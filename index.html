@@ -118,22 +118,47 @@ nav a {
             <p>Price: ৳800</p>
             <button onclick="buyProduct('Product 2')">Buy Now</button>
         </div>
-<script>
-    let cart = [];
 
-    function buyProduct(productName) {
-        cart.push(productName);
-        alert(productName + " added to cart!");
-    }
+         </div>
+        </div>
 
-    function showCart() {
-        if (cart.length === 0) {
-            alert("Your cart is empty!");
-        } else {
-            alert("Your Cart:\n\n" + cart.join("\n"));
+    </div>
+
+    <script>
+        let cart = [];
+
+        function buyProduct(productName) {
+            cart.push(productName);
+            alert(productName + " added to cart!");
         }
-    }
-</script>
+
+        function showCart() {
+            if (cart.length === 0) {
+                alert("Your cart is empty!");
+            } else {
+                alert("Your Cart:\n\n" + cart.join("\n"));
+            }
+        }
+    </script>
+
+</body>
+</html>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
