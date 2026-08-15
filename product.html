@@ -39,5 +39,16 @@
     <button>Add to Cart</button>
     <button>Buy Now</button>
 </div>
+<script>
+    const params = new URLSearchParams(window.location.search);
+    const product = params.get("product");
+
+    if (product === "2") {
+        document.querySelector("img").src = "product2.jpg";
+        document.querySelector("img").alt = "Product 2";
+        document.querySelector("h2").textContent = "Product 2";
+        document.querySelector("p").textContent = "Price: ৳800";
+    }
+</script>
 </body>
 </html>
