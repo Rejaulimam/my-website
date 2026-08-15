@@ -127,7 +127,22 @@ nav a {
         cart.push(productName);
         alert(productName + " added to cart!");
     }
+
+    function showCart() {
+        if (cart.length === 0) {
+            alert("Your cart is empty!");
+        } else {
+            alert("Your Cart:\n\n" + cart.join("\n"));
+        }
+    }
 </script>
+
+
+
+
+
+
+
 
 
     
