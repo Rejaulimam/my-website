@@ -107,19 +107,37 @@ total += product.price * product.quantity;
 
                 item.className = "cart-item";
 
-                item.innerHTML = `
-                    <h2>${product.name}</h2>
+item.innerHTML = `
+    <h2>${product.name}</h2>
 
-                    <p class="price">
-Price: ৳${product.price} × ${product.quantity}
-                    </p>
+    <p class="price">
+        Price: ৳${product.price} × ${product.quantity}
+    </p>
 
-                    <button
-                        class="remove-btn"
-                        onclick="removeFromCart(${index})">
-                        Remove
-                    </button>
-                `;
+    <div class="quantity-control">
+        <button onclick="decreaseQuantity(${index})">−</button>
+        <span>${product.quantity}</span>
+        <button onclick="increaseQuantity(${index})">+</button>
+    </div>
+
+    <button
+        class="remove-btn"
+        onclick="removeFromCart(${index})">
+        Remove
+    </button>
+`;
+
+
+
+
+
+
+
+
+
+
+
+
 
                 container.appendChild(item);
 
