@@ -181,6 +181,18 @@ item.innerHTML = `
 
             container.appendChild(totalDiv);
 
+const checkoutBtn =
+    document.createElement("button");
+
+checkoutBtn.textContent = "Checkout";
+
+checkoutBtn.className = "checkout-btn";
+
+checkoutBtn.onclick = function() {
+    alert("Checkout page coming soon!");
+};
+
+container.appendChild(checkoutBtn);
         }
 
 
