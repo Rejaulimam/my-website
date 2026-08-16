@@ -87,7 +87,16 @@ const productPrice = parseInt(productPriceText.replace(/\D/g, ""));
 
     let cart = JSON.parse(localStorage.getItem("cart")) || [];
 
+const existingProduct = cart.find(
+    item => item.name === cartItem.name
+);
+
+if (existingProduct) {
+    existingProduct.quantity += 1;
+} else {
+    cartItem.quantity = 1;
     cart.push(cartItem);
+}
 
     localStorage.setItem("cart", JSON.stringify(cart));
 
