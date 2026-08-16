@@ -76,7 +76,8 @@
 document.getElementById("addToCart").addEventListener("click", function() {
 
     const productName = document.querySelector("h2").textContent;
-    const productPrice = document.querySelector("p").textContent;
+const productPriceText = document.querySelector("p").textContent;
+const productPrice = parseInt(productPriceText.replace(/\D/g, ""));
 
     const cartItem = {
         name: productName,
