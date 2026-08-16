@@ -156,7 +156,38 @@ item.innerHTML = `
 
         }
 
+function increaseQuantity(index) {
 
+    let cart =
+        JSON.parse(localStorage.getItem("cart")) || [];
+
+    cart[index].quantity++;
+
+    localStorage.setItem(
+        "cart",
+        JSON.stringify(cart)
+    );
+
+    showCart();
+}
+
+
+function decreaseQuantity(index) {
+
+    let cart =
+        JSON.parse(localStorage.getItem("cart")) || [];
+
+    if (cart[index].quantity > 1) {
+        cart[index].quantity--;
+    }
+
+    localStorage.setItem(
+        "cart",
+        JSON.stringify(cart)
+    );
+
+    showCart();
+}
         function removeFromCart(index) {
 
             let cart =
