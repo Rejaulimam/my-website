@@ -73,9 +73,26 @@
         document.querySelector("h2").textContent = "Product 4";
         document.querySelector("p").textContent = "Price: ৳1200";
     }
-    document.getElementById("addToCart").addEventListener("click", function() {
+document.getElementById("addToCart").addEventListener("click", function() {
+
+    const productName = document.querySelector("h2").textContent;
+    const productPrice = document.querySelector("p").textContent;
+
+    const cartItem = {
+        name: productName,
+        price: productPrice
+    };
+
+    let cart = JSON.parse(localStorage.getItem("cart")) || [];
+
+    cart.push(cartItem);
+
+    localStorage.setItem("cart", JSON.stringify(cart));
+
     alert("Product added to cart!");
 });
+
+
 </script>
 </body>
 </html>
