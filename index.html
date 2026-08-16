@@ -175,20 +175,64 @@ nav a {
     </div>
 
     <script>
-        let cart = [];
+<script>
 
-        function buyProduct(productName) {
-            cart.push(productName);
-            alert(productName + " added to cart!");
+    function buyProduct(productName) {
+
+        let cart =
+            JSON.parse(localStorage.getItem("cart")) || [];
+
+        let price = 0;
+
+        if (productName === "Product 1") {
+            price = 500;
         }
 
-        function showCart() {
-            if (cart.length === 0) {
-                alert("Your cart is empty!");
-            } else {
-                alert("Your Cart:\n\n" + cart.join("\n"));
-            }
+        if (productName === "Product 2") {
+            price = 800;
         }
+
+        if (productName === "Product 3") {
+            price = 1000;
+        }
+
+        if (productName === "Product 4") {
+            price = 1200;
+        }
+
+        cart.push({
+            name: productName,
+            price: price
+        });
+
+        localStorage.setItem(
+            "cart",
+            JSON.stringify(cart)
+        );
+
+        alert(productName + " added to cart!");
+
+    }
+
+
+    function showCart() {
+        window.location.href = "cart.html";
+    }
+
+</script>
+
+
+
+
+
+
+
+
+
+
+
+
+
     </script>
 
 </body>
