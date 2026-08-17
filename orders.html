@@ -76,19 +76,51 @@ order.products.forEach((product, index) => {
     `;
 });
 
-ordersContainer.innerHTML = `
-    <div class="order">
-        <h2>Order #1</h2>
+} else {
+    let productsHTML = "";
 
-        <p><strong>Name:</strong> ${order.customerName}</p>
-        <p><strong>Phone:</strong> ${order.customerMobile}</p>
-        <p><strong>Address:</strong> ${order.customerAddress}</p>
+    order.products.forEach((product, index) => {
+        productsHTML += `
+            <p>
+                <strong>Product ${index + 1}:</strong>
+                ${product.name || "Product"}
+                <br>
+                <strong>Quantity:</strong>
+                ${product.quantity || 1}
+                <br>
+                <strong>Price:</strong>
+                ৳${product.price || 0}
+            </p>
+            <hr>
+        `;
+    });
 
-        <h3>Order Products</h3>
+    ordersContainer.innerHTML = `
+        <div class="order">
+            <h2>Order #1</h2>
 
-        ${productsHTML}
-    </div>
-`;
+            <p><strong>Name:</strong> ${order.customerName}</p>
+            <p><strong>Phone:</strong> ${order.customerMobile}</p>
+            <p><strong>Address:</strong> ${order.customerAddress}</p>
+
+            <h3>Order Products</h3>
+
+            ${productsHTML}
+        </div>
+    `;
+}
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
