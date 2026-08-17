@@ -65,12 +65,27 @@ function placeOrder() {
         return;
     }
 
-    localStorage.removeItem("cart");
+const cart = JSON.parse(localStorage.getItem("cart")) || [];
 
-    alert("Order placed successfully!");
+const order = {
+    customerName: name,
+    customerMobile: mobile,
+    customerAddress: address,
+    products: cart
+};
 
-    window.location.href = "index.html";
-}
+localStorage.setItem("order", JSON.stringify(order));
+
+localStorage.removeItem("cart");
+
+alert("Order placed successfully!");
+
+window.location.href = "index.html";
+
+
+
+
+
 
 
 
