@@ -58,15 +58,45 @@
     if (!order) {
         ordersContainer.innerHTML = "<p>No orders found.</p>";
     } else {
-        ordersContainer.innerHTML = `
-            <div class="order">
-                <h2>Order #1</h2>
+let productsHTML = "";
 
-                <p><strong>Name:</strong> ${order.customerName}</p>
-                <p><strong>Phone:</strong> ${order.customerMobile}</p>
-                <p><strong>Address:</strong> ${order.customerAddress}</p>
-            </div>
-        `;
+order.products.forEach((product, index) => {
+    productsHTML += `
+        <p>
+            <strong>Product ${index + 1}:</strong>
+            ${product.name || "Product"}
+            <br>
+            <strong>Quantity:</strong>
+            ${product.quantity || 1}
+            <br>
+            <strong>Price:</strong>
+            ৳${product.price || 0}
+        </p>
+        <hr>
+    `;
+});
+
+ordersContainer.innerHTML = `
+    <div class="order">
+        <h2>Order #1</h2>
+
+        <p><strong>Name:</strong> ${order.customerName}</p>
+        <p><strong>Phone:</strong> ${order.customerMobile}</p>
+        <p><strong>Address:</strong> ${order.customerAddress}</p>
+
+        <h3>Order Products</h3>
+
+        ${productsHTML}
+    </div>
+`;
+
+
+
+
+
+
+
+
     }
 </script>
 
