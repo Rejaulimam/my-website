@@ -135,7 +135,27 @@
 
 
 
+<script>
+    const ordersContainer = document.getElementById("ordersContainer");
 
+    const orders = JSON.parse(localStorage.getItem("orders")) || [];
+
+    if (orders.length === 0) {
+        ordersContainer.innerHTML = "<p>No orders found.</p>";
+    } else {
+        orders.forEach((order, index) => {
+            ordersContainer.innerHTML += `
+                <div class="order">
+                    <h2>Order #${index + 1}</h2>
+
+                    <p><strong>Name:</strong> ${order.name}</p>
+                    <p><strong>Phone:</strong> ${order.phone}</p>
+                    <p><strong>Address:</strong> ${order.address}</p>
+                </div>
+            `;
+        });
+    }
+</script>
 
 </body>
 </html>
