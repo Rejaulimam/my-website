@@ -50,112 +50,129 @@
     <div class="orders-container" id="ordersContainer">
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 <script>
     const ordersContainer = document.getElementById("ordersContainer");
 
-    const orders = JSON.parse(localStorage.getItem("orders")) || [];
+    const order = JSON.parse(localStorage.getItem("order"));
 
-    if (orders.length === 0) {
+    if (!order) {
         ordersContainer.innerHTML = "<p>No orders found.</p>";
     } else {
-        orders.forEach((order, index) => {
-            ordersContainer.innerHTML += `
-                <div class="order">
-                    <h2>Order #${index + 1}</h2>
+        ordersContainer.innerHTML = `
+            <div class="order">
+                <h2>Order #1</h2>
 
-                    <p><strong>Name:</strong> ${order.name}</p>
-                    <p><strong>Phone:</strong> ${order.phone}</p>
-                    <p><strong>Address:</strong> ${order.address}</p>
-                </div>
-            `;
-        });
+                <p><strong>Name:</strong> ${order.customerName}</p>
+                <p><strong>Phone:</strong> ${order.customerMobile}</p>
+                <p><strong>Address:</strong> ${order.customerAddress}</p>
+            </div>
+        `;
     }
 </script>
 
 </body>
 </html>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
