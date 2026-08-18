@@ -315,7 +315,24 @@ document.getElementById("searchInput").addEventListener("input", function () {
 
     });
 
-});
+document.getElementById("filterStatus").addEventListener("change", function () {
+
+    const selectedStatus = this.value;
+
+    const orderElements = document.querySelectorAll(".order");
+
+    orderElements.forEach((orderElement, index) => {
+
+        const orderStatus = orders[index].status || "Pending";
+
+        if (selectedStatus === "All" || orderStatus === selectedStatus) {
+            orderElement.style.display = "block";
+        } else {
+            orderElement.style.display = "none";
+        }
+
+    });
+
 
 </script>
 
