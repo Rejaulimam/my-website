@@ -194,6 +194,13 @@ function deliverOrder(orderIndex) {
 
     location.reload();
 }
+function cancelOrder(orderIndex) {
+    orders[orderIndex].status = "Cancelled";
+
+    localStorage.setItem("orders", JSON.stringify(orders));
+
+    location.reload();
+}
 </script>
 
 </div>
