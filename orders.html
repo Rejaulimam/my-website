@@ -305,44 +305,46 @@ function deleteOrder(orderIndex) {
 
     location.reload();
 }
-document.getElementById("searchInput").addEventListener("input", function () {
+function filterOrders() {
 
-    const searchText = this.value.toLowerCase();
+    const searchText =
+        document.getElementById("searchInput").value.toLowerCase();
 
-    const orderElements = document.querySelectorAll(".order");
+    const selectedStatus =
+        document.getElementById("filterStatus").value;
 
-    orderElements.forEach((orderElement) => {
-
-        const orderText = orderElement.innerText.toLowerCase();
-
-        if (orderText.includes(searchText)) {
-            orderElement.style.display = "block";
-        } else {
-            orderElement.style.display = "none";
-        }
-
-    });
-
-});
-
-document.getElementById("filterStatus").addEventListener("change", function () {
-
-    const selectedStatus = this.value;
-
-    const orderElements = document.querySelectorAll(".order");
+    const orderElements =
+        document.querySelectorAll(".order");
 
     orderElements.forEach((orderElement, index) => {
 
-        const orderStatus = orders[index].status || "Pending";
+        const orderText =
+            orderElement.innerText.toLowerCase();
 
-        if (selectedStatus === "All" || orderStatus === selectedStatus) {
+        const orderStatus =
+            orders[index].status || "Pending";
+
+        const matchesSearch =
+            orderText.includes(searchText);
+
+        const matchesStatus =
+            selectedStatus === "All" ||
+            orderStatus === selectedStatus;
+
+        if (matchesSearch && matchesStatus) {
             orderElement.style.display = "block";
         } else {
             orderElement.style.display = "none";
         }
 
     });
+}
 
+document.getElementById("searchInput")
+    .addEventListener("input", filterOrders);
+
+document.getElementById("filterStatus")
+    .addEventListener("change", filterOrders);
 });
 
 </script>
