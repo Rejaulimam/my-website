@@ -139,6 +139,15 @@ ${
 }
 
 ${
+    orderStatus === "Pending"
+    ? `
+        <button onclick="cancelOrder(${orderIndex})">
+            Cancel Order
+        </button>
+    `
+    : ""
+}
+${
     orderStatus === "Confirmed"
     ? `
         <button onclick="shipOrder(${orderIndex})">
