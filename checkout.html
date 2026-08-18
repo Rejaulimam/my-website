@@ -93,12 +93,15 @@ function placeOrder() {
 
     const cart = JSON.parse(localStorage.getItem("cart")) || [];
 
-    const order = {
-        customerName: name,
-        customerMobile: mobile,
-        customerAddress: address,
-        products: cart,
-dateTime: new Date().toLocaleString()
+    const orderId = "RK-" + Date.now();
+
+const order = {
+    orderId: orderId,
+    customerName: name,
+    customerMobile: mobile,
+    customerAddress: address,
+    products: cart,
+    dateTime: new Date().toLocaleString()
 };
 
 let orders = JSON.parse(localStorage.getItem("orders")) || [];
