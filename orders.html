@@ -148,6 +148,15 @@ ${
     : ""
 }
    
+${
+    orderStatus === "Shipped"
+    ? `
+        <button onclick="deliverOrder(${orderIndex})">
+            Mark as Delivered
+        </button>
+    `
+    : ""
+}
      </div>
             `;
         });
