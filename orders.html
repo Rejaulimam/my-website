@@ -46,13 +46,38 @@
             font-weight: bold;
         }
 
-        .status-select {
-            padding: 8px;
-            font-size: 16px;
-            border: 1px solid #ccc;
-            border-radius: 5px;
-            margin-left: 5px;
-        }
+       .status-select {
+    padding: 8px 12px;
+    font-size: 15px;
+    font-weight: bold;
+    border-radius: 5px;
+    margin-left: 5px;
+    cursor: pointer;
+}
+
+/* Pending */
+.status-select.pending {
+    background-color: #f39c12;
+    color: white;
+}
+
+/* Confirmed */
+.status-select.confirmed {
+    background-color: #3498db;
+    color: white;
+}
+
+/* Shipped */
+.status-select.shipped {
+    background-color: #9b59b6;
+    color: white;
+}
+
+/* Delivered */
+.status-select.delivered {
+    background-color: #27ae60;
+    color: white;
+}
 
         .delete-btn {
             background-color: #e53935;
