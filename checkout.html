@@ -81,8 +81,33 @@
 
     </div>
 <script>
-function placeOrder() {
-    alert("Place Order function is working!");
+function placeOrder() {function placeOrder() {
+    const name = document.getElementById("name").value;
+    const mobile = document.getElementById("mobile").value;
+    const address = document.getElementById("address").value;
+
+    if (name === "" || mobile === "" || address === "") {
+        alert("Please fill in all information.");
+        return;
+    }
+
+    const cart = JSON.parse(localStorage.getItem("cart")) || [];
+
+    const order = {
+        customerName: name,
+        customerMobile: mobile,
+        customerAddress: address,
+        products: cart
+    };
+
+    localStorage.setItem("order", JSON.stringify(order));
+
+    localStorage.removeItem("cart");
+
+    alert("Order placed successfully!");
+
+    window.location.href = "orders.html";
+}
     const name = document.getElementById("name").value;
     const mobile = document.getElementById("mobile").value;
     const address = document.getElementById("address").value;
