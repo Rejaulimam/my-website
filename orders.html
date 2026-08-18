@@ -40,10 +40,33 @@
         .order p {
             font-size: 16px;
         }
-.order .status {
-    color: #ff6600;
-    font-weight: bold;
-}
+
+        .status {
+            color: #ff6600;
+            font-weight: bold;
+        }
+
+        .status-select {
+            padding: 8px;
+            font-size: 16px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            margin-left: 5px;
+        }
+
+        .delete-btn {
+            background-color: #e53935;
+            color: white;
+            border: none;
+            padding: 10px 15px;
+            border-radius: 5px;
+            cursor: pointer;
+            margin-top: 10px;
+        }
+
+        .delete-btn:hover {
+            background-color: #c62828;
+        }
     </style>
 </head>
 
@@ -51,228 +74,183 @@
 
     <h1>RK Store - Orders</h1>
 
-    <div class="orders-container" id="ordersContainer">
+    <div class="orders-container" id="ordersContainer"></div>
 
 <script>
-    const ordersContainer = document.getElementById("ordersContainer");
 
-    const orders = JSON.parse(localStorage.getItem("orders")) || [];
+const ordersContainer = document.getElementById("ordersContainer");
 
-    if (orders.length === 0) {
+const orders = JSON.parse(localStorage.getItem("orders")) || [];
 
-        ordersContainer.innerHTML = "<p>No orders found.</p>";
 
-    } else {
+if (orders.length === 0) {
 
-        let allOrdersHTML = "";
+    ordersContainer.innerHTML = "<p>No orders found.</p>";
 
-        orders.forEach((order, orderIndex) => {
+} else {
 
-            let productsHTML = "";
-let orderTotal = 0;
-let orderStatus = order.status || "Pending";
-            order.products.forEach((product, index) => {
+    let allOrdersHTML = "";
 
-orderTotal += (product.price || 0) * (product.quantity || 1);
-                productsHTML += `
-                    <p>
-                        <strong>Product ${index + 1}:</strong>
-                        ${product.name || "Product"}
-                        <br>
+    orders.forEach((order, orderIndex) => {
 
-                        <strong>Quantity:</strong>
-                        ${product.quantity || 1}
-                        <br>
+        let productsHTML = "";
+        let orderTotal = 0;
 
-                        <strong>Price:</strong>
-                        ৳${product.price || 0}
-<br>
+        // যদি পুরোনো Order-এ status না থাকে
+        let orderStatus = order.status || "Pending";
 
-<strong>Total:</strong>
-৳${(product.price || 0) * (product.quantity || 1)}
-                    </p>
 
-                    <hr>
-                `;
-            });
+        order.products.forEach((product, index) => {
 
-            allOrdersHTML += `
-                <div class="order">
+            let quantity = product.quantity || 1;
+            let price = product.price || 0;
+            let total = price * quantity;
 
-                    <h2>Order #${orderIndex + 1}</h2>
+            orderTotal += total;
 
-                    <p>
-                        <strong>Name:</strong>
-                        ${order.customerName}
-                    </p>
+            productsHTML += `
+                <p>
+                    <strong>Product ${index + 1}:</strong>
+                    ${product.name || "Product"}
+                    <br>
 
-                    <p>
-                        <strong>Phone:</strong>
-                        ${order.customerMobile}
-                    </p>
+                    <strong>Quantity:</strong>
+                    ${quantity}
+                    <br>
 
-                    <p>
-                        <strong>Address:</strong>
-                        ${order.customerAddress}
-                    </p>
+                    <strong>Price:</strong>
+                    ৳${price}
+                    <br>
 
-                    <h3>Order Products</h3>
+                    <strong>Total:</strong>
+                    ৳${total}
+                </p>
 
-                    ${productsHTML}
-<p>
-    <strong>Order Total:</strong>
-    ৳${orderTotal}
-</p>
-
-<p>
-    <strong class="status">Status:</strong>
-    <span class="status">${orderStatus}</span>
-</p>
-${
-    orderStatus === "Pending"
-    ? `
-        <button onclick="confirmOrder(${orderIndex})">
-            Confirm Order
-        </button>
-    `
-    : ""
-}
-
-${
-    orderStatus === "Pending"
-    ? `
-        <button onclick="cancelOrder(${orderIndex})">
-            Cancel Order
-        </button>
-    `
-    : ""
-}
-${
-    orderStatus === "Confirmed"
-    ? `
-        <button onclick="shipOrder(${orderIndex})">
-            Ship Order
-        </button>
-    `
-    : ""
-}
-   
-${
-    orderStatus === "Shipped"
-    ? `
-        <button onclick="deliverOrder(${orderIndex})">
-            Mark as Delivered
-        </button>
-    `
-    : ""
-}
-
-<button onclick="deleteOrder(${orderIndex})">
-    Delete Order
-</button>
-     </div>
+                <hr>
             `;
         });
 
-        ordersContainer.innerHTML = allOrdersHTML;
-    }
 
-function confirmOrder(orderIndex) {
-    orders[orderIndex].status = "Confirmed";
+        allOrdersHTML += `
 
-    localStorage.setItem("orders", JSON.stringify(orders));
+            <div class="order">
+
+                <h2>Order #${orderIndex + 1}</h2>
+
+                <p>
+                    <strong>Name:</strong>
+                    ${order.customerName}
+                </p>
+
+                <p>
+                    <strong>Phone:</strong>
+                    ${order.customerMobile}
+                </p>
+
+                <p>
+                    <strong>Address:</strong>
+                    ${order.customerAddress}
+                </p>
+
+
+                <h3>Order Products</h3>
+
+                ${productsHTML}
+
+
+                <p>
+                    <strong>Order Total:</strong>
+                    ৳${orderTotal}
+                </p>
+
+
+                <p>
+                    <strong class="status">Status:</strong>
+
+                    <select
+                        class="status-select"
+                        onchange="changeStatus(${orderIndex}, this.value)"
+                    >
+
+                        <option value="Pending"
+                            ${orderStatus === "Pending" ? "selected" : ""}>
+                            Pending
+                        </option>
+
+                        <option value="Confirmed"
+                            ${orderStatus === "Confirmed" ? "selected" : ""}>
+                            Confirmed
+                        </option>
+
+                        <option value="Shipped"
+                            ${orderStatus === "Shipped" ? "selected" : ""}>
+                            Shipped
+                        </option>
+
+                        <option value="Delivered"
+                            ${orderStatus === "Delivered" ? "selected" : ""}>
+                            Delivered
+                        </option>
+
+                    </select>
+
+                </p>
+
+
+                <button
+                    class="delete-btn"
+                    onclick="deleteOrder(${orderIndex})"
+                >
+                    Delete Order
+                </button>
+
+            </div>
+
+        `;
+    });
+
+
+    ordersContainer.innerHTML = allOrdersHTML;
+}
+
+
+/* =========================
+   CHANGE ORDER STATUS
+========================= */
+
+function changeStatus(orderIndex, newStatus) {
+
+    orders[orderIndex].status = newStatus;
+
+    localStorage.setItem(
+        "orders",
+        JSON.stringify(orders)
+    );
 
     location.reload();
 }
-function shipOrder(orderIndex) {
-    orders[orderIndex].status = "Shipped";
 
-    localStorage.setItem("orders", JSON.stringify(orders));
 
-    location.reload();
-}
-function deliverOrder(orderIndex) {
-    orders[orderIndex].status = "Delivered";
-
-    localStorage.setItem("orders", JSON.stringify(orders));
-
-    location.reload();
-}
-function cancelOrder(orderIndex) {
-    orders[orderIndex].status = "Cancelled";
-
-    localStorage.setItem("orders", JSON.stringify(orders));
-
-    location.reload();
-}
+/* =========================
+   DELETE ORDER
+========================= */
 
 function deleteOrder(orderIndex) {
+
     orders.splice(orderIndex, 1);
 
-    localStorage.setItem("orders", JSON.stringify(orders));
+    localStorage.setItem(
+        "orders",
+        JSON.stringify(orders)
+    );
 
     location.reload();
 }
 
 </script>
 
-</div>
-
 </body>
 </html>
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 
 
