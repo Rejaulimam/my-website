@@ -149,6 +149,13 @@ function confirmOrder(orderIndex) {
 
     location.reload();
 }
+function shipOrder(orderIndex) {
+    orders[orderIndex].status = "Shipped";
+
+    localStorage.setItem("orders", JSON.stringify(orders));
+
+    location.reload();
+}
 </script>
 
 </div>
