@@ -205,6 +205,15 @@ function cancelOrder(orderIndex) {
 
     location.reload();
 }
+
+function deleteOrder(orderIndex) {
+    orders.splice(orderIndex, 1);
+
+    localStorage.setItem("orders", JSON.stringify(orders));
+
+    location.reload();
+}
+
 </script>
 
 </div>
