@@ -289,6 +289,25 @@ function deleteOrder(orderIndex) {
 
     location.reload();
 }
+document.getElementById("searchInput").addEventListener("input", function () {
+
+    const searchText = this.value.toLowerCase();
+
+    const orderElements = document.querySelectorAll(".order");
+
+    orderElements.forEach((orderElement) => {
+
+        const orderText = orderElement.innerText.toLowerCase();
+
+        if (orderText.includes(searchText)) {
+            orderElement.style.display = "block";
+        } else {
+            orderElement.style.display = "none";
+        }
+
+    });
+
+});
 
 </script>
 
