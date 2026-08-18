@@ -109,12 +109,6 @@ function placeOrder() {
     window.location.href = "orders.html";
 }
 
-
-    if (name === "" || mobile === "" || address === "") {
-        alert("Please fill in all information.");
-        return;
-    }
-
 const cart = JSON.parse(localStorage.getItem("cart")) || [];
 
 const order = {
