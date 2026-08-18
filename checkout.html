@@ -99,8 +99,12 @@ function placeOrder() {
         customerAddress: address,
         products: cart
     };
+let orders = JSON.parse(localStorage.getItem("orders")) || [];
 
-    localStorage.setItem("order", JSON.stringify(order));
+orders.push(order);
+
+localStorage.setItem("orders", JSON.stringify(orders));
+    
 
     localStorage.removeItem("cart");
 
