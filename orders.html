@@ -70,7 +70,7 @@
 
             let productsHTML = "";
 let orderTotal = 0;
-let orderStatus = "Pending";
+let orderStatus = order.status || "Pending";
             order.products.forEach((product, index) => {
 
 orderTotal += (product.price || 0) * (product.quantity || 1);
