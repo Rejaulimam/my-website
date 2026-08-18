@@ -49,89 +49,74 @@
 
     <div class="orders-container" id="ordersContainer">
 
-
 <script>
     const ordersContainer = document.getElementById("ordersContainer");
 
-    const order = JSON.parse(localStorage.getItem("order"));
+    const orders = JSON.parse(localStorage.getItem("orders")) || [];
 
-    if (!order) {
+    if (orders.length === 0) {
+
         ordersContainer.innerHTML = "<p>No orders found.</p>";
+
     } else {
-let productsHTML = "";
 
-order.products.forEach((product, index) => {
-    productsHTML += `
-        <p>
-            <strong>Product ${index + 1}:</strong>
-            ${product.name || "Product"}
-            <br>
-            <strong>Quantity:</strong>
-            ${product.quantity || 1}
-            <br>
-            <strong>Price:</strong>
-            ৳${product.price || 0}
-        </p>
-        <hr>
-    `;
-});
+        let allOrdersHTML = "";
 
+        orders.forEach((order, orderIndex) => {
 
+            let productsHTML = "";
 
+            order.products.forEach((product, index) => {
 
+                productsHTML += `
+                    <p>
+                        <strong>Product ${index + 1}:</strong>
+                        ${product.name || "Product"}
+                        <br>
 
+                        <strong>Quantity:</strong>
+                        ${product.quantity || 1}
+                        <br>
 
+                        <strong>Price:</strong>
+                        ৳${product.price || 0}
+                    </p>
 
+                    <hr>
+                `;
+            });
 
+            allOrdersHTML += `
+                <div class="order">
 
+                    <h2>Order #${orderIndex + 1}</h2>
 
+                    <p>
+                        <strong>Name:</strong>
+                        ${order.customerName}
+                    </p>
 
+                    <p>
+                        <strong>Phone:</strong>
+                        ${order.customerMobile}
+                    </p>
 
+                    <p>
+                        <strong>Address:</strong>
+                        ${order.customerAddress}
+                    </p>
 
+                    <h3>Order Products</h3>
 
+                    ${productsHTML}
 
+                </div>
+            `;
+        });
 
-
-
-
-
-    ordersContainer.innerHTML = `
-        <div class="order">
-            <h2>Order #1</h2>
-
-            <p><strong>Name:</strong> ${order.customerName}</p>
-            <p><strong>Phone:</strong> ${order.customerMobile}</p>
-            <p><strong>Address:</strong> ${order.customerAddress}</p>
-
-            <h3>Order Products</h3>
-
-            ${productsHTML}
-        </div>
-    `;
-}
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-    
+        ordersContainer.innerHTML = allOrdersHTML;
+    }
 </script>
-
 
 </div>
 
