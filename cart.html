@@ -108,6 +108,11 @@
             const cart =
                 JSON.parse(localStorage.getItem("cart")) || [];
 
+cart.forEach(product => {
+    if (!product.quantity || isNaN(product.quantity)) {
+        product.quantity = 1;
+    }
+});
             const container =
                 document.getElementById("cart-container");
 
