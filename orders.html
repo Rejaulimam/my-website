@@ -178,6 +178,13 @@ function shipOrder(orderIndex) {
 
     location.reload();
 }
+function deliverOrder(orderIndex) {
+    orders[orderIndex].status = "Delivered";
+
+    localStorage.setItem("orders", JSON.stringify(orders));
+
+    location.reload();
+}
 </script>
 
 </div>
