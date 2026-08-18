@@ -128,13 +128,26 @@ orderTotal += (product.price || 0) * (product.quantity || 1);
     <strong class="status">Status:</strong>
     <span class="status">${orderStatus}</span>
 </p>
+${
+    orderStatus === "Pending"
+    ? `
+        <button onclick="confirmOrder(${orderIndex})">
+            Confirm Order
+        </button>
+    `
+    : ""
+}
 
-           <button onclick="confirmOrder(${orderIndex})">
-    Confirm Order
-</button>
-<button onclick="shipOrder(${orderIndex})">
-    Ship Order
-</button>
+${
+    orderStatus === "Confirmed"
+    ? `
+        <button onclick="shipOrder(${orderIndex})">
+            Ship Order
+        </button>
+    `
+    : ""
+}
+   
      </div>
             `;
         });
