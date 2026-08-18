@@ -103,6 +103,42 @@ if (existingProduct) {
     alert("Product added to cart!");
 });
 
+    localStorage.setItem("cart", JSON.stringify(cart));
+
+    alert("Product added to cart!");
+});
+
+
+document.getElementById("buyNow").addEventListener("click", function() {
+
+    const productName = document.querySelector("h2").textContent;
+    const productPriceText = document.querySelector("p").textContent;
+    const productPrice = parseInt(productPriceText.replace(/\D/g, ""));
+
+    const cartItem = {
+        name: productName,
+        price: productPrice,
+        quantity: 1
+    };
+
+    let cart = JSON.parse(localStorage.getItem("cart")) || [];
+
+    const existingProduct = cart.find(
+        item => item.name === cartItem.name
+    );
+
+    if (existingProduct) {
+        existingProduct.quantity += 1;
+    } else {
+        cart.push(cartItem);
+    }
+
+    localStorage.setItem("cart", JSON.stringify(cart));
+
+    window.location.href = "cart.html";
+});
+
+</script>
 
 </script>
 </body>
