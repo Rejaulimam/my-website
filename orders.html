@@ -265,7 +265,10 @@ if (orders.length === 0) {
 
                 </p>
 
-
+<p>
+    <strong>Status Updated:</strong>
+    ${order.statusUpdated || "Not available"}
+</p>
                 <button
                     class="delete-btn"
                     onclick="deleteOrder(${orderIndex})"
