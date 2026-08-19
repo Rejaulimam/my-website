@@ -54,6 +54,38 @@
     const params = new URLSearchParams(window.location.search);
     const product = params.get("product");
 
+const productData = {
+    "1": {
+        image: "product1.jpg",
+        name: "Product 1",
+        price: "Price: ৳500"
+    },
+    "2": {
+        image: "product2.jpg",
+        name: "Product 2",
+        price: "Price: ৳800"
+    },
+    "3": {
+        image: "product3.jpg",
+        name: "Product 3",
+        price: "Price: ৳1000"
+    },
+    "4": {
+        image: "product4.jpg",
+        name: "Product 4",
+        price: "Price: ৳1200"
+    }
+};
+
+const selectedProduct = productData[product];
+
+if (selectedProduct) {
+    document.querySelector(".product-details img").src = selectedProduct.image;
+    document.querySelector(".product-details img").alt = selectedProduct.name;
+    document.querySelector(".product-details h2").textContent = selectedProduct.name;
+    document.querySelector(".product-details p").textContent = selectedProduct.price;
+}
+
     if (product === "2") {
         document.querySelector("img").src = "product2.jpg";
         document.querySelector("img").alt = "Product 2";
