@@ -1,0 +1,164 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>RK Store - Order Details</title>
+
+    <style>
+
+        body {
+            margin: 0;
+            font-family: Arial, sans-serif;
+            background-color: #f5f5f5;
+        }
+
+        h1 {
+            background-color: #ff6600;
+            color: white;
+            text-align: center;
+            padding: 15px;
+            margin: 0;
+        }
+
+        .container {
+            padding: 20px;
+        }
+
+        .order-details {
+            background-color: white;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+        }
+
+        .order-details h2 {
+            color: #ff6600;
+        }
+
+        .order-details p {
+            font-size: 16px;
+            line-height: 1.6;
+        }
+
+        .status {
+            color: #ff6600;
+            font-weight: bold;
+        }
+
+        .back-btn {
+            display: inline-block;
+            background-color: #3498db;
+            color: white;
+            padding: 10px 15px;
+            border-radius: 5px;
+            text-decoration: none;
+            margin-bottom: 15px;
+        }
+
+        .back-btn:hover {
+            background-color: #2980b9;
+        }
+
+    </style>
+</head>
+
+<body>
+
+    <h1>RK Store - Order Details</h1>
+
+    <div class="container">
+
+        <a href="orders.html" class="back-btn">
+            ← Back to Orders
+        </a>
+
+        <div class="order-details" id="orderDetails">
+
+            <p>Loading order details...</p>
+
+        </div>
+
+    </div>
+
+
+<script>
+
+    // Get Order Number from URL
+    const urlParams = new URLSearchParams(window.location.search);
+
+    const orderIndex = urlParams.get("order");
+
+
+    // Get all orders
+    const orders =
+        JSON.parse(localStorage.getItem("orders")) || [];
+
+
+    // Check Order
+    if (
+        orderIndex === null ||
+        !orders[orderIndex]
+    ) {
+
+        document.getElementById("orderDetails").innerHTML =
+            "<p>Order not found.</p>";
+
+    } else {
+
+        const order = orders[orderIndex];
+
+        const orderStatus =
+            order.status || "Pending";
+
+
+        document.getElementById("orderDetails").innerHTML = `
+
+            <h2>Order #${Number(orderIndex) + 1}</h2>
+
+            <p>
+                <strong>Order ID:</strong>
+                ${order.orderId || "Not available"}
+            </p>
+
+            <p>
+                <strong>Name:</strong>
+                ${order.customerName || "Not available"}
+            </p>
+
+            <p>
+                <strong>Phone:</strong>
+                ${order.customerMobile || "Not available"}
+            </p>
+
+            <p>
+                <strong>Address:</strong>
+                ${order.customerAddress || "Not available"}
+            </p>
+
+            <p>
+                <strong>Date & Time:</strong>
+                ${order.dateTime || "Not available"}
+            </p>
+
+            <p>
+                <strong>Status:</strong>
+                <span class="status">
+                    ${orderStatus}
+                </span>
+            </p>
+
+            <p>
+                <strong>Status Updated:</strong>
+                ${order.statusUpdatedAt || "Not available"}
+            </p>
+
+        `;
+
+    }
+
+</script>
+
+</body>
+</html>
