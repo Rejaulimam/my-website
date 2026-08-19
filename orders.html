@@ -330,17 +330,8 @@ function changeStatus(orderIndex, newStatus) {
 
 function viewOrderDetails(orderIndex) {
 
-    const order = orders[orderIndex];
-
-    alert(
-        "Order ID: " + (order.orderId || "Not available") +
-        "\n\nName: " + order.customerName +
-        "\nPhone: " + order.customerMobile +
-        "\nAddress: " + order.customerAddress +
-        "\nDate & Time: " + (order.dateTime || "Not available") +
-        "\nStatus: " + (order.status || "Pending") +
-        "\nStatus Updated: " + (order.statusUpdatedAt || "Not available")
-    );
+    window.location.href =
+        "order-details.html?order=" + orderIndex;
 }
 
 /* =========================
