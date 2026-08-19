@@ -201,10 +201,30 @@ nav a {
             price = 1200;
         }
 
-        cart.push({
-            name: productName,
-            price: price
-        });
+        let image = "";
+
+if (productName === "Product 1") {
+    image = "product1.jpg";
+}
+
+if (productName === "Product 2") {
+    image = "product2.jpg";
+}
+
+if (productName === "Product 3") {
+    image = "product3.jpg";
+}
+
+if (productName === "Product 4") {
+    image = "product4.jpg";
+}
+
+cart.push({
+    name: productName,
+    price: price,
+    image: image,
+    quantity: 1
+});
 
         localStorage.setItem(
             "cart",
