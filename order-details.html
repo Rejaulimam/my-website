@@ -356,6 +356,26 @@
             class="product-image"
         >
 
+
+<div class="product-name">
+    ${product.name || "Product " + (index + 1)}
+</div>
+
+<div class="product-info">
+    Quantity:
+    <strong>${quantity}</strong>
+    <br>
+
+    Price:
+    <strong>৳${price}</strong>
+</div>
+
+<div class="product-total">
+    Subtotal:
+    ৳${total}
+</div>
+
+</div>
         <div class="product-name">
             ${product.name || "Product " + (index + 1)}
         </div>
