@@ -294,6 +294,8 @@ function changeStatus(orderIndex, newStatus) {
 
     orders[orderIndex].status = newStatus;
 
+    orders[orderIndex].statusUpdatedAt = new Date().toLocaleString();
+
     localStorage.setItem(
         "orders",
         JSON.stringify(orders)
