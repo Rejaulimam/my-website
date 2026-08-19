@@ -93,19 +93,7 @@ if (selectedProduct) {
         document.querySelector("p").textContent = "Price: ৳800";
     }
 
-    if (product === "3") {
-        document.querySelector("img").src = "product3.jpg";
-        document.querySelector("img").alt = "Product 3";
-        document.querySelector("h2").textContent = "Product 3";
-        document.querySelector("p").textContent = "Price: ৳1000";
-    }
-
-    if (product === "4") {
-        document.querySelector("img").src = "product4.jpg";
-        document.querySelector("img").alt = "Product 4";
-        document.querySelector("h2").textContent = "Product 4";
-        document.querySelector("p").textContent = "Price: ৳1200";
-    }
+    
 document.getElementById("addToCart").addEventListener("click", function() {
 
     const productName = document.querySelector("h2").textContent;
