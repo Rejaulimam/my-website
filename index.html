@@ -425,7 +425,7 @@ function searchProducts() {
     const searchText =
         document.getElementById("searchInput").value.toLowerCase();
 
-let foundProducts = 0;
+    let foundProducts = 0;
 
     const products =
         document.querySelectorAll(".product");
@@ -446,12 +446,26 @@ let foundProducts = 0;
             productName.includes(searchText);
 
         if (categoryMatch && searchMatch) {
+
             product.style.display = "";
+            foundProducts++;
+
         } else {
+
             product.style.display = "none";
+
         }
 
     });
+
+    const noProducts =
+        document.getElementById("noProducts");
+
+    if (foundProducts === 0) {
+        noProducts.style.display = "block";
+    } else {
+        noProducts.style.display = "none";
+    }
 
 }
     </script>
