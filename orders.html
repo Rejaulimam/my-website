@@ -170,9 +170,15 @@ if (orders.length === 0) {
         let productsHTML = "";
         let orderTotal = 0;
 
-        // যদি পুরোনো Order-এ status না থাকে
         let orderStatus = order.status || "Pending";
 
+let paymentName = "Cash on Delivery";
+
+if (order.paymentMethod === "bkash") {
+    paymentName = "bKash";
+} else if (order.paymentMethod === "nagad") {
+    paymentName = "Nagad";
+}
 
         order.products.forEach((product, index) => {
 
