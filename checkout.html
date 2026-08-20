@@ -187,6 +187,11 @@ function placeOrder() {
 
 const paymentMethod = document.getElementById("paymentMethod").value;
 
+const paymentNumber =
+    document.getElementById("paymentNumber").value;
+
+const transactionId =
+    document.getElementById("transactionId").value;
     if (name === "" || mobile === "" || address === "") {
         alert("Please fill in all information.");
         return;
