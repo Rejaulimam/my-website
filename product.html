@@ -96,7 +96,7 @@ const productPrice = parseInt(productPriceText.replace(/\D/g, ""));
     const cartItem = {
     name: productName,
     price: productPrice,
-    image: document.querySelector("img").src
+    image: selectedProduct.image
 };
 
     let cart = JSON.parse(localStorage.getItem("cart")) || [];
@@ -129,7 +129,7 @@ document.getElementById("buyNow").addEventListener("click", function() {
     name: productName,
     price: productPrice,
     quantity: 1,
-    image: document.querySelector("img").src
+    image: selectedProduct.image
 };
 
     let cart = JSON.parse(localStorage.getItem("cart")) || [];
