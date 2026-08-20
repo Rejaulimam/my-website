@@ -140,6 +140,10 @@ total += product.price * product.quantity;
                 item.className = "cart-item";
 
 item.innerHTML = `
+    <img src="${product.image}"
+         alt="${product.name}"
+         style="width:100%; max-width:200px; height:180px; object-fit:cover; border-radius:8px;">
+
     <h2>${product.name}</h2>
 
     <p class="price">
