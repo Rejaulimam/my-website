@@ -242,6 +242,56 @@
             text-align: center;
         }
 
+.action-buttons {
+    display: flex;
+    gap: 10px;
+    margin-bottom: 20px;
+    flex-wrap: wrap;
+}
+
+.action-btn {
+    border: none;
+    padding: 11px 16px;
+    border-radius: 6px;
+    color: white;
+    font-size: 15px;
+    cursor: pointer;
+}
+
+.print-btn {
+    background-color: #3498db;
+}
+
+.invoice-btn {
+    background-color: #27ae60;
+}
+
+.action-btn:hover {
+    opacity: 0.9;
+}
+
+@media print {
+
+    .header,
+    .back-btn,
+    .action-buttons {
+        display: none;
+    }
+
+    body {
+        background-color: white;
+    }
+
+    .container {
+        max-width: 100%;
+        padding: 0;
+    }
+
+    .card {
+        box-shadow: none;
+    }
+}
+
     </style>
 </head>
 
