@@ -840,493 +840,642 @@
 
     function printInvoice() {
 
-        const order =
-            orders[orderIndex];
+    const order = orders[orderIndex];
+
+    if (!order) {
+        alert("Order not found.");
+        return;
+    }
+
+    let invoiceProducts = "";
+    let invoiceTotal = 0;
+
+    if (order.products && order.products.length > 0) {
+
+        order.products.forEach((product, index) => {
+
+            const quantity = product.quantity || 1;
+            const price = product.price || 0;
+            const subtotal = price * quantity;
+
+            invoiceTotal += subtotal;
+
+            invoiceProducts += `
+                <tr>
+                    <td>
+                        ${product.name || "Product " + (index + 1)}
+                    </td>
+
+                    <td>
+                        ${quantity}
+                    </td>
+
+                    <td>
+                        ৳${price}
+                    </td>
+
+                    <td>
+                        ৳${subtotal}
+                    </td>
+                </tr>
+            `;
+        });
+
+    } else {
+
+        invoiceProducts = `
+            <tr>
+                <td colspan="4">
+                    No products found.
+                </td>
+            </tr>
+        `;
+    }
 
 
-        if (!order) {
-
-            alert("Order not found.");
-
-            return;
-
-        }
-
-
-        let invoiceProducts = "";
-
-        let invoiceTotal = 0;
+    const paymentMethod =
+        order.paymentMethod === "bkash"
+            ? "bKash"
+            : order.paymentMethod === "nagad"
+                ? "Nagad"
+                : "Cash on Delivery";
 
 
-        if (
-            order.products &&
-            order.products.length > 0
-        ) {
+    const invoiceWindow = window.open("", "_blank");
 
-            order.products.forEach(
-                (product, index) => {
+    if (!invoiceWindow) {
 
-                    const quantity =
-                        product.quantity || 1;
+        alert(
+            "Please allow pop-ups for this website."
+        );
 
-                    const price =
-                        product.price || 0;
-
-                    const subtotal =
-                        price * quantity;
+        return;
+    }
 
 
-                    invoiceTotal += subtotal;
+    invoiceWindow.document.write(`
+
+<!DOCTYPE html>
+
+<html lang="en">
+
+<head>
+
+<meta charset="UTF-8">
+
+<meta
+    name="viewport"
+    content="width=device-width, initial-scale=1.0"
+>
+
+<title>RK Store - Invoice</title>
 
 
-                    invoiceProducts += `
+<style>
 
-                        <tr>
+* {
+    box-sizing: border-box;
+}
 
-                            <td>
-                                ${
-                                    product.name ||
-                                    "Product " +
-                                    (index + 1)
-                                }
-                            </td>
+body {
+    margin: 0;
+    padding: 30px;
+    font-family: Arial, sans-serif;
+    background: #f5f5f5;
+    color: #333;
+}
 
-                            <td>
-                                ${quantity}
-                            </td>
-
-                            <td>
-                                ৳${price}
-                            </td>
-
-                            <td>
-                                ৳${subtotal}
-                            </td>
-
-                        </tr>
-
-                    `;
-
-                }
-            );
-
-        }
+.invoice {
+    max-width: 850px;
+    margin: auto;
+    background: white;
+    padding: 35px;
+    box-shadow: 0 2px 10px rgba(0,0,0,0.08);
+}
 
 
-        const paymentMethod =
-            order.paymentMethod === "bkash"
-                ? "bKash"
-                : order.paymentMethod === "nagad"
-                    ? "Nagad"
-                    : "Cash on Delivery";
+/* Header */
+
+.invoice-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    border-bottom: 3px solid #ff6600;
+    padding-bottom: 20px;
+    margin-bottom: 25px;
+}
+
+.store-name {
+    font-size: 30px;
+    font-weight: bold;
+    color: #ff6600;
+}
+
+.invoice-title {
+    text-align: right;
+}
+
+.invoice-title h2 {
+    margin: 0;
+    font-size: 25px;
+}
+
+.invoice-title p {
+    margin: 5px 0 0;
+    color: #777;
+}
 
 
-        const invoiceWindow =
-            window.open(
-                "",
-                "_blank"
-            );
+/* Information */
+
+.info-section {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 25px;
+    margin-bottom: 25px;
+}
+
+.info-box {
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    padding: 15px;
+}
+
+.info-box h3 {
+    margin-top: 0;
+    margin-bottom: 12px;
+    color: #ff6600;
+    font-size: 17px;
+}
+
+.info-row {
+    display: flex;
+    justify-content: space-between;
+    gap: 15px;
+    padding: 7px 0;
+    border-bottom: 1px solid #eee;
+}
+
+.info-row:last-child {
+    border-bottom: none;
+}
+
+.info-label {
+    color: #777;
+}
+
+.info-value {
+    font-weight: bold;
+    text-align: right;
+}
 
 
-        if (!invoiceWindow) {
+/* Products */
 
-            alert(
-                "Please allow pop-ups for this website."
-            );
+.section-title {
+    font-size: 19px;
+    font-weight: bold;
+    margin: 25px 0 10px;
+}
 
-            return;
+.products-table {
+    width: 100%;
+    border-collapse: collapse;
+}
 
-        }
+.products-table th,
+.products-table td {
+    border: 1px solid #ddd;
+    padding: 11px;
+}
+
+.products-table th {
+    background: #ff6600;
+    color: white;
+    text-align: left;
+}
+
+.products-table td:nth-child(2),
+.products-table td:nth-child(3),
+.products-table td:nth-child(4),
+.products-table th:nth-child(2),
+.products-table th:nth-child(3),
+.products-table th:nth-child(4) {
+    text-align: center;
+}
 
 
-        invoiceWindow.document.write(`
+/* Total */
 
-            <!DOCTYPE html>
+.total-box {
+    margin-top: 20px;
+    margin-left: auto;
+    max-width: 350px;
+    border-top: 2px solid #333;
+    padding-top: 12px;
+}
 
-            <html>
+.total-row {
+    display: flex;
+    justify-content: space-between;
+    font-size: 22px;
+    font-weight: bold;
+}
 
-            <head>
+.total-price {
+    color: #ff6600;
+}
 
-                <title>
-                    RK Store - Invoice
-                </title>
 
-                <style>
+/* Footer */
 
-                    * {
-                        box-sizing: border-box;
+.footer {
+    text-align: center;
+    margin-top: 40px;
+    padding-top: 20px;
+    border-top: 1px solid #ddd;
+    color: #777;
+}
+
+.footer strong {
+    color: #ff6600;
+}
+
+
+/* Print */
+
+@media print {
+
+    body {
+        background: white;
+        padding: 0;
+    }
+
+    .invoice {
+        max-width: 100%;
+        box-shadow: none;
+        padding: 15px;
+    }
+
+}
+
+@media (max-width: 600px) {
+
+    body {
+        padding: 10px;
+    }
+
+    .invoice {
+        padding: 18px;
+    }
+
+    .invoice-header {
+        display: block;
+    }
+
+    .invoice-title {
+        text-align: left;
+        margin-top: 10px;
+    }
+
+    .info-section {
+        grid-template-columns: 1fr;
+    }
+
+    .products-table {
+        font-size: 13px;
+    }
+
+    .products-table th,
+    .products-table td {
+        padding: 7px;
+    }
+
+}
+
+</style>
+
+</head>
+
+
+<body>
+
+<div class="invoice">
+
+
+    <!-- Header -->
+
+    <div class="invoice-header">
+
+        <div>
+
+            <div class="store-name">
+                RK Store
+            </div>
+
+            <div>
+                Thank you for shopping with us
+            </div>
+
+        </div>
+
+
+        <div class="invoice-title">
+
+            <h2>
+                INVOICE
+            </h2>
+
+            <p>
+                Order Invoice
+            </p>
+
+        </div>
+
+    </div>
+
+
+    <!-- Information -->
+
+    <div class="info-section">
+
+
+        <!-- Order -->
+
+        <div class="info-box">
+
+            <h3>
+                Order Information
+            </h3>
+
+            <div class="info-row">
+
+                <span class="info-label">
+                    Order ID
+                </span>
+
+                <span class="info-value">
+                    ${
+                        order.orderId ||
+                        "Not available"
                     }
+                </span>
 
-                    body {
-                        margin: 0;
-                        padding: 30px;
-                        font-family: Arial, sans-serif;
-                        color: #333;
-                        background: white;
+            </div>
+
+
+            <div class="info-row">
+
+                <span class="info-label">
+                    Order Date
+                </span>
+
+                <span class="info-value">
+                    ${
+                        order.dateTime ||
+                        "Not available"
                     }
+                </span>
 
-                    .invoice {
-                        max-width: 800px;
-                        margin: auto;
+            </div>
+
+
+            <div class="info-row">
+
+                <span class="info-label">
+                    Status
+                </span>
+
+                <span class="info-value">
+                    ${
+                        order.status ||
+                        "Pending"
                     }
+                </span>
 
-                    .invoice-header {
-                        text-align: center;
-                        border-bottom: 2px solid #ff6600;
-                        padding-bottom: 15px;
-                        margin-bottom: 20px;
+            </div>
+
+        </div>
+
+
+        <!-- Customer -->
+
+        <div class="info-box">
+
+            <h3>
+                Customer Information
+            </h3>
+
+            <div class="info-row">
+
+                <span class="info-label">
+                    Name
+                </span>
+
+                <span class="info-value">
+                    ${
+                        order.customerName ||
+                        "Not available"
                     }
+                </span>
 
-                    .invoice-header h1 {
-                        margin: 0;
-                        color: #ff6600;
+            </div>
+
+
+            <div class="info-row">
+
+                <span class="info-label">
+                    Phone
+                </span>
+
+                <span class="info-value">
+                    ${
+                        order.customerMobile ||
+                        "Not available"
                     }
+                </span>
 
-                    .invoice-header p {
-                        margin: 5px 0;
+            </div>
+
+
+            <div class="info-row">
+
+                <span class="info-label">
+                    Address
+                </span>
+
+                <span class="info-value">
+                    ${
+                        order.customerAddress ||
+                        "Not available"
                     }
+                </span>
 
-                    .section-title {
-                        font-size: 18px;
-                        font-weight: bold;
-                        margin-top: 20px;
-                        margin-bottom: 10px;
-                    }
+            </div>
 
-                    .info-table {
-                        width: 100%;
-                        border-collapse: collapse;
-                    }
+        </div>
 
-                    .info-table td {
-                        padding: 7px;
-                        border-bottom: 1px solid #eee;
-                    }
+    </div>
 
-                    .info-table td:first-child {
-                        font-weight: bold;
-                        width: 180px;
-                    }
 
-                    .products-table {
-                        width: 100%;
-                        border-collapse: collapse;
-                        margin-top: 10px;
-                    }
+    <!-- Payment -->
 
-                    .products-table th,
-                    .products-table td {
-                        border: 1px solid #ddd;
-                        padding: 10px;
-                    }
+    <div class="info-box">
 
-                    .products-table th {
-                        background-color: #f5f5f5;
-                    }
+        <h3>
+            Payment Information
+        </h3>
 
-                    .total {
-                        text-align: right;
-                        margin-top: 20px;
-                        font-size: 21px;
-                        font-weight: bold;
-                        color: #ff6600;
-                    }
+        <div class="info-row">
 
-                    .footer {
-                        text-align: center;
-                        margin-top: 45px;
-                        padding-top: 15px;
-                        border-top: 1px solid #ddd;
-                        color: #777;
-                    }
+            <span class="info-label">
+                Payment Method
+            </span>
 
-                    @media print {
+            <span class="info-value">
+                ${paymentMethod}
+            </span>
 
-                        body {
-                            padding: 10px;
-                        }
+        </div>
 
-                    }
 
-                </style>
+        ${
+            order.paymentNumber
+            ? `
 
-            </head>
+                <div class="info-row">
 
+                    <span class="info-label">
+                        Payment Number
+                    </span>
 
-            <body>
-
-                <div class="invoice">
-
-
-                    <div class="invoice-header">
-
-                        <h1>
-                            RK Store
-                        </h1>
-
-                        <p>
-                            Order Invoice
-                        </p>
-
-                    </div>
-
-
-                    <div class="section-title">
-                        Order Information
-                    </div>
-
-
-                    <table class="info-table">
-
-                        <tr>
-
-                            <td>
-                                Order ID
-                            </td>
-
-                            <td>
-                                ${
-                                    order.orderId ||
-                                    "Not available"
-                                }
-                            </td>
-
-                        </tr>
-
-
-                        <tr>
-
-                            <td>
-                                Order Date
-                            </td>
-
-                            <td>
-                                ${
-                                    order.dateTime ||
-                                    "Not available"
-                                }
-                            </td>
-
-                        </tr>
-
-
-                        <tr>
-
-                            <td>
-                                Status
-                            </td>
-
-                            <td>
-                                ${
-                                    order.status ||
-                                    "Pending"
-                                }
-                            </td>
-
-                        </tr>
-
-                    </table>
-
-
-                    <div class="section-title">
-                        Customer Information
-                    </div>
-
-
-                    <table class="info-table">
-
-                        <tr>
-
-                            <td>
-                                Name
-                            </td>
-
-                            <td>
-                                ${
-                                    order.customerName ||
-                                    "Not available"
-                                }
-                            </td>
-
-                        </tr>
-
-
-                        <tr>
-
-                            <td>
-                                Phone
-                            </td>
-
-                            <td>
-                                ${
-                                    order.customerMobile ||
-                                    "Not available"
-                                }
-                            </td>
-
-                        </tr>
-
-
-                        <tr>
-
-                            <td>
-                                Address
-                            </td>
-
-                            <td>
-                                ${
-                                    order.customerAddress ||
-                                    "Not available"
-                                }
-                            </td>
-
-                        </tr>
-
-                    </table>
-
-
-                    <div class="section-title">
-                        Payment Information
-                    </div>
-
-
-                    <table class="info-table">
-
-                        <tr>
-
-                            <td>
-                                Payment Method
-                            </td>
-
-                            <td>
-                                ${paymentMethod}
-                            </td>
-
-                        </tr>
-
-
-                        ${
-                            order.paymentNumber
-                            ? `
-
-                                <tr>
-
-                                    <td>
-                                        Payment Number
-                                    </td>
-
-                                    <td>
-                                        ${
-                                            order.paymentNumber
-                                        }
-                                    </td>
-
-                                </tr>
-
-                            `
-                            : ""
-                        }
-
-
-                        ${
-                            order.transactionId
-                            ? `
-
-                                <tr>
-
-                                    <td>
-                                        Transaction ID
-                                    </td>
-
-                                    <td>
-                                        ${
-                                            order.transactionId
-                                        }
-                                    </td>
-
-                                </tr>
-
-                            `
-                            : ""
-                        }
-
-                    </table>
-
-
-                    <div class="section-title">
-                        Ordered Products
-                    </div>
-
-
-                    <table class="products-table">
-
-                        <thead>
-
-                            <tr>
-
-                                <th>
-                                    Product
-                                </th>
-
-                                <th>
-                                    Quantity
-                                </th>
-
-                                <th>
-                                    Price
-                                </th>
-
-                                <th>
-                                    Subtotal
-                                </th>
-
-                            </tr>
-
-                        </thead>
-
-
-                        <tbody>
-
-                            ${invoiceProducts}
-
-                        </tbody>
-
-                    </table>
-
-
-                    <div class="total">
-
-                        Total Amount:
-                        ৳${invoiceTotal}
-
-                    </div>
-
-
-                    <div class="footer">
-
-                        Thank you for shopping with RK Store!
-
-                    </div>
-
+                    <span class="info-value">
+                        ${order.paymentNumber}
+                    </span>
 
                 </div>
 
-
-            </body>
-
-            </html>
-
-        `);
+            `
+            : ""
+        }
 
 
-        invoiceWindow.document.close();
+        ${
+            order.transactionId
+            ? `
 
-        invoiceWindow.focus();
+                <div class="info-row">
 
-        invoiceWindow.print();
+                    <span class="info-label">
+                        Transaction ID
+                    </span>
 
-    }
+                    <span class="info-value">
+                        ${order.transactionId}
+                    </span>
 
+                </div>
+
+            `
+            : ""
+        }
+
+    </div>
+
+
+    <!-- Products -->
+
+    <div class="section-title">
+        Ordered Products
+    </div>
+
+
+    <table class="products-table">
+
+        <thead>
+
+            <tr>
+
+                <th>
+                    Product
+                </th>
+
+                <th>
+                    Quantity
+                </th>
+
+                <th>
+                    Price
+                </th>
+
+                <th>
+                    Subtotal
+                </th>
+
+            </tr>
+
+        </thead>
+
+
+        <tbody>
+
+            ${invoiceProducts}
+
+        </tbody>
+
+    </table>
+
+
+    <!-- Total -->
+
+    <div class="total-box">
+
+        <div class="total-row">
+
+            <span>
+                Total Amount
+            </span>
+
+            <span class="total-price">
+                ৳${invoiceTotal}
+            </span>
+
+        </div>
+
+    </div>
+
+
+    <!-- Footer -->
+
+    <div class="footer">
+
+        <strong>
+            RK Store
+        </strong>
+
+        <br>
+
+        Thank you for your purchase!
+
+    </div>
+
+
+</div>
+
+</body>
+
+</html>
+
+    `);
+
+
+    invoiceWindow.document.close();
+
+    invoiceWindow.focus();
+
+    invoiceWindow.print();
+
+}
 </script>
 
 </body>
