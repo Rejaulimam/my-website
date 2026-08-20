@@ -563,6 +563,66 @@
 
             </div>
 
+<!-- Payment Information -->
+
+<div class="card">
+
+    <div class="card-title">
+        Payment Information
+    </div>
+
+    <div class="info-row">
+
+        <span class="label">
+            Payment Method
+        </span>
+
+        <span class="value">
+            ${
+                order.paymentMethod === "bkash"
+                    ? "bKash"
+                    : order.paymentMethod === "nagad"
+                        ? "Nagad"
+                        : "Cash on Delivery"
+            }
+        </span>
+
+    </div>
+
+    ${
+        order.paymentMethod === "bkash" ||
+        order.paymentMethod === "nagad"
+        ? `
+
+            <div class="info-row">
+
+                <span class="label">
+                    Payment Number
+                </span>
+
+                <span class="value">
+                    ${order.paymentNumber || "Not available"}
+                </span>
+
+            </div>
+
+            <div class="info-row">
+
+                <span class="label">
+                    Transaction ID
+                </span>
+
+                <span class="value">
+                    ${order.transactionId || "Not available"}
+                </span>
+
+            </div>
+
+        `
+        : ""
+    }
+
+</div>
 
             <!-- Ordered Products -->
 
