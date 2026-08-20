@@ -403,6 +403,21 @@ if (productName === "Women's Casual Dress") {
         function showCart() {
             window.location.href = "cart.html";
         }
+function updateCartCount() {
+
+    const cart =
+        JSON.parse(localStorage.getItem("cart")) || [];
+
+    let totalQuantity = 0;
+
+    cart.forEach(function(item) {
+        totalQuantity += item.quantity || 1;
+    });
+
+    document.getElementById("cartCount").innerText = totalQuantity;
+}
+
+updateCartCount();
 
 let selectedCategory = "All";
 
