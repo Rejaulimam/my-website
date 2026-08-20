@@ -82,6 +82,24 @@
     <option value="bkash">bKash</option>
     <option value="nagad">Nagad</option>
 </select>
+
+<div id="paymentDetails" style="display:none;">
+
+    <label for="paymentNumber">Payment Number</label>
+    <input
+        type="tel"
+        id="paymentNumber"
+        placeholder="Enter bKash/Nagad number"
+    >
+
+    <label for="transactionId">Transaction ID</label>
+    <input
+        type="text"
+        id="transactionId"
+        placeholder="Enter Transaction ID"
+    >
+
+</div>
 <br><br>
 
 <button type="button" id="placeOrderButton" onclick="placeOrder()">
