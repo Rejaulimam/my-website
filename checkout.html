@@ -1,12 +1,19 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
+
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <meta
+        name="viewport"
+        content="width=device-width, initial-scale=1.0"
+    >
 
     <title>RK Store - Checkout</title>
 
     <style>
+
         body {
             margin: 0;
             font-family: Arial, sans-serif;
@@ -30,258 +37,769 @@
             border-radius: 8px;
             box-shadow: 0 0 5px #ccc;
         }
-.checkout-container label {
-    display: block;
-    margin-top: 15px;
-    margin-bottom: 5px;
-    font-size: 18px;
-}
 
-.checkout-container input,
-.checkout-container textarea {
-    display: block;
-    width: 100%;
-    box-sizing: border-box;
-    padding: 10px;
-    font-size: 16px;
-}
+        .checkout-container label {
+            display: block;
+            margin-top: 15px;
+            margin-bottom: 5px;
+            font-size: 18px;
+        }
 
-.checkout-container textarea {
-    height: 100px;
-}
+        .checkout-container input,
+        .checkout-container textarea,
+        .checkout-container select {
+            display: block;
+            width: 100%;
+            box-sizing: border-box;
+            padding: 10px;
+            font-size: 16px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+        }
 
-#placeOrderButton {
-    margin-top: 15px;
-    padding: 10px 18px;
-    font-size: 16px;
-}
+        .checkout-container textarea {
+            height: 100px;
+            resize: vertical;
+        }
+
+        #placeOrderButton {
+            margin-top: 15px;
+            padding: 12px 18px;
+            font-size: 16px;
+            background-color: #ff6600;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            width: 100%;
+        }
+
+        #placeOrderButton:hover {
+            background-color: #e65c00;
+        }
+
+        #placeOrderButton:disabled {
+            background-color: #999;
+            cursor: not-allowed;
+        }
+
+        .summary-item {
+            border-bottom: 1px solid #ddd;
+            padding: 10px 0;
+        }
+
+        .total {
+            text-align: right;
+            font-size: 20px;
+            font-weight: bold;
+            margin-top: 15px;
+        }
+
+        .message {
+            padding: 12px;
+            margin-bottom: 15px;
+            border-radius: 5px;
+            display: none;
+        }
+
+        .success {
+            background-color: #d4edda;
+            color: #155724;
+        }
+
+        .error {
+            background-color: #f8d7da;
+            color: #721c24;
+        }
+
     </style>
+
 </head>
+
 
 <body>
 
+
     <h1>RK Store - Checkout</h1>
 
+
     <div class="checkout-container">
-<div id="orderSummary">
-</div>
+
+
+        <div id="message" class="message"></div>
+
+
+        <div id="orderSummary"></div>
+
+
         <h2>Customer Information</h2>
-<label for="name">Name</label>
-<input type="text" id="name" placeholder="Enter your name">
 
-<label for="mobile">Mobile Number</label>
-<input type="tel" id="mobile" placeholder="Enter your mobile number">
 
-<label for="address">Address</label>
-<textarea id="address" placeholder="Enter your address"></textarea>
+        <label for="name">
+            Name
+        </label>
 
-<label>Payment Method</label>
+        <input
+            type="text"
+            id="name"
+            placeholder="Enter your name"
+        >
 
-<select id="paymentMethod">
-    <option value="cod">Cash on Delivery</option>
-    <option value="bkash">bKash</option>
-    <option value="nagad">Nagad</option>
-</select>
 
-<div id="paymentDetails" style="display:none;">
+        <label for="mobile">
+            Mobile Number
+        </label>
 
-    <label for="paymentNumber">Payment Number</label>
-    <input
-        type="tel"
-        id="paymentNumber"
-        placeholder="Enter bKash/Nagad number"
-    >
+        <input
+            type="tel"
+            id="mobile"
+            placeholder="Enter your mobile number"
+        >
 
-    <label for="transactionId">Transaction ID</label>
-    <input
-        type="text"
-        id="transactionId"
-        placeholder="Enter Transaction ID"
-    >
 
-</div>
-<br><br>
+        <label for="address">
+            Address
+        </label>
 
-<button type="button" id="placeOrderButton" onclick="placeOrder()">
-    Place Order
-</button>
+        <textarea
+            id="address"
+            placeholder="Enter your address"
+        ></textarea>
+
+
+        <label for="paymentMethod">
+            Payment Method
+        </label>
+
+
+        <select id="paymentMethod">
+
+            <option value="cod">
+                Cash on Delivery
+            </option>
+
+            <option value="bkash">
+                bKash
+            </option>
+
+            <option value="nagad">
+                Nagad
+            </option>
+
+        </select>
+
+
+        <div
+            id="paymentDetails"
+            style="display:none;"
+        >
+
+            <label for="paymentNumber">
+                Payment Number
+            </label>
+
+            <input
+                type="tel"
+                id="paymentNumber"
+                placeholder="Enter bKash/Nagad number"
+            >
+
+
+            <label for="transactionId">
+                Transaction ID
+            </label>
+
+            <input
+                type="text"
+                id="transactionId"
+                placeholder="Enter Transaction ID"
+            >
+
+        </div>
+
+
+        <br><br>
+
+
+        <button
+            type="button"
+            id="placeOrderButton"
+        >
+            Place Order
+        </button>
+
 
     </div>
-<script>
-
-function showOrderSummary() {
-
-    const cart =
-        JSON.parse(localStorage.getItem("cart")) || [];
-
-    const summary =
-        document.getElementById("orderSummary");
-
-    if (cart.length === 0) {
-        summary.innerHTML =
-            "<p>Your cart is empty.</p>";
-        return;
-    }
-
-    let total = 0;
-
-    let html =
-        "<h2>Order Summary</h2>";
-
-    cart.forEach(function(product) {
-
-        const subtotal =
-            product.price * product.quantity;
-
-        total += subtotal;
-
-        html += `
-            <div style="
-                border-bottom:1px solid #ddd;
-                padding:10px 0;
-            ">
-
-                <strong>${product.name}</strong>
-
-                <p>
-                    Price: ৳${product.price}
-                    × ${product.quantity}
-                </p>
-
-                <p>
-                    Subtotal: ৳${subtotal}
-                </p>
-
-            </div>
-        `;
-    });
-
-    html += `
-        <h2 style="text-align:right;">
-            Total: ৳${total}
-        </h2>
-    `;
-
-    summary.innerHTML = html;
-}
-
-showOrderSummary();
-
-document.getElementById("paymentMethod").addEventListener("change", function() {
-
-    const paymentDetails =
-        document.getElementById("paymentDetails");
-
-    if (this.value === "bkash" || this.value === "nagad") {
-        paymentDetails.style.display = "block";
-    } else {
-        paymentDetails.style.display = "none";
-    }
-
-});
-
-function placeOrder() {
-
-    const name =
-        document.getElementById("name").value.trim();
-
-    const mobile =
-        document.getElementById("mobile").value.trim();
-
-    const address =
-        document.getElementById("address").value.trim();
-
-    const paymentMethod =
-        document.getElementById("paymentMethod").value;
-
-    const paymentNumber =
-        document.getElementById("paymentNumber").value.trim();
-
-    const transactionId =
-        document.getElementById("transactionId").value.trim();
 
 
-    if (name === "" || mobile === "" || address === "") {
-        alert("Please fill in all information.");
-        return;
-    }
+<!-- =========================================
+     FIREBASE + CHECKOUT JAVASCRIPT
+========================================= -->
+
+<script type="module">
+
+    /* =========================================
+       FIREBASE IMPORT
+    ========================================= */
+
+    import {
+        initializeApp
+    } from "https://www.gstatic.com/firebasejs/12.18.0/firebase-app.js";
 
 
-    if (
-        paymentMethod === "bkash" ||
-        paymentMethod === "nagad"
-    ) {
-
-        if (paymentNumber === "" || transactionId === "") {
-
-            alert(
-                "Please enter Payment Number and Transaction ID."
-            );
-
-            return;
-        }
-    }
+    import {
+        getFirestore,
+        collection,
+        addDoc,
+        serverTimestamp
+    } from "https://www.gstatic.com/firebasejs/12.18.0/firebase-firestore.js";
 
 
-    const cart =
-        JSON.parse(localStorage.getItem("cart")) || [];
+    /* =========================================
+       FIREBASE CONFIG
+    ========================================= */
 
+    const firebaseConfig = {
 
-    if (cart.length === 0) {
+        apiKey: "AIzaSyCkBQaphKKz_Wxd1GgKAVoxqR4taKvzdEM",
 
-        alert("Your cart is empty.");
-        return;
-    }
+        authDomain:
+            "rk-store-5fb24.firebaseapp.com",
 
+        projectId:
+            "rk-store-5fb24",
 
-    const orderId =
-        "RK-" + Date.now();
+        storageBucket:
+            "rk-store-5fb24.firebasestorage.app",
 
+        messagingSenderId:
+            "407275549697",
 
-    const order = {
-
-        orderId: orderId,
-
-        customerName: name,
-
-        customerMobile: mobile,
-
-        customerAddress: address,
-
-        paymentMethod: paymentMethod,
-
-        paymentNumber: paymentNumber,
-
-        transactionId: transactionId,
-
-        products: cart,
-
-        dateTime: new Date().toLocaleString()
+        appId:
+            "1:407275549697:web:41043b49bf7182cecffc00"
 
     };
 
 
-    let orders =
-        JSON.parse(localStorage.getItem("orders")) || [];
+    /* =========================================
+       INITIALIZE FIREBASE
+    ========================================= */
+
+    const app =
+        initializeApp(firebaseConfig);
 
 
-    orders.push(order);
+    /* =========================================
+       INITIALIZE FIRESTORE
+    ========================================= */
+
+    const db =
+        getFirestore(app);
 
 
-    localStorage.setItem(
-        "orders",
-        JSON.stringify(orders)
-    );
+    /* =========================================
+       SHOW MESSAGE
+    ========================================= */
+
+    function showMessage(text, type) {
+
+        const message =
+            document.getElementById("message");
+
+        message.textContent = text;
+
+        message.className =
+            "message " + type;
+
+        message.style.display = "block";
+
+    }
 
 
-    localStorage.removeItem("cart");
+    /* =========================================
+       GET CART
+    ========================================= */
+
+    function getCart() {
+
+        return JSON.parse(
+            localStorage.getItem("cart")
+        ) || [];
+
+    }
 
 
-    alert("Order placed successfully!");
+    /* =========================================
+       SHOW ORDER SUMMARY
+    ========================================= */
+
+    function showOrderSummary() {
+
+        const cart =
+            getCart();
 
 
-    window.location.href = "orders.html";
-}
+        const summary =
+            document.getElementById("orderSummary");
+
+
+        if (cart.length === 0) {
+
+            summary.innerHTML = `
+                <h2>Order Summary</h2>
+
+                <p>
+                    Your cart is empty.
+                </p>
+            `;
+
+            document.getElementById(
+                "placeOrderButton"
+            ).disabled = true;
+
+            return;
+
+        }
+
+
+        let total = 0;
+
+
+        let html =
+            "<h2>Order Summary</h2>";
+
+
+        cart.forEach(function(product) {
+
+
+            const quantity =
+                Number(product.quantity) || 1;
+
+
+            const price =
+                Number(product.price) || 0;
+
+
+            const subtotal =
+                price * quantity;
+
+
+            total += subtotal;
+
+
+            html += `
+
+                <div class="summary-item">
+
+                    <strong>
+                        ${product.name || "Product"}
+                    </strong>
+
+                    <p>
+                        Price:
+                        ৳${price}
+                        ×
+                        ${quantity}
+                    </p>
+
+                    <p>
+                        Subtotal:
+                        ৳${subtotal}
+                    </p>
+
+                </div>
+
+            `;
+
+        });
+
+
+        html += `
+
+            <div class="total">
+
+                Total:
+                ৳${total}
+
+            </div>
+
+        `;
+
+
+        summary.innerHTML =
+            html;
+
+    }
+
+
+    /* =========================================
+       PAYMENT METHOD CHANGE
+    ========================================= */
+
+    document
+        .getElementById("paymentMethod")
+        .addEventListener(
+            "change",
+            function() {
+
+                const paymentDetails =
+                    document.getElementById(
+                        "paymentDetails"
+                    );
+
+
+                if (
+                    this.value === "bkash" ||
+                    this.value === "nagad"
+                ) {
+
+                    paymentDetails.style.display =
+                        "block";
+
+                } else {
+
+                    paymentDetails.style.display =
+                        "none";
+
+                }
+
+            }
+        );
+
+
+    /* =========================================
+       PLACE ORDER
+    ========================================= */
+
+    async function placeOrder() {
+
+
+        const button =
+            document.getElementById(
+                "placeOrderButton"
+            );
+
+
+        /* -----------------------------------------
+           GET CUSTOMER INFORMATION
+        ----------------------------------------- */
+
+        const name =
+            document
+                .getElementById("name")
+                .value
+                .trim();
+
+
+        const mobile =
+            document
+                .getElementById("mobile")
+                .value
+                .trim();
+
+
+        const address =
+            document
+                .getElementById("address")
+                .value
+                .trim();
+
+
+        const paymentMethod =
+            document
+                .getElementById("paymentMethod")
+                .value;
+
+
+        const paymentNumber =
+            document
+                .getElementById("paymentNumber")
+                .value
+                .trim();
+
+
+        const transactionId =
+            document
+                .getElementById("transactionId")
+                .value
+                .trim();
+
+
+        /* -----------------------------------------
+           VALIDATE CUSTOMER INFORMATION
+        ----------------------------------------- */
+
+        if (
+            name === "" ||
+            mobile === "" ||
+            address === ""
+        ) {
+
+            showMessage(
+                "Please fill in all customer information.",
+                "error"
+            );
+
+            return;
+
+        }
+
+
+        /* -----------------------------------------
+           VALIDATE PAYMENT INFORMATION
+        ----------------------------------------- */
+
+        if (
+            paymentMethod === "bkash" ||
+            paymentMethod === "nagad"
+        ) {
+
+            if (
+                paymentNumber === "" ||
+                transactionId === ""
+            ) {
+
+                showMessage(
+                    "Please enter Payment Number and Transaction ID.",
+                    "error"
+                );
+
+                return;
+
+            }
+
+        }
+
+
+        /* -----------------------------------------
+           GET CART
+        ----------------------------------------- */
+
+        const cart =
+            getCart();
+
+
+        if (cart.length === 0) {
+
+            showMessage(
+                "Your cart is empty.",
+                "error"
+            );
+
+            return;
+
+        }
+
+
+        /* -----------------------------------------
+           CALCULATE TOTAL
+        ----------------------------------------- */
+
+        let orderTotal = 0;
+
+
+        cart.forEach(function(product) {
+
+            const quantity =
+                Number(product.quantity) || 1;
+
+            const price =
+                Number(product.price) || 0;
+
+            orderTotal +=
+                price * quantity;
+
+        });
+
+
+        /* -----------------------------------------
+           CREATE ORDER ID
+        ----------------------------------------- */
+
+        const orderId =
+            "RK-" + Date.now();
+
+
+        /* -----------------------------------------
+           CREATE ORDER DATA
+        ----------------------------------------- */
+
+        const order = {
+
+            orderId: orderId,
+
+            customerName: name,
+
+            customerMobile: mobile,
+
+            customerAddress: address,
+
+            paymentMethod: paymentMethod,
+
+            paymentNumber:
+                paymentMethod === "cod"
+                    ? ""
+                    : paymentNumber,
+
+            transactionId:
+                paymentMethod === "cod"
+                    ? ""
+                    : transactionId,
+
+            products: cart,
+
+            totalAmount: orderTotal,
+
+            status: "Pending",
+
+            dateTime:
+                new Date().toLocaleString(),
+
+            createdAt:
+                serverTimestamp()
+
+        };
+
+
+        /* -----------------------------------------
+           DISABLE BUTTON
+        ----------------------------------------- */
+
+        button.disabled = true;
+
+        button.textContent =
+            "Placing Order...";
+
+
+        try {
+
+
+            /* =====================================
+               SAVE ORDER TO FIRESTORE
+            ===================================== */
+
+            const docRef =
+                await addDoc(
+                    collection(
+                        db,
+                        "orders"
+                    ),
+                    order
+                );
+
+
+            /* =====================================
+               ALSO SAVE LOCALLY
+               FOR NOW
+            ===================================== */
+
+            let localOrders =
+                JSON.parse(
+                    localStorage.getItem("orders")
+                ) || [];
+
+
+            localOrders.push({
+
+                ...order,
+
+                firebaseDocumentId:
+                    docRef.id
+
+            });
+
+
+            localStorage.setItem(
+                "orders",
+                JSON.stringify(
+                    localOrders
+                )
+            );
+
+
+            /* =====================================
+               CLEAR CART
+            ===================================== */
+
+            localStorage.removeItem(
+                "cart"
+            );
+
+
+            /* =====================================
+               SUCCESS
+            ===================================== */
+
+            showMessage(
+                "Order placed successfully!",
+                "success"
+            );
+
+
+            alert(
+                "Order placed successfully!\n\nOrder ID: " +
+                orderId
+            );
+
+
+            /* =====================================
+               GO TO ORDERS PAGE
+            ===================================== */
+
+            window.location.href =
+                "orders.html";
+
+
+        } catch (error) {
+
+
+            console.error(
+                "Firebase order error:",
+                error
+            );
+
+
+            showMessage(
+                "Order could not be placed. Please try again.",
+                "error"
+            );
+
+
+            button.disabled =
+                false;
+
+
+            button.textContent =
+                "Place Order";
+
+        }
+
+    }
+
+
+    /* =========================================
+       CONNECT BUTTON
+    ========================================= */
+
+    document
+        .getElementById(
+            "placeOrderButton"
+        )
+        .addEventListener(
+            "click",
+            placeOrder
+        );
+
+
+    /* =========================================
+       START
+    ========================================= */
+
+    showOrderSummary();
+
 </script>
+
+
 </body>
+
 </html>
