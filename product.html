@@ -1,8 +1,6 @@
-<!DOCTYPE html>
-<html>
+<!DOCTYPE html><html>
 <head>
-    <title>Product Details</title>
-    <style>
+    <title>Product Details</title><style>
     body {
         margin: 0;
         font-family: Arial, sans-serif;
@@ -25,131 +23,245 @@
         text-align: center;
         box-shadow: 0 2px 8px rgba(0,0,0,0.1);
     }
+
+    .product-details img {
+        width: 250px;
+        max-width: 100%;
+        border-radius: 10px;
+    }
+
+    button {
+        background-color: #ff6600;
+        color: white;
+        border: none;
+        padding: 10px 15px;
+        border-radius: 5px;
+        margin: 5px;
+        cursor: pointer;
+    }
+
+    button:hover {
+        background-color: #e65c00;
+    }
 </style>
-</head>
-<body>
-<h1>Product Details</h1>
 
-<div class="product-details">
-    <img src="product1.jpg" alt="Product 1" width="250" style="border-radius: 10px;">
-    <h2>Product 1</h2>
-    <p>Price: ৳500</p>
-    <p>This is a product from RK Store.</p>
+</head><body><h1>Product Details</h1><div class="product-details"><img id="productImage"
+     src="product1.jpg"
+     alt="Product">
 
-<button id="addToCart">Add to Cart</button>
-<button id="buyNow">Buy Now</button>
-</div>
+<h2 id="productName">
+    Men's Casual Brown Check Shirt
+</h2>
 
+<p id="productPrice">
+    Price: ৳500
+</p>
 
+<p>
+    This is a product from RK Store.
+</p>
 
+<button id="addToCart">
+    Add to Cart
+</button>
 
+<button id="buyNow">
+    Buy Now
+</button>
 
+</div><script>
 
+    /* =========================
+       GET PRODUCT NUMBER
+    ========================= */
 
+    const params =
+        new URLSearchParams(window.location.search);
 
-
-    
-<script>
-
-    const params = new URLSearchParams(window.location.search);
-    const product = params.get("product");
-
-const productData = {
-    "1": {
-        image: "product1.jpg",
-        name: "Men's Casual Brown Check Shirt",
-        price: "Price: ৳500"
-    },
-    "2": {
-        image: "product2.jpg",
-        name: "Men's Casual Print Shirt",
-        price: "Price: ৳800"
-    },
-    "3": {
-        image: "product3.jpg",
-        name: "Men's Casual White Shirt",
-        price: "Price: ৳1000"
-    },
-    "4": {
-        image: "product4.jpg",
-        name: "Men's Casual Navy Check Shirt",
-        price: "Price: ৳1200"
-    }
-};
-
-const selectedProduct = productData[product];
-
-if (selectedProduct) {
-    document.querySelector(".product-details img").src = selectedProduct.image;
-    document.querySelector(".product-details img").alt = selectedProduct.name;
-    document.querySelector(".product-details h2").textContent = selectedProduct.name;
-    document.querySelector(".product-details p").textContent = selectedProduct.price;
-}
-
-    
-document.getElementById("addToCart").addEventListener("click", function() {
-
-    const productName = document.querySelector("h2").textContent;
-const productPriceText = document.querySelector("p").textContent;
-const productPrice = parseInt(productPriceText.replace(/\D/g, ""));
-
-    const cartItem = {
-    name: productName,
-    price: productPrice,
-    image: selectedProduct.image
-};
-
-    let cart = JSON.parse(localStorage.getItem("cart")) || [];
-
-const existingProduct = cart.find(
-    item => item.name === cartItem.name
-);
-
-if (existingProduct) {
-    existingProduct.quantity += 1;
-} else {
-    cartItem.quantity = 1;
-    cart.push(cartItem);
-}
-
-    localStorage.setItem("cart", JSON.stringify(cart));
-
-    alert("Product added to cart!");
-});
+    const product =
+        params.get("product");
 
 
+    /* =========================
+       PRODUCT DATA
+    ========================= */
 
-document.getElementById("buyNow").addEventListener("click", function() {
+    const productData = {
 
-    const productName = document.querySelector("h2").textContent;
-    const productPriceText = document.querySelector("p").textContent;
-    const productPrice = parseInt(productPriceText.replace(/\D/g, ""));
+        "1": {
+            image: "product1.jpg",
+            name: "Men's Casual Brown Check Shirt",
+            price: 500
+        },
 
-    const cartItem = {
-    name: productName,
-    price: productPrice,
-    quantity: 1,
-    image: selectedProduct.image
-};
+        "2": {
+            image: "product2.jpg",
+            name: "Men's Casual Print Shirt",
+            price: 800
+        },
 
-    let cart = JSON.parse(localStorage.getItem("cart")) || [];
+        "3": {
+            image: "product3.jpg",
+            name: "Men's Casual White Shirt",
+            price: 1000
+        },
 
-    const existingProduct = cart.find(
-        item => item.name === cartItem.name
-    );
+        "4": {
+            image: "product4.jpg",
+            name: "Men's Casual Navy Check Shirt",
+            price: 1200
+        }
 
-    if (existingProduct) {
-        existingProduct.quantity += 1;
-    } else {
-        cart.push(cartItem);
+    };
+
+
+    /* =========================
+       SELECT PRODUCT
+    ========================= */
+
+    const selectedProduct =
+        productData[product];
+
+
+    /* =========================
+       SHOW PRODUCT
+    ========================= */
+
+    if (selectedProduct) {
+
+        document.getElementById("productImage").src =
+            selectedProduct.image;
+
+        document.getElementById("productImage").alt =
+            selectedProduct.name;
+
+        document.getElementById("productName").textContent =
+            selectedProduct.name;
+
+        document.getElementById("productPrice").textContent =
+            "Price: ৳" + selectedProduct.price;
+
     }
 
-    localStorage.setItem("cart", JSON.stringify(cart));
 
-    window.location.href = "cart.html";
-});
+    /* =========================
+       ADD TO CART
+    ========================= */
+
+    document.getElementById("addToCart")
+        .addEventListener("click", function() {
+
+            if (!selectedProduct) {
+                alert("Product not found!");
+                return;
+            }
+
+            let cart =
+                JSON.parse(localStorage.getItem("cart")) || [];
 
 
-</script>
-</body>
+            const cartItem = {
+
+                name: selectedProduct.name,
+
+                price: selectedProduct.price,
+
+                image: selectedProduct.image,
+
+                quantity: 1
+
+            };
+
+
+            const existingProduct =
+                cart.find(
+                    item =>
+                    item.name === selectedProduct.name
+                );
+
+
+            if (existingProduct) {
+
+                existingProduct.quantity += 1;
+
+            } else {
+
+                cart.push(cartItem);
+
+            }
+
+
+            localStorage.setItem(
+                "cart",
+                JSON.stringify(cart)
+            );
+
+
+            alert(
+                selectedProduct.name +
+                " added to cart!"
+            );
+
+        });
+
+
+    /* =========================
+       BUY NOW
+    ========================= */
+
+    document.getElementById("buyNow")
+        .addEventListener("click", function() {
+
+            if (!selectedProduct) {
+                alert("Product not found!");
+                return;
+            }
+
+            let cart =
+                JSON.parse(localStorage.getItem("cart")) || [];
+
+
+            const cartItem = {
+
+                name: selectedProduct.name,
+
+                price: selectedProduct.price,
+
+                image: selectedProduct.image,
+
+                quantity: 1
+
+            };
+
+
+            const existingProduct =
+                cart.find(
+                    item =>
+                    item.name === selectedProduct.name
+                );
+
+
+            if (existingProduct) {
+
+                existingProduct.quantity += 1;
+
+            } else {
+
+                cart.push(cartItem);
+
+            }
+
+
+            localStorage.setItem(
+                "cart",
+                JSON.stringify(cart)
+            );
+
+
+            window.location.href =
+                "cart.html";
+
+        });
+
+</script></body>
 </html>
