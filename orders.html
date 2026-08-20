@@ -242,6 +242,22 @@ if (order.paymentMethod === "bkash") {
     ${paymentName}
 </p>
 
+${
+    order.paymentMethod === "bkash" ||
+    order.paymentMethod === "nagad"
+    ? `
+        <p>
+            <strong>Payment Number:</strong>
+            ${order.paymentNumber || "Not available"}
+        </p>
+
+        <p>
+            <strong>Transaction ID:</strong>
+            ${order.transactionId || "Not available"}
+        </p>
+    `
+    : ""
+}
 <p>
     <strong>Date & Time:</strong>
     ${order.dateTime || "Not available"}
