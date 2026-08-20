@@ -181,51 +181,107 @@ document.getElementById("paymentMethod").addEventListener("change", function() {
 });
 
 function placeOrder() {
-    const name = document.getElementById("name").value;
-    const mobile = document.getElementById("mobile").value;
-    const address = document.getElementById("address").value;
 
-const paymentMethod = document.getElementById("paymentMethod").value;
+    const name =
+        document.getElementById("name").value.trim();
 
-const paymentNumber =
-    document.getElementById("paymentNumber").value;
+    const mobile =
+        document.getElementById("mobile").value.trim();
 
-const transactionId =
-    document.getElementById("transactionId").value;
+    const address =
+        document.getElementById("address").value.trim();
+
+    const paymentMethod =
+        document.getElementById("paymentMethod").value;
+
+    const paymentNumber =
+        document.getElementById("paymentNumber").value.trim();
+
+    const transactionId =
+        document.getElementById("transactionId").value.trim();
+
+
     if (name === "" || mobile === "" || address === "") {
         alert("Please fill in all information.");
         return;
     }
 
-    const cart = JSON.parse(localStorage.getItem("cart")) || [];
 
-    const orderId = "RK-" + Date.now();
+    if (
+        paymentMethod === "bkash" ||
+        paymentMethod === "nagad"
+    ) {
 
-const order = {
-    orderId: orderId,
-    customerName: name,
-    customerMobile: mobile,
-    customerAddress: address,
-paymentMethod: paymentMethod,
-    products: cart,
-    dateTime: new Date().toLocaleString()
-};
+        if (paymentNumber === "" || transactionId === "") {
 
-let orders = JSON.parse(localStorage.getItem("orders")) || [];
+            alert(
+                "Please enter Payment Number and Transaction ID."
+            );
 
-orders.push(order);
+            return;
+        }
+    }
 
-localStorage.setItem("orders", JSON.stringify(orders));
-    
+
+    const cart =
+        JSON.parse(localStorage.getItem("cart")) || [];
+
+
+    if (cart.length === 0) {
+
+        alert("Your cart is empty.");
+        return;
+    }
+
+
+    const orderId =
+        "RK-" + Date.now();
+
+
+    const order = {
+
+        orderId: orderId,
+
+        customerName: name,
+
+        customerMobile: mobile,
+
+        customerAddress: address,
+
+        paymentMethod: paymentMethod,
+
+        paymentNumber: paymentNumber,
+
+        transactionId: transactionId,
+
+        products: cart,
+
+        dateTime: new Date().toLocaleString()
+
+    };
+
+
+    let orders =
+        JSON.parse(localStorage.getItem("orders")) || [];
+
+
+    orders.push(order);
+
+
+    localStorage.setItem(
+        "orders",
+        JSON.stringify(orders)
+    );
+
 
     localStorage.removeItem("cart");
 
+
     alert("Order placed successfully!");
+
 
     window.location.href = "orders.html";
 }
-
-
 </script>
 </body>
 </html>
