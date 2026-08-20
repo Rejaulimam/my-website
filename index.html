@@ -365,6 +365,25 @@
             window.location.href = "cart.html";
         }
 
+function filterCategory(category) {
+
+    const products =
+        document.querySelectorAll(".product");
+
+    products.forEach(function(product) {
+
+        const productCategory =
+            product.getAttribute("data-category");
+
+        if (productCategory === category) {
+            product.style.display = "";
+        } else {
+            product.style.display = "none";
+        }
+
+    });
+
+}
     </script>
 
 </body>
