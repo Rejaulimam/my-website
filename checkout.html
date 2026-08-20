@@ -167,6 +167,18 @@ function showOrderSummary() {
 
 showOrderSummary();
 
+document.getElementById("paymentMethod").addEventListener("change", function() {
+
+    const paymentDetails =
+        document.getElementById("paymentDetails");
+
+    if (this.value === "bkash" || this.value === "nagad") {
+        paymentDetails.style.display = "block";
+    } else {
+        paymentDetails.style.display = "none";
+    }
+
+});
 
 function placeOrder() {
     const name = document.getElementById("name").value;
