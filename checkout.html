@@ -82,6 +82,67 @@
 
     </div>
 <script>
+
+function showOrderSummary() {
+
+    const cart =
+        JSON.parse(localStorage.getItem("cart")) || [];
+
+    const summary =
+        document.getElementById("orderSummary");
+
+    if (cart.length === 0) {
+        summary.innerHTML =
+            "<p>Your cart is empty.</p>";
+        return;
+    }
+
+    let total = 0;
+
+    let html =
+        "<h2>Order Summary</h2>";
+
+    cart.forEach(function(product) {
+
+        const subtotal =
+            product.price * product.quantity;
+
+        total += subtotal;
+
+        html += `
+            <div style="
+                border-bottom:1px solid #ddd;
+                padding:10px 0;
+            ">
+
+                <strong>${product.name}</strong>
+
+                <p>
+                    Price: ৳${product.price}
+                    × ${product.quantity}
+                </p>
+
+                <p>
+                    Subtotal: ৳${subtotal}
+                </p>
+
+            </div>
+        `;
+    });
+
+    html += `
+        <h2 style="text-align:right;">
+            Total: ৳${total}
+        </h2>
+    `;
+
+    summary.innerHTML = html;
+}
+
+showOrderSummary();
+
+
+function placeOrder() {
 function placeOrder() {
     const name = document.getElementById("name").value;
     const mobile = document.getElementById("mobile").value;
