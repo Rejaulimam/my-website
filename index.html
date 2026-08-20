@@ -31,33 +31,22 @@
             text-align: center;
         }
 
-.products {
-    display: flex;
-    justify-content: center;
-    gap: 15px;
-    padding: 15px;
-    flex-wrap: wrap;
-}
+        .products {
+            display: flex;
+            justify-content: center;
+            gap: 15px;
+            padding: 15px;
+            flex-wrap: wrap;
+        }
 
-
-
-
-
-
-.product {
-    background-color: white;
-width: 160px;
-    padding: 15px;
-    text-align: center;
-    border-radius: 10px;
-    box-shadow: 0 2px 8px rgba(0,0,0,0.1);
-}
-
-
-
-
-
-        
+        .product {
+            background-color: white;
+            width: 160px;
+            padding: 15px;
+            text-align: center;
+            border-radius: 10px;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+        }
 
         button {
             background-color: #ff6600;
@@ -65,262 +54,247 @@ width: 160px;
             border: none;
             padding: 10px 15px;
             border-radius: 5px;
-            
-
         }
+
         nav {
-    background-color: white;
-    text-align: center;
-    padding: 15px;
-}
+            background-color: white;
+            text-align: center;
+            padding: 15px;
+        }
 
-nav a {
-    text-decoration: none;
-    color: #333;
-    margin: 0 15px;
-    font-weight: bold;
-}
+        nav a {
+            text-decoration: none;
+            color: #333;
+            margin: 0 15px;
+            font-weight: bold;
+        }
 
-.search {
-    text-align: center;
-    padding: 20px;
-}
+        .search {
+            text-align: center;
+            padding: 20px;
+        }
 
-.categories {
-    background-color: white;
-    padding: 15px;
-    margin: 10px;
-    border-radius: 10px;
-}
+        .categories {
+            background-color: white;
+            padding: 15px;
+            margin: 10px;
+            border-radius: 10px;
+        }
 
-.category-list {
-    display: flex;
-    justify-content: center;
-    gap: 10px;
-    flex-wrap: wrap;
-}
-.search input {
-    padding: 10px;
-    width: 250px;
-    border: 1px solid #ccc;
-    border-radius: 5px;
-}
+        .category-list {
+            display: flex;
+            justify-content: center;
+            gap: 10px;
+            flex-wrap: wrap;
+        }
+
+        .search input {
+            padding: 10px;
+            width: 250px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+        }
     </style>
 </head>
 
 <body>
 
     <h1>RK Store</h1>
-    <nav>
-    <a href="#">Home</a>
-    <a href="#">Categories</a>
-<a href="#" onclick="showCart()">Cart 🛒</a>
-<a href="orders.html">Orders</a>
-    <a href="#">Login</a>
-</nav>
 
-<div class="search">
-    <input type="text" placeholder="Search products...">
-    <button>Search</button>
-</div>
+    <nav>
+        <a href="#">Home</a>
+        <a href="#">Categories</a>
+        <a href="#" onclick="showCart()">Cart 🛒</a>
+        <a href="orders.html">Orders</a>
+        <a href="#">Login</a>
+    </nav>
+
+    <div class="search">
+        <input type="text" placeholder="Search products...">
+        <button>Search</button>
+    </div>
 
     <div class="welcome">
         <p>Welcome to RK Store</p>
     </div>
 
-<div class="categories">
-    <h2>Categories</h2>
+    <div class="categories">
+        <h2>Categories</h2>
 
-    <div class="category-list">
-        <button>Men</button>
-        <button>Women</button>
-        <button>Electronics</button>
-        <button>Home & Living</button>
+        <div class="category-list">
+            <button>Men</button>
+            <button>Women</button>
+            <button>Electronics</button>
+            <button>Home & Living</button>
+        </div>
     </div>
-</div>
+
     <h2>Our Products</h2>
 
     <div class="products">
 
         <div class="product">
-<img src="product1.jpg" alt="Product 1" width="100%" style="border-radius: 8px;">
-            <h3>Product 1</h3>
+
+            <img src="product1.jpg"
+                 alt="Men's Casual Brown Check Shirt"
+                 width="100%"
+                 style="border-radius: 8px;">
+
+            <h3>Men's Casual Brown Check Shirt</h3>
+
             <p>Price: ৳500</p>
-            <button onclick="buyProduct('Product 1')">Buy Now</button>
-<button onclick="window.location.href='product.html?product=1'">View Details</button>
+
+            <button onclick="buyProduct('Men\'s Casual Brown Check Shirt')">
+                Buy Now
+            </button>
+
+            <button onclick="window.location.href='product.html?product=1'">
+                View Details
+            </button>
+
         </div>
 
+
         <div class="product">
-<img src="product2.jpg" alt="Product 2" width="100%" style="border-radius: 8px;">
-            <h3>Product 2</h3>
+
+            <img src="product2.jpg"
+                 alt="Men's Casual Print Shirt"
+                 width="100%"
+                 style="border-radius: 8px;">
+
+            <h3>Men's Casual Print Shirt</h3>
+
             <p>Price: ৳800</p>
-            <button onclick="buyProduct('Product 2')">Buy Now</button>
-<button onclick="window.location.href='product.html?product=2'">View Details</button>
+
+            <button onclick="buyProduct('Men\'s Casual Print Shirt')">
+                Buy Now
+            </button>
+
+            <button onclick="window.location.href='product.html?product=2'">
+                View Details
+            </button>
+
         </div>
 
+
         <div class="product">
-            <img src="product3.jpg" alt="Product 3" width="100%" style="border-radius: 8px;">
-            <h3>Product 3</h3>
+
+            <img src="product3.jpg"
+                 alt="Men's Casual White Shirt"
+                 width="100%"
+                 style="border-radius: 8px;">
+
+            <h3>Men's Casual White Shirt</h3>
+
             <p>Price: ৳1000</p>
-            <button onclick="buyProduct('Product 3')">Buy Now</button>
-<button onclick="window.location.href='product.html?product=3'">View Details</button>
+
+            <button onclick="buyProduct('Men\'s Casual White Shirt')">
+                Buy Now
+            </button>
+
+            <button onclick="window.location.href='product.html?product=3'">
+                View Details
+            </button>
+
         </div>
 
+
         <div class="product">
-            <img src="product4.jpg" alt="Product 4" width="100%" style="border-radius: 8px;">
-            <h3>Product 4</h3>
+
+            <img src="product4.jpg"
+                 alt="Men's Casual Navy Check Shirt"
+                 width="100%"
+                 style="border-radius: 8px;">
+
+            <h3>Men's Casual Navy Check Shirt</h3>
+
             <p>Price: ৳1200</p>
-            <button onclick="buyProduct('Product 4')">Buy Now</button>
-<button onclick="window.location.href='product.html?product=4'">View Details</button>
+
+            <button onclick="buyProduct('Men\'s Casual Navy Check Shirt')">
+                Buy Now
+            </button>
+
+            <button onclick="window.location.href='product.html?product=4'">
+                View Details
+            </button>
+
         </div>
+
     </div>
+
 
     <script>
 
+        function buyProduct(productName) {
 
-    function buyProduct(productName) {
+            let cart =
+                JSON.parse(localStorage.getItem("cart")) || [];
 
-        let cart =
-            JSON.parse(localStorage.getItem("cart")) || [];
+            let price = 0;
 
-        let price = 0;
+            if (productName === "Men's Casual Brown Check Shirt") {
+                price = 500;
+            }
 
-        if (productName === "Product 1") {
-            price = 500;
+            if (productName === "Men's Casual Print Shirt") {
+                price = 800;
+            }
+
+            if (productName === "Men's Casual White Shirt") {
+                price = 1000;
+            }
+
+            if (productName === "Men's Casual Navy Check Shirt") {
+                price = 1200;
+            }
+
+
+            let image = "";
+
+            if (productName === "Men's Casual Brown Check Shirt") {
+                image = "product1.jpg";
+            }
+
+            if (productName === "Men's Casual Print Shirt") {
+                image = "product2.jpg";
+            }
+
+            if (productName === "Men's Casual White Shirt") {
+                image = "product3.jpg";
+            }
+
+            if (productName === "Men's Casual Navy Check Shirt") {
+                image = "product4.jpg";
+            }
+
+
+            cart.push({
+                name: productName,
+                price: price,
+                image: image,
+                quantity: 1
+            });
+
+
+            localStorage.setItem(
+                "cart",
+                JSON.stringify(cart)
+            );
+
+
+            alert(productName + " added to cart!");
+
         }
 
-        if (productName === "Product 2") {
-            price = 800;
+
+        function showCart() {
+            window.location.href = "cart.html";
         }
-
-        if (productName === "Product 3") {
-            price = 1000;
-        }
-
-        if (productName === "Product 4") {
-            price = 1200;
-        }
-
-        let image = "";
-
-if (productName === "Product 1") {
-    image = "product1.jpg";
-}
-
-if (productName === "Product 2") {
-    image = "product2.jpg";
-}
-
-if (productName === "Product 3") {
-    image = "product3.jpg";
-}
-
-if (productName === "Product 4") {
-    image = "product4.jpg";
-}
-
-cart.push({
-    name: productName,
-    price: price,
-    image: image,
-    quantity: 1
-});
-
-        localStorage.setItem(
-            "cart",
-            JSON.stringify(cart)
-        );
-
-        alert(productName + " added to cart!");
-
-    }
-
-
-    function showCart() {
-        window.location.href = "cart.html";
-    }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
     </script>
 
 </body>
 </html>
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-    
-
-
-
-
-
-
-        
-    
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 
 
