@@ -155,6 +155,8 @@ function placeOrder() {
     const mobile = document.getElementById("mobile").value;
     const address = document.getElementById("address").value;
 
+const paymentMethod = document.getElementById("paymentMethod").value;
+
     if (name === "" || mobile === "" || address === "") {
         alert("Please fill in all information.");
         return;
