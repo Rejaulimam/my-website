@@ -402,37 +402,20 @@ if (productName === "Women's Casual Dress") {
             window.location.href = "cart.html";
         }
 
+let selectedCategory = "All";
+
 function filterCategory(category) {
 
-    const products =
-        document.querySelectorAll(".product");
+    selectedCategory = category;
 
-    products.forEach(function(product) {
-
-        const productCategory =
-            product.getAttribute("data-category");
-
-        if (productCategory === category) {
-            product.style.display = "";
-        } else {
-            product.style.display = "none";
-        }
-
-    });
-
+    searchProducts();
 }
 
 function showAllProducts() {
 
-    const products =
-        document.querySelectorAll(".product");
+    selectedCategory = "All";
 
-    products.forEach(function(product) {
-
-        product.style.display = "";
-
-    });
-
+    searchProducts();
 }
 
 function searchProducts() {
@@ -448,7 +431,17 @@ function searchProducts() {
         const productName =
             product.querySelector("h3").innerText.toLowerCase();
 
-        if (productName.includes(searchText)) {
+        const productCategory =
+            product.getAttribute("data-category");
+
+        const categoryMatch =
+            selectedCategory === "All" ||
+            productCategory === selectedCategory;
+
+        const searchMatch =
+            productName.includes(searchText);
+
+        if (categoryMatch && searchMatch) {
             product.style.display = "";
         } else {
             product.style.display = "none";
