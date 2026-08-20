@@ -430,6 +430,29 @@ function showAllProducts() {
     });
 
 }
+
+function searchProducts() {
+
+    const searchText =
+        document.getElementById("searchInput").value.toLowerCase();
+
+    const products =
+        document.querySelectorAll(".product");
+
+    products.forEach(function(product) {
+
+        const productName =
+            product.querySelector("h3").innerText.toLowerCase();
+
+        if (productName.includes(searchText)) {
+            product.style.display = "";
+        } else {
+            product.style.display = "none";
+        }
+
+    });
+
+}
     </script>
 
 </body>
