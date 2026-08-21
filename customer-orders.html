@@ -1,0 +1,643 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta
+        name="viewport"
+        content="width=device-width, initial-scale=1.0"
+    >
+
+    <title>My Orders - RK Store</title>
+
+
+    <style>
+
+        body {
+
+            margin: 0;
+
+            font-family: Arial, sans-serif;
+
+            background: #f5f5f5;
+
+        }
+
+
+        .header {
+
+            background: #ff6600;
+
+            color: white;
+
+            padding: 18px;
+
+            text-align: center;
+
+        }
+
+
+        .header h1 {
+
+            margin: 0;
+
+        }
+
+
+        .header p {
+
+            margin: 6px 0 0;
+
+        }
+
+
+        .container {
+
+            width: 92%;
+
+            max-width: 700px;
+
+            margin: 25px auto;
+
+        }
+
+
+        .back-button {
+
+            width: 100%;
+
+            padding: 12px;
+
+            border: none;
+
+            border-radius: 6px;
+
+            background: #333;
+
+            color: white;
+
+            font-size: 16px;
+
+            cursor: pointer;
+
+            margin-bottom: 20px;
+
+        }
+
+
+        .order-card {
+
+            background: white;
+
+            padding: 18px;
+
+            margin-bottom: 18px;
+
+            border-radius: 10px;
+
+            box-shadow:
+                0 2px 8px rgba(0,0,0,0.1);
+
+        }
+
+
+        .order-card h2 {
+
+            margin-top: 0;
+
+            color: #ff6600;
+
+        }
+
+
+        .order-info {
+
+            margin: 8px 0;
+
+            color: #444;
+
+        }
+
+
+        .product {
+
+            border-top: 1px solid #ddd;
+
+            padding: 10px 0;
+
+        }
+
+
+        .product:first-child {
+
+            border-top: none;
+
+        }
+
+
+        .total {
+
+            text-align: right;
+
+            font-size: 18px;
+
+            font-weight: bold;
+
+            margin-top: 15px;
+
+        }
+
+
+        .status {
+
+            display: inline-block;
+
+            padding: 6px 12px;
+
+            border-radius: 20px;
+
+            background: #fff3cd;
+
+            color: #856404;
+
+            font-weight: bold;
+
+        }
+
+
+        #loading {
+
+            text-align: center;
+
+            color: #666;
+
+            padding: 30px;
+
+        }
+
+
+        #noOrders {
+
+            display: none;
+
+            background: white;
+
+            padding: 25px;
+
+            text-align: center;
+
+            border-radius: 10px;
+
+            box-shadow:
+                0 2px 8px rgba(0,0,0,0.1);
+
+        }
+
+    </style>
+
+</head>
+
+
+<body>
+
+
+    <div class="header">
+
+        <h1>RK Store</h1>
+
+        <p>My Orders</p>
+
+    </div>
+
+
+    <div class="container">
+
+
+        <button
+            class="back-button"
+            onclick="goDashboard()"
+        >
+            ← Back to Dashboard
+        </button>
+
+
+        <div id="loading">
+
+            Loading your orders...
+
+        </div>
+
+
+        <div id="ordersContainer"></div>
+
+
+        <div id="noOrders">
+
+            <h2>No Orders Yet</h2>
+
+            <p>
+                You haven't placed any orders yet.
+            </p>
+
+            <button
+                class="back-button"
+                onclick="goHome()"
+            >
+                Start Shopping
+            </button>
+
+        </div>
+
+
+    </div>
+
+
+
+<script type="module">
+
+
+    /* =========================
+       FIREBASE
+    ========================= */
+
+
+    import {
+
+        initializeApp
+
+    } from
+    "https://www.gstatic.com/firebasejs/12.18.0/firebase-app.js";
+
+
+    import {
+
+        getFirestore,
+
+        collection,
+
+        query,
+
+        where,
+
+        getDocs
+
+    } from
+    "https://www.gstatic.com/firebasejs/12.18.0/firebase-firestore.js";
+
+
+    import {
+
+        getAuth,
+
+        onAuthStateChanged
+
+    } from
+    "https://www.gstatic.com/firebasejs/12.18.0/firebase-auth.js";
+
+
+
+    /* =========================
+       FIREBASE CONFIG
+    ========================= */
+
+
+    const firebaseConfig = {
+
+        apiKey:
+            "AIzaSyCkBQaphKKz_Wxd1GgKAVoxqR4taKvzdEM",
+
+        authDomain:
+            "rk-store-5fb24.firebaseapp.com",
+
+        projectId:
+            "rk-store-5fb24",
+
+        storageBucket:
+            "rk-store-5fb24.firebasestorage.app",
+
+        messagingSenderId:
+            "407275549697",
+
+        appId:
+            "1:407275549697:web:41043b49bf7182cecffc00"
+
+    };
+
+
+
+    /* =========================
+       INITIALIZE
+    ========================= */
+
+
+    const app =
+        initializeApp(firebaseConfig);
+
+
+    const db =
+        getFirestore(app);
+
+
+    const auth =
+        getAuth(app);
+
+
+
+    /* =========================
+       AUTH CHECK
+    ========================= */
+
+
+    onAuthStateChanged(
+
+        auth,
+
+        async function(user) {
+
+
+            if (!user) {
+
+                window.location.href =
+                    "customer-login.html";
+
+                return;
+
+            }
+
+
+            await loadCustomerOrders(user.uid);
+
+        }
+
+    );
+
+
+
+    /* =========================
+       LOAD CUSTOMER ORDERS
+    ========================= */
+
+
+    async function loadCustomerOrders(customerId) {
+
+
+        const loading =
+            document.getElementById(
+                "loading"
+            );
+
+
+        const container =
+            document.getElementById(
+                "ordersContainer"
+            );
+
+
+        const noOrders =
+            document.getElementById(
+                "noOrders"
+            );
+
+
+        try {
+
+
+            const ordersQuery =
+                query(
+
+                    collection(
+                        db,
+                        "orders"
+                    ),
+
+                    where(
+                        "customerId",
+                        "==",
+                        customerId
+                    )
+
+                );
+
+
+            const snapshot =
+                await getDocs(
+                    ordersQuery
+                );
+
+
+            loading.style.display =
+                "none";
+
+
+            if (snapshot.empty) {
+
+                noOrders.style.display =
+                    "block";
+
+                return;
+
+            }
+
+
+            let ordersHTML = "";
+
+
+            snapshot.forEach(
+                function(doc) {
+
+
+                    const order =
+                        doc.data();
+
+
+                    let productsHTML =
+                        "";
+
+
+                    if (
+                        Array.isArray(
+                            order.products
+                        )
+                    ) {
+
+
+                        order.products.forEach(
+                            function(product) {
+
+
+                                const price =
+                                    Number(
+                                        product.price
+                                    ) || 0;
+
+
+                                const quantity =
+                                    Number(
+                                        product.quantity
+                                    ) || 1;
+
+
+                                const subtotal =
+                                    price *
+                                    quantity;
+
+
+                                productsHTML += `
+
+                                    <div class="product">
+
+                                        <strong>
+                                            ${product.name || "Product"}
+                                        </strong>
+
+                                        <p>
+                                            Price:
+                                            ৳${price}
+                                        </p>
+
+                                        <p>
+                                            Quantity:
+                                            ${quantity}
+                                        </p>
+
+                                        <p>
+                                            Subtotal:
+                                            ৳${subtotal}
+                                        </p>
+
+                                    </div>
+
+                                `;
+
+                            }
+                        );
+
+                    }
+
+
+                    ordersHTML += `
+
+                        <div class="order-card">
+
+                            <h2>
+                                Order #${order.orderId || doc.id}
+                            </h2>
+
+
+                            <p class="order-info">
+
+                                <strong>
+                                    Date:
+                                </strong>
+
+                                ${order.dateTime || "N/A"}
+
+                            </p>
+
+
+                            <p class="order-info">
+
+                                <strong>
+                                    Status:
+                                </strong>
+
+                                <span class="status">
+
+                                    ${order.status || "Pending"}
+
+                                </span>
+
+                            </p>
+
+
+                            <p class="order-info">
+
+                                <strong>
+                                    Payment:
+                                </strong>
+
+                                ${order.paymentMethod || "N/A"}
+
+                            </p>
+
+
+                            <h3>
+                                Products
+                            </h3>
+
+
+                            ${productsHTML}
+
+
+                            <div class="total">
+
+                                Total:
+                                ৳${Number(order.totalAmount) || 0}
+
+                            </div>
+
+                        </div>
+
+                    `;
+
+                }
+            );
+
+
+            container.innerHTML =
+                ordersHTML;
+
+
+        } catch (error) {
+
+
+            console.error(
+                "Load Orders Error:",
+                error
+            );
+
+
+            loading.innerText =
+                "Unable to load your orders. Please try again.";
+
+        }
+
+    }
+
+
+
+    /* =========================
+       DASHBOARD
+    ========================= */
+
+
+    window.goDashboard =
+        function() {
+
+            window.location.href =
+                "customer-dashboard.html";
+
+        };
+
+
+
+    /* =========================
+       HOME
+    ========================= */
+
+
+    window.goHome =
+        function() {
+
+            window.location.href =
+                "index.html";
+
+        };
+
+
+</script>
+
+
+</body>
+</html>
