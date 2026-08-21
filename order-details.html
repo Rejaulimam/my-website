@@ -352,11 +352,28 @@
        GET ORDER FROM URL
     ========================= */
 
-    const urlParams =
-        new URLSearchParams(window.location.search);
+    /* =========================
+   GET ORDER INDEX
+========================= */
 
-    const orderIndex =
-        urlParams.get("order");
+// First check URL
+const urlParams =
+    new URLSearchParams(window.location.search);
+
+let orderIndex =
+    urlParams.get("order");
+
+// If URL does not contain order index,
+// get it from localStorage
+if (orderIndex === null) {
+    orderIndex =
+        localStorage.getItem("selectedOrderIndex");
+}
+
+// Convert to number
+if (orderIndex !== null) {
+    orderIndex = Number(orderIndex);
+}
 
 
     /* =========================
