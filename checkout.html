@@ -56,6 +56,7 @@
 
         #placeOrderButton {
             margin-top: 15px;
+            width: 100%;
             padding: 12px 20px;
             font-size: 16px;
             background-color: #ff6600;
@@ -78,6 +79,12 @@
         .total {
             text-align: right;
         }
+
+        #authStatus {
+            text-align: center;
+            color: #666;
+            margin-bottom: 15px;
+        }
     </style>
 </head>
 
@@ -87,39 +94,69 @@
 
     <div class="checkout-container">
 
+        <div id="authStatus">
+            Checking customer login...
+        </div>
+
         <div id="orderSummary"></div>
 
         <h2>Customer Information</h2>
 
         <label for="name">Name</label>
+
         <input
             type="text"
             id="name"
             placeholder="Enter your name"
         >
 
-        <label for="mobile">Mobile Number</label>
+
+        <label for="mobile">
+            Mobile Number
+        </label>
+
         <input
             type="tel"
             id="mobile"
             placeholder="Enter your mobile number"
         >
 
-        <label for="address">Address</label>
+
+        <label for="address">
+            Address
+        </label>
+
         <textarea
             id="address"
             placeholder="Enter your address"
         ></textarea>
 
-        <label for="paymentMethod">Payment Method</label>
+
+        <label for="paymentMethod">
+            Payment Method
+        </label>
 
         <select id="paymentMethod">
-            <option value="cod">Cash on Delivery</option>
-            <option value="bkash">bKash</option>
-            <option value="nagad">Nagad</option>
+
+            <option value="cod">
+                Cash on Delivery
+            </option>
+
+            <option value="bkash">
+                bKash
+            </option>
+
+            <option value="nagad">
+                Nagad
+            </option>
+
         </select>
 
-        <div id="paymentDetails" style="display:none;">
+
+        <div
+            id="paymentDetails"
+            style="display:none;"
+        >
 
             <label for="paymentNumber">
                 Payment Number
@@ -130,6 +167,7 @@
                 id="paymentNumber"
                 placeholder="Enter bKash/Nagad number"
             >
+
 
             <label for="transactionId">
                 Transaction ID
@@ -142,6 +180,7 @@
             >
 
         </div>
+
 
         <button
             type="button"
@@ -156,66 +195,80 @@
 
 <script type="module">
 
-    /* =========================
-       FIREBASE
-    ========================= */
+/* ==================================================
+   FIREBASE IMPORT
+================================================== */
 
-    import {
-        initializeApp
-    } from "https://www.gstatic.com/firebasejs/12.18.0/firebase-app.js";
-
-    import {
-        getFirestore,
-        collection,
-        addDoc,
-        serverTimestamp
-    } from "https://www.gstatic.com/firebasejs/12.18.0/firebase-firestore.js";
-
-    import {
-        getAuth,
-        onAuthStateChanged
-    } from "https://www.gstatic.com/firebasejs/12.18.0/firebase-auth.js";
+import {
+    initializeApp
+} from "https://www.gstatic.com/firebasejs/12.18.0/firebase-app.js";
 
 
-    const firebaseConfig = {
-
-        apiKey: "AIzaSyCkBQaphKKz_WxdGgKAVoxqR4taKvzdEM",
-
-        authDomain:
-            "rk-store-5fb24.firebaseapp.com",
-
-        projectId:
-            "rk-store-5fb24",
-
-        storageBucket:
-            "rk-store-5fb24.firebasestorage.app",
-
-        messagingSenderId:
-            "407275549697",
-
-        appId:
-            "1:407275549697:web:41043b49bf7182cecffc00"
-    };
+import {
+    getFirestore,
+    collection,
+    addDoc,
+    serverTimestamp
+} from "https://www.gstatic.com/firebasejs/12.18.0/firebase-firestore.js";
 
 
-    const app =
-        initializeApp(firebaseConfig);
-
-    const db =
-        getFirestore(app);
-
-    const auth =
-        getAuth(app);
+import {
+    getAuth,
+    onAuthStateChanged
+} from "https://www.gstatic.com/firebasejs/12.18.0/firebase-auth.js";
 
 
-    /* =========================
-       AUTH STATE
-    ========================= */
+/* ==================================================
+   FIREBASE CONFIG
+================================================== */
 
-    let currentUser = null;
+const firebaseConfig = {
 
-let authReady = false;
+    apiKey:
+        "AIzaSyCkBQaphKKz_Wxd1GgKAVoxqR4taKvzdEM",
 
+    authDomain:
+        "rk-store-5fb24.firebaseapp.com",
+
+    projectId:
+        "rk-store-5fb24",
+
+    storageBucket:
+        "rk-store-5fb24.firebasestorage.app",
+
+    messagingSenderId:
+        "407275549697",
+
+    appId:
+        "1:407275549697:web:41043b49bf7182cecffc00"
+};
+
+
+/* ==================================================
+   INITIALIZE FIREBASE
+================================================== */
+
+const app =
+    initializeApp(firebaseConfig);
+
+const db =
+    getFirestore(app);
+
+const auth =
+    getAuth(app);
+
+
+/* ==================================================
+   CUSTOMER AUTH
+================================================== */
+
+let currentUser = null;
+
+
+/*
+   Firebase নিজে থেকে Login Session
+   restore করার জন্য এই listener ব্যবহার করছি।
+*/
 
 onAuthStateChanged(
     auth,
@@ -223,56 +276,119 @@ onAuthStateChanged(
 
         currentUser = user;
 
-        authReady = true;
+        const authStatus =
+            document.getElementById(
+                "authStatus"
+            );
 
-        console.log(
-            "Checkout Auth User:",
-            user
-        );
+
+        if (user) {
+
+            console.log(
+                "Checkout Customer:",
+                user.uid
+            );
+
+
+            authStatus.innerText =
+                "Customer logged in: " +
+                (user.email || "Customer");
+
+
+            authStatus.style.color =
+                "green";
+
+
+            /*
+               Registration-এর সময়
+               displayName থাকলে Name box
+               automatically পূরণ হবে।
+            */
+
+            const nameInput =
+                document.getElementById(
+                    "name"
+                );
+
+
+            if (
+                nameInput.value.trim() === "" &&
+                user.displayName
+            ) {
+
+                nameInput.value =
+                    user.displayName;
+
+            }
+
+        }
+
+        else {
+
+            console.log(
+                "Checkout: No customer logged in"
+            );
+
+
+            authStatus.innerText =
+                "Customer login required.";
+
+            authStatus.style.color =
+                "red";
+
+        }
 
     }
 );
 
-    /* =========================
-       ORDER SUMMARY
-    ========================= */
 
-    function showOrderSummary() {
+/* ==================================================
+   ORDER SUMMARY
+================================================== */
 
-        const cart =
-            JSON.parse(
-                localStorage.getItem("cart")
-            ) || [];
+function showOrderSummary() {
 
-
-        const summary =
-            document.getElementById(
-                "orderSummary"
-            );
+    const cart =
+        JSON.parse(
+            localStorage.getItem("cart")
+        ) || [];
 
 
-        if (cart.length === 0) {
-
-            summary.innerHTML =
-                "<p>Your cart is empty.</p>";
-
-            return;
-        }
+    const summary =
+        document.getElementById(
+            "orderSummary"
+        );
 
 
-        let total = 0;
+    if (cart.length === 0) {
 
-        let html =
-            "<h2>Order Summary</h2>";
+        summary.innerHTML =
+            "<p>Your cart is empty.</p>";
+
+        return;
+    }
 
 
-        cart.forEach(function(product) {
+    let total = 0;
+
+    let html =
+        "<h2>Order Summary</h2>";
+
+
+    cart.forEach(
+        function(product) {
 
             const quantity =
-                Number(product.quantity) || 1;
+                Number(
+                    product.quantity
+                ) || 1;
+
 
             const price =
-                Number(product.price) || 0;
+                Number(
+                    product.price
+                ) || 0;
+
 
             const subtotal =
                 price * quantity;
@@ -301,67 +417,72 @@ onAuthStateChanged(
                 </div>
 
             `;
-        });
+
+        }
+    );
 
 
-        html += `
+    html += `
 
-            <h2 class="total">
-                Total: ৳${total}
-            </h2>
+        <h2 class="total">
+            Total: ৳${total}
+        </h2>
 
-        `;
-
-
-        summary.innerHTML =
-            html;
-    }
+    `;
 
 
-    showOrderSummary();
+    summary.innerHTML =
+        html;
+
+}
 
 
-    /* =========================
-       PAYMENT METHOD
-    ========================= */
-
-    document
-        .getElementById("paymentMethod")
-        .addEventListener(
-            "change",
-            function() {
-
-                const paymentDetails =
-                    document.getElementById(
-                        "paymentDetails"
-                    );
+showOrderSummary();
 
 
-                if (
-                    this.value === "bkash" ||
-                    this.value === "nagad"
-                ) {
+/* ==================================================
+   PAYMENT METHOD
+================================================== */
 
-                    paymentDetails.style.display =
-                        "block";
+document
+    .getElementById("paymentMethod")
+    .addEventListener(
+        "change",
+        function() {
 
-                } else {
+            const paymentDetails =
+                document.getElementById(
+                    "paymentDetails"
+                );
 
-                    paymentDetails.style.display =
-                        "none";
-                }
+
+            if (
+                this.value === "bkash" ||
+                this.value === "nagad"
+            ) {
+
+                paymentDetails.style.display =
+                    "block";
 
             }
-        );
+
+            else {
+
+                paymentDetails.style.display =
+                    "none";
+
+            }
+
+        }
+    );
 
 
-    /* =========================
-       PLACE ORDER
-    ========================= */
+/* ==================================================
+   PLACE ORDER
+================================================== */
 
-    window.placeOrder =
-        async function() {
-
+window.placeOrder =
+    async function() {
 
         const button =
             document.getElementById(
@@ -369,21 +490,26 @@ onAuthStateChanged(
             );
 
 
-        /* =========================
-           AUTH CHECK
-        ========================= */
+        /*
+           Firebase-এর currentUser সরাসরি
+           আবার পরীক্ষা করছি।
+        */
 
-        if (!authReady) {
+        const user =
+            auth.currentUser;
 
-            alert(
-                "Please wait a moment and try again."
-            );
 
-            return;
-        }
+        console.log(
+            "Place Order User:",
+            user
+        );
 
-console.log("Current User:", currentUser);
-        if (!currentUser) {
+
+        /* ==================================================
+           LOGIN CHECK
+        ================================================== */
+
+        if (!user) {
 
             alert(
                 "Please login to your customer account first."
@@ -396,9 +522,18 @@ console.log("Current User:", currentUser);
         }
 
 
-        /* =========================
+        /*
+           currentUser নিশ্চিতভাবে Firebase user
+           হিসেবে সেট করছি।
+        */
+
+        currentUser =
+            user;
+
+
+        /* ==================================================
            CUSTOMER INFORMATION
-        ========================= */
+        ================================================== */
 
         const name =
             document
@@ -421,33 +556,39 @@ console.log("Current User:", currentUser);
                 .trim();
 
 
-        /* =========================
+        /* ==================================================
            PAYMENT INFORMATION
-        ========================= */
+        ================================================== */
 
         const paymentMethod =
             document
-                .getElementById("paymentMethod")
+                .getElementById(
+                    "paymentMethod"
+                )
                 .value;
 
 
         const paymentNumber =
             document
-                .getElementById("paymentNumber")
+                .getElementById(
+                    "paymentNumber"
+                )
                 .value
                 .trim();
 
 
         const transactionId =
             document
-                .getElementById("transactionId")
+                .getElementById(
+                    "transactionId"
+                )
                 .value
                 .trim();
 
 
-        /* =========================
-           VALIDATION
-        ========================= */
+        /* ==================================================
+           CUSTOMER VALIDATION
+        ================================================== */
 
         if (
             name === "" ||
@@ -462,6 +603,10 @@ console.log("Current User:", currentUser);
             return;
         }
 
+
+        /* ==================================================
+           PAYMENT VALIDATION
+        ================================================== */
 
         if (
             paymentMethod === "bkash" ||
@@ -479,12 +624,13 @@ console.log("Current User:", currentUser);
 
                 return;
             }
+
         }
 
 
-        /* =========================
+        /* ==================================================
            CART
-        ========================= */
+        ================================================== */
 
         const cart =
             JSON.parse(
@@ -502,9 +648,9 @@ console.log("Current User:", currentUser);
         }
 
 
-        /* =========================
-           TOTAL
-        ========================= */
+        /* ==================================================
+           TOTAL AMOUNT
+        ================================================== */
 
         let totalAmount = 0;
 
@@ -531,17 +677,17 @@ console.log("Current User:", currentUser);
         );
 
 
-        /* =========================
+        /* ==================================================
            ORDER ID
-        ========================= */
+        ================================================== */
 
         const orderId =
             "RK-" + Date.now();
 
 
-        /* =========================
+        /* ==================================================
            ORDER DATA
-        ========================= */
+        ================================================== */
 
         const order = {
 
@@ -590,24 +736,22 @@ console.log("Current User:", currentUser);
         };
 
 
-        /* =========================
+        /* ==================================================
            BUTTON LOCK
-        ========================= */
+        ================================================== */
 
         button.disabled =
             true;
-
 
         button.innerText =
             "Placing Order...";
 
 
+        /* ==================================================
+           SAVE ORDER TO FIRESTORE
+        ================================================== */
+
         try {
-
-
-            /* =========================
-               FIRESTORE SAVE
-            ========================= */
 
             const docRef =
                 await addDoc(
@@ -619,9 +763,15 @@ console.log("Current User:", currentUser);
                 );
 
 
-            /* =========================
-               LOCAL STORAGE
-            ========================= */
+            console.log(
+                "Order saved:",
+                docRef.id
+            );
+
+
+            /* ==================================================
+               SAVE LOCAL COPY
+            ================================================== */
 
             let orders =
                 JSON.parse(
@@ -652,32 +802,38 @@ console.log("Current User:", currentUser);
             );
 
 
-            /* =========================
+            /* ==================================================
                CLEAR CART
-            ========================= */
+            ================================================== */
 
             localStorage.removeItem(
                 "cart"
             );
 
 
-            /* =========================
+            /* ==================================================
                SUCCESS
-            ========================= */
+            ================================================== */
 
             alert(
                 "Order placed successfully!"
             );
 
 
+            /*
+               Admin Orders page
+            */
+
             window.location.href =
                 "orders.html";
 
 
-        } catch (error) {
+        }
+
+        catch (error) {
 
             console.error(
-                "Firebase Error:",
+                "Firebase Order Error:",
                 error
             );
 
@@ -690,9 +846,9 @@ console.log("Current User:", currentUser);
             button.disabled =
                 false;
 
-
             button.innerText =
                 "Place Order";
+
         }
 
     };
