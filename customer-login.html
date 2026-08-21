@@ -121,10 +121,11 @@ import {
 }
 from "https://www.gstatic.com/firebasejs/12.18.0/firebase-auth.js";
 
+
 const firebaseConfig = {
 
     apiKey:
-        "AIzaSyCkBQaphKKz_Wxd1GgKAVoxqR4taKvzdEM",
+        "AIzaSyCkBQaphKKz_WxdGgKAVoxqR4taKvzdEM",
 
     authDomain:
         "rk-store-5fb24.firebaseapp.com",
@@ -146,23 +147,40 @@ const firebaseConfig = {
 const app =
     initializeApp(firebaseConfig);
 
+
 const auth =
     getAuth(app);
 
 
-window.loginCustomer = function() {
+/* =========================
+   CUSTOMER LOGIN
+========================= */
+
+window.loginCustomer = async function() {
 
     const email =
-        document.getElementById("email").value.trim();
+        document
+            .getElementById("email")
+            .value
+            .trim();
 
     const password =
-        document.getElementById("password").value;
+        document
+            .getElementById("password")
+            .value;
 
     const message =
         document.getElementById("message");
 
 
-    if (email === "" || password === "") {
+    /* =========================
+       VALIDATION
+    ========================= */
+
+    if (
+        email === "" ||
+        password === ""
+    ) {
 
         message.style.color = "red";
 
@@ -173,13 +191,32 @@ window.loginCustomer = function() {
     }
 
 
-    signInWithEmailAndPassword(
-        auth,
-        email,
-        password
-    )
+    try {
 
-    .then(() => {
+        /* =========================
+           KEEP LOGIN SESSION
+        ========================= */
+
+        await setPersistence(
+            auth,
+            browserLocalPersistence
+        );
+
+
+        /* =========================
+           FIREBASE LOGIN
+        ========================= */
+
+        await signInWithEmailAndPassword(
+            auth,
+            email,
+            password
+        );
+
+
+        /* =========================
+           SUCCESS
+        ========================= */
 
         message.style.color = "green";
 
@@ -187,18 +224,25 @@ window.loginCustomer = function() {
             "Login successful!";
 
 
-        setTimeout(() => {
+        setTimeout(function() {
 
             window.location.href =
                 "index.html";
 
         }, 1000);
 
-    })
 
-    .catch((error) => {
+    } catch (error) {
 
-        message.style.color = "red";
+        console.error(
+            "Login Error:",
+            error
+        );
+
+
+        message.style.color =
+            "red";
+
 
         if (
             error.code ===
@@ -215,7 +259,7 @@ window.loginCustomer = function() {
 
         }
 
-    });
+    }
 
 };
 
