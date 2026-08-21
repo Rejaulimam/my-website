@@ -1,0 +1,501 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta
+        name="viewport"
+        content="width=device-width, initial-scale=1.0"
+    >
+
+    <title>RK Store - My Orders</title>
+
+    <style>
+
+        body {
+            margin: 0;
+            font-family: Arial, sans-serif;
+            background: #f5f5f5;
+        }
+
+        h1 {
+            background: #ff6600;
+            color: white;
+            text-align: center;
+            padding: 18px;
+            margin: 0;
+        }
+
+        .container {
+            width: 92%;
+            max-width: 700px;
+            margin: 25px auto;
+        }
+
+        .order {
+            background: white;
+            padding: 20px;
+            margin-bottom: 20px;
+            border-radius: 8px;
+            box-shadow: 0 2px 6px #ccc;
+        }
+
+        .order h2 {
+            color: #ff6600;
+            margin-top: 0;
+        }
+
+        .product {
+            border-top: 1px solid #ddd;
+            padding: 10px 0;
+        }
+
+        .status {
+            font-weight: bold;
+            color: #ff6600;
+        }
+
+        .loading,
+        .no-orders,
+        .login-message {
+            background: white;
+            padding: 25px;
+            text-align: center;
+            border-radius: 8px;
+        }
+
+        .login-btn {
+            display: inline-block;
+            background: #ff6600;
+            color: white;
+            padding: 12px 20px;
+            border-radius: 5px;
+            text-decoration: none;
+            margin-top: 10px;
+        }
+
+    </style>
+
+</head>
+
+<body>
+
+<h1>RK Store - My Orders</h1>
+
+
+<div
+    class="container"
+    id="ordersContainer"
+>
+
+    <div class="loading">
+        Loading your orders...
+    </div>
+
+</div>
+
+
+<script type="module">
+
+
+/* =========================
+   FIREBASE
+========================= */
+
+
+import {
+    initializeApp
+} from "https://www.gstatic.com/firebasejs/12.18.0/firebase-app.js";
+
+
+import {
+    getFirestore,
+    collection,
+    getDocs
+} from "https://www.gstatic.com/firebasejs/12.18.0/firebase-firestore.js";
+
+
+import {
+    getAuth,
+    onAuthStateChanged
+} from "https://www.gstatic.com/firebasejs/12.18.0/firebase-auth.js";
+
+
+const firebaseConfig = {
+
+    apiKey:
+        "AIzaSyCkBQaphKKz_WxdGgKAVoxqR4taKvzdEM",
+
+    authDomain:
+        "rk-store-5fb24.firebaseapp.com",
+
+    projectId:
+        "rk-store-5fb24",
+
+    storageBucket:
+        "rk-store-5fb24.firebasestorage.app",
+
+    messagingSenderId:
+        "407275549697",
+
+    appId:
+        "1:407275549697:web:41043b49bf7182cecffc00"
+
+};
+
+
+const app =
+    initializeApp(firebaseConfig);
+
+
+const db =
+    getFirestore(app);
+
+
+const auth =
+    getAuth(app);
+
+
+/* =========================
+   LOAD CUSTOMER ORDERS
+========================= */
+
+
+async function loadMyOrders(user) {
+
+    const container =
+        document.getElementById(
+            "ordersContainer"
+        );
+
+
+    try {
+
+        const snapshot =
+            await getDocs(
+                collection(db, "orders")
+            );
+
+
+        let myOrders = [];
+
+
+        snapshot.forEach(
+            (docSnapshot) => {
+
+                const order =
+                    docSnapshot.data();
+
+
+                /*
+                   শুধু এই Customer-এর
+                   customerId-এর অর্ডার নেওয়া হবে
+                */
+
+
+                if (
+                    order.customerId === user.uid
+                ) {
+
+                    myOrders.push({
+
+                        ...order,
+
+                        firebaseId:
+                            docSnapshot.id
+
+                    });
+
+                }
+
+            }
+        );
+
+
+        /* =========================
+           NEWEST FIRST
+        ========================= */
+
+
+        myOrders.sort(
+            (a, b) => {
+
+                return (
+                    String(b.dateTime || "")
+                    .localeCompare(
+                        String(a.dateTime || "")
+                    )
+                );
+
+            }
+        );
+
+
+        if (myOrders.length === 0) {
+
+            container.innerHTML = `
+
+                <div class="no-orders">
+
+                    <h2>
+                        No Orders Yet
+                    </h2>
+
+                    <p>
+                        You have not placed any orders yet.
+                    </p>
+
+                    <a
+                        class="login-btn"
+                        href="index.html"
+                    >
+                        Continue Shopping
+                    </a>
+
+                </div>
+
+            `;
+
+            return;
+
+        }
+
+
+        let html = "";
+
+
+        myOrders.forEach(
+            (order) => {
+
+
+                let productsHTML = "";
+
+
+                if (
+                    order.products &&
+                    order.products.length > 0
+                ) {
+
+
+                    order.products.forEach(
+                        (product) => {
+
+                            const price =
+                                Number(
+                                    product.price
+                                ) || 0;
+
+
+                            const quantity =
+                                Number(
+                                    product.quantity
+                                ) || 1;
+
+
+                            const subtotal =
+                                price * quantity;
+
+
+                            productsHTML += `
+
+                                <div class="product">
+
+                                    <p>
+                                        <strong>
+                                            Product:
+                                        </strong>
+
+                                        ${
+                                            product.name ||
+                                            "Product"
+                                        }
+                                    </p>
+
+                                    <p>
+                                        Price:
+                                        ৳${price}
+                                    </p>
+
+                                    <p>
+                                        Quantity:
+                                        ${quantity}
+                                    </p>
+
+                                    <p>
+                                        Subtotal:
+                                        ৳${subtotal}
+                                    </p>
+
+                                </div>
+
+                            `;
+
+                        }
+                    );
+
+                }
+
+
+                const total =
+                    Number(
+                        order.totalAmount
+                    ) || 0;
+
+
+                html += `
+
+                    <div class="order">
+
+                        <h2>
+                            Order ID:
+                            ${order.orderId || "N/A"}
+                        </h2>
+
+
+                        <p>
+
+                            <strong>
+                                Date:
+                            </strong>
+
+                            ${
+                                order.dateTime ||
+                                "N/A"
+                            }
+
+                        </p>
+
+
+                        <p>
+
+                            <strong>
+                                Status:
+                            </strong>
+
+                            <span class="status">
+
+                                ${
+                                    order.status ||
+                                    "Pending"
+                                }
+
+                            </span>
+
+                        </p>
+
+
+                        <h3>
+                            Products
+                        </h3>
+
+
+                        ${productsHTML}
+
+
+                        <p>
+
+                            <strong>
+                                Total:
+                            </strong>
+
+                            ৳${total}
+
+                        </p>
+
+                    </div>
+
+                `;
+
+            }
+        );
+
+
+        container.innerHTML = html;
+
+
+    } catch (error) {
+
+        console.error(
+            "My Orders Error:",
+            error
+        );
+
+
+        container.innerHTML = `
+
+            <div class="no-orders">
+
+                <h2>
+                    Orders Could Not Be Loaded
+                </h2>
+
+                <p>
+                    ${error.message}
+                </p>
+
+            </div>
+
+        `;
+
+    }
+
+}
+
+
+/* =========================
+   CUSTOMER LOGIN CHECK
+========================= */
+
+
+onAuthStateChanged(
+    auth,
+    (user) => {
+
+
+        if (!user) {
+
+            document
+                .getElementById(
+                    "ordersContainer"
+                )
+                .innerHTML = `
+
+                    <div class="login-message">
+
+                        <h2>
+                            Please Login
+                        </h2>
+
+                        <p>
+                            Login to see your orders.
+                        </p>
+
+                        <a
+                            class="login-btn"
+                            href="customer-login.html"
+                        >
+                            Customer Login
+                        </a>
+
+                    </div>
+
+                `;
+
+            return;
+
+        }
+
+
+        /* Customer logged in */
+
+        loadMyOrders(user);
+
+    }
+);
+
+
+</script>
+
+</body>
+</html>
