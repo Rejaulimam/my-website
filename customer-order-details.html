@@ -11,11 +11,13 @@
 
     <title>RK Store - My Order Details</title>
 
+
     <style>
 
         * {
             box-sizing: border-box;
         }
+
 
         body {
             margin: 0;
@@ -24,6 +26,11 @@
             color: #333;
         }
 
+
+        /* =========================
+           HEADER
+        ========================= */
+
         .header {
             background: #ff6600;
             color: white;
@@ -31,19 +38,31 @@
             text-align: center;
         }
 
+
         .header h1 {
             margin: 0;
         }
 
+
         .header p {
             margin: 6px 0 0;
         }
+
+
+        /* =========================
+           CONTAINER
+        ========================= */
 
         .container {
             width: 92%;
             max-width: 700px;
             margin: 25px auto;
         }
+
+
+        /* =========================
+           BACK BUTTON
+        ========================= */
 
         .back-button {
             display: block;
@@ -58,6 +77,16 @@
             cursor: pointer;
         }
 
+
+        .back-button:hover {
+            background: #222;
+        }
+
+
+        /* =========================
+           CARD
+        ========================= */
+
         .card {
             background: white;
             padding: 18px;
@@ -66,12 +95,18 @@
             box-shadow: 0 2px 8px rgba(0,0,0,0.1);
         }
 
+
         .card-title {
             font-size: 20px;
             font-weight: bold;
             color: #ff6600;
             margin-bottom: 15px;
         }
+
+
+        /* =========================
+           INFO
+        ========================= */
 
         .info-row {
             display: flex;
@@ -81,27 +116,37 @@
             border-bottom: 1px solid #eee;
         }
 
+
         .info-row:last-child {
             border-bottom: none;
         }
 
+
         .label {
             color: #777;
         }
+
 
         .value {
             font-weight: bold;
             text-align: right;
         }
 
+
+        /* =========================
+           PRODUCT
+        ========================= */
+
         .product {
             border-top: 1px solid #ddd;
             padding: 15px 0;
         }
 
+
         .product:first-child {
             border-top: none;
         }
+
 
         .product-name {
             font-size: 18px;
@@ -109,10 +154,12 @@
             margin-bottom: 8px;
         }
 
+
         .product p {
             margin: 6px 0;
             color: #555;
         }
+
 
         .subtotal {
             text-align: right;
@@ -120,6 +167,11 @@
             color: #333;
             margin-top: 8px;
         }
+
+
+        /* =========================
+           TOTAL
+        ========================= */
 
         .total {
             display: flex;
@@ -131,9 +183,15 @@
             font-weight: bold;
         }
 
+
         .total-price {
             color: #ff6600;
         }
+
+
+        /* =========================
+           STATUS BADGE
+        ========================= */
 
         .status {
             display: inline-block;
@@ -144,6 +202,107 @@
             font-weight: bold;
         }
 
+
+        /* =========================
+           ORDER STATUS TIMELINE
+        ========================= */
+
+        .timeline {
+            margin-top: 10px;
+            position: relative;
+            padding-left: 5px;
+        }
+
+
+        .timeline-item {
+            position: relative;
+            padding: 0 0 30px 45px;
+            color: #999;
+            font-size: 16px;
+            font-weight: normal;
+        }
+
+
+        .timeline-item:last-child {
+            padding-bottom: 0;
+        }
+
+
+        /* Circle */
+
+        .timeline-item::before {
+            content: "";
+            position: absolute;
+            left: 4px;
+            top: 1px;
+            width: 18px;
+            height: 18px;
+            border-radius: 50%;
+            background-color: #ddd;
+            border: 3px solid #f5f5f5;
+            box-shadow: 0 0 0 2px #ddd;
+            z-index: 2;
+        }
+
+
+        /* Connecting Line */
+
+        .timeline-item::after {
+            content: "";
+            position: absolute;
+            left: 13px;
+            top: 21px;
+            width: 3px;
+            height: 38px;
+            background-color: #ddd;
+        }
+
+
+        .timeline-item:last-child::after {
+            display: none;
+        }
+
+
+        /* Completed */
+
+        .timeline-item.completed {
+            color: #27ae60;
+            font-weight: bold;
+        }
+
+
+        .timeline-item.completed::before {
+            background-color: #27ae60;
+            box-shadow: 0 0 0 2px #27ae60;
+        }
+
+
+        /* Active */
+
+        .timeline-item.active {
+            color: #ff6600;
+            font-weight: bold;
+        }
+
+
+        .timeline-item.active::before {
+            background-color: #ff6600;
+            box-shadow: 0 0 0 3px rgba(255,102,0,0.2);
+            transform: scale(1.15);
+        }
+
+
+        /* Active line */
+
+        .timeline-item.active::after {
+            background-color: #ff6600;
+        }
+
+
+        /* =========================
+           ERROR
+        ========================= */
+
         .error {
             background: white;
             padding: 25px;
@@ -151,11 +310,37 @@
             border-radius: 10px;
         }
 
+
+        /* =========================
+           MOBILE
+        ========================= */
+
+        @media (max-width: 500px) {
+
+            .info-row {
+                flex-direction: column;
+                gap: 5px;
+            }
+
+
+            .value {
+                text-align: left;
+            }
+
+
+            .total {
+                font-size: 18px;
+            }
+
+        }
+
     </style>
 
 </head>
 
+
 <body>
+
 
     <div class="header">
 
@@ -167,6 +352,7 @@
 
 
     <div class="container">
+
 
         <button
             class="back-button"
@@ -182,32 +368,42 @@
 
         </div>
 
+
     </div>
 
 
+
 <script type="module">
+
 
     /* =========================
        FIREBASE
     ========================= */
 
+
     import {
+
         initializeApp
+
     } from
     "https://www.gstatic.com/firebasejs/12.18.0/firebase-app.js";
 
 
     import {
+
         getFirestore,
         doc,
         getDoc
+
     } from
     "https://www.gstatic.com/firebasejs/12.18.0/firebase-firestore.js";
 
 
     import {
+
         getAuth,
         onAuthStateChanged
+
     } from
     "https://www.gstatic.com/firebasejs/12.18.0/firebase-auth.js";
 
@@ -215,6 +411,7 @@
     /* =========================
        FIREBASE CONFIG
     ========================= */
+
 
     const firebaseConfig = {
 
@@ -243,6 +440,7 @@
        INITIALIZE
     ========================= */
 
+
     const app =
         initializeApp(firebaseConfig);
 
@@ -259,6 +457,7 @@
        GET ORDER ID
     ========================= */
 
+
     const urlParams =
         new URLSearchParams(
             window.location.search
@@ -273,11 +472,13 @@
        AUTH CHECK
     ========================= */
 
+
     onAuthStateChanged(
 
         auth,
 
         async function(user) {
+
 
             if (!user) {
 
@@ -312,10 +513,12 @@
        LOAD ORDER
     ========================= */
 
+
     async function loadOrder(
         customerId,
         orderId
     ) {
+
 
         const container =
             document.getElementById(
@@ -324,6 +527,7 @@
 
 
         try {
+
 
             const orderRef =
                 doc(
@@ -356,6 +560,7 @@
                SECURITY CHECK
             ========================= */
 
+
             if (
                 order.customerId !==
                 customerId
@@ -366,6 +571,11 @@
                 return;
 
             }
+
+
+            /* =========================
+               PRODUCTS
+            ========================= */
 
 
             let productsHTML = "";
@@ -379,8 +589,10 @@
                 )
             ) {
 
+
                 order.products.forEach(
                     function(product) {
+
 
                         const price =
                             Number(
@@ -407,6 +619,7 @@
 
                             <div class="product">
 
+
                                 <div class="product-name">
 
                                     ${
@@ -416,12 +629,14 @@
 
                                 </div>
 
+
                                 <p>
 
                                     Price:
                                     ৳${price}
 
                                 </p>
+
 
                                 <p>
 
@@ -430,12 +645,14 @@
 
                                 </p>
 
+
                                 <div class="subtotal">
 
                                     Subtotal:
                                     ৳${subtotal}
 
                                 </div>
+
 
                             </div>
 
@@ -460,26 +677,117 @@
             }
 
 
+            /* =========================
+               ORDER STATUS
+            ========================= */
+
+
+            const currentStatus =
+                order.status ||
+                "Pending";
+
+
+            const statusOrder = [
+
+                "Pending",
+                "Confirmed",
+                "Shipped",
+                "Delivered"
+
+            ];
+
+
+            const currentStatusIndex =
+                statusOrder.indexOf(
+                    currentStatus
+                );
+
+
+            let timelineHTML = "";
+
+
+            statusOrder.forEach(
+                function(status, index) {
+
+
+                    let className = "";
+
+
+                    if (
+                        currentStatusIndex >= 0 &&
+                        index < currentStatusIndex
+                    ) {
+
+                        className =
+                            "completed";
+
+                    }
+
+
+                    else if (
+                        index ===
+                        currentStatusIndex
+                    ) {
+
+                        className =
+                            "active";
+
+                    }
+
+
+                    timelineHTML += `
+
+                        <div
+                            class="timeline-item ${className}"
+                        >
+
+                            ${status}
+
+                        </div>
+
+                    `;
+
+                }
+            );
+
+
+            /* =========================
+               DISPLAY ORDER
+            ========================= */
+
+
             container.innerHTML = `
+
+
+                <!-- ORDER INFORMATION -->
+
 
                 <div class="card">
 
+
                     <div class="card-title">
+
                         Order Information
+
                     </div>
 
 
                     <div class="info-row">
 
                         <span class="label">
+
                             Order ID
+
                         </span>
 
+
                         <span class="value">
+
                             ${
                                 order.orderId ||
                                 orderId
                             }
+
                         </span>
 
                     </div>
@@ -488,14 +796,19 @@
                     <div class="info-row">
 
                         <span class="label">
+
                             Order Date
+
                         </span>
 
+
                         <span class="value">
+
                             ${
                                 order.dateTime ||
                                 "N/A"
                             }
+
                         </span>
 
                     </div>
@@ -504,19 +817,21 @@
                     <div class="info-row">
 
                         <span class="label">
+
                             Status
+
                         </span>
+
 
                         <span class="value">
 
+
                             <span class="status">
 
-                                ${
-                                    order.status ||
-                                    "Pending"
-                                }
+                                ${currentStatus}
 
                             </span>
+
 
                         </span>
 
@@ -526,8 +841,11 @@
                     <div class="info-row">
 
                         <span class="label">
+
                             Status Updated
+
                         </span>
+
 
                         <span class="value">
 
@@ -544,8 +862,11 @@
                     <div class="info-row">
 
                         <span class="label">
+
                             Payment
+
                         </span>
+
 
                         <span class="value">
 
@@ -558,21 +879,32 @@
 
                     </div>
 
+
                 </div>
+
+
+
+                <!-- CUSTOMER INFORMATION -->
 
 
                 <div class="card">
 
+
                     <div class="card-title">
+
                         Customer Information
+
                     </div>
 
 
                     <div class="info-row">
 
                         <span class="label">
+
                             Name
+
                         </span>
+
 
                         <span class="value">
 
@@ -589,8 +921,11 @@
                     <div class="info-row">
 
                         <span class="label">
+
                             Phone
+
                         </span>
+
 
                         <span class="value">
 
@@ -607,8 +942,11 @@
                     <div class="info-row">
 
                         <span class="label">
+
                             Address
+
                         </span>
+
 
                         <span class="value">
 
@@ -621,13 +959,21 @@
 
                     </div>
 
+
                 </div>
+
+
+
+                <!-- ORDERED PRODUCTS -->
 
 
                 <div class="card">
 
+
                     <div class="card-title">
+
                         Ordered Products
+
                     </div>
 
 
@@ -636,26 +982,63 @@
 
                     <div class="total">
 
+
                         <span>
+
                             Total Amount
+
                         </span>
 
+
                         <span class="total-price">
+
                             ৳${totalAmount}
+
                         </span>
+
 
                     </div>
 
+
                 </div>
+
+
+
+                <!-- ORDER STATUS TIMELINE -->
+
+
+                <div class="card">
+
+
+                    <div class="card-title">
+
+                        Order Status
+
+                    </div>
+
+
+                    <div class="timeline">
+
+                        ${timelineHTML}
+
+                    </div>
+
+
+                </div>
+
 
             `;
 
 
         } catch (error) {
 
+
             console.error(
+
                 "Order Details Error:",
+
                 error
+
             );
 
 
@@ -664,11 +1047,16 @@
                 <div class="error">
 
                     <h2>
+
                         Unable to Load Order
+
                     </h2>
 
+
                     <p>
+
                         Please try again later.
+
                     </p>
 
                 </div>
@@ -684,7 +1072,9 @@
        ERROR
     ========================= */
 
+
     function showError() {
+
 
         document.getElementById(
             "orderDetails"
@@ -693,11 +1083,16 @@
             <div class="error">
 
                 <h2>
+
                     Order Not Found
+
                 </h2>
 
+
                 <p>
+
                     This order could not be found.
+
                 </p>
 
             </div>
@@ -711,15 +1106,19 @@
        BACK
     ========================= */
 
+
     window.goBack =
         function() {
+
 
             window.location.href =
                 "customer-orders.html";
 
         };
 
+
 </script>
+
 
 </body>
 </html>
