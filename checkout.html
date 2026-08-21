@@ -211,9 +211,13 @@ import {
 } from "https://www.gstatic.com/firebasejs/12.18.0/firebase-auth.js";
 
 let currentUser = null;
+let authReady = false;
 
 onAuthStateChanged(auth, function(user) {
+
     currentUser = user;
+    authReady = true;
+
 });
     /* =========================
        ORDER SUMMARY
