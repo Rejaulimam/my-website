@@ -171,10 +171,11 @@
         serverTimestamp
     } from "https://www.gstatic.com/firebasejs/12.18.0/firebase-firestore.js";
 
-import {
-    getAuth,
-    onAuthStateChanged
-} from "https://www.gstatic.com/firebasejs/12.18.0/firebase-auth.js";
+    import {
+        getAuth,
+        onAuthStateChanged
+    } from "https://www.gstatic.com/firebasejs/12.18.0/firebase-auth.js";
+
 
     const firebaseConfig = {
 
@@ -203,22 +204,31 @@ import {
     const db =
         getFirestore(app);
 
-const auth =
-    getAuth(app);
+    const auth =
+        getAuth(app);
 
-import {
-    onAuthStateChanged
-} from "https://www.gstatic.com/firebasejs/12.18.0/firebase-auth.js";
 
-let currentUser = null;
-let authReady = false;
+    /* =========================
+       AUTH STATE
+    ========================= */
 
-onAuthStateChanged(auth, function(user) {
+    let currentUser = null;
 
-    currentUser = user;
-    authReady = true;
+    let authReady = false;
 
-});
+
+    onAuthStateChanged(
+        auth,
+        function(user) {
+
+            currentUser = user;
+
+            authReady = true;
+
+        }
+    );
+
+
     /* =========================
        ORDER SUMMARY
     ========================= */
@@ -229,6 +239,7 @@ onAuthStateChanged(auth, function(user) {
             JSON.parse(
                 localStorage.getItem("cart")
             ) || [];
+
 
         const summary =
             document.getElementById(
@@ -261,6 +272,7 @@ onAuthStateChanged(auth, function(user) {
 
             const subtotal =
                 price * quantity;
+
 
             total += subtotal;
 
@@ -297,7 +309,8 @@ onAuthStateChanged(auth, function(user) {
         `;
 
 
-        summary.innerHTML = html;
+        summary.innerHTML =
+            html;
     }
 
 
@@ -342,13 +355,46 @@ onAuthStateChanged(auth, function(user) {
        PLACE ORDER
     ========================= */
 
-    window.placeOrder = async function() {
+    window.placeOrder =
+        async function() {
+
 
         const button =
             document.getElementById(
                 "placeOrderButton"
             );
 
+
+        /* =========================
+           AUTH CHECK
+        ========================= */
+
+        if (!authReady) {
+
+            alert(
+                "Please wait a moment and try again."
+            );
+
+            return;
+        }
+
+
+        if (!currentUser) {
+
+            alert(
+                "Please login to your customer account first."
+            );
+
+            window.location.href =
+                "customer-login.html";
+
+            return;
+        }
+
+
+        /* =========================
+           CUSTOMER INFORMATION
+        ========================= */
 
         const name =
             document
@@ -370,6 +416,10 @@ onAuthStateChanged(auth, function(user) {
                 .value
                 .trim();
 
+
+        /* =========================
+           PAYMENT INFORMATION
+        ========================= */
 
         const paymentMethod =
             document
@@ -428,6 +478,10 @@ onAuthStateChanged(auth, function(user) {
         }
 
 
+        /* =========================
+           CART
+        ========================= */
+
         const cart =
             JSON.parse(
                 localStorage.getItem("cart")
@@ -436,7 +490,9 @@ onAuthStateChanged(auth, function(user) {
 
         if (cart.length === 0) {
 
-            alert("Your cart is empty.");
+            alert(
+                "Your cart is empty."
+            );
 
             return;
         }
@@ -449,18 +505,26 @@ onAuthStateChanged(auth, function(user) {
         let totalAmount = 0;
 
 
-        cart.forEach(function(product) {
+        cart.forEach(
+            function(product) {
 
-            const quantity =
-                Number(product.quantity) || 1;
+                const quantity =
+                    Number(
+                        product.quantity
+                    ) || 1;
 
-            const price =
-                Number(product.price) || 0;
 
-            totalAmount +=
-                price * quantity;
+                const price =
+                    Number(
+                        product.price
+                    ) || 0;
 
-        });
+
+                totalAmount +=
+                    price * quantity;
+
+            }
+        );
 
 
         /* =========================
@@ -475,69 +539,60 @@ onAuthStateChanged(auth, function(user) {
            ORDER DATA
         ========================= */
 
-        if (!authReady) {
+        const order = {
 
-    alert("Please wait a moment and try again.");
+            orderId:
+                orderId,
 
-    return;
-}
+            customerId:
+                currentUser.uid,
 
-const user = currentUser;
+            customerEmail:
+                currentUser.email || "",
 
-if (!user) {
+            customerName:
+                name,
 
-    alert("Please login to your customer account first.");
+            customerMobile:
+                mobile,
 
-    window.location.href = "customer-login.html";
+            customerAddress:
+                address,
 
-    return;
-}
+            paymentMethod:
+                paymentMethod,
 
+            paymentNumber:
+                paymentNumber,
 
-const order = {
+            transactionId:
+                transactionId,
 
-    orderId: orderId,
+            products:
+                cart,
 
-    customerId:
-        user.uid,
+            totalAmount:
+                totalAmount,
 
-    customerEmail:
-        user.email || "",
+            status:
+                "Pending",
 
-    customerName: name,
+            dateTime:
+                new Date().toLocaleString(),
 
-    customerMobile: mobile,
+            createdAt:
+                serverTimestamp()
 
-    customerAddress: address,
+        };
 
-    paymentMethod: paymentMethod,
-
-    paymentNumber:
-        paymentNumber,
-
-    transactionId:
-        transactionId,
-
-    products: cart,
-
-    totalAmount:
-        totalAmount,
-
-    status: "Pending",
-
-    dateTime:
-        new Date().toLocaleString(),
-
-    createdAt:
-        serverTimestamp()
-
-};
 
         /* =========================
            BUTTON LOCK
         ========================= */
 
-        button.disabled = true;
+        button.disabled =
+            true;
+
 
         button.innerText =
             "Placing Order...";
@@ -545,20 +600,23 @@ const order = {
 
         try {
 
+
             /* =========================
                FIRESTORE SAVE
             ========================= */
 
             const docRef =
                 await addDoc(
-                    collection(db, "orders"),
+                    collection(
+                        db,
+                        "orders"
+                    ),
                     order
                 );
 
 
             /* =========================
                LOCAL STORAGE
-               FOR CURRENT WEBSITE
             ========================= */
 
             let orders =
@@ -584,7 +642,9 @@ const order = {
 
             localStorage.setItem(
                 "orders",
-                JSON.stringify(orders)
+                JSON.stringify(
+                    orders
+                )
             );
 
 
@@ -596,6 +656,10 @@ const order = {
                 "cart"
             );
 
+
+            /* =========================
+               SUCCESS
+            ========================= */
 
             alert(
                 "Order placed successfully!"
@@ -619,7 +683,9 @@ const order = {
             );
 
 
-            button.disabled = false;
+            button.disabled =
+                false;
+
 
             button.innerText =
                 "Place Order";
