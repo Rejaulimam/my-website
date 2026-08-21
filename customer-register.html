@@ -1,0 +1,302 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>RK Store - Create Account</title>
+
+    <style>
+        body {
+            margin: 0;
+            font-family: Arial, sans-serif;
+            background: #f5f5f5;
+        }
+
+        .register-box {
+            width: 90%;
+            max-width: 400px;
+            margin: 50px auto;
+            background: white;
+            padding: 25px;
+            border-radius: 10px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.15);
+            box-sizing: border-box;
+        }
+
+        h2 {
+            text-align: center;
+            color: #ff6600;
+            margin-bottom: 25px;
+        }
+
+        input {
+            width: 100%;
+            padding: 12px;
+            margin-bottom: 15px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            box-sizing: border-box;
+            font-size: 16px;
+        }
+
+        button {
+            width: 100%;
+            padding: 12px;
+            background: #ff6600;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            font-size: 17px;
+            cursor: pointer;
+        }
+
+        button:hover {
+            background: #e65c00;
+        }
+
+        .login-link {
+            text-align: center;
+            margin-top: 18px;
+        }
+
+        .login-link a {
+            color: #ff6600;
+            text-decoration: none;
+            font-weight: bold;
+        }
+
+        #message {
+            text-align: center;
+            margin-top: 15px;
+            font-size: 14px;
+        }
+    </style>
+</head>
+
+<body>
+
+<div class="register-box">
+
+    <h2>Create Customer Account</h2>
+
+    <input
+        type="text"
+        id="name"
+        placeholder="Enter your name"
+    >
+
+    <input
+        type="email"
+        id="email"
+        placeholder="Enter your email"
+    >
+
+    <input
+        type="password"
+        id="password"
+        placeholder="Create password"
+    >
+
+    <input
+        type="password"
+        id="confirmPassword"
+        placeholder="Confirm password"
+    >
+
+    <button onclick="registerCustomer()">
+        Create Account
+    </button>
+
+    <div class="login-link">
+        Already have an account?
+        <a href="customer-login.html">
+            Login
+        </a>
+    </div>
+
+    <div id="message"></div>
+
+</div>
+
+
+<script type="module">
+
+import {
+    initializeApp
+}
+from "https://www.gstatic.com/firebasejs/12.18.0/firebase-app.js";
+
+
+import {
+    getAuth,
+    createUserWithEmailAndPassword,
+    updateProfile
+}
+from "https://www.gstatic.com/firebasejs/12.18.0/firebase-auth.js";
+
+
+const firebaseConfig = {
+
+    apiKey:
+        "AIzaSyCkBQaphKKz_Wxd1GgKAVoxqR4taKvzdEM",
+
+    authDomain:
+        "rk-store-5fb24.firebaseapp.com",
+
+    projectId:
+        "rk-store-5fb24",
+
+    storageBucket:
+        "rk-store-5fb24.firebasestorage.app",
+
+    messagingSenderId:
+        "407275549697",
+
+    appId:
+        "1:407275549697:web:41043b49bf7182cecffc00"
+};
+
+
+const app =
+    initializeApp(firebaseConfig);
+
+const auth =
+    getAuth(app);
+
+
+window.registerCustomer =
+async function() {
+
+    const name =
+        document.getElementById("name")
+        .value
+        .trim();
+
+    const email =
+        document.getElementById("email")
+        .value
+        .trim();
+
+    const password =
+        document.getElementById("password")
+        .value;
+
+    const confirmPassword =
+        document.getElementById("confirmPassword")
+        .value;
+
+    const message =
+        document.getElementById("message");
+
+
+    if (
+        name === "" ||
+        email === "" ||
+        password === "" ||
+        confirmPassword === ""
+    ) {
+
+        message.style.color = "red";
+
+        message.innerText =
+            "Please fill in all information.";
+
+        return;
+    }
+
+
+    if (password !== confirmPassword) {
+
+        message.style.color = "red";
+
+        message.innerText =
+            "Passwords do not match.";
+
+        return;
+    }
+
+
+    if (password.length < 6) {
+
+        message.style.color = "red";
+
+        message.innerText =
+            "Password must be at least 6 characters.";
+
+        return;
+    }
+
+
+    try {
+
+        const userCredential =
+            await createUserWithEmailAndPassword(
+                auth,
+                email,
+                password
+            );
+
+
+        await updateProfile(
+            userCredential.user,
+            {
+                displayName: name
+            }
+        );
+
+
+        message.style.color = "green";
+
+        message.innerText =
+            "Account created successfully!";
+
+
+        setTimeout(() => {
+
+            window.location.href =
+                "index.html";
+
+        }, 1500);
+
+
+    } catch (error) {
+
+        message.style.color = "red";
+
+
+        if (
+            error.code ===
+            "auth/email-already-in-use"
+        ) {
+
+            message.innerText =
+                "This email is already registered.";
+
+        }
+
+        else if (
+            error.code ===
+            "auth/invalid-email"
+        ) {
+
+            message.innerText =
+                "Please enter a valid email.";
+
+        }
+
+        else {
+
+            message.innerText =
+                error.message;
+
+        }
+
+    }
+
+};
+
+</script>
+
+</body>
+</html>
