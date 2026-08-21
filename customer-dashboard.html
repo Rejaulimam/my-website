@@ -1,0 +1,138 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Customer Dashboard - RK Store</title>
+
+    <style>
+        body {
+            margin: 0;
+            font-family: Arial, sans-serif;
+            background: #f5f5f5;
+        }
+
+        .header {
+            background: #ff6600;
+            color: white;
+            padding: 18px;
+            text-align: center;
+        }
+
+        .container {
+            max-width: 600px;
+            margin: 30px auto;
+            padding: 20px;
+        }
+
+        .card {
+            background: white;
+            padding: 20px;
+            margin-bottom: 15px;
+            border-radius: 10px;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+        }
+
+        .card h2 {
+            margin-top: 0;
+        }
+
+        button {
+            width: 100%;
+            padding: 12px;
+            border: none;
+            border-radius: 6px;
+            background: #ff6600;
+            color: white;
+            font-size: 16px;
+            cursor: pointer;
+        }
+
+        .logout {
+            background: #d32f2f;
+        }
+    </style>
+</head>
+
+<body>
+
+    <div class="header">
+        <h1>RK Store</h1>
+        <p>Customer Dashboard</p>
+    </div>
+
+    <div class="container">
+
+        <div class="card">
+            <h2>Welcome 👋</h2>
+            <p id="customerName">Loading...</p>
+        </div>
+
+        <div class="card">
+            <h2>📦 My Orders</h2>
+            <p>View your orders and order details.</p>
+
+            <button onclick="viewOrders()">
+                View My Orders
+            </button>
+        </div>
+
+        <div class="card">
+            <h2>🏠 Shopping</h2>
+            <p>Continue shopping at RK Store.</p>
+
+            <button onclick="goHome()">
+                Go to Home
+            </button>
+        </div>
+
+        <div class="card">
+            <button class="logout" onclick="logout()">
+                Logout
+            </button>
+        </div>
+
+    </div>
+
+    <script>
+
+        // Check logged-in customer
+        const customer = JSON.parse(
+            localStorage.getItem("customer")
+        );
+
+        if (!customer) {
+            window.location.href = "customer-login.html";
+        } else {
+
+            // Show customer name
+            document.getElementById("customerName").innerText =
+                "Hello, " + (customer.name || "Customer") + "!";
+        }
+
+
+        // View Orders
+        function viewOrders() {
+            window.location.href = "customer-orders.html";
+        }
+
+
+        // Go Home
+        function goHome() {
+            window.location.href = "index.html";
+        }
+
+
+        // Logout
+        function logout() {
+
+            localStorage.removeItem("customer");
+
+            window.location.href = "customer-login.html";
+        }
+
+    </script>
+
+</body>
+</html>
