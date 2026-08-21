@@ -1,0 +1,725 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta
+        name="viewport"
+        content="width=device-width, initial-scale=1.0"
+    >
+
+    <title>RK Store - My Order Details</title>
+
+    <style>
+
+        * {
+            box-sizing: border-box;
+        }
+
+        body {
+            margin: 0;
+            font-family: Arial, sans-serif;
+            background: #f5f5f5;
+            color: #333;
+        }
+
+        .header {
+            background: #ff6600;
+            color: white;
+            padding: 18px;
+            text-align: center;
+        }
+
+        .header h1 {
+            margin: 0;
+        }
+
+        .header p {
+            margin: 6px 0 0;
+        }
+
+        .container {
+            width: 92%;
+            max-width: 700px;
+            margin: 25px auto;
+        }
+
+        .back-button {
+            display: block;
+            width: 100%;
+            padding: 12px;
+            margin-bottom: 20px;
+            border: none;
+            border-radius: 6px;
+            background: #333;
+            color: white;
+            font-size: 16px;
+            cursor: pointer;
+        }
+
+        .card {
+            background: white;
+            padding: 18px;
+            margin-bottom: 18px;
+            border-radius: 10px;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+        }
+
+        .card-title {
+            font-size: 20px;
+            font-weight: bold;
+            color: #ff6600;
+            margin-bottom: 15px;
+        }
+
+        .info-row {
+            display: flex;
+            justify-content: space-between;
+            gap: 15px;
+            padding: 10px 0;
+            border-bottom: 1px solid #eee;
+        }
+
+        .info-row:last-child {
+            border-bottom: none;
+        }
+
+        .label {
+            color: #777;
+        }
+
+        .value {
+            font-weight: bold;
+            text-align: right;
+        }
+
+        .product {
+            border-top: 1px solid #ddd;
+            padding: 15px 0;
+        }
+
+        .product:first-child {
+            border-top: none;
+        }
+
+        .product-name {
+            font-size: 18px;
+            font-weight: bold;
+            margin-bottom: 8px;
+        }
+
+        .product p {
+            margin: 6px 0;
+            color: #555;
+        }
+
+        .subtotal {
+            text-align: right;
+            font-weight: bold;
+            color: #333;
+            margin-top: 8px;
+        }
+
+        .total {
+            display: flex;
+            justify-content: space-between;
+            border-top: 2px solid #ddd;
+            padding-top: 15px;
+            margin-top: 10px;
+            font-size: 20px;
+            font-weight: bold;
+        }
+
+        .total-price {
+            color: #ff6600;
+        }
+
+        .status {
+            display: inline-block;
+            padding: 7px 14px;
+            border-radius: 20px;
+            background: #fff3cd;
+            color: #856404;
+            font-weight: bold;
+        }
+
+        .error {
+            background: white;
+            padding: 25px;
+            text-align: center;
+            border-radius: 10px;
+        }
+
+    </style>
+
+</head>
+
+<body>
+
+    <div class="header">
+
+        <h1>RK Store</h1>
+
+        <p>Order Details</p>
+
+    </div>
+
+
+    <div class="container">
+
+        <button
+            class="back-button"
+            onclick="goBack()"
+        >
+            ← Back to My Orders
+        </button>
+
+
+        <div id="orderDetails">
+
+            Loading order details...
+
+        </div>
+
+    </div>
+
+
+<script type="module">
+
+    /* =========================
+       FIREBASE
+    ========================= */
+
+    import {
+        initializeApp
+    } from
+    "https://www.gstatic.com/firebasejs/12.18.0/firebase-app.js";
+
+
+    import {
+        getFirestore,
+        doc,
+        getDoc
+    } from
+    "https://www.gstatic.com/firebasejs/12.18.0/firebase-firestore.js";
+
+
+    import {
+        getAuth,
+        onAuthStateChanged
+    } from
+    "https://www.gstatic.com/firebasejs/12.18.0/firebase-auth.js";
+
+
+    /* =========================
+       FIREBASE CONFIG
+    ========================= */
+
+    const firebaseConfig = {
+
+        apiKey:
+            "AIzaSyCkBQaphKKz_Wxd1GgKAVoxqR4taKvzdEM",
+
+        authDomain:
+            "rk-store-5fb24.firebaseapp.com",
+
+        projectId:
+            "rk-store-5fb24",
+
+        storageBucket:
+            "rk-store-5fb24.firebasestorage.app",
+
+        messagingSenderId:
+            "407275549697",
+
+        appId:
+            "1:407275549697:web:41043b49bf7182cecffc00"
+
+    };
+
+
+    /* =========================
+       INITIALIZE
+    ========================= */
+
+    const app =
+        initializeApp(firebaseConfig);
+
+
+    const db =
+        getFirestore(app);
+
+
+    const auth =
+        getAuth(app);
+
+
+    /* =========================
+       GET ORDER ID
+    ========================= */
+
+    const urlParams =
+        new URLSearchParams(
+            window.location.search
+        );
+
+
+    const orderId =
+        urlParams.get("orderId");
+
+
+    /* =========================
+       AUTH CHECK
+    ========================= */
+
+    onAuthStateChanged(
+
+        auth,
+
+        async function(user) {
+
+            if (!user) {
+
+                window.location.href =
+                    "customer-login.html";
+
+                return;
+
+            }
+
+
+            if (!orderId) {
+
+                showError();
+
+                return;
+
+            }
+
+
+            await loadOrder(
+                user.uid,
+                orderId
+            );
+
+        }
+
+    );
+
+
+    /* =========================
+       LOAD ORDER
+    ========================= */
+
+    async function loadOrder(
+        customerId,
+        orderId
+    ) {
+
+        const container =
+            document.getElementById(
+                "orderDetails"
+            );
+
+
+        try {
+
+            const orderRef =
+                doc(
+                    db,
+                    "orders",
+                    orderId
+                );
+
+
+            const orderSnapshot =
+                await getDoc(
+                    orderRef
+                );
+
+
+            if (!orderSnapshot.exists()) {
+
+                showError();
+
+                return;
+
+            }
+
+
+            const order =
+                orderSnapshot.data();
+
+
+            /* =========================
+               SECURITY CHECK
+            ========================= */
+
+            if (
+                order.customerId !==
+                customerId
+            ) {
+
+                showError();
+
+                return;
+
+            }
+
+
+            let productsHTML = "";
+
+            let totalAmount = 0;
+
+
+            if (
+                Array.isArray(
+                    order.products
+                )
+            ) {
+
+                order.products.forEach(
+                    function(product) {
+
+                        const price =
+                            Number(
+                                product.price
+                            ) || 0;
+
+
+                        const quantity =
+                            Number(
+                                product.quantity
+                            ) || 1;
+
+
+                        const subtotal =
+                            price *
+                            quantity;
+
+
+                        totalAmount +=
+                            subtotal;
+
+
+                        productsHTML += `
+
+                            <div class="product">
+
+                                <div class="product-name">
+
+                                    ${
+                                        product.name ||
+                                        "Product"
+                                    }
+
+                                </div>
+
+                                <p>
+
+                                    Price:
+                                    ৳${price}
+
+                                </p>
+
+                                <p>
+
+                                    Quantity:
+                                    ${quantity}
+
+                                </p>
+
+                                <div class="subtotal">
+
+                                    Subtotal:
+                                    ৳${subtotal}
+
+                                </div>
+
+                            </div>
+
+                        `;
+
+                    }
+                );
+
+            }
+
+
+            if (!productsHTML) {
+
+                productsHTML = `
+
+                    <p>
+                        No products found.
+                    </p>
+
+                `;
+
+            }
+
+
+            container.innerHTML = `
+
+                <div class="card">
+
+                    <div class="card-title">
+                        Order Information
+                    </div>
+
+
+                    <div class="info-row">
+
+                        <span class="label">
+                            Order ID
+                        </span>
+
+                        <span class="value">
+                            ${
+                                order.orderId ||
+                                orderId
+                            }
+                        </span>
+
+                    </div>
+
+
+                    <div class="info-row">
+
+                        <span class="label">
+                            Order Date
+                        </span>
+
+                        <span class="value">
+                            ${
+                                order.dateTime ||
+                                "N/A"
+                            }
+                        </span>
+
+                    </div>
+
+
+                    <div class="info-row">
+
+                        <span class="label">
+                            Status
+                        </span>
+
+                        <span class="value">
+
+                            <span class="status">
+
+                                ${
+                                    order.status ||
+                                    "Pending"
+                                }
+
+                            </span>
+
+                        </span>
+
+                    </div>
+
+
+                    <div class="info-row">
+
+                        <span class="label">
+                            Status Updated
+                        </span>
+
+                        <span class="value">
+
+                            ${
+                                order.statusUpdatedTime ||
+                                "Not updated"
+                            }
+
+                        </span>
+
+                    </div>
+
+
+                    <div class="info-row">
+
+                        <span class="label">
+                            Payment
+                        </span>
+
+                        <span class="value">
+
+                            ${
+                                order.paymentMethod ||
+                                "N/A"
+                            }
+
+                        </span>
+
+                    </div>
+
+                </div>
+
+
+                <div class="card">
+
+                    <div class="card-title">
+                        Customer Information
+                    </div>
+
+
+                    <div class="info-row">
+
+                        <span class="label">
+                            Name
+                        </span>
+
+                        <span class="value">
+
+                            ${
+                                order.customerName ||
+                                "N/A"
+                            }
+
+                        </span>
+
+                    </div>
+
+
+                    <div class="info-row">
+
+                        <span class="label">
+                            Phone
+                        </span>
+
+                        <span class="value">
+
+                            ${
+                                order.customerMobile ||
+                                "N/A"
+                            }
+
+                        </span>
+
+                    </div>
+
+
+                    <div class="info-row">
+
+                        <span class="label">
+                            Address
+                        </span>
+
+                        <span class="value">
+
+                            ${
+                                order.customerAddress ||
+                                "N/A"
+                            }
+
+                        </span>
+
+                    </div>
+
+                </div>
+
+
+                <div class="card">
+
+                    <div class="card-title">
+                        Ordered Products
+                    </div>
+
+
+                    ${productsHTML}
+
+
+                    <div class="total">
+
+                        <span>
+                            Total Amount
+                        </span>
+
+                        <span class="total-price">
+                            ৳${totalAmount}
+                        </span>
+
+                    </div>
+
+                </div>
+
+            `;
+
+
+        } catch (error) {
+
+            console.error(
+                "Order Details Error:",
+                error
+            );
+
+
+            container.innerHTML = `
+
+                <div class="error">
+
+                    <h2>
+                        Unable to Load Order
+                    </h2>
+
+                    <p>
+                        Please try again later.
+                    </p>
+
+                </div>
+
+            `;
+
+        }
+
+    }
+
+
+    /* =========================
+       ERROR
+    ========================= */
+
+    function showError() {
+
+        document.getElementById(
+            "orderDetails"
+        ).innerHTML = `
+
+            <div class="error">
+
+                <h2>
+                    Order Not Found
+                </h2>
+
+                <p>
+                    This order could not be found.
+                </p>
+
+            </div>
+
+        `;
+
+    }
+
+
+    /* =========================
+       BACK
+    ========================= */
+
+    window.goBack =
+        function() {
+
+            window.location.href =
+                "customer-orders.html";
+
+        };
+
+</script>
+
+</body>
+</html>
