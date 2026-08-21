@@ -205,6 +205,15 @@ import {
 const auth =
     getAuth(app);
 
+import {
+    onAuthStateChanged
+} from "https://www.gstatic.com/firebasejs/12.18.0/firebase-auth.js";
+
+let currentUser = null;
+
+onAuthStateChanged(auth, function(user) {
+    currentUser = user;
+});
     /* =========================
        ORDER SUMMARY
     ========================= */
