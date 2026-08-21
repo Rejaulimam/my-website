@@ -214,20 +214,24 @@
 
     let currentUser = null;
 
-    let authReady = false;
+let authReady = false;
 
 
-    onAuthStateChanged(
-        auth,
-        function(user) {
+onAuthStateChanged(
+    auth,
+    function(user) {
 
-            currentUser = user;
+        currentUser = user;
 
-            authReady = true;
+        authReady = true;
 
-        }
-    );
+        console.log(
+            "Checkout Auth User:",
+            user
+        );
 
+    }
+);
 
     /* =========================
        ORDER SUMMARY
