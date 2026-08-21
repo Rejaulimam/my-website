@@ -74,12 +74,16 @@
         .logout:hover {
             background: #b71c1c;
         }
+
+        #loading {
+            text-align: center;
+            color: #666;
+        }
     </style>
 </head>
 
 <body>
 
-    <!-- HEADER -->
     <div class="header">
 
         <h1>RK Store</h1>
@@ -89,75 +93,75 @@
     </div>
 
 
-    <!-- MAIN CONTAINER -->
     <div class="container">
 
-
-        <!-- CUSTOMER INFORMATION -->
-        <div class="card">
-
-            <h2>Welcome 👋</h2>
-
-            <p id="customerName">
-                Loading...
-            </p>
-
-            <p id="customerEmail"
-               class="customer-email">
-                Loading...
-            </p>
-
+        <div id="loading">
+            Checking login...
         </div>
 
 
-        <!-- MY ORDERS -->
-        <div class="card">
+        <div id="dashboardContent" style="display:none;">
 
-            <h2>📦 My Orders</h2>
+            <div class="card">
 
-            <p>
-                View your orders and order details.
-            </p>
+                <h2>Welcome 👋</h2>
 
-            <button onclick="viewOrders()">
-                View My Orders
-            </button>
+                <p id="customerName">
+                    Customer
+                </p>
+
+                <p id="customerEmail"
+                   class="customer-email">
+                </p>
+
+            </div>
+
+
+            <div class="card">
+
+                <h2>📦 My Orders</h2>
+
+                <p>
+                    View your orders and order details.
+                </p>
+
+                <button onclick="viewOrders()">
+                    View My Orders
+                </button>
+
+            </div>
+
+
+            <div class="card">
+
+                <h2>🏠 Shopping</h2>
+
+                <p>
+                    Continue shopping at RK Store.
+                </p>
+
+                <button onclick="goHome()">
+                    Continue Shopping
+                </button>
+
+            </div>
+
+
+            <div class="card">
+
+                <button
+                    class="logout"
+                    onclick="logout()">
+                    Logout
+                </button>
+
+            </div>
 
         </div>
-
-
-        <!-- SHOPPING -->
-        <div class="card">
-
-            <h2>🏠 Shopping</h2>
-
-            <p>
-                Continue shopping at RK Store.
-            </p>
-
-            <button onclick="goHome()">
-                Continue Shopping
-            </button>
-
-        </div>
-
-
-        <!-- LOGOUT -->
-        <div class="card">
-
-            <button
-                class="logout"
-                onclick="logout()">
-                Logout
-            </button>
-
-        </div>
-
 
     </div>
 
 
-    <!-- FIREBASE -->
     <script type="module">
 
         /* =========================
@@ -167,7 +171,6 @@
         import {
             initializeApp
         } from "https://www.gstatic.com/firebasejs/12.18.0/firebase-app.js";
-
 
         import {
             getAuth,
@@ -204,35 +207,47 @@
 
 
         /* =========================
-           INITIALIZE FIREBASE
+           INITIALIZE
         ========================= */
 
         const app =
             initializeApp(firebaseConfig);
-
 
         const auth =
             getAuth(app);
 
 
         /* =========================
-           CHECK LOGIN STATUS
+           CHECK CUSTOMER LOGIN
         ========================= */
 
         onAuthStateChanged(
             auth,
             function(user) {
 
+                console.log(
+                    "Dashboard Auth:",
+                    user
+                );
+
+
                 if (user) {
 
-                    /*
-                       Customer is logged in
-                    */
+                    document
+                        .getElementById("loading")
+                        .style.display = "none";
+
+
+                    document
+                        .getElementById("dashboardContent")
+                        .style.display = "block";
+
 
                     document
                         .getElementById("customerName")
                         .innerText =
                         "You are logged in successfully.";
+
 
                     document
                         .getElementById("customerEmail")
@@ -244,11 +259,23 @@
                 else {
 
                     /*
-                       Customer is not logged in
+                       Give Firebase time
+                       to restore the session.
                     */
 
-                    window.location.href =
-                        "customer-login.html";
+                    setTimeout(
+                        function() {
+
+                            if (!auth.currentUser) {
+
+                                window.location.href =
+                                    "customer-login.html";
+
+                            }
+
+                        },
+                        3000
+                    );
 
                 }
 
@@ -257,7 +284,7 @@
 
 
         /* =========================
-           VIEW ORDERS
+           MY ORDERS
         ========================= */
 
         window.viewOrders =
@@ -270,7 +297,7 @@
 
 
         /* =========================
-           GO TO HOME
+           SHOPPING
         ========================= */
 
         window.goHome =
