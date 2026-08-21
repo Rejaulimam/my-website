@@ -4,10 +4,8 @@
 
     <meta charset="UTF-8">
 
-    <meta
-        name="viewport"
-        content="width=device-width, initial-scale=1.0"
-    >
+    <meta name="viewport"
+          content="width=device-width, initial-scale=1.0">
 
     <title>RK Store - My Orders</title>
 
@@ -83,38 +81,27 @@
 
 <h1>RK Store - My Orders</h1>
 
-
 <div
     class="container"
     id="ordersContainer"
 >
-
     <div class="loading">
-        Loading your orders...
+        Checking customer login...
     </div>
-
 </div>
 
 
 <script type="module">
 
-
-/* =========================
-   FIREBASE
-========================= */
-
-
 import {
     initializeApp
 } from "https://www.gstatic.com/firebasejs/12.18.0/firebase-app.js";
-
 
 import {
     getFirestore,
     collection,
     getDocs
 } from "https://www.gstatic.com/firebasejs/12.18.0/firebase-firestore.js";
-
 
 import {
     getAuth,
@@ -125,7 +112,7 @@ import {
 const firebaseConfig = {
 
     apiKey:
-        "AIzaSyCkBQaphKKz_WxdGgKAVoxqR4taKvzdEM",
+        "AIzaSyCkBQaphKKz_Wxd1GgKAVoxqR4taKvzdEM",
 
     authDomain:
         "rk-store-5fb24.firebaseapp.com",
@@ -148,10 +135,8 @@ const firebaseConfig = {
 const app =
     initializeApp(firebaseConfig);
 
-
 const db =
     getFirestore(app);
-
 
 const auth =
     getAuth(app);
@@ -161,14 +146,12 @@ const auth =
    LOAD CUSTOMER ORDERS
 ========================= */
 
-
 async function loadMyOrders(user) {
 
     const container =
         document.getElementById(
             "ordersContainer"
         );
-
 
     try {
 
@@ -177,22 +160,13 @@ async function loadMyOrders(user) {
                 collection(db, "orders")
             );
 
-
         let myOrders = [];
-
 
         snapshot.forEach(
             (docSnapshot) => {
 
                 const order =
                     docSnapshot.data();
-
-
-                /*
-                   শুধু এই Customer-এর
-                   customerId-এর অর্ডার নেওয়া হবে
-                */
-
 
                 if (
                     order.customerId === user.uid
@@ -208,25 +182,6 @@ async function loadMyOrders(user) {
                     });
 
                 }
-
-            }
-        );
-
-
-        /* =========================
-           NEWEST FIRST
-        ========================= */
-
-
-        myOrders.sort(
-            (a, b) => {
-
-                return (
-                    String(b.dateTime || "")
-                    .localeCompare(
-                        String(a.dateTime || "")
-                    )
-                );
 
             }
         );
@@ -258,7 +213,6 @@ async function loadMyOrders(user) {
             `;
 
             return;
-
         }
 
 
@@ -268,7 +222,6 @@ async function loadMyOrders(user) {
         myOrders.forEach(
             (order) => {
 
-
                 let productsHTML = "";
 
 
@@ -276,7 +229,6 @@ async function loadMyOrders(user) {
                     order.products &&
                     order.products.length > 0
                 ) {
-
 
                     order.products.forEach(
                         (product) => {
@@ -286,12 +238,10 @@ async function loadMyOrders(user) {
                                     product.price
                                 ) || 0;
 
-
                             const quantity =
                                 Number(
                                     product.quantity
                                 ) || 1;
-
 
                             const subtotal =
                                 price * quantity;
@@ -352,9 +302,7 @@ async function loadMyOrders(user) {
                             ${order.orderId || "N/A"}
                         </h2>
 
-
                         <p>
-
                             <strong>
                                 Date:
                             </strong>
@@ -363,12 +311,9 @@ async function loadMyOrders(user) {
                                 order.dateTime ||
                                 "N/A"
                             }
-
                         </p>
 
-
                         <p>
-
                             <strong>
                                 Status:
                             </strong>
@@ -381,26 +326,20 @@ async function loadMyOrders(user) {
                                 }
 
                             </span>
-
                         </p>
-
 
                         <h3>
                             Products
                         </h3>
 
-
                         ${productsHTML}
 
-
                         <p>
-
                             <strong>
                                 Total:
                             </strong>
 
                             ৳${total}
-
                         </p>
 
                     </div>
@@ -420,7 +359,6 @@ async function loadMyOrders(user) {
             "My Orders Error:",
             error
         );
-
 
         container.innerHTML = `
 
@@ -444,17 +382,21 @@ async function loadMyOrders(user) {
 
 
 /* =========================
-   CUSTOMER LOGIN CHECK
+   CHECK CUSTOMER LOGIN
 ========================= */
-
 
 onAuthStateChanged(
     auth,
     (user) => {
 
+        if (user) {
 
-        if (!user) {
+            // Customer is already logged in
+            loadMyOrders(user);
 
+        } else {
+
+            // Customer is not logged in
             document
                 .getElementById(
                     "ordersContainer"
@@ -482,18 +424,10 @@ onAuthStateChanged(
 
                 `;
 
-            return;
-
         }
-
-
-        /* Customer logged in */
-
-        loadMyOrders(user);
 
     }
 );
-
 
 </script>
 
