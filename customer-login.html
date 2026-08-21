@@ -1,0 +1,224 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>RK Store - Customer Login</title>
+
+    <style>
+        body {
+            margin: 0;
+            font-family: Arial, sans-serif;
+            background: #f5f5f5;
+        }
+
+        .login-box {
+            width: 90%;
+            max-width: 400px;
+            margin: 60px auto;
+            background: white;
+            padding: 25px;
+            border-radius: 10px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.15);
+            box-sizing: border-box;
+        }
+
+        h2 {
+            text-align: center;
+            color: #ff6600;
+            margin-bottom: 25px;
+        }
+
+        input {
+            width: 100%;
+            padding: 12px;
+            margin-bottom: 15px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            box-sizing: border-box;
+            font-size: 16px;
+        }
+
+        button {
+            width: 100%;
+            padding: 12px;
+            background: #ff6600;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            font-size: 17px;
+            cursor: pointer;
+        }
+
+        button:hover {
+            background: #e65c00;
+        }
+
+        .register {
+            text-align: center;
+            margin-top: 18px;
+        }
+
+        .register a {
+            color: #ff6600;
+            text-decoration: none;
+            font-weight: bold;
+        }
+
+        #message {
+            text-align: center;
+            margin-top: 15px;
+            font-size: 14px;
+        }
+    </style>
+</head>
+
+<body>
+
+<div class="login-box">
+
+    <h2>RK Store Customer Login</h2>
+
+    <input
+        type="email"
+        id="email"
+        placeholder="Enter your email"
+    >
+
+    <input
+        type="password"
+        id="password"
+        placeholder="Enter your password"
+    >
+
+    <button onclick="loginCustomer()">
+        Login
+    </button>
+
+    <div class="register">
+        New customer?
+        <a href="customer-register.html">
+            Create Account
+        </a>
+    </div>
+
+    <div id="message"></div>
+
+</div>
+
+
+<script type="module">
+
+import { initializeApp }
+from "https://www.gstatic.com/firebasejs/12.18.0/firebase-app.js";
+
+import {
+    getAuth,
+    signInWithEmailAndPassword
+}
+from "https://www.gstatic.com/firebasejs/12.18.0/firebase-auth.js";
+
+
+const firebaseConfig = {
+
+    apiKey:
+        "AIzaSyCkBQaphKKz_Wxd1GgKAVoxqR4taKvzdEM",
+
+    authDomain:
+        "rk-store-5fb24.firebaseapp.com",
+
+    projectId:
+        "rk-store-5fb24",
+
+    storageBucket:
+        "rk-store-5fb24.firebasestorage.app",
+
+    messagingSenderId:
+        "407275549697",
+
+    appId:
+        "1:407275549697:web:41043b49bf7182cecffc00"
+};
+
+
+const app =
+    initializeApp(firebaseConfig);
+
+const auth =
+    getAuth(app);
+
+
+window.loginCustomer = function() {
+
+    const email =
+        document.getElementById("email").value.trim();
+
+    const password =
+        document.getElementById("password").value;
+
+    const message =
+        document.getElementById("message");
+
+
+    if (email === "" || password === "") {
+
+        message.style.color = "red";
+
+        message.innerText =
+            "Please enter email and password.";
+
+        return;
+    }
+
+
+    signInWithEmailAndPassword(
+        auth,
+        email,
+        password
+    )
+
+    .then(() => {
+
+        message.style.color = "green";
+
+        message.innerText =
+            "Login successful!";
+
+
+        setTimeout(() => {
+
+            window.location.href =
+                "index.html";
+
+        }, 1000);
+
+    })
+
+    .catch((error) => {
+
+        message.style.color = "red";
+
+        if (
+            error.code ===
+            "auth/invalid-credential"
+        ) {
+
+            message.innerText =
+                "Invalid email or password.";
+
+        } else {
+
+            message.innerText =
+                error.message;
+
+        }
+
+    });
+
+};
+
+</script>
+
+</body>
+</html>
