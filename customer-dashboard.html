@@ -20,10 +20,18 @@
             text-align: center;
         }
 
+        .header h1 {
+            margin: 0;
+        }
+
+        .header p {
+            margin: 6px 0 0;
+        }
+
         .container {
+            width: 90%;
             max-width: 600px;
             margin: 30px auto;
-            padding: 20px;
         }
 
         .card {
@@ -36,6 +44,12 @@
 
         .card h2 {
             margin-top: 0;
+            color: #333;
+        }
+
+        .customer-email {
+            color: #555;
+            word-break: break-word;
         }
 
         button {
@@ -49,88 +63,251 @@
             cursor: pointer;
         }
 
+        button:hover {
+            background: #e65c00;
+        }
+
         .logout {
             background: #d32f2f;
+        }
+
+        .logout:hover {
+            background: #b71c1c;
         }
     </style>
 </head>
 
 <body>
 
+    <!-- HEADER -->
     <div class="header">
+
         <h1>RK Store</h1>
+
         <p>Customer Dashboard</p>
+
     </div>
 
+
+    <!-- MAIN CONTAINER -->
     <div class="container">
 
+
+        <!-- CUSTOMER INFORMATION -->
         <div class="card">
+
             <h2>Welcome 👋</h2>
-            <p id="customerName">Loading...</p>
+
+            <p id="customerName">
+                Loading...
+            </p>
+
+            <p id="customerEmail"
+               class="customer-email">
+                Loading...
+            </p>
+
         </div>
 
+
+        <!-- MY ORDERS -->
         <div class="card">
+
             <h2>📦 My Orders</h2>
-            <p>View your orders and order details.</p>
+
+            <p>
+                View your orders and order details.
+            </p>
 
             <button onclick="viewOrders()">
                 View My Orders
             </button>
+
         </div>
 
+
+        <!-- SHOPPING -->
         <div class="card">
+
             <h2>🏠 Shopping</h2>
-            <p>Continue shopping at RK Store.</p>
+
+            <p>
+                Continue shopping at RK Store.
+            </p>
 
             <button onclick="goHome()">
-                Go to Home
+                Continue Shopping
             </button>
+
         </div>
 
+
+        <!-- LOGOUT -->
         <div class="card">
-            <button class="logout" onclick="logout()">
+
+            <button
+                class="logout"
+                onclick="logout()">
                 Logout
             </button>
+
         </div>
+
 
     </div>
 
-    <script>
 
-        // Check logged-in customer
-        const customer = JSON.parse(
-            localStorage.getItem("customer")
+    <!-- FIREBASE -->
+    <script type="module">
+
+        /* =========================
+           FIREBASE
+        ========================= */
+
+        import {
+            initializeApp
+        } from "https://www.gstatic.com/firebasejs/12.18.0/firebase-app.js";
+
+
+        import {
+            getAuth,
+            onAuthStateChanged,
+            signOut
+        } from "https://www.gstatic.com/firebasejs/12.18.0/firebase-auth.js";
+
+
+        /* =========================
+           FIREBASE CONFIG
+        ========================= */
+
+        const firebaseConfig = {
+
+            apiKey:
+                "AIzaSyCkBQaphKKz_Wxd1GgKAVoxqR4taKvzdEM",
+
+            authDomain:
+                "rk-store-5fb24.firebaseapp.com",
+
+            projectId:
+                "rk-store-5fb24",
+
+            storageBucket:
+                "rk-store-5fb24.firebasestorage.app",
+
+            messagingSenderId:
+                "407275549697",
+
+            appId:
+                "1:407275549697:web:41043b49bf7182cecffc00"
+
+        };
+
+
+        /* =========================
+           INITIALIZE FIREBASE
+        ========================= */
+
+        const app =
+            initializeApp(firebaseConfig);
+
+
+        const auth =
+            getAuth(app);
+
+
+        /* =========================
+           CHECK LOGIN STATUS
+        ========================= */
+
+        onAuthStateChanged(
+            auth,
+            function(user) {
+
+                if (user) {
+
+                    /*
+                       Customer is logged in
+                    */
+
+                    document
+                        .getElementById("customerName")
+                        .innerText =
+                        "You are logged in successfully.";
+
+                    document
+                        .getElementById("customerEmail")
+                        .innerText =
+                        "Email: " + user.email;
+
+                }
+
+                else {
+
+                    /*
+                       Customer is not logged in
+                    */
+
+                    window.location.href =
+                        "customer-login.html";
+
+                }
+
+            }
         );
 
-        if (!customer) {
-            window.location.href = "customer-login.html";
-        } else {
 
-            // Show customer name
-            document.getElementById("customerName").innerText =
-                "Hello, " + (customer.name || "Customer") + "!";
-        }
+        /* =========================
+           VIEW ORDERS
+        ========================= */
 
+        window.viewOrders =
+            function() {
 
-        // View Orders
-        function viewOrders() {
-            window.location.href = "customer-orders.html";
-        }
+                window.location.href =
+                    "customer-orders.html";
+
+            };
 
 
-        // Go Home
-        function goHome() {
-            window.location.href = "index.html";
-        }
+        /* =========================
+           GO TO HOME
+        ========================= */
+
+        window.goHome =
+            function() {
+
+                window.location.href =
+                    "index.html";
+
+            };
 
 
-        // Logout
-        function logout() {
+        /* =========================
+           LOGOUT
+        ========================= */
 
-            localStorage.removeItem("customer");
+        window.logout =
+            async function() {
 
-            window.location.href = "customer-login.html";
-        }
+                try {
+
+                    await signOut(auth);
+
+                    window.location.href =
+                        "customer-login.html";
+
+                }
+
+                catch (error) {
+
+                    console.error(
+                        "Logout Error:",
+                        error
+                    );
+
+                }
+
+            };
 
     </script>
 
