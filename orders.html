@@ -479,14 +479,8 @@ function deleteOrder(index) {
 
 function viewDetails(index) {
 
-    localStorage.setItem(
-        "selectedOrderIndex",
-        index
-    );
-
-
     window.location.href =
-        "order-details.html";
+        "order-details.html?order=" + index;
 
 }
 
