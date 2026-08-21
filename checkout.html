@@ -475,11 +475,20 @@ onAuthStateChanged(auth, function(user) {
            ORDER DATA
         ========================= */
 
-        const user = currentUser;
+        if (!authReady) {
+
+    alert("Please wait a moment and try again.");
+
+    return;
+}
+
+const user = currentUser;
 
 if (!user) {
 
-    alert("Customer login session not found. Please wait a moment and try again.");
+    alert("Please login to your customer account first.");
+
+    window.location.href = "customer-login.html";
 
     return;
 }
