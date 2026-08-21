@@ -643,6 +643,19 @@
         };
 
 
+/* =========================
+   VIEW ORDER DETAILS
+========================= */
+
+window.viewOrderDetails =
+    function(orderId) {
+
+        window.location.href =
+            "customer-order-details.html?orderId=" +
+            encodeURIComponent(orderId);
+
+    };
+
 
     /* =========================
        HOME
