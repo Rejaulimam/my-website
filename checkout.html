@@ -471,11 +471,11 @@ onAuthStateChanged(auth, function(user) {
            ORDER DATA
         ========================= */
 
-        const user = auth.currentUser;
+        const user = currentUser;
 
 if (!user) {
 
-    alert("Customer login session not found. Please login again.");
+    alert("Customer login session not found. Please wait a moment and try again.");
 
     return;
 }
