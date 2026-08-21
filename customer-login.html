@@ -55,6 +55,11 @@
             background: #e65c00;
         }
 
+        button:disabled {
+            background: #999;
+            cursor: not-allowed;
+        }
+
         .register {
             text-align: center;
             margin-top: 18px;
@@ -92,7 +97,10 @@
         placeholder="Enter your password"
     >
 
-    <button onclick="loginCustomer()">
+    <button
+        id="loginButton"
+        onclick="loginCustomer()"
+    >
         Login
     </button>
 
@@ -110,17 +118,26 @@
 
 <script type="module">
 
-import { initializeApp }
-from "https://www.gstatic.com/firebasejs/12.18.0/firebase-app.js";
+/* =========================
+   FIREBASE
+========================= */
+
+import {
+    initializeApp
+} from "https://www.gstatic.com/firebasejs/12.18.0/firebase-app.js";
 
 import {
     getAuth,
     signInWithEmailAndPassword,
     setPersistence,
-    browserLocalPersistence
-}
-from "https://www.gstatic.com/firebasejs/12.18.0/firebase-auth.js";
+    browserLocalPersistence,
+    onAuthStateChanged
+} from "https://www.gstatic.com/firebasejs/12.18.0/firebase-auth.js";
 
+
+/* =========================
+   FIREBASE CONFIG
+========================= */
 
 const firebaseConfig = {
 
@@ -144,9 +161,12 @@ const firebaseConfig = {
 };
 
 
+/* =========================
+   INITIALIZE FIREBASE
+========================= */
+
 const app =
     initializeApp(firebaseConfig);
-
 
 const auth =
     getAuth(app);
@@ -172,6 +192,9 @@ window.loginCustomer = async function() {
     const message =
         document.getElementById("message");
 
+    const loginButton =
+        document.getElementById("loginButton");
+
 
     /* =========================
        VALIDATION
@@ -191,6 +214,16 @@ window.loginCustomer = async function() {
     }
 
 
+    /* =========================
+       BUTTON LOCK
+    ========================= */
+
+    loginButton.disabled = true;
+
+    loginButton.innerText =
+        "Logging in...";
+
+
     try {
 
         /* =========================
@@ -207,10 +240,60 @@ window.loginCustomer = async function() {
            FIREBASE LOGIN
         ========================= */
 
-        await signInWithEmailAndPassword(
-            auth,
-            email,
-            password
+        const userCredential =
+            await signInWithEmailAndPassword(
+                auth,
+                email,
+                password
+            );
+
+
+        const user =
+            userCredential.user;
+
+
+        /* =========================
+           CHECK USER
+        ========================= */
+
+        if (!user) {
+
+            throw new Error(
+                "Customer login session could not be created."
+            );
+        }
+
+
+        console.log(
+            "Customer logged in:",
+            user.uid
+        );
+
+
+        /* =========================
+           WAIT FOR AUTH STATE
+        ========================= */
+
+        await new Promise(
+            function(resolve) {
+
+                const unsubscribe =
+                    onAuthStateChanged(
+                        auth,
+                        function(currentUser) {
+
+                            if (currentUser) {
+
+                                unsubscribe();
+
+                                resolve();
+
+                            }
+
+                        }
+                    );
+
+            }
         );
 
 
@@ -218,18 +301,26 @@ window.loginCustomer = async function() {
            SUCCESS
         ========================= */
 
-        message.style.color = "green";
+        message.style.color =
+            "green";
 
         message.innerText =
             "Login successful!";
 
 
-        setTimeout(function() {
+        /* =========================
+           GO TO HOME
+        ========================= */
 
-            window.location.href =
-                "index.html";
+        setTimeout(
+            function() {
 
-        }, 1000);
+                window.location.href =
+                    "index.html";
+
+            },
+            500
+        );
 
 
     } catch (error) {
@@ -252,12 +343,45 @@ window.loginCustomer = async function() {
             message.innerText =
                 "Invalid email or password.";
 
-        } else {
+        }
+
+        else if (
+            error.code ===
+            "auth/user-not-found"
+        ) {
+
+            message.innerText =
+                "Customer account not found.";
+
+        }
+
+        else if (
+            error.code ===
+            "auth/wrong-password"
+        ) {
+
+            message.innerText =
+                "Incorrect password.";
+
+        }
+
+        else {
 
             message.innerText =
                 error.message;
 
         }
+
+
+        /* =========================
+           UNLOCK BUTTON
+        ========================= */
+
+        loginButton.disabled =
+            false;
+
+        loginButton.innerText =
+            "Login";
 
     }
 
