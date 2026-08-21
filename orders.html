@@ -419,36 +419,44 @@ document.getElementById("filterStatus")
 
 
 </script>
-<!-- Firebase -->
+<!-- Firebase Login Protection -->
 <script type="module">
-    import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js";
+
+    import { initializeApp }
+    from "https://www.gstatic.com/firebasejs/12.1.0/firebase-app.js";
+
     import {
         getAuth,
         onAuthStateChanged
-    } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-auth.js";
+    }
+    from "https://www.gstatic.com/firebasejs/12.1.0/firebase-auth.js";
 
-    // এখানে Login page-এ যে একই firebaseConfig ব্যবহার করেছো,
-    // ঠিক সেই config বসাতে হবে।
+
     const firebaseConfig = {
-        apiKey: "তোমার_API_KEY",
-        authDomain: "তোমার_AUTH_DOMAIN",
-        projectId: "তোমার_PROJECT_ID",
-        storageBucket: "তোমার_STORAGE_BUCKET",
-        messagingSenderId: "তোমার_MESSAGING_SENDER_ID",
-        appId: "তোমার_APP_ID"
+        apiKey: "AIzaSyCkBQaphKKz_Wxd1GgKAVoxqR4taKvzdEM",
+        authDomain: "rk-store-5fb24.firebaseapp.com",
+        projectId: "rk-store-5fb24",
+        storageBucket: "rk-store-5fb24.firebasestorage.app",
+        messagingSenderId: "407275549697",
+        appId: "1:407275549697:web:41043b49bf7182cecffc00"
     };
 
+
     const app = initializeApp(firebaseConfig);
+
     const auth = getAuth(app);
+
 
     onAuthStateChanged(auth, (user) => {
 
         if (!user) {
-            // Login না থাকলে Login page-এ পাঠাবে
+
             window.location.href = "login.html";
+
         }
 
     });
+
 </script>
 </body>
 </html>
