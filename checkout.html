@@ -461,39 +461,57 @@ const auth =
            ORDER DATA
         ========================= */
 
-        const order = {
+        const user = auth.currentUser;
 
-            orderId: orderId,
+if (!user) {
 
-            customerName: name,
+    alert("Please login to place an order.");
 
-            customerMobile: mobile,
+    window.location.href =
+        "customer-login.html";
 
-            customerAddress: address,
+    return;
+}
 
-            paymentMethod: paymentMethod,
 
-            paymentNumber:
-                paymentNumber,
+const order = {
 
-            transactionId:
-                transactionId,
+    orderId: orderId,
 
-            products: cart,
+    customerId:
+        user.uid,
 
-            totalAmount:
-                totalAmount,
+    customerEmail:
+        user.email || "",
 
-            status: "Pending",
+    customerName: name,
 
-            dateTime:
-                new Date().toLocaleString(),
+    customerMobile: mobile,
 
-            createdAt:
-                serverTimestamp()
+    customerAddress: address,
 
-        };
+    paymentMethod: paymentMethod,
 
+    paymentNumber:
+        paymentNumber,
+
+    transactionId:
+        transactionId,
+
+    products: cart,
+
+    totalAmount:
+        totalAmount,
+
+    status: "Pending",
+
+    dateTime:
+        new Date().toLocaleString(),
+
+    createdAt:
+        serverTimestamp()
+
+};
 
         /* =========================
            BUTTON LOCK
