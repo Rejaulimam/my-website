@@ -1,342 +1,765 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
+
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <meta
+        name="viewport"
+        content="width=device-width, initial-scale=1.0"
+    >
 
     <title>Customer Dashboard - RK Store</title>
 
+
     <style>
-        body {
-            margin: 0;
-            font-family: Arial, sans-serif;
-            background: #f5f5f5;
+
+        * {
+            box-sizing: border-box;
         }
+
+
+        body {
+
+            margin: 0;
+
+            font-family: Arial, sans-serif;
+
+            background: #f5f5f5;
+
+            color: #333;
+
+        }
+
+
+        /* =========================
+           HEADER
+        ========================= */
 
         .header {
+
             background: #ff6600;
+
             color: white;
+
             padding: 18px;
+
             text-align: center;
+
         }
+
 
         .header h1 {
+
             margin: 0;
+
         }
+
 
         .header p {
+
             margin: 6px 0 0;
+
         }
+
+
+        /* =========================
+           CONTAINER
+        ========================= */
 
         .container {
-            width: 90%;
-            max-width: 600px;
-            margin: 30px auto;
+
+            width: 92%;
+
+            max-width: 700px;
+
+            margin: 25px auto;
+
         }
 
-        .card {
-            background: white;
-            padding: 20px;
-            margin-bottom: 15px;
-            border-radius: 10px;
-            box-shadow: 0 2px 8px rgba(0,0,0,0.1);
-        }
 
-        .card h2 {
-            margin-top: 0;
-            color: #333;
-        }
-
-        .customer-email {
-            color: #555;
-            word-break: break-word;
-        }
-
-        button {
-            width: 100%;
-            padding: 12px;
-            border: none;
-            border-radius: 6px;
-            background: #ff6600;
-            color: white;
-            font-size: 16px;
-            cursor: pointer;
-        }
-
-        button:hover {
-            background: #e65c00;
-        }
-
-        .logout {
-            background: #d32f2f;
-        }
-
-        .logout:hover {
-            background: #b71c1c;
-        }
+        /* =========================
+           LOADING
+        ========================= */
 
         #loading {
+
             text-align: center;
+
             color: #666;
+
+            padding: 30px;
+
         }
-    </style>
-</head>
-
-<body>
-
-    <div class="header">
-
-        <h1>RK Store</h1>
-
-        <p>Customer Dashboard</p>
-
-    </div>
-
-
-    <div class="container">
-
-        <div id="loading">
-            Checking login...
-        </div>
-
-
-        <div id="dashboardContent" style="display:none;">
-
-            <div class="card">
-
-                <h2>Welcome 👋</h2>
-
-                <p id="customerName">
-                    Customer
-                </p>
-
-                <p id="customerEmail"
-                   class="customer-email">
-                </p>
-
-            </div>
-
-
-            <div class="card">
-
-                <h2>📦 My Orders</h2>
-
-                <p>
-                    View your orders and order details.
-                </p>
-
-                <button onclick="viewOrders()">
-                    View My Orders
-                </button>
-
-            </div>
-
-
-            <div class="card">
-
-                <h2>🏠 Shopping</h2>
-
-                <p>
-                    Continue shopping at RK Store.
-                </p>
-
-                <button onclick="goHome()">
-                    Continue Shopping
-                </button>
-
-            </div>
-
-
-            <div class="card">
-
-                <button
-                    class="logout"
-                    onclick="logout()">
-                    Logout
-                </button>
-
-            </div>
-
-        </div>
-
-    </div>
-
-
-    <script type="module">
-
-        /* =========================
-           FIREBASE
-        ========================= */
-
-        import {
-            initializeApp
-        } from "https://www.gstatic.com/firebasejs/12.18.0/firebase-app.js";
-
-        import {
-            getAuth,
-            onAuthStateChanged,
-            signOut
-        } from "https://www.gstatic.com/firebasejs/12.18.0/firebase-auth.js";
 
 
         /* =========================
-           FIREBASE CONFIG
+           CARD
         ========================= */
 
-        const firebaseConfig = {
+        .card {
 
-            apiKey:
-                "AIzaSyCkBQaphKKz_Wxd1GgKAVoxqR4taKvzdEM",
+            background: white;
 
-            authDomain:
-                "rk-store-5fb24.firebaseapp.com",
+            padding: 20px;
 
-            projectId:
-                "rk-store-5fb24",
+            margin-bottom: 18px;
 
-            storageBucket:
-                "rk-store-5fb24.firebasestorage.app",
+            border-radius: 10px;
 
-            messagingSenderId:
-                "407275549697",
+            box-shadow:
+                0 2px 8px rgba(0,0,0,0.1);
 
-            appId:
-                "1:407275549697:web:41043b49bf7182cecffc00"
+        }
 
-        };
+
+        .card h2 {
+
+            margin-top: 0;
+
+            color: #333;
+
+        }
 
 
         /* =========================
-           INITIALIZE
+           CUSTOMER INFORMATION
         ========================= */
 
-        const app =
-            initializeApp(firebaseConfig);
+        .customer-name {
 
-        const auth =
-            getAuth(app);
+            font-size: 20px;
+
+            font-weight: bold;
+
+            color: #ff6600;
+
+            margin-bottom: 8px;
+
+        }
+
+
+        .customer-email {
+
+            color: #555;
+
+            word-break: break-word;
+
+        }
 
 
         /* =========================
-           CHECK CUSTOMER LOGIN
+           MENU
         ========================= */
 
-        onAuthStateChanged(
-            auth,
-            function(user) {
+        .menu-title {
 
-                console.log(
-                    "Dashboard Auth:",
-                    user
-                );
+            font-size: 20px;
 
+            font-weight: bold;
 
-                if (user) {
+            margin-bottom: 15px;
 
-                    document
-                        .getElementById("loading")
-                        .style.display = "none";
+            color: #333;
+
+        }
 
 
-                    document
-                        .getElementById("dashboardContent")
-                        .style.display = "block";
+        .menu-button {
+
+            display: block;
+
+            width: 100%;
+
+            padding: 14px;
+
+            margin-bottom: 10px;
+
+            border: none;
+
+            border-radius: 6px;
+
+            background: #ff6600;
+
+            color: white;
+
+            font-size: 16px;
+
+            cursor: pointer;
+
+            text-align: left;
+
+        }
 
 
-                    document
-    .getElementById("customerName")
-    .innerText =
-    "Hello, " + (user.displayName || "Customer") + "!";
+        .menu-button:hover {
 
+            background: #e65c00;
 
-                    document
-                        .getElementById("customerEmail")
-                        .innerText =
-                        "Email: " + user.email;
-
-                }
-
-                else {
-
-                    /*
-                       Give Firebase time
-                       to restore the session.
-                    */
-
-                    setTimeout(
-                        function() {
-
-                            if (!auth.currentUser) {
-
-                                window.location.href =
-                                    "customer-login.html";
-
-                            }
-
-                        },
-                        3000
-                    );
-
-                }
-
-            }
-        );
+        }
 
 
         /* =========================
-           MY ORDERS
+           STATUS BUTTONS
         ========================= */
 
-        window.viewOrders =
-            function() {
+        .pending-button {
 
-                window.location.href =
-                    "customer-orders.html";
+            background: #f0ad00;
 
-            };
+        }
+
+
+        .pending-button:hover {
+
+            background: #d99a00;
+
+        }
+
+
+        .shipped-button {
+
+            background: #1976d2;
+
+        }
+
+
+        .shipped-button:hover {
+
+            background: #125ca8;
+
+        }
+
+
+        .delivered-button {
+
+            background: #27ae60;
+
+        }
+
+
+        .delivered-button:hover {
+
+            background: #1f8c4d;
+
+        }
 
 
         /* =========================
            SHOPPING
         ========================= */
 
-        window.goHome =
-            function() {
+        .shopping-button {
 
-                window.location.href =
-                    "index.html";
+            background: #ff6600;
 
-            };
+        }
 
 
         /* =========================
            LOGOUT
         ========================= */
 
-        window.logout =
-            async function() {
+        .logout {
 
-                try {
+            background: #d32f2f;
 
-                    await signOut(auth);
+        }
 
-                    window.location.href =
-                        "customer-login.html";
 
-                }
+        .logout:hover {
 
-                catch (error) {
+            background: #b71c1c;
 
-                    console.error(
-                        "Logout Error:",
-                        error
+        }
+
+
+        /* =========================
+           MOBILE
+        ========================= */
+
+        @media (max-width: 500px) {
+
+            .container {
+
+                width: 94%;
+
+            }
+
+            .card {
+
+                padding: 17px;
+
+            }
+
+        }
+
+    </style>
+
+</head>
+
+
+<body>
+
+
+    <!-- =========================
+         HEADER
+    ========================= -->
+
+    <div class="header">
+
+        <h1>RK Store</h1>
+
+        <p>
+            Customer Dashboard
+        </p>
+
+    </div>
+
+
+
+    <!-- =========================
+         MAIN CONTAINER
+    ========================= -->
+
+    <div class="container">
+
+
+        <!-- LOADING -->
+
+        <div id="loading">
+
+            Checking login...
+
+        </div>
+
+
+
+        <!-- DASHBOARD -->
+
+        <div
+            id="dashboardContent"
+            style="display:none;"
+        >
+
+
+            <!-- =========================
+                 CUSTOMER INFORMATION
+            ========================= -->
+
+            <div class="card">
+
+                <h2>
+                    Welcome 👋
+                </h2>
+
+
+                <div
+                    id="customerName"
+                    class="customer-name"
+                >
+                    Customer
+                </div>
+
+
+                <div
+                    id="customerEmail"
+                    class="customer-email"
+                >
+                </div>
+
+            </div>
+
+
+
+            <!-- =========================
+                 MY ORDERS
+            ========================= -->
+
+            <div class="card">
+
+                <div class="menu-title">
+
+                    📦 My Orders
+
+                </div>
+
+
+                <button
+                    class="menu-button"
+                    onclick="viewOrders()"
+                >
+
+                    📦 View All Orders
+
+                </button>
+
+
+                <button
+                    class="menu-button pending-button"
+                    onclick="viewOrders()"
+                >
+
+                    🟡 Pending Orders
+
+                </button>
+
+
+                <button
+                    class="menu-button shipped-button"
+                    onclick="viewOrders()"
+                >
+
+                    🚚 Shipped Orders
+
+                </button>
+
+
+                <button
+                    class="menu-button delivered-button"
+                    onclick="viewOrders()"
+                >
+
+                    ✅ Delivered Orders
+
+                </button>
+
+            </div>
+
+
+
+            <!-- =========================
+                 SHOPPING
+            ========================= -->
+
+            <div class="card">
+
+                <div class="menu-title">
+
+                    🛍️ Shopping
+
+                </div>
+
+
+                <p>
+
+                    Continue shopping at
+                    RK Store.
+
+                </p>
+
+
+                <button
+                    class="menu-button shopping-button"
+                    onclick="goHome()"
+                >
+
+                    🛍️ Continue Shopping
+
+                </button>
+
+            </div>
+
+
+
+            <!-- =========================
+                 LOGOUT
+            ========================= -->
+
+            <div class="card">
+
+                <button
+                    class="menu-button logout"
+                    onclick="logout()"
+                >
+
+                    🚪 Logout
+
+                </button>
+
+            </div>
+
+
+        </div>
+
+    </div>
+
+
+
+<script type="module">
+
+
+    /* ==================================================
+       FIREBASE
+    ================================================== */
+
+
+    import {
+
+        initializeApp
+
+    } from
+    "https://www.gstatic.com/firebasejs/12.18.0/firebase-app.js";
+
+
+    import {
+
+        getAuth,
+
+        onAuthStateChanged,
+
+        signOut
+
+    } from
+    "https://www.gstatic.com/firebasejs/12.18.0/firebase-auth.js";
+
+
+
+    /* ==================================================
+       FIREBASE CONFIG
+    ================================================== */
+
+
+    const firebaseConfig = {
+
+        apiKey:
+            "AIzaSyCkBQaphKKz_Wxd1GgKAVoxqR4taKvzdEM",
+
+        authDomain:
+            "rk-store-5fb24.firebaseapp.com",
+
+        projectId:
+            "rk-store-5fb24",
+
+        storageBucket:
+            "rk-store-5fb24.firebasestorage.app",
+
+        messagingSenderId:
+            "407275549697",
+
+        appId:
+            "1:407275549697:web:41043b49bf7182cecffc00"
+
+    };
+
+
+
+    /* ==================================================
+       INITIALIZE FIREBASE
+    ================================================== */
+
+
+    const app =
+        initializeApp(firebaseConfig);
+
+
+    const auth =
+        getAuth(app);
+
+
+
+    /* ==================================================
+       CHECK CUSTOMER LOGIN
+    ================================================== */
+
+
+    onAuthStateChanged(
+
+        auth,
+
+        function(user) {
+
+
+            console.log(
+                "Dashboard Auth:",
+                user
+            );
+
+
+            /* =========================
+               CUSTOMER LOGGED IN
+            ========================= */
+
+            if (user) {
+
+
+                document
+                    .getElementById(
+                        "loading"
+                    )
+                    .style.display =
+                    "none";
+
+
+                document
+                    .getElementById(
+                        "dashboardContent"
+                    )
+                    .style.display =
+                    "block";
+
+
+
+                /* =========================
+                   CUSTOMER NAME
+                ========================= */
+
+
+                document
+                    .getElementById(
+                        "customerName"
+                    )
+                    .innerText =
+
+                    "Hello, " +
+
+                    (
+                        user.displayName ||
+                        "Customer"
+                    ) +
+
+                    "!";
+
+
+
+                /* =========================
+                   CUSTOMER EMAIL
+                ========================= */
+
+
+                document
+                    .getElementById(
+                        "customerEmail"
+                    )
+                    .innerText =
+
+                    "Email: " +
+
+                    (
+                        user.email ||
+                        ""
                     );
 
-                }
 
-            };
+            }
 
-    </script>
+
+            /* =========================
+               NOT LOGGED IN
+            ========================= */
+
+            else {
+
+
+                setTimeout(
+
+                    function() {
+
+
+                        if (
+                            !auth.currentUser
+                        ) {
+
+
+                            window.location.href =
+                                "customer-login.html";
+
+
+                        }
+
+                    },
+
+                    3000
+
+                );
+
+            }
+
+        }
+
+    );
+
+
+
+    /* ==================================================
+       VIEW ORDERS
+    ================================================== */
+
+
+    window.viewOrders =
+
+        function() {
+
+
+            window.location.href =
+                "customer-orders.html";
+
+
+        };
+
+
+
+    /* ==================================================
+       CONTINUE SHOPPING
+    ================================================== */
+
+
+    window.goHome =
+
+        function() {
+
+
+            window.location.href =
+                "index.html";
+
+
+        };
+
+
+
+    /* ==================================================
+       LOGOUT
+    ================================================== */
+
+
+    window.logout =
+
+        async function() {
+
+
+            try {
+
+
+                await signOut(
+                    auth
+                );
+
+
+                window.location.href =
+                    "customer-login.html";
+
+
+            }
+
+            catch (error) {
+
+
+                console.error(
+
+                    "Logout Error:",
+
+                    error
+
+                );
+
+
+            }
+
+        };
+
+
+</script>
+
 
 </body>
 </html>
