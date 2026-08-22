@@ -1,0 +1,460 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta
+        name="viewport"
+        content="width=device-width, initial-scale=1.0"
+    >
+
+    <title>RK Store - Admin Login</title>
+
+    <style>
+
+        body {
+            margin: 0;
+            font-family: Arial, sans-serif;
+            background: #f5f5f5;
+        }
+
+        .login-box {
+            width: 90%;
+            max-width: 400px;
+            margin: 60px auto;
+            background: white;
+            padding: 25px;
+            border-radius: 10px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.15);
+            box-sizing: border-box;
+        }
+
+        h2 {
+            text-align: center;
+            color: #ff6600;
+            margin-bottom: 25px;
+        }
+
+        input {
+            width: 100%;
+            padding: 12px;
+            margin-bottom: 15px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            box-sizing: border-box;
+            font-size: 16px;
+        }
+
+        button {
+            width: 100%;
+            padding: 12px;
+            background: #ff6600;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            font-size: 17px;
+            cursor: pointer;
+        }
+
+        button:hover {
+            background: #e65c00;
+        }
+
+        button:disabled {
+            background: #999;
+            cursor: not-allowed;
+        }
+
+        #message {
+            text-align: center;
+            margin-top: 15px;
+            font-size: 14px;
+        }
+
+    </style>
+
+</head>
+
+
+<body>
+
+
+<div class="login-box">
+
+    <h2>
+        RK Store Admin Login
+    </h2>
+
+
+    <input
+        type="email"
+        id="email"
+        placeholder="Enter admin email"
+    >
+
+
+    <input
+        type="password"
+        id="password"
+        placeholder="Enter admin password"
+    >
+
+
+    <button
+        id="loginButton"
+        onclick="loginAdmin()"
+    >
+        Admin Login
+    </button>
+
+
+    <div id="message"></div>
+
+</div>
+
+
+
+<script type="module">
+
+
+/* =========================
+   FIREBASE
+========================= */
+
+
+import {
+    initializeApp
+} from "https://www.gstatic.com/firebasejs/12.18.0/firebase-app.js";
+
+
+import {
+    getAuth,
+    signInWithEmailAndPassword,
+    setPersistence,
+    browserLocalPersistence,
+    signOut
+} from "https://www.gstatic.com/firebasejs/12.18.0/firebase-auth.js";
+
+
+
+/* =========================
+   FIREBASE CONFIG
+========================= */
+
+
+const firebaseConfig = {
+
+    apiKey:
+        "AIzaSyCkBQaphKKz_Wxd1GgKAVoxqR4taKvzdEM",
+
+    authDomain:
+        "rk-store-5fb24.firebaseapp.com",
+
+    projectId:
+        "rk-store-5fb24",
+
+    storageBucket:
+        "rk-store-5fb24.firebasestorage.app",
+
+    messagingSenderId:
+        "407275549697",
+
+    appId:
+        "1:407275549697:web:41043b49bf7182cecffc00"
+
+};
+
+
+
+/* =========================
+   INITIALIZE FIREBASE
+========================= */
+
+
+const app =
+    initializeApp(firebaseConfig);
+
+
+const auth =
+    getAuth(app);
+
+
+
+/* =========================
+   ADMIN EMAIL
+========================= */
+
+
+const ADMIN_EMAIL =
+    "REJAUL.IMAM@gmail.com";
+
+
+
+/* =========================
+   ADMIN LOGIN
+========================= */
+
+
+window.loginAdmin =
+    async function() {
+
+
+        const email =
+            document
+                .getElementById("email")
+                .value
+                .trim();
+
+
+        const password =
+            document
+                .getElementById("password")
+                .value;
+
+
+        const message =
+            document.getElementById(
+                "message"
+            );
+
+
+        const loginButton =
+            document.getElementById(
+                "loginButton"
+            );
+
+
+
+        /* =========================
+           VALIDATION
+        ========================= */
+
+
+        if (
+            email === "" ||
+            password === ""
+        ) {
+
+            message.style.color =
+                "red";
+
+
+            message.innerText =
+                "Please enter email and password.";
+
+
+            return;
+
+        }
+
+
+
+        /* =========================
+           ADMIN EMAIL CHECK
+        ========================= */
+
+
+        if (
+            email.toLowerCase() !==
+            ADMIN_EMAIL.toLowerCase()
+        ) {
+
+            message.style.color =
+                "red";
+
+
+            message.innerText =
+                "This account is not authorized as Admin.";
+
+
+            return;
+
+        }
+
+
+
+        /* =========================
+           BUTTON LOCK
+        ========================= */
+
+
+        loginButton.disabled =
+            true;
+
+
+        loginButton.innerText =
+            "Logging in...";
+
+
+
+        try {
+
+
+            /* =========================
+               KEEP LOGIN SESSION
+            ========================= */
+
+
+            await setPersistence(
+                auth,
+                browserLocalPersistence
+            );
+
+
+
+            /* =========================
+               FIREBASE LOGIN
+            ========================= */
+
+
+            const userCredential =
+                await signInWithEmailAndPassword(
+                    auth,
+                    email,
+                    password
+                );
+
+
+            const user =
+                userCredential.user;
+
+
+
+            /* =========================
+               FINAL ADMIN CHECK
+            ========================= */
+
+
+            if (
+                !user ||
+                user.email.toLowerCase() !==
+                ADMIN_EMAIL.toLowerCase()
+            ) {
+
+
+                await signOut(auth);
+
+
+                throw new Error(
+                    "Admin authorization failed."
+                );
+
+            }
+
+
+
+            console.log(
+                "Admin logged in:",
+                user.uid
+            );
+
+
+
+            /* =========================
+               SUCCESS
+            ========================= */
+
+
+            message.style.color =
+                "green";
+
+
+            message.innerText =
+                "Admin login successful!";
+
+
+
+            /* =========================
+               GO TO ORDERS
+            ========================= */
+
+
+            setTimeout(
+                function() {
+
+                    window.location.href =
+                        "orders.html";
+
+                },
+                500
+            );
+
+
+        }
+
+
+        catch (error) {
+
+
+            console.error(
+                "Admin Login Error:",
+                error
+            );
+
+
+            message.style.color =
+                "red";
+
+
+            if (
+                error.code ===
+                "auth/invalid-credential"
+            ) {
+
+                message.innerText =
+                    "Invalid admin email or password.";
+
+            }
+
+            else if (
+                error.code ===
+                "auth/user-not-found"
+            ) {
+
+                message.innerText =
+                    "Admin account not found in Firebase.";
+
+            }
+
+            else if (
+                error.code ===
+                "auth/wrong-password"
+            ) {
+
+                message.innerText =
+                    "Incorrect admin password.";
+
+            }
+
+            else {
+
+                message.innerText =
+                    error.message;
+
+            }
+
+
+
+            /* =========================
+               UNLOCK BUTTON
+            ========================= */
+
+
+            loginButton.disabled =
+                false;
+
+
+            loginButton.innerText =
+                "Admin Login";
+
+        }
+
+    };
+
+
+</script>
+
+
+</body>
+</html>
