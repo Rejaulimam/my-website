@@ -66,6 +66,18 @@
             cursor: not-allowed;
         }
 
+        .forgot-password {
+            text-align: center;
+            margin-top: 15px;
+        }
+
+        .forgot-password a {
+            color: #ff6600;
+            font-weight: bold;
+            text-decoration: none;
+            cursor: pointer;
+        }
+
         #message {
             text-align: center;
             margin-top: 15px;
@@ -109,6 +121,18 @@
     </button>
 
 
+    <div class="forgot-password">
+
+        <a
+            href="#"
+            onclick="forgotAdminPassword(); return false;"
+        >
+            Forgot Password?
+        </a>
+
+    </div>
+
+
     <div id="message"></div>
 
 </div>
@@ -133,7 +157,8 @@ import {
     signInWithEmailAndPassword,
     setPersistence,
     browserLocalPersistence,
-    signOut
+    signOut,
+    sendPasswordResetEmail
 } from "https://www.gstatic.com/firebasejs/12.18.0/firebase-auth.js";
 
 
@@ -447,6 +472,112 @@ window.loginAdmin =
 
             loginButton.innerText =
                 "Admin Login";
+
+        }
+
+    };
+
+
+
+/* =========================
+   FORGOT ADMIN PASSWORD
+========================= */
+
+
+window.forgotAdminPassword =
+    async function() {
+
+
+        const email =
+            document
+                .getElementById("email")
+                .value
+                .trim();
+
+
+        const message =
+            document.getElementById(
+                "message"
+            );
+
+
+        /* =========================
+           CHECK EMAIL
+        ========================= */
+
+
+        if (
+            email.toLowerCase() !==
+            ADMIN_EMAIL.toLowerCase()
+        ) {
+
+            message.style.color =
+                "red";
+
+
+            message.innerText =
+                "Please enter the Admin email first.";
+
+            return;
+
+        }
+
+
+
+        try {
+
+
+            /* =========================
+               SEND RESET EMAIL
+            ========================= */
+
+
+            await sendPasswordResetEmail(
+                auth,
+                ADMIN_EMAIL
+            );
+
+
+            message.style.color =
+                "green";
+
+
+            message.innerText =
+                "Password reset email sent. Please check your Gmail.";
+
+
+        }
+
+
+        catch (error) {
+
+
+            console.error(
+                "Password Reset Error:",
+                error
+            );
+
+
+            message.style.color =
+                "red";
+
+
+            if (
+                error.code ===
+                "auth/user-not-found"
+            ) {
+
+                message.innerText =
+                    "This Admin email is not registered in Firebase.";
+
+            }
+
+            else {
+
+                message.innerText =
+                    error.message;
+
+            }
 
         }
 
