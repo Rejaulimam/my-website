@@ -14,6 +14,11 @@
 
     <style>
 
+        * {
+            box-sizing: border-box;
+        }
+
+
         body {
 
             margin: 0;
@@ -82,6 +87,41 @@
             cursor: pointer;
 
             margin-bottom: 20px;
+
+        }
+
+
+        .back-button:hover {
+
+            background: #222;
+
+        }
+
+
+        /* =========================
+           FILTER TITLE
+        ========================= */
+
+        .filter-title {
+
+            background: white;
+
+            padding: 15px;
+
+            margin-bottom: 18px;
+
+            border-radius: 10px;
+
+            box-shadow:
+                0 2px 8px rgba(0,0,0,0.1);
+
+            text-align: center;
+
+            font-size: 18px;
+
+            font-weight: bold;
+
+            color: #ff6600;
 
         }
 
@@ -165,21 +205,36 @@
 
         }
 
-.view-details-button {
-    width: 100%;
-    padding: 12px;
-    margin-top: 15px;
-    border: none;
-    border-radius: 6px;
-    background: #ff6600;
-    color: white;
-    font-size: 16px;
-    cursor: pointer;
-}
 
-.view-details-button:hover {
-    background: #e65c00;
-}
+        .view-details-button {
+
+            width: 100%;
+
+            padding: 12px;
+
+            margin-top: 15px;
+
+            border: none;
+
+            border-radius: 6px;
+
+            background: #ff6600;
+
+            color: white;
+
+            font-size: 16px;
+
+            cursor: pointer;
+
+        }
+
+
+        .view-details-button:hover {
+
+            background: #e65c00;
+
+        }
+
 
         #loading {
 
@@ -233,8 +288,20 @@
             class="back-button"
             onclick="goDashboard()"
         >
+
             ← Back to Dashboard
+
         </button>
+
+
+        <div
+            id="filterTitle"
+            class="filter-title"
+        >
+
+            All Orders
+
+        </div>
 
 
         <div id="loading">
@@ -249,17 +316,22 @@
 
         <div id="noOrders">
 
-            <h2>No Orders Yet</h2>
+            <h2>No Orders Found</h2>
 
-            <p>
+            <p id="noOrdersText">
+
                 You haven't placed any orders yet.
+
             </p>
+
 
             <button
                 class="back-button"
                 onclick="goHome()"
             >
+
                 Start Shopping
+
             </button>
 
         </div>
@@ -360,6 +432,50 @@
 
 
     /* =========================
+       GET STATUS FILTER
+    ========================= */
+
+
+    const urlParams =
+        new URLSearchParams(
+            window.location.search
+        );
+
+
+    const selectedStatus =
+        urlParams.get("status");
+
+
+
+    /* =========================
+       FILTER TITLE
+    ========================= */
+
+
+    const filterTitle =
+        document.getElementById(
+            "filterTitle"
+        );
+
+
+    if (selectedStatus) {
+
+        filterTitle.innerText =
+            selectedStatus +
+            " Orders";
+
+    }
+
+    else {
+
+        filterTitle.innerText =
+            "All Orders";
+
+    }
+
+
+
+    /* =========================
        AUTH CHECK
     ========================= */
 
@@ -381,7 +497,9 @@
             }
 
 
-            await loadCustomerOrders(user.uid);
+            await loadCustomerOrders(
+                user.uid
+            );
 
         }
 
@@ -394,7 +512,9 @@
     ========================= */
 
 
-    async function loadCustomerOrders(customerId) {
+    async function loadCustomerOrders(
+        customerId
+    ) {
 
 
         const loading =
@@ -412,6 +532,12 @@
         const noOrders =
             document.getElementById(
                 "noOrders"
+            );
+
+
+        const noOrdersText =
+            document.getElementById(
+                "noOrdersText"
             );
 
 
@@ -445,25 +571,47 @@
                 "none";
 
 
-            if (snapshot.empty) {
-
-                noOrders.style.display =
-                    "block";
-
-                return;
-
-            }
-
-
             let ordersHTML = "";
+
+            let matchingOrders = 0;
 
 
             snapshot.forEach(
+
                 function(doc) {
 
 
                     const order =
                         doc.data();
+
+
+                    const orderStatus =
+                        order.status ||
+                        "Pending";
+
+
+                    /* =========================
+                       STATUS FILTER
+                    ========================= */
+
+
+                    if (
+                        selectedStatus &&
+                        orderStatus !==
+                        selectedStatus
+                    ) {
+
+                        return;
+
+                    }
+
+
+                    matchingOrders++;
+
+
+                    /* =========================
+                       PRODUCTS
+                    ========================= */
 
 
                     let productsHTML =
@@ -478,6 +626,7 @@
 
 
                         order.products.forEach(
+
                             function(product) {
 
 
@@ -503,22 +652,36 @@
                                     <div class="product">
 
                                         <strong>
-                                            ${product.name || "Product"}
+
+                                            ${
+                                                product.name ||
+                                                "Product"
+                                            }
+
                                         </strong>
 
+
                                         <p>
+
                                             Price:
                                             ৳${price}
+
                                         </p>
 
+
                                         <p>
+
                                             Quantity:
                                             ${quantity}
+
                                         </p>
 
+
                                         <p>
+
                                             Subtotal:
                                             ৳${subtotal}
+
                                         </p>
 
                                     </div>
@@ -526,17 +689,30 @@
                                 `;
 
                             }
+
                         );
 
                     }
+
+
+                    /* =========================
+                       ORDER CARD
+                    ========================= */
 
 
                     ordersHTML += `
 
                         <div class="order-card">
 
+
                             <h2>
-                                Order #${order.orderId || doc.id}
+
+                                Order #
+                                ${
+                                    order.orderId ||
+                                    doc.id
+                                }
+
                             </h2>
 
 
@@ -546,7 +722,10 @@
                                     Date:
                                 </strong>
 
-                                ${order.dateTime || "N/A"}
+                                ${
+                                    order.dateTime ||
+                                    "N/A"
+                                }
 
                             </p>
 
@@ -557,9 +736,10 @@
                                     Status:
                                 </strong>
 
+
                                 <span class="status">
 
-                                    ${order.status || "Pending"}
+                                    ${orderStatus}
 
                                 </span>
 
@@ -572,13 +752,18 @@
                                     Payment:
                                 </strong>
 
-                                ${order.paymentMethod || "N/A"}
+                                ${
+                                    order.paymentMethod ||
+                                    "N/A"
+                                }
 
                             </p>
 
 
                             <h3>
+
                                 Products
+
                             </h3>
 
 
@@ -588,39 +773,92 @@
                             <div class="total">
 
                                 Total:
-                                ৳${Number(order.totalAmount) || 0}
+                                ৳${
+                                    Number(
+                                        order.totalAmount
+                                    ) || 0
+                                }
 
                             </div>
 
-<button
-    class="view-details-button"
-    onclick="viewOrderDetails('${doc.id}')"
->
-    View Details
-</button>
+
+                            <button
+                                class="view-details-button"
+                                onclick="viewOrderDetails('${doc.id}')"
+                            >
+
+                                View Details
+
+                            </button>
+
 
                         </div>
 
                     `;
 
                 }
+
             );
+
+
+            /* =========================
+               SHOW RESULT
+            ========================= */
+
+
+            if (
+                matchingOrders === 0
+            ) {
+
+
+                noOrders.style.display =
+                    "block";
+
+
+                if (selectedStatus) {
+
+                    noOrdersText.innerText =
+
+                        "You don't have any " +
+                        selectedStatus +
+                        " orders.";
+
+                }
+
+                else {
+
+                    noOrdersText.innerText =
+
+                        "You haven't placed any orders yet.";
+
+                }
+
+
+                return;
+
+            }
 
 
             container.innerHTML =
                 ordersHTML;
 
 
-        } catch (error) {
+        }
+
+        catch (error) {
 
 
             console.error(
+
                 "Load Orders Error:",
+
                 error
+
             );
 
 
             loading.innerText =
+
                 "Unable to load your orders. Please try again.";
 
         }
@@ -635,6 +873,7 @@
 
 
     window.goDashboard =
+
         function() {
 
             window.location.href =
@@ -643,18 +882,27 @@
         };
 
 
-/* =========================
-   VIEW ORDER DETAILS
-========================= */
 
-window.viewOrderDetails =
-    function(orderId) {
+    /* =========================
+       VIEW ORDER DETAILS
+    ========================= */
 
-        window.location.href =
-            "customer-order-details.html?orderId=" +
-            encodeURIComponent(orderId);
 
-    };
+    window.viewOrderDetails =
+
+        function(orderId) {
+
+
+            window.location.href =
+
+                "customer-order-details.html?orderId=" +
+
+                encodeURIComponent(
+                    orderId
+                );
+
+        };
+
 
 
     /* =========================
@@ -663,7 +911,9 @@ window.viewOrderDetails =
 
 
     window.goHome =
+
         function() {
+
 
             window.location.href =
                 "index.html";
