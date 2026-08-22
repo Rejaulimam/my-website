@@ -752,6 +752,26 @@
 
 
             /* =========================
+               PAYMENT INFORMATION
+            ========================= */
+
+
+            const paymentMethod =
+                order.paymentMethod ||
+                "N/A";
+
+
+            const paymentNumber =
+                order.paymentNumber ||
+                "N/A";
+
+
+            const transactionId =
+                order.transactionId ||
+                "N/A";
+
+
+            /* =========================
                DISPLAY ORDER
             ========================= */
 
@@ -852,27 +872,6 @@
                             ${
                                 order.statusUpdatedTime ||
                                 "Not updated"
-                            }
-
-                        </span>
-
-                    </div>
-
-
-                    <div class="info-row">
-
-                        <span class="label">
-
-                            Payment
-
-                        </span>
-
-
-                        <span class="value">
-
-                            ${
-                                order.paymentMethod ||
-                                "N/A"
                             }
 
                         </span>
@@ -996,6 +995,77 @@
 
                         </span>
 
+
+                    </div>
+
+
+                </div>
+
+
+
+                <!-- PAYMENT INFORMATION -->
+
+
+                <div class="card">
+
+
+                    <div class="card-title">
+
+                        Payment Information
+
+                    </div>
+
+
+                    <div class="info-row">
+
+                        <span class="label">
+
+                            Payment Method
+
+                        </span>
+
+
+                        <span class="value">
+
+                            ${paymentMethod}
+
+                        </span>
+
+                    </div>
+
+
+                    <div class="info-row">
+
+                        <span class="label">
+
+                            Payment Number
+
+                        </span>
+
+
+                        <span class="value">
+
+                            ${paymentNumber}
+
+                        </span>
+
+                    </div>
+
+
+                    <div class="info-row">
+
+                        <span class="label">
+
+                            Transaction ID
+
+                        </span>
+
+
+                        <span class="value">
+
+                            ${transactionId}
+
+                        </span>
 
                     </div>
 
