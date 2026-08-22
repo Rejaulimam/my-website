@@ -835,6 +835,17 @@ window.displayOrders = function() {
                                 Delivered
                             </option>
 
+<option
+    value="Cancelled"
+    ${
+        status === "Cancelled"
+            ? "selected"
+            : ""
+    }
+>
+    Cancelled
+</option>
+
                         </select>
 
                     </p>
