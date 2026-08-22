@@ -1206,33 +1206,62 @@ window.viewDetails =
 
 
 /* =========================
-   FIREBASE LOGIN PROTECTION
+   ADMIN LOGIN PROTECTION
 ========================= */
+
+const ADMIN_EMAIL =
+    "REJAUL.IMAM@gmail.com";
 
 
 onAuthStateChanged(
     auth,
     (user) => {
 
+        /* =========================
+           NOT LOGGED IN
+        ========================= */
 
         if (!user) {
 
-
             window.location.href =
-                "login.html";
-
+                "admin-login.html";
 
             return;
 
         }
 
 
-        /*
+        /* =========================
+           ADMIN EMAIL CHECK
+        ========================= */
 
-        User is logged in.
-        Now load Firebase orders.
+        if (
+            !user.email ||
+            user.email.toLowerCase() !==
+            ADMIN_EMAIL.toLowerCase()
+        ) {
 
-        */
+            alert(
+                "Access denied. Admin login required."
+            );
+
+
+            window.location.href =
+                "admin-login.html";
+
+            return;
+
+        }
+
+
+        /* =========================
+           ADMIN VERIFIED
+        ========================= */
+
+        console.log(
+            "Admin verified:",
+            user.email
+        );
 
 
         loadOrders();
