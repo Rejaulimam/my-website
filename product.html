@@ -1,272 +1,295 @@
-<!DOCTYPE html><html>
+<!DOCTYPE html>
+<html>
+
 <head>
-    <title>Product Details</title><style>
-    body {
-        margin: 0;
-        font-family: Arial, sans-serif;
-        background-color: #f5f5f5;
-    }
 
-    h1 {
-        background-color: #ff6600;
-        color: white;
-        text-align: center;
-        padding: 20px;
-        margin: 0;
-    }
+    <title>Product Details</title>
 
-    .product-details {
-        background-color: white;
-        margin: 20px;
-        padding: 20px;
-        border-radius: 10px;
-        text-align: center;
-        box-shadow: 0 2px 8px rgba(0,0,0,0.1);
-    }
+    <style>
 
-    .product-details img {
-        width: 250px;
-        max-width: 100%;
-        border-radius: 10px;
-    }
+        body {
+            margin: 0;
+            font-family: Arial, sans-serif;
+            background-color: #f5f5f5;
+        }
 
-    button {
-        background-color: #ff6600;
-        color: white;
-        border: none;
-        padding: 10px 15px;
-        border-radius: 5px;
-        margin: 5px;
-        cursor: pointer;
-    }
+        h1 {
+            background-color: #ff6600;
+            color: white;
+            text-align: center;
+            padding: 20px;
+            margin: 0;
+        }
 
-    button:hover {
-        background-color: #e65c00;
-    }
-</style>
+        .product-details {
+            background-color: white;
+            margin: 20px;
+            padding: 20px;
+            border-radius: 10px;
+            text-align: center;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+        }
 
-</head><body><h1>Product Details</h1><div class="product-details"><img id="productImage"
-     src="product1.jpg"
-     alt="Product">
+        .product-details img {
+            width: 250px;
+            max-width: 100%;
+            border-radius: 10px;
+        }
 
-<h2 id="productName">
-    Men's Casual Brown Check Shirt
-</h2>
+        button {
+            background-color: #ff6600;
+            color: white;
+            border: none;
+            padding: 10px 15px;
+            border-radius: 5px;
+            margin: 5px;
+            cursor: pointer;
+        }
 
-<p id="productPrice">
-    Price: ৳500
-</p>
+        button:hover {
+            background-color: #e65c00;
+        }
 
-<p>
-    This is a product from RK Store.
-</p>
+    </style>
 
-<button id="addToCart">
-    Add to Cart
-</button>
+</head>
 
-<button id="buyNow">
-    Buy Now
-</button>
+<body>
 
-</div><script>
-
-    /* =========================
-       GET PRODUCT NUMBER
-    ========================= */
-
-    const params =
-        new URLSearchParams(window.location.search);
-
-    const product =
-        params.get("product");
+    <h1>Product Details</h1>
 
 
-    /* =========================
-       PRODUCT DATA
-    ========================= */
+    <div class="product-details">
 
-    const productData = {
+        <img id="productImage"
+             src="product1.jpg"
+             alt="Product">
 
-        "1": {
-            image: "product1.jpg",
-            name: "Men's Casual Brown Check Shirt",
-            price: 500
-        },
+        <h2 id="productName">
+            Men's Formal Solid Shirt
+        </h2>
 
-        "2": {
-            image: "product2.jpg",
-            name: "Men's Casual Print Shirt",
-            price: 800
-        },
+        <p id="productPrice">
+            Price: ৳450
+        </p>
 
-        "3": {
-            image: "product3.jpg",
-            name: "Men's Casual White Shirt",
-            price: 1000
-        },
+        <p>
+            This is a product from RK Store.
+        </p>
 
-       "4": {
-    image: "product4.jpg",
-    name: "Men's Casual Navy Check Shirt",
-    price: 1200
-},
+        <button id="addToCart">
+            Add to Cart
+        </button>
 
-"5": {
-    image: "product5.jpg",
-    name: "Women's Casual Dress",
-    price: 900
-}
+        <button id="buyNow">
+            Buy Now
+        </button>
 
-};
-
-    /* =========================
-       SELECT PRODUCT
-    ========================= */
-
-    const selectedProduct =
-        productData[product];
+    </div>
 
 
-    /* =========================
-       SHOW PRODUCT
-    ========================= */
+    <script>
 
-    if (selectedProduct) {
+        /* =========================
+           GET PRODUCT NUMBER
+        ========================= */
 
-        document.getElementById("productImage").src =
-            selectedProduct.image;
+        const params =
+            new URLSearchParams(window.location.search);
 
-        document.getElementById("productImage").alt =
-            selectedProduct.name;
-
-        document.getElementById("productName").textContent =
-            selectedProduct.name;
-
-        document.getElementById("productPrice").textContent =
-            "Price: ৳" + selectedProduct.price;
-
-    }
+        const product =
+            params.get("product");
 
 
-    /* =========================
-       ADD TO CART
-    ========================= */
+        /* =========================
+           PRODUCT DATA
+        ========================= */
 
-    document.getElementById("addToCart")
-        .addEventListener("click", function() {
+        const productData = {
 
-            if (!selectedProduct) {
-                alert("Product not found!");
-                return;
+            "1": {
+                image: "product1.jpg",
+                name: "Men's Formal Solid Shirt",
+                price: 450
+            },
+
+            "2": {
+                image: "product2.jpg",
+                name: "Men's Casual Shirt",
+                price: 400
+            },
+
+            "3": {
+                image: "product3.jpg",
+                name: "Men's Casual Check Shirt",
+                price: 480
+            },
+
+            "4": {
+                image: "product4.jpg",
+                name: "Women's Casual Yellow Dress",
+                price: 500
+            },
+
+            "5": {
+                image: "product5.jpg",
+                name: "Women's Casual Dress",
+                price: 900
             }
 
-            let cart =
-                JSON.parse(localStorage.getItem("cart")) || [];
+        };
 
 
-            const cartItem = {
+        /* =========================
+           SELECT PRODUCT
+        ========================= */
 
-                name: selectedProduct.name,
-
-                price: selectedProduct.price,
-
-                image: selectedProduct.image,
-
-                quantity: 1
-
-            };
+        const selectedProduct =
+            productData[product];
 
 
-            const existingProduct =
-                cart.find(
-                    item =>
-                    item.name === selectedProduct.name
+        /* =========================
+           SHOW PRODUCT
+        ========================= */
+
+        if (selectedProduct) {
+
+            document.getElementById("productImage").src =
+                selectedProduct.image;
+
+            document.getElementById("productImage").alt =
+                selectedProduct.name;
+
+            document.getElementById("productName").textContent =
+                selectedProduct.name;
+
+            document.getElementById("productPrice").textContent =
+                "Price: ৳" + selectedProduct.price;
+
+        }
+
+
+        /* =========================
+           ADD TO CART
+        ========================= */
+
+        document.getElementById("addToCart")
+            .addEventListener("click", function() {
+
+                if (!selectedProduct) {
+                    alert("Product not found!");
+                    return;
+                }
+
+                let cart =
+                    JSON.parse(localStorage.getItem("cart")) || [];
+
+
+                const cartItem = {
+
+                    name: selectedProduct.name,
+
+                    price: selectedProduct.price,
+
+                    image: selectedProduct.image,
+
+                    quantity: 1
+
+                };
+
+
+                const existingProduct =
+                    cart.find(
+                        item =>
+                        item.name === selectedProduct.name
+                    );
+
+
+                if (existingProduct) {
+
+                    existingProduct.quantity += 1;
+
+                } else {
+
+                    cart.push(cartItem);
+
+                }
+
+
+                localStorage.setItem(
+                    "cart",
+                    JSON.stringify(cart)
                 );
 
 
-            if (existingProduct) {
+                alert(
+                    selectedProduct.name +
+                    " added to cart!"
+                );
 
-                existingProduct.quantity += 1;
-
-            } else {
-
-                cart.push(cartItem);
-
-            }
+            });
 
 
-            localStorage.setItem(
-                "cart",
-                JSON.stringify(cart)
-            );
+        /* =========================
+           BUY NOW
+        ========================= */
+
+        document.getElementById("buyNow")
+            .addEventListener("click", function() {
+
+                if (!selectedProduct) {
+                    alert("Product not found!");
+                    return;
+                }
+
+                let cart =
+                    JSON.parse(localStorage.getItem("cart")) || [];
 
 
-            alert(
-                selectedProduct.name +
-                " added to cart!"
-            );
+                const cartItem = {
 
-        });
+                    name: selectedProduct.name,
 
+                    price: selectedProduct.price,
 
-    /* =========================
-       BUY NOW
-    ========================= */
+                    image: selectedProduct.image,
 
-    document.getElementById("buyNow")
-        .addEventListener("click", function() {
+                    quantity: 1
 
-            if (!selectedProduct) {
-                alert("Product not found!");
-                return;
-            }
-
-            let cart =
-                JSON.parse(localStorage.getItem("cart")) || [];
+                };
 
 
-            const cartItem = {
-
-                name: selectedProduct.name,
-
-                price: selectedProduct.price,
-
-                image: selectedProduct.image,
-
-                quantity: 1
-
-            };
+                const existingProduct =
+                    cart.find(
+                        item =>
+                        item.name === selectedProduct.name
+                    );
 
 
-            const existingProduct =
-                cart.find(
-                    item =>
-                    item.name === selectedProduct.name
+                if (existingProduct) {
+
+                    existingProduct.quantity += 1;
+
+                } else {
+
+                    cart.push(cartItem);
+
+                }
+
+
+                localStorage.setItem(
+                    "cart",
+                    JSON.stringify(cart)
                 );
 
 
-            if (existingProduct) {
+                window.location.href =
+                    "cart.html";
 
-                existingProduct.quantity += 1;
+            });
 
-            } else {
+    </script>
 
-                cart.push(cartItem);
+</body>
 
-            }
-
-
-            localStorage.setItem(
-                "cart",
-                JSON.stringify(cart)
-            );
-
-
-            window.location.href =
-                "cart.html";
-
-        });
-
-</script></body>
 </html>
