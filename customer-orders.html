@@ -30,6 +30,10 @@
         }
 
 
+        /* =========================
+           HEADER
+        ========================= */
+
         .header {
 
             background: #ff6600;
@@ -57,56 +61,30 @@
         }
 
 
+        /* =========================
+           CONTAINER
+        ========================= */
+
         .container {
 
             width: 92%;
 
-            max-width: 700px;
+            max-width: 850px;
 
             margin: 25px auto;
 
         }
 
 
-        .back-button {
-
-            width: 100%;
-
-            padding: 12px;
-
-            border: none;
-
-            border-radius: 6px;
-
-            background: #333;
-
-            color: white;
-
-            font-size: 16px;
-
-            cursor: pointer;
-
-            margin-bottom: 20px;
-
-        }
-
-
-        .back-button:hover {
-
-            background: #222;
-
-        }
-
-
         /* =========================
-           FILTER TITLE
+           ORDER FILTER BOX
         ========================= */
 
-        .filter-title {
+        .filter-box {
 
             background: white;
 
-            padding: 15px;
+            padding: 18px;
 
             margin-bottom: 18px;
 
@@ -115,16 +93,52 @@
             box-shadow:
                 0 2px 8px rgba(0,0,0,0.1);
 
-            text-align: center;
+            display: flex;
 
-            font-size: 18px;
+            justify-content: space-between;
+
+            align-items: center;
+
+            gap: 15px;
+
+        }
+
+
+        .filter-title {
+
+            font-size: 22px;
 
             font-weight: bold;
 
             color: #ff6600;
 
+            margin: 0;
+
         }
 
+
+        .status-select {
+
+            width: 250px;
+
+            padding: 12px;
+
+            font-size: 16px;
+
+            border: 1px solid #ccc;
+
+            border-radius: 6px;
+
+            background: white;
+
+            cursor: pointer;
+
+        }
+
+
+        /* =========================
+           ORDER CARD
+        ========================= */
 
         .order-card {
 
@@ -160,6 +174,10 @@
         }
 
 
+        /* =========================
+           PRODUCT
+        ========================= */
+
         .product {
 
             border-top: 1px solid #ddd;
@@ -176,6 +194,10 @@
         }
 
 
+        /* =========================
+           TOTAL
+        ========================= */
+
         .total {
 
             text-align: right;
@@ -188,6 +210,10 @@
 
         }
 
+
+        /* =========================
+           STATUS
+        ========================= */
 
         .status {
 
@@ -205,6 +231,10 @@
 
         }
 
+
+        /* =========================
+           VIEW DETAILS
+        ========================= */
 
         .view-details-button {
 
@@ -236,6 +266,10 @@
         }
 
 
+        /* =========================
+           LOADING
+        ========================= */
+
         #loading {
 
             text-align: center;
@@ -246,6 +280,10 @@
 
         }
 
+
+        /* =========================
+           NO ORDERS
+        ========================= */
 
         #noOrders {
 
@@ -264,6 +302,74 @@
 
         }
 
+
+        .start-shopping-button {
+
+            width: 100%;
+
+            padding: 12px;
+
+            border: none;
+
+            border-radius: 6px;
+
+            background: #ff6600;
+
+            color: white;
+
+            font-size: 16px;
+
+            cursor: pointer;
+
+        }
+
+
+        .start-shopping-button:hover {
+
+            background: #e65c00;
+
+        }
+
+
+        /* =========================
+           MOBILE
+        ========================= */
+
+        @media (max-width: 600px) {
+
+            .container {
+
+                width: 94%;
+
+            }
+
+
+            .filter-box {
+
+                flex-direction: column;
+
+                align-items: stretch;
+
+            }
+
+
+            .filter-title {
+
+                text-align: left;
+
+                font-size: 20px;
+
+            }
+
+
+            .status-select {
+
+                width: 100%;
+
+            }
+
+        }
+
     </style>
 
 </head>
@@ -271,6 +377,10 @@
 
 <body>
 
+
+    <!-- =========================
+         HEADER
+    ========================= -->
 
     <div class="header">
 
@@ -284,25 +394,78 @@
     <div class="container">
 
 
-        <button
-            class="back-button"
-            onclick="goDashboard()"
-        >
+        <!-- =========================
+             ORDER FILTER
+        ========================= -->
 
-            ← Back to Dashboard
-
-        </button>
+        <div class="filter-box">
 
 
-        <div
-            id="filterTitle"
-            class="filter-title"
-        >
+            <h2
+                id="filterTitle"
+                class="filter-title"
+            >
 
-            All Orders
+                All Orders
+
+            </h2>
+
+
+            <select
+                id="statusFilter"
+                class="status-select"
+            >
+
+                <option value="">
+
+                    All Orders
+
+                </option>
+
+
+                <option value="Pending">
+
+                    Pending Order
+
+                </option>
+
+
+                <option value="Confirmed">
+
+                    Confirm Order
+
+                </option>
+
+
+                <option value="Cancelled">
+
+                    Cancel Order
+
+                </option>
+
+
+                <option value="Shipped">
+
+                    Shipped Order
+
+                </option>
+
+
+                <option value="Delivered">
+
+                    Delivered Order
+
+                </option>
+
+            </select>
+
 
         </div>
 
+
+        <!-- =========================
+             LOADING
+        ========================= -->
 
         <div id="loading">
 
@@ -311,8 +474,16 @@
         </div>
 
 
+        <!-- =========================
+             ORDERS
+        ========================= -->
+
         <div id="ordersContainer"></div>
 
+
+        <!-- =========================
+             NO ORDERS
+        ========================= -->
 
         <div id="noOrders">
 
@@ -326,7 +497,7 @@
 
 
             <button
-                class="back-button"
+                class="start-shopping-button"
                 onclick="goHome()"
             >
 
@@ -414,7 +585,7 @@
 
 
     /* =========================
-       INITIALIZE
+       INITIALIZE FIREBASE
     ========================= */
 
 
@@ -432,7 +603,25 @@
 
 
     /* =========================
-       GET STATUS FILTER
+       ELEMENTS
+    ========================= */
+
+
+    const filterTitle =
+        document.getElementById(
+            "filterTitle"
+        );
+
+
+    const statusFilter =
+        document.getElementById(
+            "statusFilter"
+        );
+
+
+
+    /* =========================
+       URL STATUS
     ========================= */
 
 
@@ -443,7 +632,17 @@
 
 
     const selectedStatus =
-        urlParams.get("status");
+        urlParams.get("status") || "";
+
+
+
+    /* =========================
+       SET DROPDOWN
+    ========================= */
+
+
+    statusFilter.value =
+        selectedStatus;
 
 
 
@@ -452,26 +651,116 @@
     ========================= */
 
 
-    const filterTitle =
-        document.getElementById(
-            "filterTitle"
-        );
+    function updateFilterTitle() {
 
 
-    if (selectedStatus) {
+        if (!selectedStatus) {
 
-        filterTitle.innerText =
-            selectedStatus +
-            " Orders";
+            filterTitle.innerText =
+                "All Orders";
+
+            return;
+
+        }
+
+
+        if (
+            selectedStatus ===
+            "Pending"
+        ) {
+
+            filterTitle.innerText =
+                "Pending Order";
+
+        }
+
+        else if (
+            selectedStatus ===
+            "Confirmed"
+        ) {
+
+            filterTitle.innerText =
+                "Confirm Order";
+
+        }
+
+        else if (
+            selectedStatus ===
+            "Cancelled"
+        ) {
+
+            filterTitle.innerText =
+                "Cancel Order";
+
+        }
+
+        else if (
+            selectedStatus ===
+            "Shipped"
+        ) {
+
+            filterTitle.innerText =
+                "Shipped Order";
+
+        }
+
+        else if (
+            selectedStatus ===
+            "Delivered"
+        ) {
+
+            filterTitle.innerText =
+                "Delivered Order";
+
+        }
+
+        else {
+
+            filterTitle.innerText =
+                "All Orders";
+
+        }
 
     }
 
-    else {
 
-        filterTitle.innerText =
-            "All Orders";
+    updateFilterTitle();
 
-    }
+
+
+    /* =========================
+       DROPDOWN CHANGE
+    ========================= */
+
+
+    statusFilter.addEventListener(
+        "change",
+        function() {
+
+
+            const status =
+                this.value;
+
+
+            if (status === "") {
+
+                window.location.href =
+                    "customer-orders.html";
+
+            }
+
+            else {
+
+                window.location.href =
+                    "customer-orders.html?status=" +
+                    encodeURIComponent(
+                        status
+                    );
+
+            }
+
+        }
+    );
 
 
 
@@ -544,6 +833,11 @@
         try {
 
 
+            /* =========================
+               CUSTOMER ORDERS QUERY
+            ========================= */
+
+
             const ordersQuery =
                 query(
 
@@ -576,6 +870,12 @@
             let matchingOrders = 0;
 
 
+
+            /* =========================
+               READ ORDERS
+            ========================= */
+
+
             snapshot.forEach(
 
                 function(doc) {
@@ -590,15 +890,19 @@
                         "Pending";
 
 
+
                     /* =========================
                        STATUS FILTER
                     ========================= */
 
 
                     if (
-                        selectedStatus &&
+
+                        selectedStatus !== "" &&
+
                         orderStatus !==
                         selectedStatus
+
                     ) {
 
                         return;
@@ -607,6 +911,7 @@
 
 
                     matchingOrders++;
+
 
 
                     /* =========================
@@ -619,9 +924,11 @@
 
 
                     if (
+
                         Array.isArray(
                             order.products
                         )
+
                     ) {
 
 
@@ -695,6 +1002,7 @@
                     }
 
 
+
                     /* =========================
                        ORDER CARD
                     ========================= */
@@ -708,6 +1016,7 @@
                             <h2>
 
                                 Order #
+
                                 ${
                                     order.orderId ||
                                     doc.id
@@ -773,6 +1082,7 @@
                             <div class="total">
 
                                 Total:
+
                                 ৳${
                                     Number(
                                         order.totalAmount
@@ -783,8 +1093,15 @@
 
 
                             <button
+
                                 class="view-details-button"
-                                onclick="viewOrderDetails('${doc.id}')"
+
+                                onclick="
+                                    viewOrderDetails(
+                                        '${doc.id}'
+                                    )
+                                "
+
                             >
 
                                 View Details
@@ -801,13 +1118,16 @@
             );
 
 
+
             /* =========================
-               SHOW RESULT
+               NO MATCHING ORDERS
             ========================= */
 
 
             if (
+
                 matchingOrders === 0
+
             ) {
 
 
@@ -820,8 +1140,10 @@
                     noOrdersText.innerText =
 
                         "You don't have any " +
-                        selectedStatus +
-                        " orders.";
+
+                        filterTitle.innerText +
+
+                        ".";
 
                 }
 
@@ -837,6 +1159,12 @@
                 return;
 
             }
+
+
+
+            /* =========================
+               SHOW ORDERS
+            ========================= */
 
 
             container.innerHTML =
@@ -864,22 +1192,6 @@
         }
 
     }
-
-
-
-    /* =========================
-       DASHBOARD
-    ========================= */
-
-
-    window.goDashboard =
-
-        function() {
-
-            window.location.href =
-                "customer-dashboard.html";
-
-        };
 
 
 
