@@ -1,0 +1,359 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta
+        name="viewport"
+        content="width=device-width, initial-scale=1.0"
+    >
+
+    <title>RK Store - Customer Forgot Password</title>
+
+
+    <style>
+
+        body {
+            margin: 0;
+            font-family: Arial, sans-serif;
+            background: #f5f5f5;
+        }
+
+
+        .forgot-box {
+            width: 90%;
+            max-width: 400px;
+            margin: 60px auto;
+            background: white;
+            padding: 25px;
+            border-radius: 10px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.15);
+            box-sizing: border-box;
+        }
+
+
+        h2 {
+            text-align: center;
+            color: #ff6600;
+            margin-bottom: 15px;
+        }
+
+
+        .info {
+            text-align: center;
+            color: #555;
+            font-size: 14px;
+            margin-bottom: 20px;
+            line-height: 1.5;
+        }
+
+
+        input {
+            width: 100%;
+            padding: 12px;
+            margin-bottom: 15px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            box-sizing: border-box;
+            font-size: 16px;
+        }
+
+
+        button {
+            width: 100%;
+            padding: 12px;
+            background: #ff6600;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            font-size: 17px;
+            cursor: pointer;
+        }
+
+
+        button:hover {
+            background: #e65c00;
+        }
+
+
+        button:disabled {
+            background: #999;
+            cursor: not-allowed;
+        }
+
+
+        #message {
+            text-align: center;
+            margin-top: 15px;
+            font-size: 14px;
+            line-height: 1.5;
+        }
+
+
+        .back-login {
+            text-align: center;
+            margin-top: 20px;
+        }
+
+
+        .back-login a {
+            color: #ff6600;
+            text-decoration: none;
+            font-weight: bold;
+        }
+
+    </style>
+
+</head>
+
+
+<body>
+
+
+<div class="forgot-box">
+
+    <h2>Forgot Password?</h2>
+
+
+    <div class="info">
+        Enter your customer account email.
+        We will send you a password reset link.
+    </div>
+
+
+    <input
+        type="email"
+        id="email"
+        placeholder="Enter your email"
+    >
+
+
+    <button
+        id="resetButton"
+        onclick="resetCustomerPassword()"
+    >
+        Send Reset Link
+    </button>
+
+
+    <div id="message"></div>
+
+
+    <div class="back-login">
+
+        <a href="customer-login.html">
+            Back to Customer Login
+        </a>
+
+    </div>
+
+</div>
+
+
+
+<script type="module">
+
+
+/* =========================
+   FIREBASE
+========================= */
+
+import {
+    initializeApp
+} from "https://www.gstatic.com/firebasejs/12.18.0/firebase-app.js";
+
+
+import {
+    getAuth,
+    sendPasswordResetEmail
+} from "https://www.gstatic.com/firebasejs/12.18.0/firebase-auth.js";
+
+
+
+/* =========================
+   FIREBASE CONFIG
+========================= */
+
+const firebaseConfig = {
+
+    apiKey:
+        "AIzaSyCkBQaphKKz_Wxd1GgKAVoxqR4taKvzdEM",
+
+    authDomain:
+        "rk-store-5fb24.firebaseapp.com",
+
+    projectId:
+        "rk-store-5fb24",
+
+    storageBucket:
+        "rk-store-5fb24.firebasestorage.app",
+
+    messagingSenderId:
+        "407275549697",
+
+    appId:
+        "1:407275549697:web:41043b49bf7182cecffc00"
+
+};
+
+
+
+/* =========================
+   INITIALIZE FIREBASE
+========================= */
+
+const app =
+    initializeApp(firebaseConfig);
+
+
+const auth =
+    getAuth(app);
+
+
+
+/* =========================
+   PASSWORD RESET
+========================= */
+
+window.resetCustomerPassword =
+async function() {
+
+
+    const email =
+        document
+            .getElementById("email")
+            .value
+            .trim();
+
+
+    const message =
+        document.getElementById("message");
+
+
+    const resetButton =
+        document.getElementById("resetButton");
+
+
+
+    /* =========================
+       VALIDATION
+    ========================= */
+
+    if (email === "") {
+
+        message.style.color = "red";
+
+        message.innerText =
+            "Please enter your email.";
+
+        return;
+    }
+
+
+
+    /* =========================
+       BUTTON LOCK
+    ========================= */
+
+    resetButton.disabled = true;
+
+    resetButton.innerText =
+        "Sending...";
+
+
+
+    try {
+
+
+        /* =========================
+           SEND RESET EMAIL
+        ========================= */
+
+        await sendPasswordResetEmail(
+            auth,
+            email
+        );
+
+
+        /* =========================
+           SUCCESS
+        ========================= */
+
+        message.style.color =
+            "green";
+
+        message.innerText =
+            "Password reset link has been sent to your email. Please check your inbox.";
+
+
+        resetButton.innerText =
+            "Reset Link Sent";
+
+
+    }
+
+
+    catch (error) {
+
+
+        console.error(
+            "Password Reset Error:",
+            error
+        );
+
+
+        message.style.color =
+            "red";
+
+
+        if (
+            error.code ===
+            "auth/user-not-found"
+        ) {
+
+            message.innerText =
+                "No customer account was found with this email.";
+
+        }
+
+
+        else if (
+            error.code ===
+            "auth/invalid-email"
+        ) {
+
+            message.innerText =
+                "Please enter a valid email address.";
+
+        }
+
+
+        else {
+
+            message.innerText =
+                error.message;
+
+        }
+
+
+        /* =========================
+           UNLOCK BUTTON
+        ========================= */
+
+        resetButton.disabled =
+            false;
+
+        resetButton.innerText =
+            "Send Reset Link";
+
+    }
+
+};
+
+
+</script>
+
+
+</body>
+</html>
