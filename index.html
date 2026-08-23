@@ -126,6 +126,80 @@
             border-radius: 5px;
         }
 
+
+        /* =========================
+           HELP LINE
+           ========================= */
+
+        .help-section {
+            text-align: center;
+            margin: 20px 10px;
+        }
+
+        .help-button {
+            background-color: #007bff;
+            color: white;
+            border: none;
+            padding: 12px 25px;
+            border-radius: 6px;
+            font-size: 16px;
+            font-weight: bold;
+            cursor: pointer;
+        }
+
+        .help-button:hover {
+            background-color: #0056b3;
+        }
+
+        .help-box {
+            display: none;
+            background-color: white;
+            max-width: 400px;
+            margin: 12px auto;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 3px 12px rgba(0,0,0,0.15);
+        }
+
+        .help-box h3 {
+            margin-top: 0;
+            color: #333;
+        }
+
+        .help-option {
+            display: block;
+            width: 100%;
+            box-sizing: border-box;
+            margin: 10px 0;
+            padding: 12px;
+            border-radius: 6px;
+            text-decoration: none;
+            color: white;
+            font-weight: bold;
+            cursor: pointer;
+        }
+
+        .whatsapp {
+            background-color: #25D366;
+        }
+
+        .imo {
+            background-color: #1677ff;
+        }
+
+        .phone {
+            background-color: #ff6600;
+        }
+
+        .email {
+            background-color: #6c63ff;
+        }
+
+        .help-option:hover {
+            opacity: 0.9;
+        }
+
+
         @media (max-width: 700px) {
 
             .products {
@@ -154,6 +228,12 @@
                 width: 100%;
                 margin: 3px 0;
             }
+
+            nav a {
+                margin: 0 5px;
+                font-size: 14px;
+            }
+
         }
 
     </style>
@@ -166,25 +246,97 @@
     <nav>
         <a href="#">Home</a>
         <a href="#">Categories</a>
-        <a href="#" onclick="showCart()">Cart 🛒 (<span id="cartCount">0</span>)</a>
+
+        <a href="#" onclick="showCart(); return false;">
+            Cart 🛒 (<span id="cartCount">0</span>)
+        </a>
 
         <a href="customer-login.html">Customer Login</a>
         <a href="my-orders.html">My Orders</a>
         <a href="admin-login.html">Admin Login</a>
     </nav>
 
-    <div class="search">
-        <input type="text"
-               id="searchInput"
-               placeholder="Search products..."
-               oninput="searchProducts()">
 
-        <button onclick="searchProducts()">Search</button>
+    <!-- =========================
+         HELP LINE
+         ========================= -->
+
+    <div class="help-section">
+
+        <button
+            class="help-button"
+            onclick="toggleHelpLine()">
+            ☎️ Help Line
+        </button>
+
+        <div
+            class="help-box"
+            id="helpBox">
+
+            <h3>Customer Help Line</h3>
+
+            <!-- WhatsApp -->
+
+            <a
+                class="help-option whatsapp"
+                href="https://wa.me/8801731099464"
+                target="_blank">
+                🟢 WhatsApp
+            </a>
+
+
+            <!-- IMO -->
+
+            <a
+                class="help-option imo"
+                href="imo://chat?phone=01731099464">
+                🔵 IMO
+            </a>
+
+
+            <!-- Phone -->
+
+            <a
+                class="help-option phone"
+                href="tel:01731099464">
+                📞 Phone
+            </a>
+
+
+            <!-- Email -->
+
+            <a
+                class="help-option email"
+                href="mailto:rejaulkarim.bdnet0@gmail.com">
+                ✉️ Email
+            </a>
+
+        </div>
+
     </div>
+
+
+    <div class="search">
+
+        <input
+            type="text"
+            id="searchInput"
+            placeholder="Search products..."
+            oninput="searchProducts()">
+
+        <button onclick="searchProducts()">
+            Search
+        </button>
+
+    </div>
+
 
     <div class="welcome">
+
         <p>Welcome to RK Store</p>
+
     </div>
+
 
     <div class="categories">
 
@@ -216,28 +368,34 @@
 
     </div>
 
+
     <h2>Our Products</h2>
 
+
     <div class="products">
+
 
         <!-- Product 1 -->
 
         <div class="product" data-category="Men">
 
-            <img src="product1.jpg"
-                 alt="Men's Formal Solid Shirt"
-                 width="100%"
-                 style="border-radius: 8px;">
+            <img
+                src="product1.jpg"
+                alt="Men's Formal Solid Shirt"
+                width="100%"
+                style="border-radius: 8px;">
 
             <h3>Men's Formal Solid Shirt</h3>
 
             <p>Price: ৳450</p>
 
-            <button onclick="buyProduct('Men\'s Formal Solid Shirt')">
+            <button
+                onclick="buyProduct('Men\'s Formal Solid Shirt')">
                 Buy Now
             </button>
 
-            <button onclick="window.location.href='product.html?product=1'">
+            <button
+                onclick="window.location.href='product.html?product=1'">
                 View Details
             </button>
 
@@ -248,20 +406,23 @@
 
         <div class="product" data-category="Men">
 
-            <img src="product2.jpg"
-                 alt="Men's Casual Shirt"
-                 width="100%"
-                 style="border-radius: 8px;">
+            <img
+                src="product2.jpg"
+                alt="Men's Casual Shirt"
+                width="100%"
+                style="border-radius: 8px;">
 
             <h3>Men's Casual Shirt</h3>
 
             <p>Price: ৳400</p>
 
-            <button onclick="buyProduct('Men\'s Casual Shirt')">
+            <button
+                onclick="buyProduct('Men\'s Casual Shirt')">
                 Buy Now
             </button>
 
-            <button onclick="window.location.href='product.html?product=2'">
+            <button
+                onclick="window.location.href='product.html?product=2'">
                 View Details
             </button>
 
@@ -272,20 +433,23 @@
 
         <div class="product" data-category="Men">
 
-            <img src="product3.jpg"
-                 alt="Men's Casual Check Shirt"
-                 width="100%"
-                 style="border-radius: 8px;">
+            <img
+                src="product3.jpg"
+                alt="Men's Casual Check Shirt"
+                width="100%"
+                style="border-radius: 8px;">
 
             <h3>Men's Casual Check Shirt</h3>
 
             <p>Price: ৳480</p>
 
-            <button onclick="buyProduct('Men\'s Casual Check Shirt')">
+            <button
+                onclick="buyProduct('Men\'s Casual Check Shirt')">
                 Buy Now
             </button>
 
-            <button onclick="window.location.href='product.html?product=3'">
+            <button
+                onclick="window.location.href='product.html?product=3'">
                 View Details
             </button>
 
@@ -296,20 +460,23 @@
 
         <div class="product" data-category="Women">
 
-            <img src="product4.jpg"
-                 alt="Women's Casual Yellow Dress"
-                 width="100%"
-                 style="border-radius: 8px;">
+            <img
+                src="product4.jpg"
+                alt="Women's Casual Yellow Dress"
+                width="100%"
+                style="border-radius: 8px;">
 
             <h3>Women's Casual Yellow Dress</h3>
 
             <p>Price: ৳500</p>
 
-            <button onclick="buyProduct('Women\'s Casual Yellow Dress')">
+            <button
+                onclick="buyProduct('Women\'s Casual Yellow Dress')">
                 Buy Now
             </button>
 
-            <button onclick="window.location.href='product.html?product=4'">
+            <button
+                onclick="window.location.href='product.html?product=4'">
                 View Details
             </button>
 
@@ -320,20 +487,23 @@
 
         <div class="product" data-category="Women">
 
-            <img src="product5.jpg"
-                 alt="Women's Casual Dress"
-                 width="100%"
-                 style="border-radius: 8px;">
+            <img
+                src="product5.jpg"
+                alt="Women's Casual Dress"
+                width="100%"
+                style="border-radius: 8px;">
 
             <h3>Women's Casual Dress</h3>
 
             <p>Price: ৳900</p>
 
-            <button onclick="buyProduct('Women\'s Casual Dress')">
+            <button
+                onclick="buyProduct('Women\'s Casual Dress')">
                 Buy Now
             </button>
 
-            <button onclick="window.location.href='product.html?product=5'">
+            <button
+                onclick="window.location.href='product.html?product=5'">
                 View Details
             </button>
 
@@ -341,13 +511,42 @@
 
     </div>
 
-    <p id="noProducts"
-       style="display:none; text-align:center; font-size:18px; color:#777;">
+
+    <p
+        id="noProducts"
+        style="display:none; text-align:center; font-size:18px; color:#777;">
         No products found
     </p>
 
 
     <script>
+
+
+        /* =========================
+           HELP LINE FUNCTION
+           ========================= */
+
+        function toggleHelpLine() {
+
+            const helpBox =
+                document.getElementById("helpBox");
+
+            if (helpBox.style.display === "block") {
+
+                helpBox.style.display = "none";
+
+            } else {
+
+                helpBox.style.display = "block";
+
+            }
+
+        }
+
+
+        /* =========================
+           CART FUNCTION
+           ========================= */
 
         function buyProduct(productName) {
 
@@ -403,10 +602,12 @@
 
 
             cart.push({
+
                 name: productName,
                 price: price,
                 image: image,
                 quantity: 1
+
             });
 
 
@@ -424,7 +625,9 @@
 
 
         function showCart() {
+
             window.location.href = "cart.html";
+
         }
 
 
@@ -436,16 +639,23 @@
             let totalQuantity = 0;
 
             cart.forEach(function(item) {
+
                 totalQuantity += item.quantity || 1;
+
             });
 
             document.getElementById("cartCount").innerText =
                 totalQuantity;
+
         }
 
 
         updateCartCount();
 
+
+        /* =========================
+           CATEGORY
+           ========================= */
 
         let selectedCategory = "All";
 
@@ -468,12 +678,21 @@
         }
 
 
+        /* =========================
+           SEARCH
+           ========================= */
+
         function searchProducts() {
 
             const searchText =
-                document.getElementById("searchInput").value.toLowerCase();
+                document
+                    .getElementById("searchInput")
+                    .value
+                    .toLowerCase();
+
 
             let foundProducts = 0;
+
 
             const products =
                 document.querySelectorAll(".product");
@@ -482,7 +701,11 @@
             products.forEach(function(product) {
 
                 const productName =
-                    product.querySelector("h3").innerText.toLowerCase();
+                    product
+                        .querySelector("h3")
+                        .innerText
+                        .toLowerCase();
+
 
                 const productCategory =
                     product.getAttribute("data-category");
