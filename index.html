@@ -21,11 +21,57 @@
             margin: 0;
         }
 
-        .welcome {
-            background-color: white;
-            text-align: center;
-            padding: 20px;
-        }
+        /* =========================
+   BEAUTIFUL WELCOME
+========================= */
+
+.welcome {
+
+    background: linear-gradient(
+        135deg,
+        #fff7ed,
+        #ffffff,
+        #fff0e0
+    );
+
+    text-align: center;
+
+    padding: 28px 15px;
+
+    margin: 15px 10px 5px;
+
+    border-radius: 14px;
+
+    box-shadow:
+        0 3px 12px rgba(0,0,0,0.10);
+
+    border: 1px solid #ffe0c2;
+
+}
+
+
+.welcome h2 {
+
+    margin: 0;
+
+    font-size: 28px;
+
+    color: #ff6600;
+
+    font-weight: bold;
+
+}
+
+
+.welcome p {
+
+    margin: 8px 0 0;
+
+    font-size: 16px;
+
+    color: #666;
+
+}
 
         h2 {
             text-align: center;
@@ -316,27 +362,39 @@
     </div>
 
 
-    <div class="search">
+    <!-- =========================
+     WELCOME SECTION
+========================= -->
 
-        <input
-            type="text"
-            id="searchInput"
-            placeholder="Search products..."
-            oninput="searchProducts()">
+<div class="welcome">
 
-        <button onclick="searchProducts()">
-            Search
-        </button>
+    <h2>Welcome to RK Store</h2>
 
-    </div>
+    <p>
+        Shop your favorite products with us
+    </p>
+
+</div>
 
 
-    <div class="welcome">
+<!-- =========================
+     SEARCH
+========================= -->
 
-        <p>Welcome to RK Store</p>
+<div class="search">
 
-    </div>
+    <input
+        type="text"
+        id="searchInput"
+        placeholder="Search products..."
+        oninput="searchProducts()"
+    >
 
+    <button onclick="searchProducts()">
+        🔍 Search
+    </button>
+
+</div>
 
     <div class="categories">
 
