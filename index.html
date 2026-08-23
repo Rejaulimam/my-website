@@ -32,52 +32,52 @@
         }
 
         .products {
-    display: grid;
-    grid-template-columns: repeat(4, 1fr);
-    gap: 15px;
-    padding: 15px;
-    max-width: 1100px;
-    margin: auto;
-}
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 15px;
+            padding: 15px;
+            max-width: 1100px;
+            margin: auto;
+        }
 
-.product {
-    background-color: white;
-    padding: 12px;
-    text-align: center;
-    border-radius: 8px;
-    box-shadow: 0 2px 8px rgba(0,0,0,0.1);
-    transition: transform 0.2s, box-shadow 0.2s;
-}
+        .product {
+            background-color: white;
+            padding: 12px;
+            text-align: center;
+            border-radius: 8px;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+            transition: transform 0.2s, box-shadow 0.2s;
+        }
 
-.product:hover {
-    transform: translateY(-4px);
-    box-shadow: 0 4px 12px rgba(0,0,0,0.15);
-}
+        .product:hover {
+            transform: translateY(-4px);
+            box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+        }
 
-.product img {
-    width: 100%;
-    height: 180px;
-    object-fit: cover;
-    border-radius: 8px;
-}
+        .product img {
+            width: 100%;
+            height: 180px;
+            object-fit: cover;
+            border-radius: 8px;
+        }
 
-.product h3 {
-    font-size: 16px;
-    min-height: 42px;
-    margin: 10px 0 5px;
-}
+        .product h3 {
+            font-size: 16px;
+            min-height: 42px;
+            margin: 10px 0 5px;
+        }
 
-.product p {
-    font-size: 18px;
-    font-weight: bold;
-    color: #ff6600;
-    margin: 8px 0 12px;
-}
+        .product p {
+            font-size: 18px;
+            font-weight: bold;
+            color: #ff6600;
+            margin: 8px 0 12px;
+        }
 
-.product button {
-    margin: 4px 2px;
-    cursor: pointer;
-}
+        .product button {
+            margin: 4px 2px;
+            cursor: pointer;
+        }
 
         button {
             background-color: #ff6600;
@@ -125,35 +125,36 @@
             border: 1px solid #ccc;
             border-radius: 5px;
         }
-@media (max-width: 700px) {
 
-    .products {
-        grid-template-columns: repeat(2, 1fr);
-        gap: 10px;
-        padding: 10px;
-    }
+        @media (max-width: 700px) {
 
-    .product {
-        padding: 8px;
-    }
+            .products {
+                grid-template-columns: repeat(2, 1fr);
+                gap: 10px;
+                padding: 10px;
+            }
 
-    .product img {
-        height: 150px;
-    }
+            .product {
+                padding: 8px;
+            }
 
-    .product h3 {
-        font-size: 14px;
-    }
+            .product img {
+                height: 150px;
+            }
 
-    .product p {
-        font-size: 16px;
-    }
+            .product h3 {
+                font-size: 14px;
+            }
 
-    .product button {
-        width: 100%;
-        margin: 3px 0;
-    }
-}
+            .product p {
+                font-size: 16px;
+            }
+
+            .product button {
+                width: 100%;
+                margin: 3px 0;
+            }
+        }
 
     </style>
 </head>
@@ -166,111 +167,121 @@
         <a href="#">Home</a>
         <a href="#">Categories</a>
         <a href="#" onclick="showCart()">Cart 🛒 (<span id="cartCount">0</span>)</a>
-      
-<a href="customer-login.html">Customer Login</a>
-<a href="my-orders.html">My Orders</a>
-<a href="admin-login.html">Admin Login</a>
+
+        <a href="customer-login.html">Customer Login</a>
+        <a href="my-orders.html">My Orders</a>
+        <a href="admin-login.html">Admin Login</a>
     </nav>
 
     <div class="search">
-    <input type="text"
-           id="searchInput"
-           placeholder="Search products..."
-           oninput="searchProducts()">
+        <input type="text"
+               id="searchInput"
+               placeholder="Search products..."
+               oninput="searchProducts()">
 
-    <button onclick="searchProducts()">Search</button>
-</div>
+        <button onclick="searchProducts()">Search</button>
+    </div>
 
     <div class="welcome">
         <p>Welcome to RK Store</p>
     </div>
 
-   <div class="categories">
+    <div class="categories">
 
-    <h2>Shop by Category</h2>
+        <h2>Shop by Category</h2>
 
-    <div class="category-list">
+        <div class="category-list">
 
-<button onclick="showAllProducts()">
-    🛍️ All Products
-</button>
-        <button onclick="filterCategory('Men')">
-            👕 Men
-        </button>
+            <button onclick="showAllProducts()">
+                🛍️ All Products
+            </button>
 
-        <button onclick="filterCategory('Women')">
-            👗 Women
-        </button>
+            <button onclick="filterCategory('Men')">
+                👕 Men
+            </button>
 
-        <button onclick="filterCategory('Electronics')">
-            📱 Electronics
-        </button>
+            <button onclick="filterCategory('Women')">
+                👗 Women
+            </button>
 
-        <button onclick="filterCategory('Home & Living')">
-            🏠 Home & Living
-        </button>
+            <button onclick="filterCategory('Electronics')">
+                📱 Electronics
+            </button>
+
+            <button onclick="filterCategory('Home & Living')">
+                🏠 Home & Living
+            </button>
+
+        </div>
 
     </div>
 
-</div>
     <h2>Our Products</h2>
 
     <div class="products">
 
-        <div class="product" data-category="Men">
-    <img src="product1.jpg"
-         alt="Men's Formal Solid Shirt"
-         width="100%"
-         style="border-radius: 8px;">
-
-    <h3>Men's Formal Solid Shirt</h3>
-
-    <p>Price: ৳450</p>
-
-    <button onclick="buyProduct('Men\'s Formal Solid Shirt')">
-        Buy Now
-    </button>
-
-    <button onclick="window.location.href='product.html?product=1'">
-        View Details
-    </button>
-</div>
-
+        <!-- Product 1 -->
 
         <div class="product" data-category="Men">
 
-    <img src="product2.jpg"
-         alt="Men's Casual Shirt"
-         width="100%"
-         style="border-radius: 8px;">
+            <img src="product1.jpg"
+                 alt="Men's Formal Solid Shirt"
+                 width="100%"
+                 style="border-radius: 8px;">
 
-    <h3>Men's Casual Shirt</h3>
+            <h3>Men's Formal Solid Shirt</h3>
 
-    <p>Price: ৳400</p>
+            <p>Price: ৳450</p>
 
-    <button onclick="buyProduct('Men\'s Casual Shirt')">
-        Buy Now
-    </button>
+            <button onclick="buyProduct('Men\'s Formal Solid Shirt')">
+                Buy Now
+            </button>
 
-    <button onclick="window.location.href='product.html?product=2'">
-        View Details
-    </button>
+            <button onclick="window.location.href='product.html?product=1'">
+                View Details
+            </button>
 
-</div>
+        </div>
 
+
+        <!-- Product 2 -->
+
+        <div class="product" data-category="Men">
+
+            <img src="product2.jpg"
+                 alt="Men's Casual Shirt"
+                 width="100%"
+                 style="border-radius: 8px;">
+
+            <h3>Men's Casual Shirt</h3>
+
+            <p>Price: ৳400</p>
+
+            <button onclick="buyProduct('Men\'s Casual Shirt')">
+                Buy Now
+            </button>
+
+            <button onclick="window.location.href='product.html?product=2'">
+                View Details
+            </button>
+
+        </div>
+
+
+        <!-- Product 3 -->
 
         <div class="product" data-category="Men">
 
             <img src="product3.jpg"
-                 alt="Men's Casual White Shirt"
+                 alt="Men's Casual Check Shirt"
                  width="100%"
                  style="border-radius: 8px;">
 
-            <h3>Men's Casual White Shirt</h3>
+            <h3>Men's Casual Check Shirt</h3>
 
-            <p>Price: ৳1000</p>
+            <p>Price: ৳480</p>
 
-            <button onclick="buyProduct('Men\'s Casual White Shirt')">
+            <button onclick="buyProduct('Men\'s Casual Check Shirt')">
                 Buy Now
             </button>
 
@@ -281,18 +292,20 @@
         </div>
 
 
-        <div class="product" data-category="Men">
+        <!-- Product 4 -->
+
+        <div class="product" data-category="Women">
 
             <img src="product4.jpg"
-                 alt="Men's Casual Navy Check Shirt"
+                 alt="Women's Casual Yellow Dress"
                  width="100%"
                  style="border-radius: 8px;">
 
-            <h3>Men's Casual Navy Check Shirt</h3>
+            <h3>Women's Casual Yellow Dress</h3>
 
-            <p>Price: ৳1200</p>
+            <p>Price: ৳500</p>
 
-            <button onclick="buyProduct('Men\'s Casual Navy Check Shirt')">
+            <button onclick="buyProduct('Women\'s Casual Yellow Dress')">
                 Buy Now
             </button>
 
@@ -300,7 +313,7 @@
                 View Details
             </button>
 
-                </div>
+        </div>
 
 
         <!-- Product 5 -->
@@ -327,10 +340,13 @@
         </div>
 
     </div>
-<p id="noProducts"
-   style="display:none; text-align:center; font-size:18px; color:#777;">
-    No products found
-</p>
+
+    <p id="noProducts"
+       style="display:none; text-align:center; font-size:18px; color:#777;">
+        No products found
+    </p>
+
+
     <script>
 
         function buyProduct(productName) {
@@ -340,47 +356,51 @@
 
             let price = 0;
 
+
             if (productName === "Men's Formal Solid Shirt") {
-    price = 450;
-}
-
-     if (productName === "Men's Casual Shirt") {
-    price = 400;
-}  
-
-            if (productName === "Men's Casual White Shirt") {
-                price = 1000;
+                price = 450;
             }
 
-            if (productName === "Men's Casual Navy Check Shirt") {
-                price = 1200;
+            if (productName === "Men's Casual Shirt") {
+                price = 400;
             }
 
-if (productName === "Women's Casual Dress") {
-    price = 900;
-}
+            if (productName === "Men's Casual Check Shirt") {
+                price = 480;
+            }
+
+            if (productName === "Women's Casual Yellow Dress") {
+                price = 500;
+            }
+
+            if (productName === "Women's Casual Dress") {
+                price = 900;
+            }
+
 
             let image = "";
 
+
             if (productName === "Men's Formal Solid Shirt") {
-    image = "product1.jpg";
-}
+                image = "product1.jpg";
+            }
 
-           if (productName === "Men's Casual Shirt") {
-    image = "product2.jpg";
-}
+            if (productName === "Men's Casual Shirt") {
+                image = "product2.jpg";
+            }
 
-            if (productName === "Men's Casual White Shirt") {
+            if (productName === "Men's Casual Check Shirt") {
                 image = "product3.jpg";
             }
 
-            if (productName === "Men's Casual Navy Check Shirt") {
+            if (productName === "Women's Casual Yellow Dress") {
                 image = "product4.jpg";
             }
 
-if (productName === "Women's Casual Dress") {
-    image = "product5.jpg";
-}
+            if (productName === "Women's Casual Dress") {
+                image = "product5.jpg";
+            }
+
 
             cart.push({
                 name: productName,
@@ -397,163 +417,117 @@ if (productName === "Women's Casual Dress") {
 
 
             alert(productName + " added to cart!");
-updateCartCount();
+
+            updateCartCount();
+
         }
 
 
         function showCart() {
             window.location.href = "cart.html";
         }
-function updateCartCount() {
 
-    const cart =
-        JSON.parse(localStorage.getItem("cart")) || [];
 
-    let totalQuantity = 0;
+        function updateCartCount() {
 
-    cart.forEach(function(item) {
-        totalQuantity += item.quantity || 1;
-    });
+            const cart =
+                JSON.parse(localStorage.getItem("cart")) || [];
 
-    document.getElementById("cartCount").innerText = totalQuantity;
-}
+            let totalQuantity = 0;
 
-updateCartCount();
+            cart.forEach(function(item) {
+                totalQuantity += item.quantity || 1;
+            });
 
-let selectedCategory = "All";
+            document.getElementById("cartCount").innerText =
+                totalQuantity;
+        }
 
-function filterCategory(category) {
 
-    selectedCategory = category;
+        updateCartCount();
 
-    searchProducts();
-}
 
-function showAllProducts() {
+        let selectedCategory = "All";
 
-    selectedCategory = "All";
 
-    searchProducts();
-}
+        function filterCategory(category) {
 
-function searchProducts() {
+            selectedCategory = category;
 
-    const searchText =
-        document.getElementById("searchInput").value.toLowerCase();
-
-    let foundProducts = 0;
-
-    const products =
-        document.querySelectorAll(".product");
-
-    products.forEach(function(product) {
-
-        const productName =
-            product.querySelector("h3").innerText.toLowerCase();
-
-        const productCategory =
-            product.getAttribute("data-category");
-
-        const categoryMatch =
-            selectedCategory === "All" ||
-            productCategory === selectedCategory;
-
-        const searchMatch =
-            productName.includes(searchText);
-
-        if (categoryMatch && searchMatch) {
-
-            product.style.display = "";
-            foundProducts++;
-
-        } else {
-
-            product.style.display = "none";
+            searchProducts();
 
         }
 
-    });
 
-    const noProducts =
-        document.getElementById("noProducts");
+        function showAllProducts() {
 
-    if (foundProducts === 0) {
-        noProducts.style.display = "block";
-    } else {
-        noProducts.style.display = "none";
-    }
+            selectedCategory = "All";
 
-}
+            searchProducts();
+
+        }
+
+
+        function searchProducts() {
+
+            const searchText =
+                document.getElementById("searchInput").value.toLowerCase();
+
+            let foundProducts = 0;
+
+            const products =
+                document.querySelectorAll(".product");
+
+
+            products.forEach(function(product) {
+
+                const productName =
+                    product.querySelector("h3").innerText.toLowerCase();
+
+                const productCategory =
+                    product.getAttribute("data-category");
+
+
+                const categoryMatch =
+                    selectedCategory === "All" ||
+                    productCategory === selectedCategory;
+
+
+                const searchMatch =
+                    productName.includes(searchText);
+
+
+                if (categoryMatch && searchMatch) {
+
+                    product.style.display = "";
+                    foundProducts++;
+
+                } else {
+
+                    product.style.display = "none";
+
+                }
+
+            });
+
+
+            const noProducts =
+                document.getElementById("noProducts");
+
+
+            if (foundProducts === 0) {
+
+                noProducts.style.display = "block";
+
+            } else {
+
+                noProducts.style.display = "none";
+
+            }
+
+        }
+
     </script>
 
 </body>
 </html>
-
-
-
-
-
-
-
-
-
-
-
-
-
-    
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
