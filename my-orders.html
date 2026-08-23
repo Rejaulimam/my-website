@@ -31,6 +31,52 @@
             margin: 25px auto;
         }
 
+
+        /* =========================
+           MY ORDERS DROPDOWN
+        ========================= */
+
+        .order-filter {
+            background: white;
+            padding: 15px;
+            margin-bottom: 20px;
+            border-radius: 8px;
+            box-shadow: 0 2px 6px #ccc;
+        }
+
+        .order-filter-label {
+            display: block;
+            font-weight: bold;
+            font-size: 17px;
+            margin-bottom: 8px;
+        }
+
+        #orderStatusFilter {
+            width: 100%;
+            box-sizing: border-box;
+            padding: 12px;
+            font-size: 16px;
+            border: 1px solid #ccc;
+            border-radius: 6px;
+            background: white;
+            cursor: pointer;
+        }
+
+        /*
+         * Cancelled option
+         * লাল রঙ
+         */
+
+        #orderStatusFilter option[value="Cancelled"] {
+            color: #e53935;
+            font-weight: bold;
+        }
+
+
+        /* =========================
+           ORDER
+        ========================= */
+
         .order {
             background: white;
             padding: 20px;
@@ -49,10 +95,40 @@
             padding: 10px 0;
         }
 
+
+        /* =========================
+           STATUS COLORS
+        ========================= */
+
         .status {
             font-weight: bold;
             color: #ff6600;
         }
+
+        .status.pending {
+            color: #f39c12;
+        }
+
+        .status.confirmed {
+            color: #3498db;
+        }
+
+        .status.shipped {
+            color: #9b59b6;
+        }
+
+        .status.delivered {
+            color: #27ae60;
+        }
+
+        .status.cancelled {
+            color: #e53935;
+        }
+
+
+        /* =========================
+           LOADING / NO ORDERS
+        ========================= */
 
         .loading,
         .no-orders,
@@ -81,27 +157,98 @@
 
 <h1>RK Store - My Orders</h1>
 
-<div
-    class="container"
-    id="ordersContainer"
->
-    <div class="loading">
-        Checking customer login...
+
+<div class="container">
+
+
+    <!-- =========================
+         MY ORDERS DROPDOWN
+         ========================= -->
+
+    <div class="order-filter">
+
+        <label
+            class="order-filter-label"
+            for="orderStatusFilter"
+        >
+            My Orders ▼
+        </label>
+
+
+        <select
+            id="orderStatusFilter"
+            onchange="filterMyOrders()"
+        >
+
+            <option value="All">
+                📦 View All Orders
+            </option>
+
+
+            <option value="Pending">
+                🟡 Pending Orders
+            </option>
+
+
+            <option value="Confirmed">
+                ✅ Confirmed Orders
+            </option>
+
+
+            <option value="Shipped">
+                🚚 Shipped Orders
+            </option>
+
+
+            <option value="Delivered">
+                ✅ Delivered Orders
+            </option>
+
+
+            <option
+                value="Cancelled"
+            >
+                ❎ Cancelled Orders
+            </option>
+
+        </select>
+
     </div>
+
+
+    <!-- =========================
+         ORDERS CONTAINER
+         ========================= -->
+
+    <div
+        id="ordersContainer"
+    >
+
+        <div class="loading">
+
+            Checking customer login...
+
+        </div>
+
+    </div>
+
 </div>
 
 
 <script type="module">
 
+
 import {
     initializeApp
 } from "https://www.gstatic.com/firebasejs/12.18.0/firebase-app.js";
+
 
 import {
     getFirestore,
     collection,
     getDocs
 } from "https://www.gstatic.com/firebasejs/12.18.0/firebase-firestore.js";
+
 
 import {
     getAuth,
@@ -135,16 +282,27 @@ const firebaseConfig = {
 const app =
     initializeApp(firebaseConfig);
 
+
 const db =
     getFirestore(app);
+
 
 const auth =
     getAuth(app);
 
 
 /* =========================
+   CUSTOMER ORDERS
+========================= */
+
+
+let myOrders = [];
+
+
+/* =========================
    LOAD CUSTOMER ORDERS
 ========================= */
+
 
 async function loadMyOrders(user) {
 
@@ -153,6 +311,7 @@ async function loadMyOrders(user) {
             "ordersContainer"
         );
 
+
     try {
 
         const snapshot =
@@ -160,13 +319,21 @@ async function loadMyOrders(user) {
                 collection(db, "orders")
             );
 
-        let myOrders = [];
+
+        /*
+         * আগের মতোই customer ID
+         * দিয়ে শুধু নিজের order নেওয়া হবে
+         */
+
+        myOrders = [];
+
 
         snapshot.forEach(
             (docSnapshot) => {
 
                 const order =
                     docSnapshot.data();
+
 
                 if (
                     order.customerId === user.uid
@@ -187,7 +354,14 @@ async function loadMyOrders(user) {
         );
 
 
-        if (myOrders.length === 0) {
+        /* =========================
+           NO ORDERS
+        ========================= */
+
+
+        if (
+            myOrders.length === 0
+        ) {
 
             container.innerHTML = `
 
@@ -213,144 +387,15 @@ async function loadMyOrders(user) {
             `;
 
             return;
+
         }
 
 
-        let html = "";
+        /*
+         * প্রথমবার সব order দেখাবে
+         */
 
-
-        myOrders.forEach(
-            (order) => {
-
-                let productsHTML = "";
-
-
-                if (
-                    order.products &&
-                    order.products.length > 0
-                ) {
-
-                    order.products.forEach(
-                        (product) => {
-
-                            const price =
-                                Number(
-                                    product.price
-                                ) || 0;
-
-                            const quantity =
-                                Number(
-                                    product.quantity
-                                ) || 1;
-
-                            const subtotal =
-                                price * quantity;
-
-
-                            productsHTML += `
-
-                                <div class="product">
-
-                                    <p>
-                                        <strong>
-                                            Product:
-                                        </strong>
-
-                                        ${
-                                            product.name ||
-                                            "Product"
-                                        }
-                                    </p>
-
-                                    <p>
-                                        Price:
-                                        ৳${price}
-                                    </p>
-
-                                    <p>
-                                        Quantity:
-                                        ${quantity}
-                                    </p>
-
-                                    <p>
-                                        Subtotal:
-                                        ৳${subtotal}
-                                    </p>
-
-                                </div>
-
-                            `;
-
-                        }
-                    );
-
-                }
-
-
-                const total =
-                    Number(
-                        order.totalAmount
-                    ) || 0;
-
-
-                html += `
-
-                    <div class="order">
-
-                        <h2>
-                            Order ID:
-                            ${order.orderId || "N/A"}
-                        </h2>
-
-                        <p>
-                            <strong>
-                                Date:
-                            </strong>
-
-                            ${
-                                order.dateTime ||
-                                "N/A"
-                            }
-                        </p>
-
-                        <p>
-                            <strong>
-                                Status:
-                            </strong>
-
-                            <span class="status">
-
-                                ${
-                                    order.status ||
-                                    "Pending"
-                                }
-
-                            </span>
-                        </p>
-
-                        <h3>
-                            Products
-                        </h3>
-
-                        ${productsHTML}
-
-                        <p>
-                            <strong>
-                                Total:
-                            </strong>
-
-                            ৳${total}
-                        </p>
-
-                    </div>
-
-                `;
-
-            }
-        );
-
-
-        container.innerHTML = html;
+        displayOrders("All");
 
 
     } catch (error) {
@@ -359,6 +404,7 @@ async function loadMyOrders(user) {
             "My Orders Error:",
             error
         );
+
 
         container.innerHTML = `
 
@@ -382,8 +428,382 @@ async function loadMyOrders(user) {
 
 
 /* =========================
+   FILTER MY ORDERS
+========================= */
+
+
+window.filterMyOrders =
+    function() {
+
+
+        const filter =
+            document.getElementById(
+                "orderStatusFilter"
+            );
+
+
+        const selectedStatus =
+            filter.value;
+
+
+        displayOrders(
+            selectedStatus
+        );
+
+    };
+
+
+/* =========================
+   DISPLAY ORDERS
+========================= */
+
+
+function displayOrders(
+    selectedStatus
+) {
+
+    const container =
+        document.getElementById(
+            "ordersContainer"
+        );
+
+
+    /*
+     * View All Orders
+     */
+
+    let filteredOrders;
+
+
+    if (
+        selectedStatus === "All"
+    ) {
+
+        filteredOrders =
+            myOrders;
+
+    } else {
+
+        /*
+         * নির্দিষ্ট Status অনুযায়ী
+         * order filter
+         */
+
+        filteredOrders =
+            myOrders.filter(
+                (order) => {
+
+                    const status =
+                        order.status ||
+                        "Pending";
+
+
+                    return (
+                        status ===
+                        selectedStatus
+                    );
+
+                }
+            );
+
+    }
+
+
+    /* =========================
+       NO MATCHING ORDERS
+    ========================= */
+
+
+    if (
+        filteredOrders.length === 0
+    ) {
+
+        let message =
+            "No orders found.";
+
+
+        if (
+            selectedStatus ===
+            "Pending"
+        ) {
+
+            message =
+                "You have no Pending Orders.";
+
+        }
+
+
+        if (
+            selectedStatus ===
+            "Confirmed"
+        ) {
+
+            message =
+                "You have no Confirmed Orders.";
+
+        }
+
+
+        if (
+            selectedStatus ===
+            "Shipped"
+        ) {
+
+            message =
+                "You have no Shipped Orders.";
+
+        }
+
+
+        if (
+            selectedStatus ===
+            "Delivered"
+        ) {
+
+            message =
+                "You have no Delivered Orders.";
+
+        }
+
+
+        if (
+            selectedStatus ===
+            "Cancelled"
+        ) {
+
+            message =
+                "You have no Cancelled Orders.";
+
+        }
+
+
+        container.innerHTML = `
+
+            <div class="no-orders">
+
+                <h2>
+                    No Orders Found
+                </h2>
+
+                <p>
+                    ${message}
+                </p>
+
+            </div>
+
+        `;
+
+        return;
+
+    }
+
+
+    let html = "";
+
+
+    /* =========================
+       CREATE ORDER HTML
+    ========================= */
+
+
+    filteredOrders.forEach(
+        (order) => {
+
+
+            let productsHTML = "";
+
+
+            /* =========================
+               PRODUCTS
+            ========================= */
+
+
+            if (
+                order.products &&
+                order.products.length > 0
+            ) {
+
+                order.products.forEach(
+                    (product) => {
+
+
+                        const price =
+                            Number(
+                                product.price
+                            ) || 0;
+
+
+                        const quantity =
+                            Number(
+                                product.quantity
+                            ) || 1;
+
+
+                        const subtotal =
+                            price *
+                            quantity;
+
+
+                        productsHTML += `
+
+                            <div class="product">
+
+                                <p>
+
+                                    <strong>
+                                        Product:
+                                    </strong>
+
+                                    ${
+                                        product.name ||
+                                        "Product"
+                                    }
+
+                                </p>
+
+
+                                <p>
+
+                                    Price:
+                                    ৳${price}
+
+                                </p>
+
+
+                                <p>
+
+                                    Quantity:
+                                    ${quantity}
+
+                                </p>
+
+
+                                <p>
+
+                                    Subtotal:
+                                    ৳${subtotal}
+
+                                </p>
+
+                            </div>
+
+                        `;
+
+                    }
+                );
+
+            }
+
+
+            /* =========================
+               TOTAL
+            ========================= */
+
+
+            const total =
+                Number(
+                    order.totalAmount
+                ) || 0;
+
+
+            /* =========================
+               STATUS
+            ========================= */
+
+
+            const status =
+                order.status ||
+                "Pending";
+
+
+            const statusClass =
+                status.toLowerCase();
+
+
+            /* =========================
+               ORDER HTML
+            ========================= */
+
+
+            html += `
+
+                <div class="order">
+
+                    <h2>
+
+                        Order ID:
+                        ${order.orderId || "N/A"}
+
+                    </h2>
+
+
+                    <p>
+
+                        <strong>
+                            Date:
+                        </strong>
+
+                        ${
+                            order.dateTime ||
+                            "N/A"
+                        }
+
+                    </p>
+
+
+                    <p>
+
+                        <strong>
+                            Status:
+                        </strong>
+
+                        <span
+                            class="status ${statusClass}"
+                        >
+
+                            ${status}
+
+                        </span>
+
+                    </p>
+
+
+                    <h3>
+                        Products
+                    </h3>
+
+
+                    ${productsHTML}
+
+
+                    <p>
+
+                        <strong>
+                            Total:
+                        </strong>
+
+                        ৳${total}
+
+                    </p>
+
+                </div>
+
+            `;
+
+        }
+    );
+
+
+    container.innerHTML =
+        html;
+
+}
+
+
+/* =========================
    CHECK CUSTOMER LOGIN
 ========================= */
+
 
 onAuthStateChanged(
     auth,
@@ -391,12 +811,20 @@ onAuthStateChanged(
 
         if (user) {
 
-            // Customer is already logged in
-            loadMyOrders(user);
+            /*
+             * Customer is already logged in
+             */
+
+            loadMyOrders(
+                user
+            );
 
         } else {
 
-            // Customer is not logged in
+            /*
+             * Customer is not logged in
+             */
+
             document
                 .getElementById(
                     "ordersContainer"
@@ -428,6 +856,7 @@ onAuthStateChanged(
 
     }
 );
+
 
 </script>
 
