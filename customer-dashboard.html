@@ -216,18 +216,19 @@
 
         }
 
-.confirmed-button {
 
-    background: #8e44ad;
+        .confirmed-button {
 
-}
+            background: #8e44ad;
+
+        }
 
 
-.confirmed-button:hover {
+        .confirmed-button:hover {
 
-    background: #703688;
+            background: #703688;
 
-}
+        }
 
 
         .shipped-button {
@@ -396,48 +397,6 @@
                     📦 My Orders
 
                 </div>
-
-
-                <button
-                    class="menu-button"
-                    onclick="viewOrders()"
-                >
-
-                    📦 View All Orders
-
-                </button>
-
-
-                <button
-    class="menu-button pending-button"
-    onclick="viewPendingOrders()"
->
-    🟡 Pending Orders
-</button>
-
-
-<button
-    class="menu-button confirmed-button"
-    onclick="viewConfirmedOrders()"
->
-    ✅ Confirmed Orders
-</button>
-
-
-                <button
-    class="menu-button shipped-button"
-    onclick="viewShippedOrders()"
->
-    🚚 Shipped Orders
-</button>
-
-
-                <button
-    class="menu-button delivered-button"
-    onclick="viewDeliveredOrders()"
->
-    ✅ Delivered Orders
-</button>
 
             </div>
 
@@ -713,59 +672,60 @@
         };
 
 
-/* ==================================================
-   PENDING ORDERS
-================================================== */
+    /* ==================================================
+       PENDING ORDERS
+    ================================================== */
 
-window.viewPendingOrders =
+    window.viewPendingOrders =
 
-    function() {
+        function() {
 
-        window.location.href =
-            "customer-orders.html?status=Pending";
+            window.location.href =
+                "customer-orders.html?status=Pending";
 
-    };
-
-/* ==================================================
-   CONFIRMED ORDERS
-================================================== */
-
-window.viewConfirmedOrders =
-
-    function() {
-
-        window.location.href =
-            "customer-orders.html?status=Confirmed";
-
-    };
+        };
 
 
-/* ==================================================
-   SHIPPED ORDERS
-================================================== */
+    /* ==================================================
+       CONFIRMED ORDERS
+    ================================================== */
 
-window.viewShippedOrders =
+    window.viewConfirmedOrders =
 
-    function() {
+        function() {
 
-        window.location.href =
-            "customer-orders.html?status=Shipped";
+            window.location.href =
+                "customer-orders.html?status=Confirmed";
 
-    };
+        };
 
 
-/* ==================================================
-   DELIVERED ORDERS
-================================================== */
+    /* ==================================================
+       SHIPPED ORDERS
+    ================================================== */
 
-window.viewDeliveredOrders =
+    window.viewShippedOrders =
 
-    function() {
+        function() {
 
-        window.location.href =
-            "customer-orders.html?status=Delivered";
+            window.location.href =
+                "customer-orders.html?status=Shipped";
 
-    };
+        };
+
+
+    /* ==================================================
+       DELIVERED ORDERS
+    ================================================== */
+
+    window.viewDeliveredOrders =
+
+        function() {
+
+            window.location.href =
+                "customer-orders.html?status=Delivered";
+
+        };
 
 
 
