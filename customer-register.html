@@ -1,17 +1,24 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
+
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <meta
+        name="viewport"
+        content="width=device-width, initial-scale=1.0"
+    >
 
     <title>RK Store - Create Account</title>
 
     <style>
+
         body {
             margin: 0;
             font-family: Arial, sans-serif;
             background: #f5f5f5;
         }
+
 
         .register-box {
             width: 90%;
@@ -24,11 +31,43 @@
             box-sizing: border-box;
         }
 
+
         h2 {
             text-align: center;
             color: #ff6600;
             margin-bottom: 25px;
         }
+
+
+        /* =========================
+           REGISTER METHOD BUTTONS
+        ========================= */
+
+        .method-buttons {
+            display: flex;
+            gap: 10px;
+            margin-bottom: 20px;
+        }
+
+
+        .method-button {
+            width: 50%;
+            padding: 11px;
+            background: #eee;
+            color: #333;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            font-size: 15px;
+            cursor: pointer;
+        }
+
+
+        .method-button.active {
+            background: #ff6600;
+            color: white;
+            border-color: #ff6600;
+        }
+
 
         input {
             width: 100%;
@@ -39,6 +78,7 @@
             box-sizing: border-box;
             font-size: 16px;
         }
+
 
         button {
             width: 100%;
@@ -51,14 +91,28 @@
             cursor: pointer;
         }
 
+
         button:hover {
             background: #e65c00;
         }
+
+
+        button:disabled {
+            background: #999;
+            cursor: not-allowed;
+        }
+
+
+        .otp-button {
+            margin-top: 0;
+        }
+
 
         .login-link {
             text-align: center;
             margin-top: 18px;
         }
+
 
         .login-link a {
             color: #ff6600;
@@ -66,75 +120,258 @@
             font-weight: bold;
         }
 
+
+        .login-link a:hover {
+            text-decoration: underline;
+        }
+
+
+        #phoneRegisterBox {
+            display: none;
+        }
+
+
+        #otpBox {
+            display: none;
+        }
+
+
+        #recaptcha-container {
+            margin: 10px 0 15px 0;
+        }
+
+
         #message {
             text-align: center;
             margin-top: 15px;
             font-size: 14px;
         }
+
     </style>
+
 </head>
+
 
 <body>
 
+
 <div class="register-box">
 
-    <h2>Create Customer Account</h2>
 
-    <input
-        type="text"
-        id="name"
-        placeholder="Enter your name"
-    >
+    <h2>
+        Create Customer Account
+    </h2>
 
-    <input
-        type="email"
-        id="email"
-        placeholder="Enter your email"
-    >
 
-    <input
-        type="password"
-        id="password"
-        placeholder="Create password"
-    >
+    <!-- =========================
+         REGISTER METHOD
+    ========================= -->
 
-    <input
-        type="password"
-        id="confirmPassword"
-        placeholder="Confirm password"
-    >
+    <div class="method-buttons">
 
-    <button onclick="registerCustomer()">
-        Create Account
-    </button>
+        <button
+            type="button"
+            id="emailMethodButton"
+            class="method-button active"
+            onclick="showEmailRegister()"
+        >
 
-    <div class="login-link">
-        Already have an account?
-        <a href="customer-login.html">
-            Login
-        </a>
+            📧 Email Registration
+
+        </button>
+
+
+        <button
+            type="button"
+            id="phoneMethodButton"
+            class="method-button"
+            onclick="showPhoneRegister()"
+        >
+
+            📱 Mobile Registration
+
+        </button>
+
     </div>
 
+
+
+    <!-- =========================
+         EMAIL REGISTRATION
+    ========================= -->
+
+    <div id="emailRegisterBox">
+
+
+        <input
+            type="text"
+            id="name"
+            placeholder="Enter your name"
+        >
+
+
+        <input
+            type="email"
+            id="email"
+            placeholder="Enter your email"
+        >
+
+
+        <input
+            type="password"
+            id="password"
+            placeholder="Create password"
+        >
+
+
+        <input
+            type="password"
+            id="confirmPassword"
+            placeholder="Confirm password"
+        >
+
+
+        <button
+            id="emailRegisterButton"
+            onclick="registerCustomer()"
+        >
+
+            Create Account
+
+        </button>
+
+
+    </div>
+
+
+
+    <!-- =========================
+         PHONE REGISTRATION
+    ========================= -->
+
+    <div id="phoneRegisterBox">
+
+
+        <input
+            type="text"
+            id="phoneName"
+            placeholder="Enter your name"
+        >
+
+
+        <input
+            type="tel"
+            id="phoneNumber"
+            placeholder="Enter mobile number"
+        >
+
+
+        <div id="recaptcha-container"></div>
+
+
+        <button
+            id="sendOtpButton"
+            class="otp-button"
+            onclick="sendOTP()"
+        >
+
+            Send OTP
+
+        </button>
+
+
+        <div id="otpBox">
+
+
+            <input
+                type="text"
+                id="otp"
+                placeholder="Enter 6 digit OTP"
+                maxlength="6"
+                inputmode="numeric"
+            >
+
+
+            <button
+                id="verifyOtpButton"
+                onclick="verifyOTP()"
+            >
+
+                Verify OTP & Create Account
+
+            </button>
+
+
+        </div>
+
+
+    </div>
+
+
+
+    <!-- =========================
+         LOGIN
+    ========================= -->
+
+    <div class="login-link">
+
+        Already have an account?
+
+        <a href="customer-login.html">
+
+            Login
+
+        </a>
+
+    </div>
+
+
     <div id="message"></div>
+
 
 </div>
 
 
+
 <script type="module">
 
+
+/* ==================================================
+   FIREBASE
+================================================== */
+
 import {
+
     initializeApp
-}
-from "https://www.gstatic.com/firebasejs/12.18.0/firebase-app.js";
+
+} from
+"https://www.gstatic.com/firebasejs/12.18.0/firebase-app.js";
 
 
 import {
-    getAuth,
-    createUserWithEmailAndPassword,
-    updateProfile
-}
-from "https://www.gstatic.com/firebasejs/12.18.0/firebase-auth.js";
 
+    getAuth,
+
+    createUserWithEmailAndPassword,
+
+    updateProfile,
+
+    setPersistence,
+
+    browserLocalPersistence,
+
+    RecaptchaVerifier,
+
+    signInWithPhoneNumber
+
+} from
+"https://www.gstatic.com/firebasejs/12.18.0/firebase-auth.js";
+
+
+
+/* ==================================================
+   FIREBASE CONFIG
+================================================== */
 
 const firebaseConfig = {
 
@@ -155,40 +392,305 @@ const firebaseConfig = {
 
     appId:
         "1:407275549697:web:41043b49bf7182cecffc00"
+
 };
 
 
+
+/* ==================================================
+   INITIALIZE FIREBASE
+================================================== */
+
 const app =
     initializeApp(firebaseConfig);
+
 
 const auth =
     getAuth(app);
 
 
+
+/* ==================================================
+   MESSAGE
+================================================== */
+
+const message =
+    document.getElementById(
+        "message"
+    );
+
+
+
+/* ==================================================
+   REGISTER BOXES
+================================================== */
+
+const emailRegisterBox =
+    document.getElementById(
+        "emailRegisterBox"
+    );
+
+
+const phoneRegisterBox =
+    document.getElementById(
+        "phoneRegisterBox"
+    );
+
+
+const emailMethodButton =
+    document.getElementById(
+        "emailMethodButton"
+    );
+
+
+const phoneMethodButton =
+    document.getElementById(
+        "phoneMethodButton"
+    );
+
+
+
+/* ==================================================
+   PHONE OTP VARIABLES
+================================================== */
+
+let confirmationResult =
+    null;
+
+
+let recaptchaVerifier =
+    null;
+
+
+
+/* ==================================================
+   SHOW EMAIL REGISTRATION
+================================================== */
+
+window.showEmailRegister =
+function() {
+
+
+    emailRegisterBox.style.display =
+        "block";
+
+
+    phoneRegisterBox.style.display =
+        "none";
+
+
+    emailMethodButton.classList.add(
+        "active"
+    );
+
+
+    phoneMethodButton.classList.remove(
+        "active"
+    );
+
+
+    message.innerText =
+        "";
+
+};
+
+
+
+/* ==================================================
+   SHOW PHONE REGISTRATION
+================================================== */
+
+window.showPhoneRegister =
+function() {
+
+
+    emailRegisterBox.style.display =
+        "none";
+
+
+    phoneRegisterBox.style.display =
+        "block";
+
+
+    emailMethodButton.classList.remove(
+        "active"
+    );
+
+
+    phoneMethodButton.classList.add(
+        "active"
+    );
+
+
+    message.innerText =
+        "";
+
+
+    setupRecaptcha();
+
+};
+
+
+
+/* ==================================================
+   SETUP RECAPTCHA
+================================================== */
+
+function setupRecaptcha() {
+
+
+    if (recaptchaVerifier) {
+
+        return;
+
+    }
+
+
+    recaptchaVerifier =
+        new RecaptchaVerifier(
+
+            auth,
+
+            "recaptcha-container",
+
+            {
+
+                size: "normal",
+
+                callback:
+                    function() {
+
+                        console.log(
+                            "reCAPTCHA verified."
+                        );
+
+                    },
+
+                "expired-callback":
+                    function() {
+
+                        message.style.color =
+                            "red";
+
+                        message.innerText =
+                            "reCAPTCHA expired. Please verify again.";
+
+                    }
+
+            }
+
+        );
+
+
+    recaptchaVerifier.render();
+
+}
+
+
+
+/* ==================================================
+   FORMAT BANGLADESH PHONE NUMBER
+================================================== */
+
+function formatBangladeshPhone(
+    phone
+) {
+
+
+    phone =
+        phone
+            .replace(/\s+/g, "")
+            .replace(/-/g, "");
+
+
+    /*
+       01712345678
+       ↓
+       +8801712345678
+    */
+
+    if (
+        phone.startsWith("01") &&
+        phone.length === 11
+    ) {
+
+        return "+880" +
+            phone.substring(1);
+
+    }
+
+
+    /*
+       8801712345678
+       ↓
+       +8801712345678
+    */
+
+    if (
+        phone.startsWith("8801") &&
+        phone.length === 13
+    ) {
+
+        return "+" + phone;
+
+    }
+
+
+    /*
+       +8801712345678
+    */
+
+    if (
+        phone.startsWith("+8801") &&
+        phone.length === 14
+    ) {
+
+        return phone;
+
+    }
+
+
+    return null;
+
+}
+
+
+
+/* ==================================================
+   EMAIL REGISTRATION
+   আগের ফাংশন সম্পূর্ণ রাখা হয়েছে
+================================================== */
+
 window.registerCustomer =
 async function() {
+
 
     const name =
         document.getElementById("name")
         .value
         .trim();
 
+
     const email =
         document.getElementById("email")
         .value
         .trim();
 
+
     const password =
         document.getElementById("password")
         .value;
+
 
     const confirmPassword =
         document.getElementById("confirmPassword")
         .value;
 
-    const message =
-        document.getElementById("message");
 
+
+    /* =========================
+       VALIDATION
+    ========================= */
 
     if (
         name === "" ||
@@ -197,72 +699,132 @@ async function() {
         confirmPassword === ""
     ) {
 
-        message.style.color = "red";
+        message.style.color =
+            "red";
+
 
         message.innerText =
             "Please fill in all information.";
 
+
         return;
+
     }
 
 
-    if (password !== confirmPassword) {
+    if (
+        password !==
+        confirmPassword
+    ) {
 
-        message.style.color = "red";
+        message.style.color =
+            "red";
+
 
         message.innerText =
             "Passwords do not match.";
 
+
         return;
+
     }
 
 
-    if (password.length < 6) {
+    if (
+        password.length < 6
+    ) {
 
-        message.style.color = "red";
+        message.style.color =
+            "red";
+
 
         message.innerText =
             "Password must be at least 6 characters.";
 
+
         return;
+
     }
+
+
+
+    const registerButton =
+        document.getElementById(
+            "emailRegisterButton"
+        );
+
+
+    registerButton.disabled =
+        true;
+
+
+    registerButton.innerText =
+        "Creating Account...";
+
 
 
     try {
 
+
         const userCredential =
             await createUserWithEmailAndPassword(
+
                 auth,
+
                 email,
+
                 password
+
             );
 
 
         await updateProfile(
+
             userCredential.user,
+
             {
-                displayName: name
+
+                displayName:
+                    name
+
             }
+
         );
 
 
-        message.style.color = "green";
+        message.style.color =
+            "green";
+
 
         message.innerText =
             "Account created successfully!";
 
 
-        setTimeout(() => {
+        setTimeout(
+            function() {
 
-            window.location.href =
-                "index.html";
+                window.location.href =
+                    "index.html";
 
-        }, 1500);
+            },
+            1500
+        );
 
 
-    } catch (error) {
+    }
 
-        message.style.color = "red";
+
+    catch (error) {
+
+
+        console.error(
+            "Email Registration Error:",
+            error
+        );
+
+
+        message.style.color =
+            "red";
 
 
         if (
@@ -275,6 +837,7 @@ async function() {
 
         }
 
+
         else if (
             error.code ===
             "auth/invalid-email"
@@ -285,6 +848,7 @@ async function() {
 
         }
 
+
         else {
 
             message.innerText =
@@ -292,11 +856,487 @@ async function() {
 
         }
 
+
+        registerButton.disabled =
+            false;
+
+
+        registerButton.innerText =
+            "Create Account";
+
     }
 
 };
 
+
+
+/* ==================================================
+   SEND PHONE OTP
+================================================== */
+
+window.sendOTP =
+async function() {
+
+
+    const name =
+        document.getElementById(
+            "phoneName"
+        )
+        .value
+        .trim();
+
+
+    const phoneInput =
+        document.getElementById(
+            "phoneNumber"
+        )
+        .value
+        .trim();
+
+
+    const sendOtpButton =
+        document.getElementById(
+            "sendOtpButton"
+        );
+
+
+    const otpBox =
+        document.getElementById(
+            "otpBox"
+        );
+
+
+    const phoneNumber =
+        formatBangladeshPhone(
+            phoneInput
+        );
+
+
+
+    /* =========================
+       NAME VALIDATION
+    ========================= */
+
+    if (name === "") {
+
+        message.style.color =
+            "red";
+
+
+        message.innerText =
+            "Please enter your name.";
+
+
+        return;
+
+    }
+
+
+
+    /* =========================
+       PHONE VALIDATION
+    ========================= */
+
+    if (!phoneNumber) {
+
+        message.style.color =
+            "red";
+
+
+        message.innerText =
+            "Please enter a valid Bangladesh mobile number.";
+
+
+        return;
+
+    }
+
+
+    setupRecaptcha();
+
+
+    sendOtpButton.disabled =
+        true;
+
+
+    sendOtpButton.innerText =
+        "Sending OTP...";
+
+
+    try {
+
+
+        await setPersistence(
+
+            auth,
+
+            browserLocalPersistence
+
+        );
+
+
+        confirmationResult =
+            await signInWithPhoneNumber(
+
+                auth,
+
+                phoneNumber,
+
+                recaptchaVerifier
+
+            );
+
+
+        otpBox.style.display =
+            "block";
+
+
+        message.style.color =
+            "green";
+
+
+        message.innerText =
+            "OTP sent successfully. Please enter the OTP.";
+
+
+        sendOtpButton.innerText =
+            "OTP Sent";
+
+    }
+
+
+    catch (error) {
+
+
+        console.error(
+            "Phone Registration OTP Error:",
+            error
+        );
+
+
+        message.style.color =
+            "red";
+
+
+        if (
+            error.code ===
+            "auth/invalid-phone-number"
+        ) {
+
+            message.innerText =
+                "Invalid mobile number.";
+
+        }
+
+
+        else if (
+            error.code ===
+            "auth/too-many-requests"
+        ) {
+
+            message.innerText =
+                "Too many attempts. Please try again later.";
+
+        }
+
+
+        else {
+
+            message.innerText =
+                error.message;
+
+        }
+
+
+        sendOtpButton.disabled =
+            false;
+
+
+        sendOtpButton.innerText =
+            "Send OTP";
+
+
+        resetRecaptcha();
+
+    }
+
+};
+
+
+
+/* ==================================================
+   VERIFY PHONE OTP
+================================================== */
+
+window.verifyOTP =
+async function() {
+
+
+    const otp =
+        document.getElementById(
+            "otp"
+        )
+        .value
+        .trim();
+
+
+    const verifyOtpButton =
+        document.getElementById(
+            "verifyOtpButton"
+        );
+
+
+    const name =
+        document.getElementById(
+            "phoneName"
+        )
+        .value
+        .trim();
+
+
+
+    if (!confirmationResult) {
+
+        message.style.color =
+            "red";
+
+
+        message.innerText =
+            "Please request an OTP first.";
+
+
+        return;
+
+    }
+
+
+    if (
+        name === ""
+    ) {
+
+        message.style.color =
+            "red";
+
+
+        message.innerText =
+            "Please enter your name.";
+
+
+        return;
+
+    }
+
+
+    if (
+        otp === "" ||
+        otp.length !== 6
+    ) {
+
+        message.style.color =
+            "red";
+
+
+        message.innerText =
+            "Please enter the 6 digit OTP.";
+
+
+        return;
+
+    }
+
+
+    verifyOtpButton.disabled =
+        true;
+
+
+    verifyOtpButton.innerText =
+        "Creating Account...";
+
+
+    try {
+
+
+        /* =========================
+           VERIFY OTP
+        ========================= */
+
+        const userCredential =
+            await confirmationResult.confirm(
+                otp
+            );
+
+
+        const user =
+            userCredential.user;
+
+
+        if (!user) {
+
+            throw new Error(
+                "Customer account could not be created."
+            );
+
+        }
+
+
+
+        /* =========================
+           SAVE CUSTOMER NAME
+        ========================= */
+
+        await updateProfile(
+
+            user,
+
+            {
+
+                displayName:
+                    name
+
+            }
+
+        );
+
+
+
+        console.log(
+            "Phone customer created:",
+            user.uid
+        );
+
+
+
+        /* =========================
+           SUCCESS
+        ========================= */
+
+        message.style.color =
+            "green";
+
+
+        message.innerText =
+            "Account created successfully!";
+
+
+        setTimeout(
+            function() {
+
+                window.location.href =
+                    "index.html";
+
+            },
+            1500
+        );
+
+
+    }
+
+
+    catch (error) {
+
+
+        console.error(
+            "Phone Registration Error:",
+            error
+        );
+
+
+        message.style.color =
+            "red";
+
+
+        if (
+            error.code ===
+            "auth/invalid-verification-code"
+        ) {
+
+            message.innerText =
+                "Incorrect OTP. Please try again.";
+
+        }
+
+
+        else if (
+            error.code ===
+            "auth/code-expired"
+        ) {
+
+            message.innerText =
+                "OTP expired. Please request a new OTP.";
+
+        }
+
+
+        else if (
+            error.code ===
+            "auth/credential-already-in-use"
+        ) {
+
+            message.innerText =
+                "This mobile number is already registered.";
+
+        }
+
+
+        else {
+
+            message.innerText =
+                error.message;
+
+        }
+
+
+        verifyOtpButton.disabled =
+            false;
+
+
+        verifyOtpButton.innerText =
+            "Verify OTP & Create Account";
+
+    }
+
+};
+
+
+
+/* ==================================================
+   RESET RECAPTCHA
+================================================== */
+
+function resetRecaptcha() {
+
+
+    if (recaptchaVerifier) {
+
+
+        try {
+
+            recaptchaVerifier.clear();
+
+        }
+
+        catch (error) {
+
+            console.log(
+                error
+            );
+
+        }
+
+
+        recaptchaVerifier =
+            null;
+
+    }
+
+
+    setupRecaptcha();
+
+}
+
+
 </script>
+
 
 </body>
 </html>
