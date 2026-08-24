@@ -1,17 +1,24 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
+
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <meta
+        name="viewport"
+        content="width=device-width, initial-scale=1.0"
+    >
 
     <title>RK Store - Customer Login</title>
 
     <style>
+
         body {
             margin: 0;
             font-family: Arial, sans-serif;
             background: #f5f5f5;
         }
+
 
         .login-box {
             width: 90%;
@@ -24,11 +31,13 @@
             box-sizing: border-box;
         }
 
+
         h2 {
             text-align: center;
             color: #ff6600;
             margin-bottom: 25px;
         }
+
 
         input {
             width: 100%;
@@ -39,6 +48,7 @@
             box-sizing: border-box;
             font-size: 16px;
         }
+
 
         button {
             width: 100%;
@@ -51,35 +61,42 @@
             cursor: pointer;
         }
 
+
         button:hover {
             background: #e65c00;
         }
+
 
         button:disabled {
             background: #999;
             cursor: not-allowed;
         }
 
+
         .register {
             text-align: center;
             margin-top: 18px;
         }
 
-.forgot-password {
-    text-align: center;
-    margin-top: 12px;
-    margin-bottom: 15px;
-}
 
-.forgot-password a {
-    color: #007bff;
-    text-decoration: none;
-    font-weight: bold;
-}
+        .forgot-password {
+            text-align: center;
+            margin-top: 12px;
+            margin-bottom: 15px;
+        }
 
-.forgot-password a:hover {
-    text-decoration: underline;
-}
+
+        .forgot-password a {
+            color: #007bff;
+            text-decoration: none;
+            font-weight: bold;
+        }
+
+
+        .forgot-password a:hover {
+            text-decoration: underline;
+        }
+
 
         .register a {
             color: #ff6600;
@@ -87,19 +104,28 @@
             font-weight: bold;
         }
 
+
         #message {
             text-align: center;
             margin-top: 15px;
             font-size: 14px;
         }
+
     </style>
+
 </head>
+
 
 <body>
 
+
 <div class="login-box">
 
-    <h2>RK Store Customer Login</h2>
+
+    <h2>
+        RK Store Customer Login
+    </h2>
+
 
     <input
         type="email"
@@ -107,11 +133,13 @@
         placeholder="Enter your email"
     >
 
+
     <input
         type="password"
         id="password"
         placeholder="Enter your password"
     >
+
 
     <button
         id="loginButton"
@@ -120,45 +148,73 @@
         Login
     </button>
 
+
     <div class="forgot-password">
+
         <a href="forgot-Customer.html">
+
             Forgot Password?
+
         </a>
+
     </div>
 
+
     <div class="register">
+
         New customer?
+
         <a href="customer-register.html">
+
             Create Account
+
         </a>
+
     </div>
+
 
     <div id="message"></div>
 
+
 </div>
+
+
 
 <script type="module">
 
-/* =========================
+
+/* ==================================================
    FIREBASE
-========================= */
+================================================== */
 
 import {
+
     initializeApp
-} from "https://www.gstatic.com/firebasejs/12.18.0/firebase-app.js";
+
+} from
+"https://www.gstatic.com/firebasejs/12.18.0/firebase-app.js";
+
 
 import {
+
     getAuth,
+
     signInWithEmailAndPassword,
+
     setPersistence,
+
     browserLocalPersistence,
+
     onAuthStateChanged
-} from "https://www.gstatic.com/firebasejs/12.18.0/firebase-auth.js";
+
+} from
+"https://www.gstatic.com/firebasejs/12.18.0/firebase-auth.js";
 
 
-/* =========================
+
+/* ==================================================
    FIREBASE CONFIG
-========================= */
+================================================== */
 
 const firebaseConfig = {
 
@@ -179,27 +235,50 @@ const firebaseConfig = {
 
     appId:
         "1:407275549697:web:41043b49bf7182cecffc00"
+
 };
 
 
 
-
-/* =========================
+/* ==================================================
    INITIALIZE FIREBASE
-========================= */
+================================================== */
 
 const app =
     initializeApp(firebaseConfig);
+
 
 const auth =
     getAuth(app);
 
 
-/* =========================
+
+/* ==================================================
+   GET REDIRECT PAGE
+================================================== */
+
+/*
+   My Orders থেকে Login page-এ এলে
+   Login সফল হওয়ার পর আবার My Orders-এ যাবে।
+*/
+
+const urlParams =
+    new URLSearchParams(
+        window.location.search
+    );
+
+
+const redirectPage =
+    urlParams.get("redirect");
+
+
+
+/* ==================================================
    CUSTOMER LOGIN
-========================= */
+================================================== */
 
 window.loginCustomer = async function() {
+
 
     const email =
         document
@@ -207,67 +286,92 @@ window.loginCustomer = async function() {
             .value
             .trim();
 
+
     const password =
         document
             .getElementById("password")
             .value;
 
+
     const message =
-        document.getElementById("message");
+        document.getElementById(
+            "message"
+        );
+
 
     const loginButton =
-        document.getElementById("loginButton");
+        document.getElementById(
+            "loginButton"
+        );
 
 
-    /* =========================
+
+    /* ==================================================
        VALIDATION
-    ========================= */
+    ================================================== */
 
     if (
         email === "" ||
         password === ""
     ) {
 
-        message.style.color = "red";
+        message.style.color =
+            "red";
+
 
         message.innerText =
             "Please enter email and password.";
 
+
         return;
+
     }
 
 
-    /* =========================
-       BUTTON LOCK
-    ========================= */
 
-    loginButton.disabled = true;
+    /* ==================================================
+       BUTTON LOCK
+    ================================================== */
+
+    loginButton.disabled =
+        true;
+
 
     loginButton.innerText =
         "Logging in...";
 
 
+
     try {
 
-        /* =========================
+
+        /* ==================================================
            KEEP LOGIN SESSION
-        ========================= */
+        ================================================== */
 
         await setPersistence(
+
             auth,
+
             browserLocalPersistence
+
         );
 
 
-        /* =========================
+
+        /* ==================================================
            FIREBASE LOGIN
-        ========================= */
+        ================================================== */
 
         const userCredential =
             await signInWithEmailAndPassword(
+
                 auth,
+
                 email,
+
                 password
+
             );
 
 
@@ -275,16 +379,19 @@ window.loginCustomer = async function() {
             userCredential.user;
 
 
-        /* =========================
+
+        /* ==================================================
            CHECK USER
-        ========================= */
+        ================================================== */
 
         if (!user) {
 
             throw new Error(
                 "Customer login session could not be created."
             );
+
         }
+
 
 
         console.log(
@@ -293,17 +400,22 @@ window.loginCustomer = async function() {
         );
 
 
-        /* =========================
+
+        /* ==================================================
            WAIT FOR AUTH STATE
-        ========================= */
+        ================================================== */
 
         await new Promise(
             function(resolve) {
 
+
                 const unsubscribe =
                     onAuthStateChanged(
+
                         auth,
+
                         function(currentUser) {
+
 
                             if (currentUser) {
 
@@ -314,39 +426,74 @@ window.loginCustomer = async function() {
                             }
 
                         }
+
                     );
 
             }
         );
 
 
-        /* =========================
+
+        /* ==================================================
            SUCCESS
-        ========================= */
+        ================================================== */
 
         message.style.color =
             "green";
+
 
         message.innerText =
             "Login successful!";
 
 
-        /* =========================
-           GO TO HOME
-        ========================= */
+
+        /* ==================================================
+           REDIRECT
+        ================================================== */
 
         setTimeout(
             function() {
 
-                window.location.href =
-    "customer-dashboard.html";
+
+                /*
+                   যদি My Orders থেকে Login page-এ
+                   আসে, তাহলে My Orders-এ ফিরে যাবে।
+                */
+
+                if (
+                    redirectPage ===
+                    "customer-orders.html"
+                ) {
+
+                    window.location.href =
+                        "customer-orders.html";
+
+                }
+
+
+                /*
+                   সাধারণ Login হলে আগের মতো
+                   Customer Dashboard-এ যাবে।
+                */
+
+                else {
+
+                    window.location.href =
+                        "customer-dashboard.html";
+
+                }
+
 
             },
             500
         );
 
 
-    } catch (error) {
+    }
+
+
+    catch (error) {
+
 
         console.error(
             "Login Error:",
@@ -356,6 +503,7 @@ window.loginCustomer = async function() {
 
         message.style.color =
             "red";
+
 
 
         if (
@@ -368,6 +516,7 @@ window.loginCustomer = async function() {
 
         }
 
+
         else if (
             error.code ===
             "auth/user-not-found"
@@ -377,6 +526,7 @@ window.loginCustomer = async function() {
                 "Customer account not found.";
 
         }
+
 
         else if (
             error.code ===
@@ -388,6 +538,7 @@ window.loginCustomer = async function() {
 
         }
 
+
         else {
 
             message.innerText =
@@ -396,12 +547,14 @@ window.loginCustomer = async function() {
         }
 
 
-        /* =========================
+
+        /* ==================================================
            UNLOCK BUTTON
-        ========================= */
+        ================================================== */
 
         loginButton.disabled =
             false;
+
 
         loginButton.innerText =
             "Login";
@@ -410,7 +563,9 @@ window.loginCustomer = async function() {
 
 };
 
+
 </script>
+
 
 </body>
 </html>
