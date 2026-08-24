@@ -1,0 +1,230 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta
+        name="viewport"
+        content="width=device-width, initial-scale=1.0"
+    >
+
+    <title>RK Store - Settings</title>
+
+
+    <style>
+
+        * {
+            box-sizing: border-box;
+        }
+
+
+        body {
+
+            margin: 0;
+
+            font-family: Arial, sans-serif;
+
+            background: #f5f5f5;
+
+        }
+
+
+        .header {
+
+            background: #ff6600;
+
+            color: white;
+
+            padding: 20px;
+
+            text-align: center;
+
+        }
+
+
+        .header h1 {
+
+            margin: 0;
+
+        }
+
+
+        .container {
+
+            width: 92%;
+
+            max-width: 600px;
+
+            margin: 25px auto;
+
+        }
+
+
+        .settings-box {
+
+            background: white;
+
+            padding: 20px;
+
+            border-radius: 10px;
+
+            box-shadow:
+                0 2px 8px rgba(0,0,0,0.12);
+
+        }
+
+
+        .settings-title {
+
+            font-size: 22px;
+
+            font-weight: bold;
+
+            color: #ff6600;
+
+            margin-bottom: 20px;
+
+        }
+
+
+        .setting-button {
+
+            display: block;
+
+            width: 100%;
+
+            padding: 14px;
+
+            margin-bottom: 12px;
+
+            border: none;
+
+            border-radius: 7px;
+
+            background: #ff6600;
+
+            color: white;
+
+            font-size: 16px;
+
+            font-weight: bold;
+
+            cursor: pointer;
+
+            text-align: left;
+
+        }
+
+
+        .setting-button:hover {
+
+            background: #e65c00;
+
+        }
+
+
+        .back-button {
+
+            background: #555;
+
+        }
+
+
+        .back-button:hover {
+
+            background: #333;
+
+        }
+
+    </style>
+
+</head>
+
+
+<body>
+
+
+    <div class="header">
+
+        <h1>RK Store</h1>
+
+        <p>Settings</p>
+
+    </div>
+
+
+    <div class="container">
+
+
+        <div class="settings-box">
+
+
+            <div class="settings-title">
+
+                ⚙️ Settings
+
+            </div>
+
+
+            <button
+                class="setting-button"
+                onclick="alert('Account Settings coming soon.')"
+            >
+
+                👤 Account Settings
+
+            </button>
+
+
+            <button
+                class="setting-button"
+                onclick="alert('Notification Settings coming soon.')"
+            >
+
+                🔔 Notification Settings
+
+            </button>
+
+
+            <button
+                class="setting-button"
+                onclick="alert('Website Settings coming soon.')"
+            >
+
+                🌐 Website Settings
+
+            </button>
+
+
+            <button
+                class="setting-button"
+                onclick="goHome()"
+            >
+
+                🏠 Back to Home
+
+            </button>
+
+
+        </div>
+
+    </div>
+
+
+    <script>
+
+        function goHome() {
+
+            window.location.href =
+                "index.html";
+
+        }
+
+    </script>
+
+
+</body>
+
+</html>
