@@ -19,87 +19,99 @@
             text-align: center;
             padding: 20px;
             margin: 0;
+            position: relative;
         }
 
-/* =========================
-   THREE DOT BUTTON
-========================= */
+        /* =========================
+           THREE DOT BUTTON
+           TOP LEFT OF RK STORE
+        ========================= */
 
-.three-dot-button {
-    position: fixed;
-    top: 205px;
-    left: 10px;
+        .three-dot-button {
+            position: absolute;
+            top: 50%;
+            left: 10px;
+            transform: translateY(-50%);
 
-    width: 50px;
-    height: 50px;
+            width: 45px;
+            height: 45px;
 
-    background: #ff6600;
-    color: white;
+            background: rgba(255,255,255,0.18);
+            color: white;
 
-    border: none;
-    border-radius: 8px;
+            border: 1px solid rgba(255,255,255,0.5);
+            border-radius: 8px;
 
-    font-size: 30px;
-    font-weight: bold;
+            font-size: 30px;
+            font-weight: bold;
 
-    cursor: pointer;
-    z-index: 1000;
+            cursor: pointer;
+            z-index: 1000;
 
-    box-shadow: 0 3px 8px rgba(0,0,0,0.25);
-}
+            display: flex;
+            align-items: center;
+            justify-content: center;
+
+            padding: 0;
+            box-shadow: 0 2px 6px rgba(0,0,0,0.20);
+        }
+
+        .three-dot-button:hover {
+            background: rgba(255,255,255,0.30);
+        }
 
 
         /* =========================
-   BEAUTIFUL WELCOME
-========================= */
+           BEAUTIFUL WELCOME
+        ========================= */
 
-.welcome {
+        .welcome {
 
-    background: linear-gradient(
-        135deg,
-        #fff7ed,
-        #ffffff,
-        #fff0e0
-    );
+            background: linear-gradient(
+                135deg,
+                #fff7ed,
+                #ffffff,
+                #fff0e0
+            );
 
-    text-align: center;
+            text-align: center;
 
-    padding: 28px 15px;
+            padding: 28px 15px;
 
-    margin: 15px 10px 5px;
+            margin: 15px 10px 5px;
 
-    border-radius: 14px;
+            border-radius: 14px;
 
-    box-shadow:
-        0 3px 12px rgba(0,0,0,0.10);
+            box-shadow:
+                0 3px 12px rgba(0,0,0,0.10);
 
-    border: 1px solid #ffe0c2;
+            border: 1px solid #ffe0c2;
 
-}
-
-
-.welcome h2 {
-
-    margin: 0;
-
-    font-size: 22px;
-
-    color: #ff6600;
-
-    font-weight: bold;
-
-}
+        }
 
 
-.welcome p {
+        .welcome h2 {
 
-    margin: 8px 0 0;
+            margin: 0;
 
-    font-size: 16px;
+            font-size: 22px;
 
-    color: #666;
+            color: #ff6600;
 
-}
+            font-weight: bold;
+
+        }
+
+
+        .welcome p {
+
+            margin: 8px 0 0;
+
+            font-size: 16px;
+
+            color: #666;
+
+        }
 
         h2 {
             text-align: center;
@@ -162,56 +174,56 @@
         }
 
 
-nav {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    flex-wrap: wrap;
-    gap: 6px;
-}
+        nav {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 6px;
+        }
 
         nav a {
-    display: inline-block;
-    text-decoration: none;
-    color: #222;
+            display: inline-block;
+            text-decoration: none;
+            color: #222;
 
-    margin: 5px 4px;
-    padding: 9px 13px;
+            margin: 5px 4px;
+            padding: 9px 13px;
 
-    font-size: 17px;
-    font-weight: bold;
+            font-size: 17px;
+            font-weight: bold;
 
-    background: linear-gradient(
-        145deg,
-        #ffffff,
-        #f1f1f1
-    );
+            background: linear-gradient(
+                145deg,
+                #ffffff,
+                #f1f1f1
+            );
 
-    border: 1px solid #d5d5d5;
-    border-radius: 9px;
+            border: 1px solid #d5d5d5;
+            border-radius: 9px;
 
-    box-shadow:
-        0 3px 0 #b5b5b5,
-        0 5px 10px rgba(0, 0, 0, 0.18);
+            box-shadow:
+                0 3px 0 #b5b5b5,
+                0 5px 10px rgba(0, 0, 0, 0.18);
 
-    transition: all 0.2s ease;
-}
+            transition: all 0.2s ease;
+        }
 
-nav a:hover {
-    transform: translateY(-2px);
+        nav a:hover {
+            transform: translateY(-2px);
 
-    box-shadow:
-        0 7px 0 #18181b,
-        0 10px 15px rgba(0, 0, 0, 0.30);
-}
+            box-shadow:
+                0 7px 0 #18181b,
+                0 10px 15px rgba(0, 0, 0, 0.30);
+        }
 
-nav a:active {
-    transform: translateY(4px);
+        nav a:active {
+            transform: translateY(4px);
 
-    box-shadow:
-        0 1px 0 #18181b,
-        0 3px 6px rgba(0, 0, 0, 0.20);
-}
+            box-shadow:
+                0 1px 0 #18181b,
+                0 3px 6px rgba(0, 0, 0, 0.20);
+        }
 
         .search {
             text-align: center;
@@ -242,7 +254,7 @@ nav a:active {
 
         /* =========================
            HELP LINE
-           ========================= */
+        ========================= */
 
         .help-section {
             text-align: center;
@@ -343,10 +355,10 @@ nav a:active {
             }
 
             nav a {
-    margin: 4px 2px;
-    padding: 8px 11px;
-    font-size: 17px;
-}
+                margin: 4px 2px;
+                padding: 8px 11px;
+                font-size: 17px;
+            }
 
         }
 
@@ -355,62 +367,84 @@ nav a:active {
 
 <body>
 
-    <h1>RK Store</h1>
 
-<!-- =========================
-     THREE DOT BUTTON
-========================= -->
+    <!-- =========================
+         RK STORE HEADER
+         THREE DOT BUTTON
+    ========================= -->
 
-<button
-    class="three-dot-button"
-    onclick="toggleThreeDotMenu()">
-    ⋮
-</button>
+    <h1>
 
-<div
-    id="threeDotMenu"
-    style="
-        display:none;
-        position:fixed;
-        top:265px;
-        left:10px;
-        background:white;
-        padding:10px;
-        border-radius:8px;
-        box-shadow:0 3px 12px rgba(0,0,0,0.20);
-        z-index:999;
-    ">
+        RK Store
 
-    <a
-        href="admin-login.html"
+        <button
+            class="three-dot-button"
+            onclick="toggleThreeDotMenu()">
+            ⋮
+        </button>
+
+    </h1>
+
+
+    <!-- =========================
+         THREE DOT MENU
+    ========================= -->
+
+    <div
+        id="threeDotMenu"
         style="
-            display:block;
-            text-decoration:none;
-            color:#222;
-            font-weight:bold;
-            padding:12px 18px;
+            display:none;
+            position:absolute;
+            top:78px;
+            left:10px;
+            background:white;
+            padding:10px;
+            border-radius:8px;
+            box-shadow:0 3px 12px rgba(0,0,0,0.20);
+            z-index:999;
         ">
-        🔐 Admin Login
-    </a>
 
-</div>
+        <a
+            href="admin-login.html"
+            style="
+                display:block;
+                text-decoration:none;
+                color:#222;
+                font-weight:bold;
+                padding:12px 18px;
+            ">
+            🔐 Admin Login
+        </a>
+
+    </div>
+
 
     <nav>
+
         <a href="#">Home</a>
-       
+
         <a href="#" onclick="showCart(); return false;">
             Cart 🛒 (<span id="cartCount">0</span>)
         </a>
 
-        <a href="customer-login.html">Customer Login</a>
-      <a href="customer-orders.html">My Orders</a>
-        <a href="admin-login.html">Admin Login</a>
+        <a href="customer-login.html">
+            Customer Login
+        </a>
+
+        <a href="customer-orders.html">
+            My Orders
+        </a>
+
+        <a href="admin-login.html">
+            Admin Login
+        </a>
+
     </nav>
 
 
     <!-- =========================
          HELP LINE
-         ========================= -->
+    ========================= -->
 
     <div class="help-section">
 
@@ -426,22 +460,23 @@ nav a:active {
 
             <h3>Customer Help Line</h3>
 
+
             <!-- WhatsApp -->
 
             <a
-    class="help-option whatsapp"
-    href="https://wa.me/8801731099464">
-    🟢 WhatsApp
-</a>
+                class="help-option whatsapp"
+                href="https://wa.me/8801731099464">
+                🟢 WhatsApp
+            </a>
 
 
             <!-- IMO -->
 
             <a
-    class="help-option imo"
-    href="imo://chat?phone=8801731099464">
-    🔵 IMO
-</a>
+                class="help-option imo"
+                href="imo://chat?phone=8801731099464">
+                🔵 IMO
+            </a>
 
 
             <!-- Phone -->
@@ -467,38 +502,39 @@ nav a:active {
 
 
     <!-- =========================
-     WELCOME SECTION
-========================= -->
+         WELCOME SECTION
+    ========================= -->
 
-<div class="welcome">
+    <div class="welcome">
 
-    <h2>Welcome to RK Store</h2>
+        <h2>Welcome to RK Store</h2>
 
-    <p>
-        Shop your favorite products with us
-    </p>
+        <p>
+            Shop your favorite products with us
+        </p>
 
-</div>
+    </div>
 
 
-<!-- =========================
-     SEARCH
-========================= -->
+    <!-- =========================
+         SEARCH
+    ========================= -->
 
-<div class="search">
+    <div class="search">
 
-    <input
-        type="text"
-        id="searchInput"
-        placeholder="Search products..."
-        oninput="searchProducts()"
-    >
+        <input
+            type="text"
+            id="searchInput"
+            placeholder="Search products..."
+            oninput="searchProducts"
+        >
 
-    <button onclick="searchProducts()">
-        🔍 Search
-    </button>
+        <button onclick="searchProducts()">
+            🔍 Search
+        </button>
 
-</div>
+    </div>
+
 
     <div class="categories">
 
@@ -685,8 +721,30 @@ nav a:active {
 
 
         /* =========================
+           THREE DOT MENU FUNCTION
+        ========================= */
+
+        function toggleThreeDotMenu() {
+
+            const menu =
+                document.getElementById("threeDotMenu");
+
+            if (menu.style.display === "block") {
+
+                menu.style.display = "none";
+
+            } else {
+
+                menu.style.display = "block";
+
+            }
+
+        }
+
+
+        /* =========================
            HELP LINE FUNCTION
-           ========================= */
+        ========================= */
 
         function toggleHelpLine() {
 
@@ -708,7 +766,7 @@ nav a:active {
 
         /* =========================
            CART FUNCTION
-           ========================= */
+        ========================= */
 
         function buyProduct(productName) {
 
@@ -817,7 +875,7 @@ nav a:active {
 
         /* =========================
            CATEGORY
-           ========================= */
+        ========================= */
 
         let selectedCategory = "All";
 
@@ -842,7 +900,7 @@ nav a:active {
 
         /* =========================
            SEARCH
-           ========================= */
+        ========================= */
 
         function searchProducts() {
 
