@@ -603,7 +603,7 @@ import {
 const firebaseConfig = {
 
     apiKey:
-        "AIzaSyCkBQaphKKz_Wxd1GgKAVoxqR4taKvzdEM",
+        "AIzaSyCkBQaphKKz_Wxd1gGkAVoxqR4taKvzdEM",
 
     authDomain:
         "rk-store-5fb24.firebaseapp.com",
@@ -802,6 +802,18 @@ statusFilter.addEventListener(
    AUTH CHECK
 ================================================== */
 
+/*
+   এখানে কোনো Login button বা Login form নেই।
+
+   Customer যদি আগে থেকেই Firebase-এ Login করা থাকে,
+   তাহলে সরাসরি তার Orders দেখাবে।
+
+   Customer Logout করে থাকলে Firebase user = null হবে।
+   তখন তাকে শুধু Customer Login page-এ পাঠানো হবে।
+
+   Dashboard-এ পাঠানো হবে না।
+*/
+
 onAuthStateChanged(
 
     auth,
@@ -809,10 +821,15 @@ onAuthStateChanged(
     async function(user) {
 
 
-        /*
-           Customer আগে থেকেই Login করা থাকলে
-           সরাসরি তার Orders দেখাবে।
-        */
+        console.log(
+            "Customer Orders Auth:",
+            user
+        );
+
+
+        /* =========================
+           CUSTOMER LOGGED IN
+        ========================= */
 
         if (user) {
 
@@ -825,15 +842,12 @@ onAuthStateChanged(
         }
 
 
-        /*
-           Login session না থাকলে শুধু তখনই
-           Customer Login page-এ যাবে।
-           
-           Dashboard-এ যাবে না।
-        */
+        /* =========================
+           CUSTOMER NOT LOGGED IN
+        ========================= */
 
         window.location.href =
-            "customer-login.html?redirect=customer-orders.html";
+            "customer-login.html";
 
     }
 
