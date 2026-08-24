@@ -357,6 +357,44 @@ nav a:active {
 
     <h1>RK Store</h1>
 
+<!-- =========================
+     THREE DOT BUTTON
+========================= -->
+
+<button
+    class="three-dot-button"
+    onclick="toggleThreeDotMenu()">
+    ⋮
+</button>
+
+<div
+    id="threeDotMenu"
+    style="
+        display:none;
+        position:fixed;
+        top:265px;
+        left:10px;
+        background:white;
+        padding:10px;
+        border-radius:8px;
+        box-shadow:0 3px 12px rgba(0,0,0,0.20);
+        z-index:999;
+    ">
+
+    <a
+        href="admin-login.html"
+        style="
+            display:block;
+            text-decoration:none;
+            color:#222;
+            font-weight:bold;
+            padding:12px 18px;
+        ">
+        🔐 Admin Login
+    </a>
+
+</div>
+
     <nav>
         <a href="#">Home</a>
        
