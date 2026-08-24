@@ -471,44 +471,32 @@
             >
 
                 <option value="">
-
                     All Orders
-
                 </option>
 
 
                 <option value="Pending">
-
                     Pending Order
-
                 </option>
 
 
                 <option value="Confirmed">
-
                     Confirm Order
-
                 </option>
 
 
                 <option value="Cancelled">
-
                     Cancel Order
-
                 </option>
 
 
                 <option value="Shipped">
-
                     Shipped Order
-
                 </option>
 
 
                 <option value="Delivered">
-
                     Delivered Order
-
                 </option>
 
             </select>
@@ -569,541 +557,477 @@
 <script type="module">
 
 
-    /* =========================
-       FIREBASE
-    ========================= */
+/* ==================================================
+   FIREBASE
+================================================== */
 
+import {
 
-    import {
+    initializeApp
 
-        initializeApp
+} from
+"https://www.gstatic.com/firebasejs/12.18.0/firebase-app.js";
 
-    } from
-    "https://www.gstatic.com/firebasejs/12.18.0/firebase-app.js";
 
+import {
 
-    import {
+    getFirestore,
 
-        getFirestore,
+    collection,
 
-        collection,
+    query,
 
-        query,
+    where,
 
-        where,
+    getDocs
 
-        getDocs
+} from
+"https://www.gstatic.com/firebasejs/12.18.0/firebase-firestore.js";
 
-    } from
-    "https://www.gstatic.com/firebasejs/12.18.0/firebase-firestore.js";
 
+import {
 
-    import {
+    getAuth,
 
-        getAuth,
+    onAuthStateChanged
 
-        onAuthStateChanged
+} from
+"https://www.gstatic.com/firebasejs/12.18.0/firebase-auth.js";
 
-    } from
-    "https://www.gstatic.com/firebasejs/12.18.0/firebase-auth.js";
 
 
+/* ==================================================
+   FIREBASE CONFIG
+================================================== */
 
-    /* =========================
-       FIREBASE CONFIG
-    ========================= */
+const firebaseConfig = {
 
+    apiKey:
+        "AIzaSyCkBQaphKKz_Wxd1GgKAVoxqR4taKvzdEM",
 
-    const firebaseConfig = {
+    authDomain:
+        "rk-store-5fb24.firebaseapp.com",
 
-        apiKey:
-            "AIzaSyCkBQaphKKz_Wxd1gGkAVoxqR4taKvzdEM",
+    projectId:
+        "rk-store-5fb24",
 
-        authDomain:
-            "rk-store-5fb24.firebaseapp.com",
+    storageBucket:
+        "rk-store-5fb24.firebasestorage.app",
 
-        projectId:
-            "rk-store-5fb24",
+    messagingSenderId:
+        "407275549697",
 
-        storageBucket:
-            "rk-store-5fb24.firebasestorage.app",
+    appId:
+        "1:407275549697:web:41043b49bf7182cecffc00"
 
-        messagingSenderId:
-            "407275549697",
+};
 
-        appId:
-            "1:407275549697:web:41043b49bf7182cecffc00"
 
-    };
 
+/* ==================================================
+   INITIALIZE FIREBASE
+================================================== */
 
+const app =
+    initializeApp(firebaseConfig);
 
-    /* =========================
-       INITIALIZE FIREBASE
-    ========================= */
 
+const db =
+    getFirestore(app);
 
-    const app =
-        initializeApp(firebaseConfig);
 
+const auth =
+    getAuth(app);
 
-    const db =
-        getFirestore(app);
 
 
-    const auth =
-        getAuth(app);
+/* ==================================================
+   ELEMENTS
+================================================== */
 
+const filterTitle =
+    document.getElementById(
+        "filterTitle"
+    );
 
 
-    /* =========================
-       ELEMENTS
-    ========================= */
+const statusFilter =
+    document.getElementById(
+        "statusFilter"
+    );
 
 
-    const filterTitle =
-        document.getElementById(
-            "filterTitle"
-        );
 
+/* ==================================================
+   URL STATUS
+================================================== */
 
-    const statusFilter =
-        document.getElementById(
-            "statusFilter"
-        );
+const urlParams =
+    new URLSearchParams(
+        window.location.search
+    );
 
 
+const selectedStatus =
+    urlParams.get("status") || "";
 
-    /* =========================
-       URL STATUS
-    ========================= */
 
 
-    const urlParams =
-        new URLSearchParams(
-            window.location.search
-        );
+/* ==================================================
+   SET DROPDOWN
+================================================== */
 
+statusFilter.value =
+    selectedStatus;
 
-    const selectedStatus =
-        urlParams.get("status") || "";
 
 
+/* ==================================================
+   FILTER TITLE
+================================================== */
 
-    /* =========================
-       SET DROPDOWN
-    ========================= */
+function updateFilterTitle() {
 
 
-    statusFilter.value =
-        selectedStatus;
+    if (!selectedStatus) {
 
+        filterTitle.innerText =
+            "All Orders";
 
+        return;
 
-    /* =========================
-       FILTER TITLE
-    ========================= */
+    }
 
 
-    function updateFilterTitle() {
+    if (
+        selectedStatus ===
+        "Pending"
+    ) {
 
+        filterTitle.innerText =
+            "Pending Order";
 
-        if (!selectedStatus) {
+    }
 
-            filterTitle.innerText =
-                "All Orders";
+    else if (
+        selectedStatus ===
+        "Confirmed"
+    ) {
+
+        filterTitle.innerText =
+            "Confirm Order";
+
+    }
+
+    else if (
+        selectedStatus ===
+        "Cancelled"
+    ) {
+
+        filterTitle.innerText =
+            "Cancel Order";
+
+    }
+
+    else if (
+        selectedStatus ===
+        "Shipped"
+    ) {
+
+        filterTitle.innerText =
+            "Shipped Order";
+
+    }
+
+    else if (
+        selectedStatus ===
+        "Delivered"
+    ) {
+
+        filterTitle.innerText =
+            "Delivered Order";
+
+    }
+
+    else {
+
+        filterTitle.innerText =
+            "All Orders";
+
+    }
+
+}
+
+
+updateFilterTitle();
+
+
+
+/* ==================================================
+   DROPDOWN CHANGE
+================================================== */
+
+statusFilter.addEventListener(
+    "change",
+    function() {
+
+
+        const status =
+            this.value;
+
+
+        if (status === "") {
+
+            window.location.href =
+                "customer-orders.html";
+
+        }
+
+        else {
+
+            window.location.href =
+                "customer-orders.html?status=" +
+                encodeURIComponent(
+                    status
+                );
+
+        }
+
+    }
+);
+
+
+
+/* ==================================================
+   AUTH CHECK
+================================================== */
+
+onAuthStateChanged(
+
+    auth,
+
+    async function(user) {
+
+
+        /*
+           Customer আগে থেকেই Login করা থাকলে
+           সরাসরি তার Orders দেখাবে।
+        */
+
+        if (user) {
+
+            await loadCustomerOrders(
+                user.uid
+            );
 
             return;
 
         }
 
 
-        if (
-            selectedStatus ===
-            "Pending"
-        ) {
+        /*
+           Login session না থাকলে শুধু তখনই
+           Customer Login page-এ যাবে।
+           
+           Dashboard-এ যাবে না।
+        */
 
-            filterTitle.innerText =
-                "Pending Order";
-
-        }
-
-        else if (
-            selectedStatus ===
-            "Confirmed"
-        ) {
-
-            filterTitle.innerText =
-                "Confirm Order";
-
-        }
-
-        else if (
-            selectedStatus ===
-            "Cancelled"
-        ) {
-
-            filterTitle.innerText =
-                "Cancel Order";
-
-        }
-
-        else if (
-            selectedStatus ===
-            "Shipped"
-        ) {
-
-            filterTitle.innerText =
-                "Shipped Order";
-
-        }
-
-        else if (
-            selectedStatus ===
-            "Delivered"
-        ) {
-
-            filterTitle.innerText =
-                "Delivered Order";
-
-        }
-
-        else {
-
-            filterTitle.innerText =
-                "All Orders";
-
-        }
+        window.location.href =
+            "customer-login.html?redirect=customer-orders.html";
 
     }
 
-
-    updateFilterTitle();
-
-
-
-    /* =========================
-       DROPDOWN CHANGE
-    ========================= */
-
-
-    statusFilter.addEventListener(
-        "change",
-        function() {
-
-
-            const status =
-                this.value;
-
-
-            if (status === "") {
-
-                window.location.href =
-                    "customer-orders.html";
-
-            }
-
-            else {
-
-                window.location.href =
-                    "customer-orders.html?status=" +
-                    encodeURIComponent(
-                        status
-                    );
-
-            }
-
-        }
-    );
+);
 
 
 
-    /* =========================
-       AUTH CHECK
-    ========================= */
+/* ==================================================
+   LOAD CUSTOMER ORDERS
+================================================== */
+
+async function loadCustomerOrders(
+    customerId
+) {
 
 
-    onAuthStateChanged(
-
-        auth,
-
-        async function(user) {
-
-
-            if (!user) {
-
-                window.location.href =
-                    "customer-login.html";
-
-                return;
-
-            }
+    const loading =
+        document.getElementById(
+            "loading"
+        );
 
 
-            await loadCustomerOrders(
-                user.uid
-            );
-
-        }
-
-    );
+    const container =
+        document.getElementById(
+            "ordersContainer"
+        );
 
 
-
-    /* =========================
-       LOAD CUSTOMER ORDERS
-    ========================= */
-
-
-    async function loadCustomerOrders(
-        customerId
-    ) {
+    const noOrders =
+        document.getElementById(
+            "noOrders"
+        );
 
 
-        const loading =
-            document.getElementById(
-                "loading"
+    const noOrdersText =
+        document.getElementById(
+            "noOrdersText"
+        );
+
+
+    try {
+
+
+        /* ==================================================
+           CUSTOMER ORDERS QUERY
+        ================================================== */
+
+        const ordersQuery =
+            query(
+
+                collection(
+                    db,
+                    "orders"
+                ),
+
+                where(
+                    "customerId",
+                    "==",
+                    customerId
+                )
+
             );
 
 
-        const container =
-            document.getElementById(
-                "ordersContainer"
+        const snapshot =
+            await getDocs(
+                ordersQuery
             );
 
 
-        const noOrders =
-            document.getElementById(
-                "noOrders"
-            );
+        loading.style.display =
+            "none";
 
 
-        const noOrdersText =
-            document.getElementById(
-                "noOrdersText"
-            );
+        let ordersHTML = "";
+
+        let matchingOrders = 0;
 
 
-        try {
+
+        /* ==================================================
+           READ ORDERS
+        ================================================== */
+
+        snapshot.forEach(
+
+            function(doc) {
 
 
-            /* =========================
-               CUSTOMER ORDERS QUERY
-            ========================= */
+                const order =
+                    doc.data();
 
 
-            const ordersQuery =
-                query(
+                const orderStatus =
+                    order.status ||
+                    "Pending";
 
-                    collection(
-                        db,
-                        "orders"
-                    ),
 
-                    where(
-                        "customerId",
-                        "==",
-                        customerId
+
+                /* ==================================================
+                   STATUS FILTER
+                ================================================== */
+
+                if (
+
+                    selectedStatus !== "" &&
+
+                    orderStatus !==
+                    selectedStatus
+
+                ) {
+
+                    return;
+
+                }
+
+
+                matchingOrders++;
+
+
+
+                /* ==================================================
+                   PRODUCTS
+                ================================================== */
+
+                let productsHTML =
+                    "";
+
+
+                if (
+
+                    Array.isArray(
+                        order.products
                     )
 
-                );
+                ) {
 
 
-            const snapshot =
-                await getDocs(
-                    ordersQuery
-                );
+                    order.products.forEach(
 
+                        function(product) {
 
-            loading.style.display =
-                "none";
 
+                            const price =
+                                Number(
+                                    product.price
+                                ) || 0;
 
-            let ordersHTML = "";
 
-            let matchingOrders = 0;
+                            const quantity =
+                                Number(
+                                    product.quantity
+                                ) || 1;
 
 
+                            const subtotal =
+                                price *
+                                quantity;
 
-            /* =========================
-               READ ORDERS
-            ========================= */
 
 
-            snapshot.forEach(
+                            /* =========================
+                               PRODUCT IMAGE
+                            ========================= */
 
-                function(doc) {
+                            let productImageHTML =
+                                "";
 
 
-                    const order =
-                        doc.data();
+                            if (
+                                product.image
+                            ) {
 
+                                productImageHTML = `
 
-                    const orderStatus =
-                        order.status ||
-                        "Pending";
+                                    <img
+                                        class="product-image"
+                                        src="${product.image}"
+                                        alt="${
+                                            product.name ||
+                                            "Product"
+                                        }"
+                                        onerror="
+                                            this.style.display='none';
+                                            this.nextElementSibling.style.display='flex';
+                                        "
+                                    >
 
+                                    <div
+                                        class="product-image-placeholder"
+                                        style="display:none;"
+                                    >
 
-
-                    /* =========================
-                       STATUS FILTER
-                    ========================= */
-
-
-                    if (
-
-                        selectedStatus !== "" &&
-
-                        orderStatus !==
-                        selectedStatus
-
-                    ) {
-
-                        return;
-
-                    }
-
-
-                    matchingOrders++;
-
-
-
-                    /* =========================
-                       PRODUCTS
-                    ========================= */
-
-
-                    let productsHTML =
-                        "";
-
-
-                    if (
-
-                        Array.isArray(
-                            order.products
-                        )
-
-                    ) {
-
-
-                        order.products.forEach(
-
-                            function(product) {
-
-
-                                const price =
-                                    Number(
-                                        product.price
-                                    ) || 0;
-
-
-                                const quantity =
-                                    Number(
-                                        product.quantity
-                                    ) || 1;
-
-
-                                const subtotal =
-                                    price *
-                                    quantity;
-
-
-                                /*
-                                   Product Image
-                                */
-
-                                let productImageHTML =
-                                    "";
-
-
-                                if (
-                                    product.image
-                                ) {
-
-                                    productImageHTML = `
-
-                                        <img
-                                            class="product-image"
-                                            src="${product.image}"
-                                            alt="${
-                                                product.name ||
-                                                "Product"
-                                            }"
-                                            onerror="
-                                                this.style.display='none';
-                                                this.nextElementSibling.style.display='flex';
-                                            "
-                                        >
-
-                                        <div
-                                            class="product-image-placeholder"
-                                            style="display:none;"
-                                        >
-
-                                            Image not available
-
-                                        </div>
-
-                                    `;
-
-                                }
-
-                                else {
-
-                                    productImageHTML = `
-
-                                        <div
-                                            class="product-image-placeholder"
-                                        >
-
-                                            Image not available
-
-                                        </div>
-
-                                    `;
-
-                                }
-
-
-                                productsHTML += `
-
-                                    <div class="product">
-
-                                        ${productImageHTML}
-
-
-                                        <strong>
-
-                                            ${
-                                                product.name ||
-                                                "Product"
-                                            }
-
-                                        </strong>
-
-
-                                        <p>
-
-                                            Price:
-                                            ৳${price}
-
-                                        </p>
-
-
-                                        <p>
-
-                                            Quantity:
-                                            ${quantity}
-
-                                        </p>
-
-
-                                        <p>
-
-                                            Subtotal:
-                                            ৳${subtotal}
-
-                                        </p>
+                                        Image not available
 
                                     </div>
 
@@ -1111,240 +1035,299 @@
 
                             }
 
-                        );
+                            else {
 
-                    }
+                                productImageHTML = `
 
+                                    <div
+                                        class="product-image-placeholder"
+                                    >
 
+                                        Image not available
 
-                    /* =========================
-                       ORDER CARD
-                    ========================= */
+                                    </div>
 
+                                `;
 
-                    ordersHTML += `
-
-                        <div class="order-card">
-
-
-                            <h2>
-
-                                Order #
-
-                                ${
-                                    order.orderId ||
-                                    doc.id
-                                }
-
-                            </h2>
+                            }
 
 
-                            <p class="order-info">
 
-                                <strong>
-                                    Date:
-                                </strong>
+                            productsHTML += `
 
-                                ${
-                                    order.dateTime ||
-                                    "N/A"
-                                }
+                                <div class="product">
 
-                            </p>
+                                    ${productImageHTML}
 
 
-                            <p class="order-info">
+                                    <strong>
 
-                                <strong>
-                                    Status:
-                                </strong>
+                                        ${
+                                            product.name ||
+                                            "Product"
+                                        }
 
-
-                                <span class="status">
-
-                                    ${orderStatus}
-
-                                </span>
-
-                            </p>
+                                    </strong>
 
 
-                            <p class="order-info">
+                                    <p>
 
-                                <strong>
-                                    Payment:
-                                </strong>
+                                        Price:
+                                        ৳${price}
 
-                                ${
-                                    order.paymentMethod ||
-                                    "N/A"
-                                }
-
-                            </p>
+                                    </p>
 
 
-                            <h3>
+                                    <p>
 
-                                Products
+                                        Quantity:
+                                        ${quantity}
 
-                            </h3>
-
-
-                            ${productsHTML}
+                                    </p>
 
 
-                            <div class="total">
+                                    <p>
 
-                                Total:
+                                        Subtotal:
+                                        ৳${subtotal}
 
-                                ৳${
-                                    Number(
-                                        order.totalAmount
-                                    ) || 0
-                                }
+                                    </p>
 
-                            </div>
+                                </div>
+
+                            `;
+
+                        }
+
+                    );
+
+                }
 
 
-                            <button
 
-                                class="view-details-button"
+                /* ==================================================
+                   ORDER CARD
+                ================================================== */
 
-                                onclick="
-                                    viewOrderDetails(
-                                        '${doc.id}'
-                                    )
-                                "
+                ordersHTML += `
 
-                            >
+                    <div class="order-card">
 
-                                View Details
 
-                            </button>
+                        <h2>
 
+                            Order #
+
+                            ${
+                                order.orderId ||
+                                doc.id
+                            }
+
+                        </h2>
+
+
+                        <p class="order-info">
+
+                            <strong>
+                                Date:
+                            </strong>
+
+                            ${
+                                order.dateTime ||
+                                "N/A"
+                            }
+
+                        </p>
+
+
+                        <p class="order-info">
+
+                            <strong>
+                                Status:
+                            </strong>
+
+
+                            <span class="status">
+
+                                ${orderStatus}
+
+                            </span>
+
+                        </p>
+
+
+                        <p class="order-info">
+
+                            <strong>
+                                Payment:
+                            </strong>
+
+                            ${
+                                order.paymentMethod ||
+                                "N/A"
+                            }
+
+                        </p>
+
+
+                        <h3>
+
+                            Products
+
+                        </h3>
+
+
+                        ${productsHTML}
+
+
+                        <div class="total">
+
+                            Total:
+
+                            ৳${
+                                Number(
+                                    order.totalAmount
+                                ) || 0
+                            }
 
                         </div>
 
-                    `;
 
-                }
+                        <button
 
-            );
+                            class="view-details-button"
 
+                            onclick="
+                                viewOrderDetails(
+                                    '${doc.id}'
+                                )
+                            "
 
+                        >
 
-            /* =========================
-               NO MATCHING ORDERS
-            ========================= */
+                            View Details
 
-
-            if (
-
-                matchingOrders === 0
-
-            ) {
+                        </button>
 
 
-                noOrders.style.display =
-                    "block";
+                    </div>
+
+                `;
+
+            }
+
+        );
 
 
-                if (selectedStatus) {
 
-                    noOrdersText.innerText =
+        /* ==================================================
+           NO MATCHING ORDERS
+        ================================================== */
 
-                        "You don't have any " +
+        if (
 
-                        filterTitle.innerText +
+            matchingOrders === 0
 
-                        ".";
-
-                }
-
-                else {
-
-                    noOrdersText.innerText =
-
-                        "You haven't placed any orders yet.";
-
-                }
+        ) {
 
 
-                return;
+            noOrders.style.display =
+                "block";
+
+
+            if (selectedStatus) {
+
+                noOrdersText.innerText =
+
+                    "You don't have any " +
+
+                    filterTitle.innerText +
+
+                    ".";
+
+            }
+
+            else {
+
+                noOrdersText.innerText =
+
+                    "You haven't placed any orders yet.";
 
             }
 
 
-
-            /* =========================
-               SHOW ORDERS
-            ========================= */
-
-
-            container.innerHTML =
-                ordersHTML;
-
+            return;
 
         }
 
-        catch (error) {
 
 
-            console.error(
+        /* ==================================================
+           SHOW ORDERS
+        ================================================== */
 
-                "Load Orders Error:",
+        container.innerHTML =
+            ordersHTML;
 
-                error
-
-            );
-
-
-            loading.innerText =
-
-                "Unable to load your orders. Please try again.";
-
-        }
 
     }
 
+    catch (error) {
 
 
-    /* =========================
-       VIEW ORDER DETAILS
-    ========================= */
+        console.error(
+
+            "Load Orders Error:",
+
+            error
+
+        );
 
 
-    window.viewOrderDetails =
+        loading.innerText =
 
-        function(orderId) {
+            "Unable to load your orders. Please try again.";
 
+    }
 
-            window.location.href =
-
-                "customer-order-details.html?orderId=" +
-
-                encodeURIComponent(
-                    orderId
-                );
-
-        };
+}
 
 
 
-    /* =========================
-       HOME
-    ========================= */
+/* ==================================================
+   VIEW ORDER DETAILS
+================================================== */
+
+window.viewOrderDetails =
+
+    function(orderId) {
 
 
-    window.goHome =
+        window.location.href =
 
-        function() {
+            "customer-order-details.html?orderId=" +
+
+            encodeURIComponent(
+                orderId
+            );
+
+    };
 
 
-            window.location.href =
-                "index.html";
 
-        };
+/* ==================================================
+   HOME
+================================================== */
+
+window.goHome =
+
+    function() {
+
+
+        window.location.href =
+            "index.html";
+
+    };
 
 
 </script>
