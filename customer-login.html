@@ -39,6 +39,36 @@
         }
 
 
+        /* =========================
+           LOGIN METHOD BUTTONS
+        ========================= */
+
+        .method-buttons {
+            display: flex;
+            gap: 10px;
+            margin-bottom: 20px;
+        }
+
+
+        .method-button {
+            width: 50%;
+            padding: 11px;
+            background: #eee;
+            color: #333;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            font-size: 15px;
+            cursor: pointer;
+        }
+
+
+        .method-button.active {
+            background: #ff6600;
+            color: white;
+            border-color: #ff6600;
+        }
+
+
         input {
             width: 100%;
             padding: 12px;
@@ -70,6 +100,11 @@
         button:disabled {
             background: #999;
             cursor: not-allowed;
+        }
+
+
+        .otp-button {
+            margin-top: 0;
         }
 
 
@@ -111,6 +146,21 @@
             font-size: 14px;
         }
 
+
+        #phoneLoginBox {
+            display: none;
+        }
+
+
+        #otpBox {
+            display: none;
+        }
+
+
+        #recaptcha-container {
+            margin: 10px 0 15px 0;
+        }
+
     </style>
 
 </head>
@@ -127,38 +177,139 @@
     </h2>
 
 
-    <input
-        type="email"
-        id="email"
-        placeholder="Enter your email"
-    >
+    <!-- =========================
+         LOGIN METHOD
+    ========================= -->
+
+    <div class="method-buttons">
+
+        <button
+            type="button"
+            id="emailMethodButton"
+            class="method-button active"
+            onclick="showEmailLogin()"
+        >
+
+            📧 Email Login
+
+        </button>
 
 
-    <input
-        type="password"
-        id="password"
-        placeholder="Enter your password"
-    >
+        <button
+            type="button"
+            id="phoneMethodButton"
+            class="method-button"
+            onclick="showPhoneLogin()"
+        >
 
+            📱 Mobile Login
 
-    <button
-        id="loginButton"
-        onclick="loginCustomer()"
-    >
-        Login
-    </button>
-
-
-    <div class="forgot-password">
-
-        <a href="forgot-Customer.html">
-
-            Forgot Password?
-
-        </a>
+        </button>
 
     </div>
 
+
+
+    <!-- =========================
+         EMAIL LOGIN
+    ========================= -->
+
+    <div id="emailLoginBox">
+
+        <input
+            type="email"
+            id="email"
+            placeholder="Enter your email"
+        >
+
+
+        <input
+            type="password"
+            id="password"
+            placeholder="Enter your password"
+        >
+
+
+        <button
+            id="loginButton"
+            onclick="loginCustomer()"
+        >
+
+            Login
+
+        </button>
+
+
+        <div class="forgot-password">
+
+            <a href="forgot-Customer.html">
+
+                Forgot Password?
+
+            </a>
+
+        </div>
+
+    </div>
+
+
+
+    <!-- =========================
+         PHONE LOGIN
+    ========================= -->
+
+    <div id="phoneLoginBox">
+
+        <input
+            type="tel"
+            id="phoneNumber"
+            placeholder="Enter mobile number"
+        >
+
+
+        <div id="recaptcha-container"></div>
+
+
+        <button
+            id="sendOtpButton"
+            class="otp-button"
+            onclick="sendOTP()"
+        >
+
+            Send OTP
+
+        </button>
+
+
+        <div id="otpBox">
+
+            <input
+                type="text"
+                id="otp"
+                placeholder="Enter 6 digit OTP"
+                maxlength="6"
+                inputmode="numeric"
+            >
+
+
+            <button
+                id="verifyOtpButton"
+                onclick="verifyOTP()"
+            >
+
+                Verify OTP & Login
+
+            </button>
+
+        </div>
+
+    </div>
+
+
+
+    <!-- =========================
+         REGISTER
+    ========================= -->
 
     <div class="register">
 
@@ -205,7 +356,11 @@ import {
 
     browserLocalPersistence,
 
-    onAuthStateChanged
+    onAuthStateChanged,
+
+    RecaptchaVerifier,
+
+    signInWithPhoneNumber
 
 } from
 "https://www.gstatic.com/firebasejs/12.18.0/firebase-auth.js";
@@ -257,11 +412,6 @@ const auth =
    GET REDIRECT PAGE
 ================================================== */
 
-/*
-   My Orders থেকে Login page-এ এলে
-   Login সফল হওয়ার পর আবার My Orders-এ যাবে।
-*/
-
 const urlParams =
     new URLSearchParams(
         window.location.search
@@ -274,10 +424,650 @@ const redirectPage =
 
 
 /* ==================================================
-   CUSTOMER LOGIN
+   ELEMENTS
 ================================================== */
 
-window.loginCustomer = async function() {
+const message =
+    document.getElementById(
+        "message"
+    );
+
+
+const emailLoginBox =
+    document.getElementById(
+        "emailLoginBox"
+    );
+
+
+const phoneLoginBox =
+    document.getElementById(
+        "phoneLoginBox"
+    );
+
+
+const emailMethodButton =
+    document.getElementById(
+        "emailMethodButton"
+    );
+
+
+const phoneMethodButton =
+    document.getElementById(
+        "phoneMethodButton"
+    );
+
+
+
+/* ==================================================
+   PHONE OTP VARIABLES
+================================================== */
+
+let confirmationResult =
+    null;
+
+
+let recaptchaVerifier =
+    null;
+
+
+
+/* ==================================================
+   SHOW EMAIL LOGIN
+================================================== */
+
+window.showEmailLogin =
+function() {
+
+
+    emailLoginBox.style.display =
+        "block";
+
+
+    phoneLoginBox.style.display =
+        "none";
+
+
+    emailMethodButton.classList.add(
+        "active"
+    );
+
+
+    phoneMethodButton.classList.remove(
+        "active"
+    );
+
+
+    message.innerText =
+        "";
+
+};
+
+
+
+/* ==================================================
+   SHOW PHONE LOGIN
+================================================== */
+
+window.showPhoneLogin =
+function() {
+
+
+    emailLoginBox.style.display =
+        "none";
+
+
+    phoneLoginBox.style.display =
+        "block";
+
+
+    emailMethodButton.classList.remove(
+        "active"
+    );
+
+
+    phoneMethodButton.classList.add(
+        "active"
+    );
+
+
+    message.innerText =
+        "";
+
+
+    setupRecaptcha();
+
+};
+
+
+
+/* ==================================================
+   SETUP RECAPTCHA
+================================================== */
+
+function setupRecaptcha() {
+
+
+    if (recaptchaVerifier) {
+
+        return;
+
+    }
+
+
+    recaptchaVerifier =
+        new RecaptchaVerifier(
+
+            auth,
+
+            "recaptcha-container",
+
+            {
+
+                size: "normal",
+
+                callback:
+                    function() {
+
+                        console.log(
+                            "reCAPTCHA verified."
+                        );
+
+                    },
+
+                "expired-callback":
+                    function() {
+
+                        message.style.color =
+                            "red";
+
+                        message.innerText =
+                            "reCAPTCHA expired. Please verify again.";
+
+                    }
+
+            }
+
+        );
+
+
+    recaptchaVerifier.render();
+
+}
+
+
+
+/* ==================================================
+   FORMAT BANGLADESH PHONE NUMBER
+================================================== */
+
+function formatBangladeshPhone(
+    phone
+) {
+
+
+    phone =
+        phone
+            .replace(/\s+/g, "")
+            .replace(/-/g, "");
+
+
+    /*
+       01712345678
+       ↓
+       +8801712345678
+    */
+
+    if (
+        phone.startsWith("01") &&
+        phone.length === 11
+    ) {
+
+        return "+880" +
+            phone.substring(1);
+
+    }
+
+
+    /*
+       8801712345678
+       ↓
+       +8801712345678
+    */
+
+    if (
+        phone.startsWith("8801") &&
+        phone.length === 13
+    ) {
+
+        return "+" + phone;
+
+    }
+
+
+    /*
+       Already international format
+    */
+
+    if (
+        phone.startsWith("+8801") &&
+        phone.length === 14
+    ) {
+
+        return phone;
+
+    }
+
+
+    return null;
+
+}
+
+
+
+/* ==================================================
+   SEND OTP
+================================================== */
+
+window.sendOTP =
+async function() {
+
+
+    const phoneInput =
+        document
+            .getElementById(
+                "phoneNumber"
+            )
+            .value
+            .trim();
+
+
+    const sendOtpButton =
+        document.getElementById(
+            "sendOtpButton"
+        );
+
+
+    const otpBox =
+        document.getElementById(
+            "otpBox"
+        );
+
+
+    const phoneNumber =
+        formatBangladeshPhone(
+            phoneInput
+        );
+
+
+    /* =========================
+       VALIDATION
+    ========================= */
+
+    if (!phoneNumber) {
+
+        message.style.color =
+            "red";
+
+
+        message.innerText =
+            "Please enter a valid Bangladesh mobile number.";
+
+
+        return;
+
+    }
+
+
+    setupRecaptcha();
+
+
+    sendOtpButton.disabled =
+        true;
+
+
+    sendOtpButton.innerText =
+        "Sending OTP...";
+
+
+    try {
+
+
+        /* =========================
+           KEEP LOGIN SESSION
+        ========================= */
+
+        await setPersistence(
+
+            auth,
+
+            browserLocalPersistence
+
+        );
+
+
+        /* =========================
+           SEND OTP
+        ========================= */
+
+        confirmationResult =
+            await signInWithPhoneNumber(
+
+                auth,
+
+                phoneNumber,
+
+                recaptchaVerifier
+
+            );
+
+
+        otpBox.style.display =
+            "block";
+
+
+        message.style.color =
+            "green";
+
+
+        message.innerText =
+            "OTP sent successfully. Please enter the OTP.";
+
+
+        sendOtpButton.innerText =
+            "OTP Sent";
+
+
+    }
+
+
+    catch (error) {
+
+
+        console.error(
+            "OTP Error:",
+            error
+        );
+
+
+        message.style.color =
+            "red";
+
+
+        if (
+            error.code ===
+            "auth/invalid-phone-number"
+        ) {
+
+            message.innerText =
+                "Invalid mobile number.";
+
+        }
+
+
+        else if (
+            error.code ===
+            "auth/too-many-requests"
+        ) {
+
+            message.innerText =
+                "Too many attempts. Please try again later.";
+
+        }
+
+
+        else {
+
+            message.innerText =
+                error.message;
+
+        }
+
+
+        sendOtpButton.disabled =
+            false;
+
+
+        sendOtpButton.innerText =
+            "Send OTP";
+
+
+        /*
+           ReCAPTCHA reset
+        */
+
+        if (recaptchaVerifier) {
+
+            try {
+
+                recaptchaVerifier.clear();
+
+            } catch (e) {
+
+                console.log(e);
+
+            }
+
+
+            recaptchaVerifier =
+                null;
+
+
+            setupRecaptcha();
+
+        }
+
+    }
+
+};
+
+
+
+/* ==================================================
+   VERIFY OTP
+================================================== */
+
+window.verifyOTP =
+async function() {
+
+
+    const otp =
+        document
+            .getElementById(
+                "otp"
+            )
+            .value
+            .trim();
+
+
+    const verifyOtpButton =
+        document.getElementById(
+            "verifyOtpButton"
+        );
+
+
+    if (!confirmationResult) {
+
+        message.style.color =
+            "red";
+
+
+        message.innerText =
+            "Please request an OTP first.";
+
+
+        return;
+
+    }
+
+
+    if (
+        otp === "" ||
+        otp.length !== 6
+    ) {
+
+        message.style.color =
+            "red";
+
+
+        message.innerText =
+            "Please enter the 6 digit OTP.";
+
+        return;
+
+    }
+
+
+    verifyOtpButton.disabled =
+        true;
+
+
+    verifyOtpButton.innerText =
+        "Verifying...";
+
+
+    try {
+
+
+        /* =========================
+           VERIFY OTP
+        ========================= */
+
+        const userCredential =
+            await confirmationResult.confirm(
+                otp
+            );
+
+
+        const user =
+            userCredential.user;
+
+
+        if (!user) {
+
+            throw new Error(
+                "Customer login session could not be created."
+            );
+
+        }
+
+
+        console.log(
+            "Phone customer logged in:",
+            user.uid
+        );
+
+
+        /* =========================
+           SUCCESS
+        ========================= */
+
+        message.style.color =
+            "green";
+
+
+        message.innerText =
+            "Login successful!";
+
+
+        setTimeout(
+            function() {
+
+
+                /*
+                   My Orders থেকে Login এলে
+                */
+
+                if (
+                    redirectPage ===
+                    "customer-orders.html"
+                ) {
+
+                    window.location.href =
+                        "customer-orders.html";
+
+                }
+
+
+                /*
+                   সাধারণ Login
+                */
+
+                else {
+
+                    window.location.href =
+                        "customer-dashboard.html";
+
+                }
+
+            },
+            500
+        );
+
+    }
+
+
+    catch (error) {
+
+
+        console.error(
+            "OTP Verification Error:",
+            error
+        );
+
+
+        message.style.color =
+            "red";
+
+
+        if (
+            error.code ===
+            "auth/invalid-verification-code"
+        ) {
+
+            message.innerText =
+                "Incorrect OTP. Please try again.";
+
+        }
+
+
+        else if (
+            error.code ===
+            "auth/code-expired"
+        ) {
+
+            message.innerText =
+                "OTP expired. Please request a new OTP.";
+
+        }
+
+
+        else {
+
+            message.innerText =
+                error.message;
+
+        }
+
+
+        verifyOtpButton.disabled =
+            false;
+
+
+        verifyOtpButton.innerText =
+            "Verify OTP & Login";
+
+    }
+
+};
+
+
+
+/* ==================================================
+   EMAIL CUSTOMER LOGIN
+================================================== */
+
+window.loginCustomer =
+async function() {
 
 
     const email =
@@ -293,17 +1083,10 @@ window.loginCustomer = async function() {
             .value;
 
 
-    const message =
-        document.getElementById(
-            "message"
-        );
-
-
     const loginButton =
         document.getElementById(
             "loginButton"
         );
-
 
 
     /* ==================================================
