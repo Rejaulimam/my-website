@@ -577,7 +577,7 @@ import {
 
     where,
 
-    getDocs
+    onSnapshot
 
 } from
 "https://www.gstatic.com/firebasejs/12.18.0/firebase-firestore.js";
@@ -690,7 +690,7 @@ const urlParams =
     );
 
 
-const selectedStatus =
+let selectedStatus =
     urlParams.get("status") || "";
 
 
@@ -800,44 +800,21 @@ statusFilter.addEventListener(
    AUTH CHECK
 ================================================== */
 
-/*
-   IMPORTANT:
-
-   এখানে কোনো Login Page-এ Redirect নেই।
-
-   Customer Login Button থেকে একবার Login করলে
-   Firebase browserLocalPersistence-এর কারণে
-   session browser-এ থাকবে।
-
-   এরপর Home → My Orders গেলে
-   সরাসরি তার নিজের Orders দেখাবে।
-
-   Logout না করা পর্যন্ত My Orders থেকে
-   কোনো Password চাইবে না।
-*/
-
 onAuthStateChanged(
 
     auth,
 
-    async function(user) {
+    function(user) {
 
         if (user) {
 
-            await loadCustomerOrders(
+            loadCustomerOrders(
                 user.uid
             );
 
         }
 
         else {
-
-            /*
-               My Orders নিজে কোনো Login Page
-               খুলবে না।
-
-               Login না থাকলে শুধু message দেখাবে।
-            */
 
             loading.style.display =
                 "none";
@@ -860,403 +837,435 @@ onAuthStateChanged(
 
 /* ==================================================
    LOAD CUSTOMER ORDERS
+   REAL-TIME FIREBASE
 ================================================== */
 
-async function loadCustomerOrders(
+function loadCustomerOrders(
     customerId
 ) {
 
-    try {
+    loading.style.display =
+        "block";
 
-        const ordersQuery =
-            query(
 
-                collection(
-                    db,
-                    "orders"
-                ),
+    noOrders.style.display =
+        "none";
 
-                where(
-                    "customerId",
-                    "==",
-                    customerId
-                )
 
-            );
+    container.innerHTML =
+        "";
 
 
-        const snapshot =
-            await getDocs(
-                ordersQuery
-            );
+    const ordersQuery =
+        query(
 
+            collection(
+                db,
+                "orders"
+            ),
 
-        loading.style.display =
-            "none";
-
-
-        let ordersHTML = "";
-
-        let matchingOrders = 0;
-
-
-
-        /* ==================================================
-           READ ORDERS
-        ================================================== */
-
-        snapshot.forEach(
-
-            function(doc) {
-
-                const order =
-                    doc.data();
-
-
-                const orderStatus =
-                    order.status ||
-                    "Pending";
-
-
-
-                /* ==================================================
-                   STATUS FILTER
-                ================================================== */
-
-                if (
-
-                    selectedStatus !== "" &&
-
-                    orderStatus !==
-                    selectedStatus
-
-                ) {
-
-                    return;
-
-                }
-
-
-                matchingOrders++;
-
-
-
-                /* ==================================================
-                   PRODUCTS
-                ================================================== */
-
-                let productsHTML =
-                    "";
-
-
-                if (
-                    Array.isArray(
-                        order.products
-                    )
-                ) {
-
-                    order.products.forEach(
-
-                        function(product) {
-
-                            const price =
-                                Number(
-                                    product.price
-                                ) || 0;
-
-
-                            const quantity =
-                                Number(
-                                    product.quantity
-                                ) || 1;
-
-
-                            const subtotal =
-                                price *
-                                quantity;
-
-
-
-                            /* =========================
-                               PRODUCT IMAGE
-                            ========================= */
-
-                            let productImageHTML =
-                                "";
-
-
-                            if (
-                                product.image
-                            ) {
-
-                                productImageHTML = `
-
-                                    <img
-                                        class="product-image"
-                                        src="${product.image}"
-                                        alt="${
-                                            product.name ||
-                                            "Product"
-                                        }"
-                                        onerror="
-                                            this.style.display='none';
-                                            this.nextElementSibling.style.display='flex';
-                                        "
-                                    >
-
-                                    <div
-                                        class="product-image-placeholder"
-                                        style="display:none;"
-                                    >
-
-                                        Image not available
-
-                                    </div>
-
-                                `;
-
-                            }
-
-                            else {
-
-                                productImageHTML = `
-
-                                    <div
-                                        class="product-image-placeholder"
-                                    >
-
-                                        Image not available
-
-                                    </div>
-
-                                `;
-
-                            }
-
-
-
-                            productsHTML += `
-
-                                <div class="product">
-
-                                    ${productImageHTML}
-
-
-                                    <strong>
-
-                                        ${
-                                            product.name ||
-                                            "Product"
-                                        }
-
-                                    </strong>
-
-
-                                    <p>
-
-                                        Price:
-                                        ৳${price}
-
-                                    </p>
-
-
-                                    <p>
-
-                                        Quantity:
-                                        ${quantity}
-
-                                    </p>
-
-
-                                    <p>
-
-                                        Subtotal:
-                                        ৳${subtotal}
-
-                                    </p>
-
-                                </div>
-
-                            `;
-
-                        }
-
-                    );
-
-                }
-
-
-
-                /* ==================================================
-                   ORDER CARD
-                ================================================== */
-
-                ordersHTML += `
-
-                    <div class="order-card">
-
-                        <h2>
-
-                            Order #
-
-                            ${
-                                order.orderId ||
-                                doc.id
-                            }
-
-                        </h2>
-
-
-                        <p class="order-info">
-
-                            <strong>
-                                Date:
-                            </strong>
-
-                            ${
-                                order.dateTime ||
-                                "N/A"
-                            }
-
-                        </p>
-
-
-                        <p class="order-info">
-
-                            <strong>
-                                Status:
-                            </strong>
-
-
-                            <span class="status">
-
-                                ${orderStatus}
-
-                            </span>
-
-                        </p>
-
-
-                        <p class="order-info">
-
-                            <strong>
-                                Payment:
-                            </strong>
-
-                            ${
-                                order.paymentMethod ||
-                                "N/A"
-                            }
-
-                        </p>
-
-
-                        <h3>
-
-                            Products
-
-                        </h3>
-
-
-                        ${productsHTML}
-
-
-                        <div class="total">
-
-                            Total:
-
-                            ৳${
-                                Number(
-                                    order.totalAmount
-                                ) || 0
-                            }
-
-                        </div>
-
-
-                        <button
-
-                            class="view-details-button"
-
-                            onclick="
-                                viewOrderDetails(
-                                    '${doc.id}'
-                                )
-                            "
-
-                        >
-
-                            View Details
-
-                        </button>
-
-
-                    </div>
-
-                `;
-
-            }
+            where(
+                "customerId",
+                "==",
+                customerId
+            )
 
         );
 
 
+    onSnapshot(
 
-        /* ==================================================
-           NO MATCHING ORDERS
-        ================================================== */
+        ordersQuery,
 
-        if (
-            matchingOrders === 0
-        ) {
+        function(snapshot) {
+
+            loading.style.display =
+                "none";
+
+
+            container.innerHTML =
+                "";
+
+
+            noOrders.style.display =
+                "none";
+
+
+            let ordersHTML =
+                "";
+
+
+            let matchingOrders =
+                0;
+
+
+
+            /* ==================================================
+               READ ORDERS
+            ================================================== */
+
+            snapshot.forEach(
+
+                function(doc) {
+
+                    const order =
+                        doc.data();
+
+
+                    const orderStatus =
+                        order.status ||
+                        "Pending";
+
+
+
+                    /* ==================================================
+                       STATUS FILTER
+                    ================================================== */
+
+                    if (
+
+                        selectedStatus !== "" &&
+
+                        orderStatus !==
+                        selectedStatus
+
+                    ) {
+
+                        return;
+
+                    }
+
+
+                    matchingOrders++;
+
+
+
+                    /* ==================================================
+                       PRODUCTS
+                    ================================================== */
+
+                    let productsHTML =
+                        "";
+
+
+                    if (
+                        Array.isArray(
+                            order.products
+                        )
+                    ) {
+
+                        order.products.forEach(
+
+                            function(product) {
+
+                                const price =
+                                    Number(
+                                        product.price
+                                    ) || 0;
+
+
+                                const quantity =
+                                    Number(
+                                        product.quantity
+                                    ) || 1;
+
+
+                                const subtotal =
+                                    price *
+                                    quantity;
+
+
+
+                                /* =========================
+                                   PRODUCT IMAGE
+                                ========================= */
+
+                                let productImageHTML =
+                                    "";
+
+
+                                if (
+                                    product.image
+                                ) {
+
+                                    productImageHTML = `
+
+                                        <img
+                                            class="product-image"
+                                            src="${product.image}"
+                                            alt="${
+                                                product.name ||
+                                                "Product"
+                                            }"
+                                            onerror="
+                                                this.style.display='none';
+                                                this.nextElementSibling.style.display='flex';
+                                            "
+                                        >
+
+                                        <div
+                                            class="product-image-placeholder"
+                                            style="display:none;"
+                                        >
+
+                                            Image not available
+
+                                        </div>
+
+                                    `;
+
+                                }
+
+                                else {
+
+                                    productImageHTML = `
+
+                                        <div
+                                            class="product-image-placeholder"
+                                        >
+
+                                            Image not available
+
+                                        </div>
+
+                                    `;
+
+                                }
+
+
+
+                                productsHTML += `
+
+                                    <div class="product">
+
+                                        ${productImageHTML}
+
+
+                                        <strong>
+
+                                            ${
+                                                product.name ||
+                                                "Product"
+                                            }
+
+                                        </strong>
+
+
+                                        <p>
+
+                                            Price:
+                                            ৳${price}
+
+                                        </p>
+
+
+                                        <p>
+
+                                            Quantity:
+                                            ${quantity}
+
+                                        </p>
+
+
+                                        <p>
+
+                                            Subtotal:
+                                            ৳${subtotal}
+
+                                        </p>
+
+                                    </div>
+
+                                `;
+
+                            }
+
+                        );
+
+                    }
+
+
+
+                    /* ==================================================
+                       ORDER CARD
+                    ================================================== */
+
+                    ordersHTML += `
+
+                        <div class="order-card">
+
+                            <h2>
+
+                                Order #
+
+                                ${
+                                    order.orderId ||
+                                    doc.id
+                                }
+
+                            </h2>
+
+
+                            <p class="order-info">
+
+                                <strong>
+                                    Date:
+                                </strong>
+
+                                ${
+                                    order.dateTime ||
+                                    "N/A"
+                                }
+
+                            </p>
+
+
+                            <p class="order-info">
+
+                                <strong>
+                                    Status:
+                                </strong>
+
+
+                                <span class="status">
+
+                                    ${orderStatus}
+
+                                </span>
+
+                            </p>
+
+
+                            <p class="order-info">
+
+                                <strong>
+                                    Payment:
+                                </strong>
+
+                                ${
+                                    order.paymentMethod ||
+                                    "N/A"
+                                }
+
+                            </p>
+
+
+                            <h3>
+
+                                Products
+
+                            </h3>
+
+
+                            ${productsHTML}
+
+
+                            <div class="total">
+
+                                Total:
+
+                                ৳${
+                                    Number(
+                                        order.totalAmount
+                                    ) || 0
+                                }
+
+                            </div>
+
+
+                            <button
+
+                                class="view-details-button"
+
+                                onclick="
+                                    viewOrderDetails(
+                                        '${doc.id}'
+                                    )
+                                "
+
+                            >
+
+                                View Details
+
+                            </button>
+
+
+                        </div>
+
+                    `;
+
+                }
+
+            );
+
+
+
+            /* ==================================================
+               NO MATCHING ORDERS
+            ================================================== */
+
+            if (
+                matchingOrders === 0
+            ) {
+
+                noOrders.style.display =
+                    "block";
+
+
+                if (selectedStatus) {
+
+                    noOrdersText.innerText =
+                        "You don't have any " +
+                        filterTitle.innerText +
+                        ".";
+
+                }
+
+                else {
+
+                    noOrdersText.innerText =
+                        "You haven't placed any orders yet.";
+
+                }
+
+
+                return;
+
+            }
+
+
+
+            /* ==================================================
+               SHOW ORDERS
+            ================================================== */
+
+            container.innerHTML =
+                ordersHTML;
+
+        },
+
+        function(error) {
+
+            console.error(
+                "Firebase Orders Error:",
+                error
+            );
+
+
+            loading.style.display =
+                "none";
+
 
             noOrders.style.display =
                 "block";
 
 
-            if (selectedStatus) {
-
-                noOrdersText.innerText =
-                    "You don't have any " +
-                    filterTitle.innerText +
-                    ".";
-
-            }
-
-            else {
-
-                noOrdersText.innerText =
-                    "You haven't placed any orders yet.";
-
-            }
-
-
-            return;
+            noOrdersText.innerText =
+                "Unable to load your orders. Please try again.";
 
         }
 
-
-
-        /* ==================================================
-           SHOW ORDERS
-        ================================================== */
-
-        container.innerHTML =
-            ordersHTML;
-
-    }
-
-    catch (error) {
-
-        console.error(
-            "Load Orders Error:",
-            error
-        );
-
-
-        loading.innerText =
-            "Unable to load your orders. Please try again.";
-
-    }
+    );
 
 }
 
