@@ -454,7 +454,6 @@
 
         <div class="filter-box">
 
-
             <h2
                 id="filterTitle"
                 class="filter-title"
@@ -500,7 +499,6 @@
                 </option>
 
             </select>
-
 
         </div>
 
@@ -603,7 +601,7 @@ import {
 const firebaseConfig = {
 
     apiKey:
-        "AIzaSyCkBQaphKKz_Wxd1gGkAVoxqR4taKvzdEM",
+        "AIzaSyCkBQaphKKz_Wxd1GgKAVoxqR4taKvzdEM",
 
     authDomain:
         "rk-store-5fb24.firebaseapp.com",
@@ -657,6 +655,30 @@ const statusFilter =
     );
 
 
+const loading =
+    document.getElementById(
+        "loading"
+    );
+
+
+const container =
+    document.getElementById(
+        "ordersContainer"
+    );
+
+
+const noOrders =
+    document.getElementById(
+        "noOrders"
+    );
+
+
+const noOrdersText =
+    document.getElementById(
+        "noOrdersText"
+    );
+
+
 
 /* ==================================================
    URL STATUS
@@ -672,11 +694,6 @@ const selectedStatus =
     urlParams.get("status") || "";
 
 
-
-/* ==================================================
-   SET DROPDOWN
-================================================== */
-
 statusFilter.value =
     selectedStatus;
 
@@ -688,7 +705,6 @@ statusFilter.value =
 
 function updateFilterTitle() {
 
-
     if (!selectedStatus) {
 
         filterTitle.innerText =
@@ -699,50 +715,35 @@ function updateFilterTitle() {
     }
 
 
-    if (
-        selectedStatus ===
-        "Pending"
-    ) {
+    if (selectedStatus === "Pending") {
 
         filterTitle.innerText =
             "Pending Order";
 
     }
 
-    else if (
-        selectedStatus ===
-        "Confirmed"
-    ) {
+    else if (selectedStatus === "Confirmed") {
 
         filterTitle.innerText =
             "Confirm Order";
 
     }
 
-    else if (
-        selectedStatus ===
-        "Cancelled"
-    ) {
+    else if (selectedStatus === "Cancelled") {
 
         filterTitle.innerText =
             "Cancel Order";
 
     }
 
-    else if (
-        selectedStatus ===
-        "Shipped"
-    ) {
+    else if (selectedStatus === "Shipped") {
 
         filterTitle.innerText =
             "Shipped Order";
 
     }
 
-    else if (
-        selectedStatus ===
-        "Delivered"
-    ) {
+    else if (selectedStatus === "Delivered") {
 
         filterTitle.innerText =
             "Delivered Order";
@@ -771,7 +772,6 @@ statusFilter.addEventListener(
     "change",
     function() {
 
-
         const status =
             this.value;
 
@@ -787,9 +787,7 @@ statusFilter.addEventListener(
 
             window.location.href =
                 "customer-orders.html?status=" +
-                encodeURIComponent(
-                    status
-                );
+                encodeURIComponent(status);
 
         }
 
@@ -803,15 +801,19 @@ statusFilter.addEventListener(
 ================================================== */
 
 /*
-   এখানে কোনো Login button বা Login form নেই।
+   IMPORTANT:
 
-   Customer যদি আগে থেকেই Firebase-এ Login করা থাকে,
-   তাহলে সরাসরি তার Orders দেখাবে।
+   এখানে কোনো Login Page-এ Redirect নেই।
 
-   Customer Logout করে থাকলে Firebase user = null হবে।
-   তখন তাকে শুধু Customer Login page-এ পাঠানো হবে।
+   Customer Login Button থেকে একবার Login করলে
+   Firebase browserLocalPersistence-এর কারণে
+   session browser-এ থাকবে।
 
-   Dashboard-এ পাঠানো হবে না।
+   এরপর Home → My Orders গেলে
+   সরাসরি তার নিজের Orders দেখাবে।
+
+   Logout না করা পর্যন্ত My Orders থেকে
+   কোনো Password চাইবে না।
 */
 
 onAuthStateChanged(
@@ -820,34 +822,35 @@ onAuthStateChanged(
 
     async function(user) {
 
-
-        console.log(
-            "Customer Orders Auth:",
-            user
-        );
-
-
-        /* =========================
-           CUSTOMER LOGGED IN
-        ========================= */
-
         if (user) {
 
             await loadCustomerOrders(
                 user.uid
             );
 
-            return;
-
         }
 
+        else {
 
-        /* =========================
-           CUSTOMER NOT LOGGED IN
-        ========================= */
+            /*
+               My Orders নিজে কোনো Login Page
+               খুলবে না।
 
-        window.location.href =
-            "customer-login.html";
+               Login না থাকলে শুধু message দেখাবে।
+            */
+
+            loading.style.display =
+                "none";
+
+
+            noOrders.style.display =
+                "block";
+
+
+            noOrdersText.innerText =
+                "Please login from Customer Login to view your orders.";
+
+        }
 
     }
 
@@ -863,37 +866,7 @@ async function loadCustomerOrders(
     customerId
 ) {
 
-
-    const loading =
-        document.getElementById(
-            "loading"
-        );
-
-
-    const container =
-        document.getElementById(
-            "ordersContainer"
-        );
-
-
-    const noOrders =
-        document.getElementById(
-            "noOrders"
-        );
-
-
-    const noOrdersText =
-        document.getElementById(
-            "noOrdersText"
-        );
-
-
     try {
-
-
-        /* ==================================================
-           CUSTOMER ORDERS QUERY
-        ================================================== */
 
         const ordersQuery =
             query(
@@ -936,7 +909,6 @@ async function loadCustomerOrders(
 
             function(doc) {
 
-
                 const order =
                     doc.data();
 
@@ -978,18 +950,14 @@ async function loadCustomerOrders(
 
 
                 if (
-
                     Array.isArray(
                         order.products
                     )
-
                 ) {
-
 
                     order.products.forEach(
 
                         function(product) {
-
 
                             const price =
                                 Number(
@@ -1127,7 +1095,6 @@ async function loadCustomerOrders(
 
                     <div class="order-card">
 
-
                         <h2>
 
                             Order #
@@ -1239,11 +1206,8 @@ async function loadCustomerOrders(
         ================================================== */
 
         if (
-
             matchingOrders === 0
-
         ) {
-
 
             noOrders.style.display =
                 "block";
@@ -1252,11 +1216,8 @@ async function loadCustomerOrders(
             if (selectedStatus) {
 
                 noOrdersText.innerText =
-
                     "You don't have any " +
-
                     filterTitle.innerText +
-
                     ".";
 
             }
@@ -1264,7 +1225,6 @@ async function loadCustomerOrders(
             else {
 
                 noOrdersText.innerText =
-
                     "You haven't placed any orders yet.";
 
             }
@@ -1283,23 +1243,17 @@ async function loadCustomerOrders(
         container.innerHTML =
             ordersHTML;
 
-
     }
 
     catch (error) {
 
-
         console.error(
-
             "Load Orders Error:",
-
             error
-
         );
 
 
         loading.innerText =
-
             "Unable to load your orders. Please try again.";
 
     }
@@ -1313,14 +1267,10 @@ async function loadCustomerOrders(
 ================================================== */
 
 window.viewOrderDetails =
-
     function(orderId) {
 
-
         window.location.href =
-
             "customer-order-details.html?orderId=" +
-
             encodeURIComponent(
                 orderId
             );
@@ -1334,9 +1284,7 @@ window.viewOrderDetails =
 ================================================== */
 
 window.goHome =
-
     function() {
-
 
         window.location.href =
             "index.html";
