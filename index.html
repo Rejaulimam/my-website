@@ -28,70 +28,68 @@
         ========================= */
 
         .three-dot-button {
-    position: absolute;
-    top: 50%;
-    left: 10px;
-    transform: translateY(-50%);
+            position: absolute;
+            top: 50%;
+            left: 10px;
+            transform: translateY(-50%);
 
-    width: 38px;
-    height: 38px;
+            width: 38px;
+            height: 38px;
 
-    background: rgba(255,255,255,0.18);
-    color: white;
+            background: rgba(255,255,255,0.18);
+            color: white;
 
-    border: 1px solid rgba(255,255,255,0.5);
-    border-radius: 7px;
+            border: 1px solid rgba(255,255,255,0.5);
+            border-radius: 7px;
 
-    font-size: 23px;
-    font-weight: bold;
+            font-size: 23px;
+            font-weight: bold;
 
-    cursor: pointer;
-    z-index: 1000;
+            cursor: pointer;
+            z-index: 1000;
 
-    display: flex;
-    align-items: center;
-    justify-content: center;
+            display: flex;
+            align-items: center;
+            justify-content: center;
 
-    padding: 0;
+            padding: 0;
 
-    box-shadow: 0 2px 6px rgba(0,0,0,0.20);
-}
+            box-shadow: 0 2px 6px rgba(0,0,0,0.20);
+        }
 
-.three-dot-button:hover {
-    background: rgba(255,255,255,0.30);
-}
+        .three-dot-button:hover {
+            background: rgba(255,255,255,0.30);
+        }
 
+        .header-help-button {
+            position: absolute;
+            top: 50%;
+            right: 5px;
+            transform: translateY(-50%);
 
-.header-help-button {
-    position: absolute;
-    top: 50%;
-    right: 5px;
-    transform: translateY(-50%);
+            background: rgba(255,255,255,0.18);
+            color: white;
 
-    background: rgba(255,255,255,0.18);
-    color: white;
+            border: 1px solid rgba(255,255,255,0.5);
+            border-radius: 6px;
 
-    border: 1px solid rgba(255,255,255,0.5);
-    border-radius: 6px;
+            padding: 7px 6px;
 
-    padding: 7px 6px;
+            font-size: 17px;
+            font-weight: bold;
 
-    font-size: 17px;
-    font-weight: bold;
+            white-space: nowrap;
 
-    white-space: nowrap;
+            cursor: pointer;
 
-    cursor: pointer;
-
-    box-shadow: 0 2px 6px rgba(0,0,0,0.20);
-}
+            box-shadow: 0 2px 6px rgba(0,0,0,0.20);
+        }
 
         /* =========================
            BEAUTIFUL WELCOME
         ========================= */
 
         .welcome {
-
             background: linear-gradient(
                 135deg,
                 #fff7ed,
@@ -111,31 +109,19 @@
                 0 3px 12px rgba(0,0,0,0.10);
 
             border: 1px solid #ffe0c2;
-
         }
-
 
         .welcome h2 {
-
             margin: 0;
-
             font-size: 22px;
-
             color: #ff6600;
-
             font-weight: bold;
-
         }
 
-
         .welcome p {
-
             margin: 8px 0 0;
-
             font-size: 16px;
-
             color: #666;
-
         }
 
         h2 {
@@ -178,6 +164,16 @@
             margin: 10px 0 5px;
         }
 
+        /* =========================
+           PRODUCT SERIAL NUMBER
+        ========================= */
+
+        .product-number {
+            color: #333;
+            font-weight: bold;
+            margin-right: 4px;
+        }
+
         .product p {
             font-size: 18px;
             font-weight: bold;
@@ -197,7 +193,6 @@
             padding: 10px 15px;
             border-radius: 5px;
         }
-
 
         nav {
             display: flex;
@@ -251,12 +246,12 @@
         }
 
         .search {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    gap: 5px;
-    padding: 20px 10px;
-}
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            gap: 5px;
+            padding: 20px 10px;
+        }
 
         .categories {
             background-color: white;
@@ -273,13 +268,12 @@
         }
 
         .search input {
-    padding: 10px;
-    width: 250px;
-    max-width: calc(100% - 90px);
-    border: 1px solid #ccc;
-    border-radius: 5px;
-}
-
+            padding: 10px;
+            width: 250px;
+            max-width: calc(100% - 90px);
+            border: 1px solid #ccc;
+            border-radius: 5px;
+        }
 
         /* =========================
            HELP LINE
@@ -353,7 +347,6 @@
             opacity: 0.9;
         }
 
-
         @media (max-width: 700px) {
 
             .products {
@@ -362,15 +355,15 @@
                 padding: 10px;
             }
 
-.search input {
-    width: auto;
-    flex: 1;
-    min-width: 0;
-}
+            .search input {
+                width: auto;
+                flex: 1;
+                min-width: 0;
+            }
 
-.search button {
-    flex-shrink: 0;
-}
+            .search button {
+                flex-shrink: 0;
+            }
 
             .product {
                 padding: 8px;
@@ -398,14 +391,12 @@
                 padding: 8px 11px;
                 font-size: 17px;
             }
-
         }
 
     </style>
 </head>
 
 <body>
-
 
     <!-- =========================
          RK STORE HEADER
@@ -414,56 +405,55 @@
 
     <h1>
 
-    <!-- LEFT: THREE DOT BUTTON -->
-    <button
-        class="three-dot-button"
-        onclick="toggleThreeDotMenu()">
-        ☰
-    </button>
+        <!-- LEFT: THREE DOT BUTTON -->
+        <button
+            class="three-dot-button"
+            onclick="toggleThreeDotMenu()">
+            ☰
+        </button>
 
-    RK Store
+        RK Store
 
-    <!-- RIGHT: HELP LINE BUTTON -->
-    <button
-        class="header-help-button"
-        onclick="toggleHelpLine()">
-        ☎️ Help Line
-    </button>
+        <!-- RIGHT: HELP LINE BUTTON -->
+        <button
+            class="header-help-button"
+            onclick="toggleHelpLine()">
+            ☎️ Help Line
+        </button>
 
-</h1>
+    </h1>
 
-<div
-    class="help-box"
-    id="helpBox">
+    <div
+        class="help-box"
+        id="helpBox">
 
-    <h3>Customer Help Line</h3>
+        <h3>Customer Help Line</h3>
 
-    <a
-        class="help-option whatsapp"
-        href="https://wa.me/8801731099464">
-        🟢 WhatsApp
-    </a>
+        <a
+            class="help-option whatsapp"
+            href="https://wa.me/8801731099464">
+            🟢 WhatsApp
+        </a>
 
-    <a
-        class="help-option imo"
-        href="imo://chat?phone=8801731099464">
-        🔵 IMO
-    </a>
+        <a
+            class="help-option imo"
+            href="imo://chat?phone=8801731099464">
+            🔵 IMO
+        </a>
 
-    <a
-        class="help-option phone"
-        href="tel:01731099464">
-        📞 Phone
-    </a>
+        <a
+            class="help-option phone"
+            href="tel:01731099464">
+            📞 Phone
+        </a>
 
-    <a
-        class="help-option email"
-        href="mailto:rejaulkarim.bdnet0@gmail.com">
-        ✉️ Email
-    </a>
+        <a
+            class="help-option email"
+            href="mailto:rejaulkarim.bdnet0@gmail.com">
+            ✉️ Email
+        </a>
 
-</div>
-
+    </div>
 
     <!-- =========================
          THREE DOT MENU
@@ -497,13 +487,6 @@
 
     </div>
 
-
-    
-
-
-   
-
-
     <!-- =========================
          WELCOME SECTION
     ========================= -->
@@ -518,28 +501,26 @@
 
     </div>
 
+    <nav>
 
+        <a href="#">
+            🏠 Home
+        </a>
 
+        <a href="#" onclick="showCart(); return false;">
+            🛒 Cart (<span id="cartCount">0</span>)
+        </a>
 
-<nav>
+        <a href="customer-login.html">
+            👤 Customer Login
+        </a>
 
-    <a href="#">
-        🏠 Home
-    </a>
+        <a href="customer-orders.html">
+            📦 My Orders
+        </a>
 
-    <a href="#" onclick="showCart(); return false;">
-        🛒 Cart (<span id="cartCount">0</span>)
-    </a>
+    </nav>
 
-    <a href="customer-login.html">
-        👤 Customer Login
-    </a>
-
-    <a href="customer-orders.html">
-        📦 My Orders
-    </a>
-
-</nav>
     <!-- =========================
          SEARCH
     ========================= -->
@@ -558,7 +539,6 @@
         </button>
 
     </div>
-
 
     <div class="categories">
 
@@ -590,12 +570,9 @@
 
     </div>
 
-
     <h2>Our Products</h2>
 
-
     <div class="products">
-
 
         <!-- Product 1 -->
 
@@ -607,7 +584,10 @@
                 width="100%"
                 style="border-radius: 8px;">
 
-            <h3>Men's Formal Solid Shirt</h3>
+            <h3>
+                <span class="product-number">1.</span>
+                Men's Formal Solid Shirt
+            </h3>
 
             <p>Price: ৳450</p>
 
@@ -623,7 +603,6 @@
 
         </div>
 
-
         <!-- Product 2 -->
 
         <div class="product" data-category="Men">
@@ -634,7 +613,10 @@
                 width="100%"
                 style="border-radius: 8px;">
 
-            <h3>Men's Casual Shirt</h3>
+            <h3>
+                <span class="product-number">2.</span>
+                Men's Casual Shirt
+            </h3>
 
             <p>Price: ৳400</p>
 
@@ -650,7 +632,6 @@
 
         </div>
 
-
         <!-- Product 3 -->
 
         <div class="product" data-category="Men">
@@ -661,7 +642,10 @@
                 width="100%"
                 style="border-radius: 8px;">
 
-            <h3>Men's Casual Check Shirt</h3>
+            <h3>
+                <span class="product-number">3.</span>
+                Men's Casual Check Shirt
+            </h3>
 
             <p>Price: ৳480</p>
 
@@ -677,7 +661,6 @@
 
         </div>
 
-
         <!-- Product 4 -->
 
         <div class="product" data-category="Women">
@@ -688,7 +671,10 @@
                 width="100%"
                 style="border-radius: 8px;">
 
-            <h3>Women's Casual Yellow Dress</h3>
+            <h3>
+                <span class="product-number">4.</span>
+                Women's Casual Yellow Dress
+            </h3>
 
             <p>Price: ৳500</p>
 
@@ -704,7 +690,6 @@
 
         </div>
 
-
         <!-- Product 5 -->
 
         <div class="product" data-category="Women">
@@ -715,7 +700,10 @@
                 width="100%"
                 style="border-radius: 8px;">
 
-            <h3>Women's Casual Dress</h3>
+            <h3>
+                <span class="product-number">5.</span>
+                Women's Casual Dress
+            </h3>
 
             <p>Price: ৳900</p>
 
@@ -733,16 +721,13 @@
 
     </div>
 
-
     <p
         id="noProducts"
         style="display:none; text-align:center; font-size:18px; color:#777;">
         No products found
     </p>
 
-
     <script>
-
 
         /* =========================
            THREE DOT MENU FUNCTION
@@ -765,7 +750,6 @@
 
         }
 
-
         /* =========================
            HELP LINE FUNCTION
         ========================= */
@@ -787,7 +771,6 @@
 
         }
 
-
         /* =========================
            CART FUNCTION
         ========================= */
@@ -798,7 +781,6 @@
                 JSON.parse(localStorage.getItem("cart")) || [];
 
             let price = 0;
-
 
             if (productName === "Men's Formal Solid Shirt") {
                 price = 450;
@@ -820,9 +802,7 @@
                 price = 900;
             }
 
-
             let image = "";
-
 
             if (productName === "Men's Formal Solid Shirt") {
                 image = "product1.jpg";
@@ -844,7 +824,6 @@
                 image = "product5.jpg";
             }
 
-
             cart.push({
 
                 name: productName,
@@ -854,12 +833,10 @@
 
             });
 
-
             localStorage.setItem(
                 "cart",
                 JSON.stringify(cart)
             );
-
 
             alert(productName + " added to cart!");
 
@@ -867,13 +844,11 @@
 
         }
 
-
         function showCart() {
 
             window.location.href = "cart.html";
 
         }
-
 
         function updateCartCount() {
 
@@ -893,16 +868,13 @@
 
         }
 
-
         updateCartCount();
-
 
         /* =========================
            CATEGORY
         ========================= */
 
         let selectedCategory = "All";
-
 
         function filterCategory(category) {
 
@@ -912,7 +884,6 @@
 
         }
 
-
         function showAllProducts() {
 
             selectedCategory = "All";
@@ -920,7 +891,6 @@
             searchProducts();
 
         }
-
 
         /* =========================
            SEARCH
@@ -934,13 +904,10 @@
                     .value
                     .toLowerCase();
 
-
             let foundProducts = 0;
-
 
             const products =
                 document.querySelectorAll(".product");
-
 
             products.forEach(function(product) {
 
@@ -950,19 +917,15 @@
                         .innerText
                         .toLowerCase();
 
-
                 const productCategory =
                     product.getAttribute("data-category");
-
 
                 const categoryMatch =
                     selectedCategory === "All" ||
                     productCategory === selectedCategory;
 
-
                 const searchMatch =
                     productName.includes(searchText);
-
 
                 if (categoryMatch && searchMatch) {
 
@@ -977,10 +940,8 @@
 
             });
 
-
             const noProducts =
                 document.getElementById("noProducts");
-
 
             if (foundProducts === 0) {
 
