@@ -206,6 +206,88 @@
 
 
         /* =========================
+           PRODUCT DESCRIPTION
+        ========================= */
+
+        .product-description {
+
+            margin-top: 20px;
+
+            background-color: #ffffff;
+
+            border: 1px solid #e0e0e0;
+
+            border-radius: 10px;
+
+            padding: 15px;
+
+            text-align: left;
+
+            box-shadow:
+                0 2px 6px rgba(0,0,0,0.08);
+        }
+
+
+        .product-description h3 {
+
+            margin: 0 0 15px 0;
+
+            padding-bottom: 10px;
+
+            border-bottom: 2px solid #ff6600;
+
+            color: #333;
+
+            text-align: left;
+
+            font-size: 20px;
+        }
+
+
+        .description-row {
+
+            display: flex;
+
+            align-items: flex-start;
+
+            padding: 9px 0;
+
+            border-bottom: 1px solid #eeeeee;
+
+            font-size: 15px;
+
+            line-height: 1.5;
+        }
+
+
+        .description-row:last-child {
+
+            border-bottom: none;
+
+        }
+
+
+        .description-label {
+
+            width: 45%;
+
+            font-weight: bold;
+
+            color: #333;
+        }
+
+
+        .description-value {
+
+            width: 55%;
+
+            color: #555;
+
+            word-break: break-word;
+        }
+
+
+        /* =========================
            MOBILE
         ========================= */
 
@@ -245,6 +327,43 @@
                 height: 36px;
 
                 font-size: 21px;
+            }
+
+
+            .product-description {
+
+                margin-top: 20px;
+
+                padding: 12px;
+
+            }
+
+
+            .product-description h3 {
+
+                font-size: 18px;
+
+            }
+
+
+            .description-row {
+
+                font-size: 14px;
+
+            }
+
+
+            .description-label {
+
+                width: 45%;
+
+            }
+
+
+            .description-value {
+
+                width: 55%;
+
             }
 
         }
@@ -359,6 +478,139 @@
         </button>
 
 
+        <!-- =========================
+             PRODUCT DESCRIPTION
+        ========================= -->
+
+        <div class="product-description">
+
+            <h3>
+                Product Description
+            </h3>
+
+
+            <div class="description-row">
+
+                <div class="description-label">
+                    Product Serial Number:
+                </div>
+
+                <div
+                    class="description-value"
+                    id="productSerial">
+                    1
+                </div>
+
+            </div>
+
+
+            <div class="description-row">
+
+                <div class="description-label">
+                    Product Name:
+                </div>
+
+                <div
+                    class="description-value"
+                    id="descriptionProductName">
+                    Men's Formal Solid Shirt
+                </div>
+
+            </div>
+
+
+            <div class="description-row">
+
+                <div class="description-label">
+                    Brand:
+                </div>
+
+                <div
+                    class="description-value"
+                    id="productBrand">
+                    RK Store
+                </div>
+
+            </div>
+
+
+            <div class="description-row">
+
+                <div class="description-label">
+                    Category:
+                </div>
+
+                <div
+                    class="description-value"
+                    id="productCategory">
+                    Men
+                </div>
+
+            </div>
+
+
+            <div class="description-row">
+
+                <div class="description-label">
+                    Color:
+                </div>
+
+                <div
+                    class="description-value"
+                    id="productColor">
+                    Black
+                </div>
+
+            </div>
+
+
+            <div class="description-row">
+
+                <div class="description-label">
+                    Size:
+                </div>
+
+                <div
+                    class="description-value"
+                    id="productSize">
+                    M, L, XL
+                </div>
+
+            </div>
+
+
+            <div class="description-row">
+
+                <div class="description-label">
+                    Material:
+                </div>
+
+                <div
+                    class="description-value"
+                    id="productMaterial">
+                    Cotton
+                </div>
+
+            </div>
+
+
+            <div class="description-row">
+
+                <div class="description-label">
+                    Product Details:
+                </div>
+
+                <div
+                    class="description-value"
+                    id="productDetailsText">
+                    Premium quality formal shirt suitable for regular and formal use.
+                </div>
+
+            </div>
+
+        </div>
+
+
     </div>
 
 
@@ -383,7 +635,7 @@
 
         /* =========================
            PRODUCT DATA
-           7 IMAGES FOR EACH PRODUCT
+           IMAGES + DESCRIPTION
         ========================= */
 
         const productData = {
@@ -393,20 +645,38 @@
 
                 images: [
 
-    "product1/product1.jpg",
-    "product1/product2.jpg",
-    "product1/product3.jpg",
-    "product1/product4.jpg",
-    "product1/product5.jpg",
-    "product1/product6.jpg"
+                    "product1/product1.jpg",
+                    "product1/product2.jpg",
+                    "product1/product3.jpg",
+                    "product1/product4.jpg",
+                    "product1/product5.jpg",
+                    "product1/product6.jpg"
 
-],
+                ],
 
                 name:
                     "Men's Formal Solid Shirt",
 
                 price:
-                    450
+                    450,
+
+                brand:
+                    "RK Store",
+
+                category:
+                    "Men",
+
+                color:
+                    "Black",
+
+                size:
+                    "M, L, XL",
+
+                material:
+                    "Cotton",
+
+                details:
+                    "Premium quality formal shirt suitable for regular and formal use."
 
             },
 
@@ -429,7 +699,25 @@
                     "Men's Casual Shirt",
 
                 price:
-                    400
+                    400,
+
+                brand:
+                    "RK Store",
+
+                category:
+                    "Men",
+
+                color:
+                    "Blue",
+
+                size:
+                    "M, L, XL",
+
+                material:
+                    "Cotton",
+
+                details:
+                    "Comfortable casual shirt suitable for everyday use."
 
             },
 
@@ -452,7 +740,25 @@
                     "Men's Casual Check Shirt",
 
                 price:
-                    480
+                    480,
+
+                brand:
+                    "RK Store",
+
+                category:
+                    "Men",
+
+                color:
+                    "Check Pattern",
+
+                size:
+                    "M, L, XL",
+
+                material:
+                    "Cotton",
+
+                details:
+                    "Stylish checked casual shirt designed for comfortable everyday wear."
 
             },
 
@@ -475,7 +781,25 @@
                     "Women's Casual Yellow Dress",
 
                 price:
-                    500
+                    500,
+
+                brand:
+                    "RK Store",
+
+                category:
+                    "Women",
+
+                color:
+                    "Yellow",
+
+                size:
+                    "M, L, XL",
+
+                material:
+                    "Cotton",
+
+                details:
+                    "Beautiful casual yellow dress suitable for regular and casual occasions."
 
             },
 
@@ -498,7 +822,25 @@
                     "Women's Casual Dress",
 
                 price:
-                    900
+                    900,
+
+                brand:
+                    "RK Store",
+
+                category:
+                    "Women",
+
+                color:
+                    "Mixed",
+
+                size:
+                    "M, L, XL",
+
+                material:
+                    "Cotton",
+
+                details:
+                    "Comfortable women's casual dress with a stylish design for everyday use."
 
             }
 
@@ -559,6 +901,59 @@
             ).textContent =
                 "Price: ৳" +
                 selectedProduct.price;
+
+
+
+            /* =========================
+               PRODUCT DESCRIPTION DATA
+            ========================= */
+
+            document.getElementById(
+                "productSerial"
+            ).textContent =
+                product;
+
+
+            document.getElementById(
+                "descriptionProductName"
+            ).textContent =
+                selectedProduct.name;
+
+
+            document.getElementById(
+                "productBrand"
+            ).textContent =
+                selectedProduct.brand;
+
+
+            document.getElementById(
+                "productCategory"
+            ).textContent =
+                selectedProduct.category;
+
+
+            document.getElementById(
+                "productColor"
+            ).textContent =
+                selectedProduct.color;
+
+
+            document.getElementById(
+                "productSize"
+            ).textContent =
+                selectedProduct.size;
+
+
+            document.getElementById(
+                "productMaterial"
+            ).textContent =
+                selectedProduct.material;
+
+
+            document.getElementById(
+                "productDetailsText"
+            ).textContent =
+                selectedProduct.details;
 
 
 
