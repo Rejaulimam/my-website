@@ -894,7 +894,7 @@ import {
 import {
     getFirestore,
     doc,
-    getDoc
+    getDocFromServer
 } from "https://www.gstatic.com/firebasejs/12.18.0/firebase-firestore.js";
 
 
@@ -1581,9 +1581,9 @@ async function loadFirebaseProduct(
 
 
         const snapshot =
-            await getDoc(
-                productRef
-            );
+    await getDocFromServer(
+        productRef
+    );
 
 
         if (
