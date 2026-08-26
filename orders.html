@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
 
     <meta charset="UTF-8">
@@ -11,13 +12,20 @@
 
     <title>RK Store - Orders</title>
 
+
     <style>
+
+        * {
+            box-sizing: border-box;
+        }
+
 
         body {
             margin: 0;
             font-family: Arial, sans-serif;
             background-color: #f5f5f5;
         }
+
 
         h1 {
             background-color: #ff6600;
@@ -27,25 +35,32 @@
             margin: 0;
         }
 
-        .orders-container {
-            padding: 20px;
-        }
+
+        /* =========================
+           SEARCH
+        ========================= */
 
         .search-filter {
             padding: 15px 20px;
             background-color: white;
         }
 
+
         .search-filter input {
             width: 100%;
-            box-sizing: border-box;
             padding: 10px;
             font-size: 16px;
             border: 1px solid #ccc;
             border-radius: 5px;
         }
 
+
+        /* =========================
+           STATUS FILTER
+        ========================= */
+
         #filterStatus {
+            width: calc(100% - 40px);
             margin: 0 20px 15px 20px;
             padding: 10px;
             font-size: 16px;
@@ -54,26 +69,57 @@
             background-color: white;
         }
 
+
+        /* =========================
+           ORDERS CONTAINER
+        ========================= */
+
+        .orders-container {
+            padding: 20px;
+        }
+
+
+        /* =========================
+           ORDER CARD
+        ========================= */
+
         .order {
             background-color: white;
             padding: 20px;
             margin-bottom: 20px;
             border-radius: 8px;
-            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+
+            box-shadow:
+                0 2px 5px rgba(0,0,0,0.1);
         }
+
 
         .order h2 {
             color: #ff6600;
+            margin-top: 0;
         }
+
 
         .order p {
             font-size: 16px;
+            line-height: 1.5;
         }
 
-        .status {
-            color: #ff6600;
-            font-weight: bold;
+
+        /* =========================
+           PRODUCT
+        ========================= */
+
+        .product {
+            border-top: 1px solid #ddd;
+            padding-top: 10px;
+            margin-top: 10px;
         }
+
+
+        /* =========================
+           STATUS SELECT
+        ========================= */
 
         .status-select {
             padding: 8px 12px;
@@ -84,44 +130,40 @@
             cursor: pointer;
         }
 
+
         .status-select.pending {
             background-color: #f39c12 !important;
             color: white !important;
         }
+
 
         .status-select.confirmed {
             background-color: #3498db !important;
             color: white !important;
         }
 
+
         .status-select.shipped {
             background-color: #9b59b6 !important;
             color: white !important;
         }
+
 
         .status-select.delivered {
             background-color: #27ae60 !important;
             color: white !important;
         }
 
-.status-select.cancelled {
-    background-color: #e53935 !important;
-    color: white !important;
-}
 
-        .delete-btn {
-            background-color: #e53935;
-            color: white;
-            border: none;
-            padding: 10px 15px;
-            border-radius: 5px;
-            cursor: pointer;
-            margin-top: 10px;
+        .status-select.cancelled {
+            background-color: #e53935 !important;
+            color: white !important;
         }
 
-        .delete-btn:hover {
-            background-color: #c62828;
-        }
+
+        /* =========================
+           BUTTONS
+        ========================= */
 
         .view-details-btn {
             background-color: #3498db;
@@ -134,15 +176,31 @@
             margin-right: 5px;
         }
 
+
         .view-details-btn:hover {
             background-color: #2980b9;
         }
 
-        .product {
-            border-top: 1px solid #ddd;
-            padding-top: 10px;
+
+        .delete-btn {
+            background-color: #e53935;
+            color: white;
+            border: none;
+            padding: 10px 15px;
+            border-radius: 5px;
+            cursor: pointer;
             margin-top: 10px;
         }
+
+
+        .delete-btn:hover {
+            background-color: #c62828;
+        }
+
+
+        /* =========================
+           NO ORDERS
+        ========================= */
 
         .no-orders {
             text-align: center;
@@ -151,11 +209,57 @@
             border-radius: 8px;
         }
 
+
+        /* =========================
+           LOADING
+        ========================= */
+
         .loading {
             text-align: center;
             padding: 30px;
             background-color: white;
             border-radius: 8px;
+        }
+
+
+        /* =========================
+           MOBILE
+        ========================= */
+
+        @media (max-width: 600px) {
+
+            .orders-container {
+                padding: 10px;
+            }
+
+
+            .order {
+                padding: 15px;
+            }
+
+
+            .order h2 {
+                font-size: 20px;
+            }
+
+
+            .order p {
+                font-size: 15px;
+            }
+
+
+            .view-details-btn,
+            .delete-btn {
+                width: 100%;
+                margin-right: 0;
+            }
+
+
+            .status-select {
+                margin-left: 0;
+                margin-top: 5px;
+            }
+
         }
 
     </style>
@@ -165,8 +269,15 @@
 
 <body>
 
-<h1>RK Store - Orders</h1>
 
+<h1>
+    RK Store - Orders
+</h1>
+
+
+<!-- =========================
+     SEARCH
+========================= -->
 
 <div class="search-filter">
 
@@ -174,15 +285,17 @@
         type="text"
         id="searchInput"
         placeholder="Search by name, phone or Order ID..."
-        oninput="displayOrders()"
     >
 
 </div>
 
 
+<!-- =========================
+     STATUS FILTER
+========================= -->
+
 <select
     id="filterStatus"
-    onchange="displayOrders()"
 >
 
     <option value="All">
@@ -205,13 +318,16 @@
         Delivered
     </option>
 
-<option value="Cancelled">
-    Cancelled
-
-</option>
+    <option value="Cancelled">
+        Cancelled
+    </option>
 
 </select>
 
+
+<!-- =========================
+     ORDERS
+========================= -->
 
 <div
     class="orders-container"
@@ -225,14 +341,12 @@
 </div>
 
 
-
 <script type="module">
 
 
-/* =========================
-   FIREBASE
-========================= */
-
+/* =====================================================
+   FIREBASE IMPORT
+===================================================== */
 
 import {
     initializeApp
@@ -254,6 +368,10 @@ import {
     onAuthStateChanged
 } from "https://www.gstatic.com/firebasejs/12.18.0/firebase-auth.js";
 
+
+/* =====================================================
+   FIREBASE CONFIG
+===================================================== */
 
 const firebaseConfig = {
 
@@ -278,6 +396,10 @@ const firebaseConfig = {
 };
 
 
+/* =====================================================
+   INITIALIZE FIREBASE
+===================================================== */
+
 const app =
     initializeApp(firebaseConfig);
 
@@ -290,953 +412,29 @@ const auth =
     getAuth(app);
 
 
-/* =========================
-   GLOBAL ORDERS
-========================= */
-
-
-let orders = [];
-
-
-/* =========================
-   LOAD ORDERS FROM FIREBASE
-========================= */
-
-
-async function loadOrders() {
-
-    const ordersContainer =
-        document.getElementById(
-            "ordersContainer"
-        );
-
-
-    ordersContainer.innerHTML = `
-
-        <div class="loading">
-            Loading Orders...
-        </div>
-
-    `;
-
-
-    try {
-
-        const querySnapshot =
-            await getDocs(
-                collection(db, "orders")
-            );
-
-
-        orders = [];
-
-
-        querySnapshot.forEach(
-            (docSnapshot) => {
-
-                const data =
-                    docSnapshot.data();
-
-
-                orders.push({
-
-                    ...data,
-
-                    firebaseId:
-                        docSnapshot.id
-
-                });
-
-            }
-        );
-
-
-        /* =========================
-           SORT NEWEST ORDER FIRST
-        ========================= */
-
-
-        orders.sort(
-            (a, b) => {
-
-                const dateA =
-                    a.createdAt &&
-                    typeof a.createdAt.toDate === "function"
-
-                        ? a.createdAt.toDate()
-
-                        : new Date(
-                            a.dateTime || 0
-                        );
-
-
-                const dateB =
-                    b.createdAt &&
-                    typeof b.createdAt.toDate === "function"
-
-                        ? b.createdAt.toDate()
-
-                        : new Date(
-                            b.dateTime || 0
-                        );
-
-
-                return dateB - dateA;
-
-            }
-        );
-
-
-        /* =========================
-           SAVE COPY TO LOCAL STORAGE
-           FOR ORDER DETAILS PAGE
-        ========================= */
-
-
-        localStorage.setItem(
-            "orders",
-            JSON.stringify(
-                orders.map(order => {
-
-                    return {
-
-                        ...order,
-
-                        createdAt:
-                            order.createdAt &&
-                            typeof order.createdAt.toDate === "function"
-
-                                ? order.createdAt
-                                    .toDate()
-                                    .toISOString()
-
-                                : order.createdAt
-
-                    };
-
-                })
-            )
-        );
-
-
-        displayOrders();
-
-
-    } catch (error) {
-
-        console.error(
-            "Firebase Orders Error:",
-            error
-        );
-
-
-        ordersContainer.innerHTML = `
-
-            <div class="no-orders">
-
-                <h2>
-                    Orders Could Not Be Loaded
-                </h2>
-
-                <p>
-                    Please check your internet connection
-                    and Firebase settings.
-                </p>
-
-                <p>
-                    ${error.message}
-                </p>
-
-            </div>
-
-        `;
-
-    }
-
-}
-
-
-/* =========================
-   DISPLAY ORDERS
-========================= */
-
-
-window.displayOrders = function() {
-
-    const ordersContainer =
-        document.getElementById(
-            "ordersContainer"
-        );
-
-
-    const searchInput =
-        document.getElementById(
-            "searchInput"
-        );
-
-
-    const filterStatus =
-        document.getElementById(
-            "filterStatus"
-        );
-
-
-    const searchText =
-        searchInput.value
-            .toLowerCase()
-            .trim();
-
-
-    const selectedStatus =
-        filterStatus.value;
-
-
-    ordersContainer.innerHTML = "";
-
-
-    if (orders.length === 0) {
-
-        ordersContainer.innerHTML = `
-
-            <div class="no-orders">
-
-                <h2>
-                    No Orders Found
-                </h2>
-
-                <p>
-                    There are no orders yet.
-                </p>
-
-            </div>
-
-        `;
-
-        return;
-
-    }
-
-
-    let foundOrders = 0;
-
-
-    orders.forEach(
-        (order, index) => {
-
-
-            const orderId =
-                order.orderId ||
-                ("RK-" + (index + 1));
-
-
-            const customerName =
-                order.customerName || "";
-
-
-            const customerMobile =
-                order.customerMobile || "";
-
-
-            const customerAddress =
-                order.customerAddress || "";
-
-
-            const status =
-                order.status || "Pending";
-
-
-            const statusUpdatedTime =
-                order.statusUpdatedTime ||
-                "Not updated";
-
-
-            /* =========================
-               SEARCH
-            ========================= */
-
-
-            const searchMatch =
-
-                customerName
-                    .toLowerCase()
-                    .includes(searchText)
-
-                ||
-
-                customerMobile
-                    .toLowerCase()
-                    .includes(searchText)
-
-                ||
-
-                orderId
-                    .toLowerCase()
-                    .includes(searchText);
-
-
-            /* =========================
-               STATUS FILTER
-            ========================= */
-
-
-            const statusMatch =
-
-                selectedStatus === "All"
-
-                ||
-
-                status === selectedStatus;
-
-
-            if (
-                !searchMatch ||
-                !statusMatch
-            ) {
-
-                return;
-
-            }
-
-
-            foundOrders++;
-
-
-            /* =========================
-               PRODUCTS
-            ========================= */
-
-
-            let productsHTML = "";
-
-
-            let totalAmount = 0;
-
-
-            if (
-                order.products &&
-                order.products.length > 0
-            ) {
-
-
-                order.products.forEach(
-                    product => {
-
-
-                        const quantity =
-                            Number(
-                                product.quantity
-                            ) || 1;
-
-
-                        const price =
-                            Number(
-                                product.price
-                            ) || 0;
-
-
-                        const subtotal =
-                            price * quantity;
-
-
-                        totalAmount +=
-                            subtotal;
-
-
-                        productsHTML += `
-
-                            <div class="product">
-
-                                <p>
-
-                                    <strong>
-                                        Product:
-                                    </strong>
-
-                                    ${
-                                        product.name ||
-                                        "Product"
-                                    }
-
-                                </p>
-
-
-                                <p>
-
-                                    <strong>
-                                        Price:
-                                    </strong>
-
-                                    ৳${price}
-
-                                </p>
-
-
-                                <p>
-
-                                    <strong>
-                                        Quantity:
-                                    </strong>
-
-                                    ${quantity}
-
-                                </p>
-
-
-                                <p>
-
-                                    <strong>
-                                        Subtotal:
-                                    </strong>
-
-                                    ৳${subtotal}
-
-                                </p>
-
-                            </div>
-
-                        `;
-
-                    }
-                );
-
-            }
-
-
-            /* =========================
-               ORDER HTML
-            ========================= */
-
-
-            const orderHTML = `
-
-                <div class="order">
-
-                    <h2>
-                        Order ID: ${orderId}
-                    </h2>
-
-
-                    <p>
-
-                        <strong>
-                            Name:
-                        </strong>
-
-                        ${customerName}
-
-                    </p>
-
-
-                    <p>
-
-                        <strong>
-                            Phone:
-                        </strong>
-
-                        ${customerMobile}
-
-                    </p>
-
-
-                    <p>
-
-                        <strong>
-                            Address:
-                        </strong>
-
-                        ${customerAddress}
-
-                    </p>
-
-
-                    <h3>
-                        Order Products
-                    </h3>
-
-
-                    ${productsHTML}
-
-
-                    <p>
-
-                        <strong>
-                            Order Total:
-                        </strong>
-
-                        ৳${totalAmount}
-
-                    </p>
-
-
-                    <p>
-
-                        <strong>
-                            Status:
-                        </strong>
-
-
-                        <select
-
-                            class="status-select ${status.toLowerCase()}"
-
-                            onchange="
-                                changeStatus(
-                                    ${index},
-                                    this.value
-                                )
-                            "
-
-                        >
-
-                            <option
-                                value="Pending"
-                                ${
-                                    status === "Pending"
-                                        ? "selected"
-                                        : ""
-                                }
-                            >
-                                Pending
-                            </option>
-
-
-                            <option
-                                value="Confirmed"
-                                ${
-                                    status === "Confirmed"
-                                        ? "selected"
-                                        : ""
-                                }
-                            >
-                                Confirmed
-                            </option>
-
-
-                            <option
-                                value="Shipped"
-                                ${
-                                    status === "Shipped"
-                                        ? "selected"
-                                        : ""
-                                }
-                            >
-                                Shipped
-                            </option>
-
-
-                            <option
-                                value="Delivered"
-                                ${
-                                    status === "Delivered"
-                                        ? "selected"
-                                        : ""
-                                }
-                            >
-                                Delivered
-                            </option>
-
-<option
-    value="Cancelled"
-    ${
-        status === "Cancelled"
-            ? "selected"
-            : ""
-    }
->
-    Cancelled
-</option>
-
-                        </select>
-
-                    </p>
-
-
-                    <p>
-
-                        <strong>
-                            Status Updated:
-                        </strong>
-
-                        ${statusUpdatedTime}
-
-                    </p>
-
-
-                    <button
-
-                        class="view-details-btn"
-
-                        onclick="
-                            viewDetails(${index})
-                        "
-
-                    >
-
-                        View Details
-
-                    </button>
-
-
-                    <button
-
-                        class="delete-btn"
-
-                        onclick="
-                            deleteOrder(${index})
-                        "
-
-                    >
-
-                        Delete Order
-
-                    </button>
-
-
-                </div>
-
-            `;
-
-
-            ordersContainer.innerHTML +=
-                orderHTML;
-
-
-        }
-    );
-
-
-    /* =========================
-       NO MATCH
-    ========================= */
-
-
-    if (foundOrders === 0) {
-
-        ordersContainer.innerHTML = `
-
-            <div class="no-orders">
-
-                <h2>
-                    No Matching Orders
-                </h2>
-
-                <p>
-                    No order matches your search
-                    or filter.
-                </p>
-
-            </div>
-
-        `;
-
-    }
-
-};
-
-
-/* =========================
-   CHANGE ORDER STATUS
-========================= */
-
-
-window.changeStatus =
-    async function(index, newStatus) {
-
-
-        const order =
-            orders[index];
-
-
-        if (!order) {
-
-            return;
-
-        }
-
-
-        try {
-
-
-            const now =
-                new Date();
-
-
-            const statusUpdatedTime =
-                now.toLocaleString();
-
-
-            /* =========================
-               UPDATE FIREBASE
-            ========================= */
-
-
-            if (order.firebaseId) {
-
-
-                await updateDoc(
-
-                    doc(
-                        db,
-                        "orders",
-                        order.firebaseId
-                    ),
-
-                    {
-
-                        status:
-                            newStatus,
-
-                        statusUpdatedTime:
-                            statusUpdatedTime
-
-                    }
-
-                );
-
-            }
-
-
-            /* =========================
-               UPDATE LOCAL ARRAY
-            ========================= */
-
-
-            orders[index].status =
-                newStatus;
-
-
-            orders[index].statusUpdatedTime =
-                statusUpdatedTime;
-
-
-            /* =========================
-               UPDATE LOCAL STORAGE
-            ========================= */
-
-
-            localStorage.setItem(
-
-                "orders",
-
-                JSON.stringify(
-
-                    orders.map(order => {
-
-                        return {
-
-                            ...order,
-
-                            createdAt:
-                                order.createdAt &&
-                                typeof order.createdAt.toDate === "function"
-
-                                    ? order.createdAt
-                                        .toDate()
-                                        .toISOString()
-
-                                    : order.createdAt
-
-                        };
-
-                    })
-
-                )
-
-            );
-
-
-            displayOrders();
-
-
-        } catch (error) {
-
-
-            console.error(
-                "Status Update Error:",
-                error
-            );
-
-
-            alert(
-                "Status update failed. Please try again."
-            );
-
-        }
-
-    };
-
-
-/* =========================
-   DELETE ORDER
-========================= */
-
-
-window.deleteOrder =
-    async function(index) {
-
-
-        const confirmDelete =
-            confirm(
-                "Are you sure you want to delete this order?"
-            );
-
-
-        if (!confirmDelete) {
-
-            return;
-
-        }
-
-
-        const order =
-            orders[index];
-
-
-        if (!order) {
-
-            return;
-
-        }
-
-
-        try {
-
-
-            /* =========================
-               DELETE FROM FIREBASE
-            ========================= */
-
-
-            if (order.firebaseId) {
-
-
-                await deleteDoc(
-
-                    doc(
-                        db,
-                        "orders",
-                        order.firebaseId
-                    )
-
-                );
-
-            }
-
-
-            /* =========================
-               REMOVE FROM ARRAY
-            ========================= */
-
-
-            orders.splice(
-                index,
-                1
-            );
-
-
-            /* =========================
-               UPDATE LOCAL STORAGE
-            ========================= */
-
-
-            localStorage.setItem(
-
-                "orders",
-
-                JSON.stringify(
-
-                    orders.map(order => {
-
-                        return {
-
-                            ...order,
-
-                            createdAt:
-                                order.createdAt &&
-                                typeof order.createdAt.toDate === "function"
-
-                                    ? order.createdAt
-                                        .toDate()
-                                        .toISOString()
-
-                                    : order.createdAt
-
-                        };
-
-                    })
-
-                )
-
-            );
-
-
-            displayOrders();
-
-
-        } catch (error) {
-
-
-            console.error(
-                "Delete Order Error:",
-                error
-            );
-
-
-            alert(
-                "Order could not be deleted. Please try again."
-            );
-
-        }
-
-    };
-
-
-/* =========================
-   VIEW ORDER DETAILS
-========================= */
-
-
-window.viewDetails =
-    function(index) {
-
-
-        /*
-
-        Save selected order index.
-
-        order-details.html
-        will continue to work.
-
-        */
-
-
-        localStorage.setItem(
-
-            "selectedOrderIndex",
-
-            index
-
-        );
-
-
-        window.location.href =
-            "order-details.html?order=" +
-            index;
-
-    };
-
-
-/* =========================
-   ADMIN LOGIN PROTECTION
-========================= */
+/* =====================================================
+   ADMIN EMAIL
+===================================================== */
 
 const ADMIN_EMAIL =
     "REJAUL.IMAM@gmail.com";
 
 
+/* =====================================================
+   GLOBAL ORDERS
+===================================================== */
+
+let orders = [];
+
+
+/* =====================================================
+   AUTH CHECK
+===================================================== */
+
 onAuthStateChanged(
     auth,
-    (user) => {
+    async function(user) {
+
 
         /* =========================
            NOT LOGGED IN
@@ -1285,14 +483,1153 @@ onAuthStateChanged(
         );
 
 
-        loadOrders();
+        await loadOrders();
 
     }
 );
+
+
+/* =====================================================
+   LOAD ORDERS FROM FIREBASE
+===================================================== */
+
+async function loadOrders() {
+
+    const ordersContainer =
+        document.getElementById(
+            "ordersContainer"
+        );
+
+
+    ordersContainer.innerHTML = `
+
+        <div class="loading">
+            Loading Orders...
+        </div>
+
+    `;
+
+
+    try {
+
+        const querySnapshot =
+            await getDocs(
+                collection(
+                    db,
+                    "orders"
+                )
+            );
+
+
+        orders = [];
+
+
+        querySnapshot.forEach(
+            function(docSnapshot) {
+
+                const data =
+                    docSnapshot.data();
+
+
+                orders.push({
+
+                    ...data,
+
+                    firebaseId:
+                        docSnapshot.id
+
+                });
+
+            }
+        );
+
+
+        /* =========================
+           NEWEST ORDER FIRST
+        ========================= */
+
+        orders.sort(
+            function(a, b) {
+
+                const dateA =
+                    getOrderDate(a);
+
+
+                const dateB =
+                    getOrderDate(b);
+
+
+                return dateB - dateA;
+
+            }
+        );
+
+
+        /* =========================
+           LOCAL STORAGE BACKUP
+        ========================= */
+
+        saveOrdersToLocalStorage();
+
+
+        displayOrders();
+
+    }
+
+
+    catch (error) {
+
+        console.error(
+            "Firebase Orders Error:",
+            error
+        );
+
+
+        ordersContainer.innerHTML = `
+
+            <div class="no-orders">
+
+                <h2>
+                    Orders Could Not Be Loaded
+                </h2>
+
+                <p>
+                    Please check your internet connection
+                    and Firebase settings.
+                </p>
+
+                <p>
+                    ${escapeHTML(error.message)}
+                </p>
+
+            </div>
+
+        `;
+
+    }
+
+}
+
+
+/* =====================================================
+   GET ORDER DATE
+===================================================== */
+
+function getOrderDate(order) {
+
+    try {
+
+        if (
+            order.createdAt &&
+            typeof order.createdAt.toDate ===
+            "function"
+        ) {
+
+            return order.createdAt.toDate();
+
+        }
+
+
+        if (
+            order.createdAt &&
+            typeof order.createdAt ===
+            "string"
+        ) {
+
+            return new Date(
+                order.createdAt
+            );
+
+        }
+
+
+        if (
+            order.dateTime
+        ) {
+
+            return new Date(
+                order.dateTime
+            );
+
+        }
+
+    }
+
+    catch (error) {
+
+        console.log(
+            "Date Error:",
+            error
+        );
+
+    }
+
+
+    return new Date(0);
+
+}
+
+
+/* =====================================================
+   SAVE LOCAL STORAGE
+===================================================== */
+
+function saveOrdersToLocalStorage() {
+
+    const safeOrders =
+        orders.map(
+            function(order) {
+
+                const copy = {
+                    ...order
+                };
+
+
+                if (
+                    copy.createdAt &&
+                    typeof copy.createdAt.toDate ===
+                    "function"
+                ) {
+
+                    copy.createdAt =
+                        copy.createdAt
+                            .toDate()
+                            .toISOString();
+
+                }
+
+
+                return copy;
+
+            }
+        );
+
+
+    localStorage.setItem(
+        "orders",
+        JSON.stringify(
+            safeOrders
+        )
+    );
+
+}
+
+
+/* =====================================================
+   DISPLAY ORDERS
+===================================================== */
+
+function displayOrders() {
+
+    const ordersContainer =
+        document.getElementById(
+            "ordersContainer"
+        );
+
+
+    const searchInput =
+        document.getElementById(
+            "searchInput"
+        );
+
+
+    const filterStatus =
+        document.getElementById(
+            "filterStatus"
+        );
+
+
+    const searchText =
+        searchInput.value
+            .toLowerCase()
+            .trim();
+
+
+    const selectedStatus =
+        filterStatus.value;
+
+
+    ordersContainer.innerHTML =
+        "";
+
+
+    if (
+        orders.length === 0
+    ) {
+
+        ordersContainer.innerHTML = `
+
+            <div class="no-orders">
+
+                <h2>
+                    No Orders Found
+                </h2>
+
+                <p>
+                    There are no orders yet.
+                </p>
+
+            </div>
+
+        `;
+
+        return;
+
+    }
+
+
+    let foundOrders =
+        0;
+
+
+    orders.forEach(
+        function(order, index) {
+
+
+            /* =========================
+               ORDER ID
+            ========================= */
+
+            const orderId =
+                String(
+                    order.orderId ||
+                    ("RK-" + (index + 1))
+                );
+
+
+            /* =========================
+               CUSTOMER DATA
+            ========================= */
+
+            const customerName =
+                String(
+                    order.customerName ||
+                    ""
+                );
+
+
+            const customerMobile =
+                String(
+                    order.customerMobile ||
+                    ""
+                );
+
+
+            const customerAddress =
+                String(
+                    order.customerAddress ||
+                    ""
+                );
+
+
+            /* =========================
+               STATUS
+            ========================= */
+
+            const status =
+                order.status ||
+                "Pending";
+
+
+            const statusUpdatedTime =
+                order.statusUpdatedTime ||
+                "Not updated";
+
+
+            /* =========================
+               SEARCH
+            ========================= */
+
+            const searchMatch =
+
+                customerName
+                    .toLowerCase()
+                    .includes(
+                        searchText
+                    )
+
+                ||
+
+                customerMobile
+                    .toLowerCase()
+                    .includes(
+                        searchText
+                    )
+
+                ||
+
+                orderId
+                    .toLowerCase()
+                    .includes(
+                        searchText
+                    );
+
+
+            /* =========================
+               STATUS FILTER
+            ========================= */
+
+            const statusMatch =
+
+                selectedStatus ===
+                "All"
+
+                ||
+
+                status ===
+                selectedStatus;
+
+
+            if (
+                !searchMatch ||
+                !statusMatch
+            ) {
+
+                return;
+
+            }
+
+
+            foundOrders++;
+
+
+            /* =========================
+               PRODUCTS
+            ========================= */
+
+            let productsHTML =
+                "";
+
+
+            let totalAmount =
+                0;
+
+
+            if (
+                Array.isArray(
+                    order.products
+                ) &&
+                order.products.length > 0
+            ) {
+
+
+                order.products.forEach(
+                    function(product) {
+
+
+                        const quantity =
+                            Number(
+                                product.quantity
+                            ) || 1;
+
+
+                        const price =
+                            Number(
+                                product.price
+                            ) || 0;
+
+
+                        const subtotal =
+                            price *
+                            quantity;
+
+
+                        totalAmount +=
+                            subtotal;
+
+
+                        productsHTML += `
+
+                            <div class="product">
+
+                                <p>
+
+                                    <strong>
+                                        Product:
+                                    </strong>
+
+                                    ${
+                                        escapeHTML(
+                                            product.name ||
+                                            "Product"
+                                        )
+                                    }
+
+                                </p>
+
+
+                                <p>
+
+                                    <strong>
+                                        Price:
+                                    </strong>
+
+                                    ৳${price}
+
+                                </p>
+
+
+                                <p>
+
+                                    <strong>
+                                        Quantity:
+                                    </strong>
+
+                                    ${quantity}
+
+                                </p>
+
+
+                                <p>
+
+                                    <strong>
+                                        Subtotal:
+                                    </strong>
+
+                                    ৳${subtotal}
+
+                                </p>
+
+                            </div>
+
+                        `;
+
+                    }
+                );
+
+            }
+
+
+            /* =========================
+               ORDER CARD
+            ========================= */
+
+            const orderHTML = `
+
+                <div class="order">
+
+                    <h2>
+                        Order ID:
+                        ${escapeHTML(orderId)}
+                    </h2>
+
+
+                    <p>
+
+                        <strong>
+                            Name:
+                        </strong>
+
+                        ${escapeHTML(customerName)}
+
+                    </p>
+
+
+                    <p>
+
+                        <strong>
+                            Phone:
+                        </strong>
+
+                        ${escapeHTML(customerMobile)}
+
+                    </p>
+
+
+                    <p>
+
+                        <strong>
+                            Address:
+                        </strong>
+
+                        ${escapeHTML(customerAddress)}
+
+                    </p>
+
+
+                    <h3>
+                        Order Products
+                    </h3>
+
+
+                    ${
+                        productsHTML ||
+                        "<p>No product information.</p>"
+                    }
+
+
+                    <p>
+
+                        <strong>
+                            Order Total:
+                        </strong>
+
+                        ৳${totalAmount}
+
+                    </p>
+
+
+                    <p>
+
+                        <strong>
+                            Status:
+                        </strong>
+
+
+                        <select
+
+                            class="status-select ${status.toLowerCase()}"
+
+                            data-index="${index}"
+
+                        >
+
+                            <option
+                                value="Pending"
+                                ${
+                                    status ===
+                                    "Pending"
+                                        ? "selected"
+                                        : ""
+                                }
+                            >
+                                Pending
+                            </option>
+
+
+                            <option
+                                value="Confirmed"
+                                ${
+                                    status ===
+                                    "Confirmed"
+                                        ? "selected"
+                                        : ""
+                                }
+                            >
+                                Confirmed
+                            </option>
+
+
+                            <option
+                                value="Shipped"
+                                ${
+                                    status ===
+                                    "Shipped"
+                                        ? "selected"
+                                        : ""
+                                }
+                            >
+                                Shipped
+                            </option>
+
+
+                            <option
+                                value="Delivered"
+                                ${
+                                    status ===
+                                    "Delivered"
+                                        ? "selected"
+                                        : ""
+                                }
+                            >
+                                Delivered
+                            </option>
+
+
+                            <option
+                                value="Cancelled"
+                                ${
+                                    status ===
+                                    "Cancelled"
+                                        ? "selected"
+                                        : ""
+                                }
+                            >
+                                Cancelled
+                            </option>
+
+                        </select>
+
+                    </p>
+
+
+                    <p>
+
+                        <strong>
+                            Status Updated:
+                        </strong>
+
+                        ${
+                            escapeHTML(
+                                statusUpdatedTime
+                            )
+                        }
+
+                    </p>
+
+
+                    <button
+                        class="view-details-btn"
+                        data-index="${index}"
+                    >
+                        View Details
+                    </button>
+
+
+                    <button
+                        class="delete-btn"
+                        data-index="${index}"
+                    >
+                        Delete Order
+                    </button>
+
+                </div>
+
+            `;
+
+
+            ordersContainer.innerHTML +=
+                orderHTML;
+
+        }
+    );
+
+
+    /* =========================
+       NO MATCH
+    ========================= */
+
+    if (
+        foundOrders === 0
+    ) {
+
+        ordersContainer.innerHTML = `
+
+            <div class="no-orders">
+
+                <h2>
+                    No Matching Orders
+                </h2>
+
+                <p>
+                    No order matches your search
+                    or filter.
+                </p>
+
+            </div>
+
+        `;
+
+    }
+
+}
+
+
+/* =====================================================
+   SEARCH
+===================================================== */
+
+document
+    .getElementById(
+        "searchInput"
+    )
+    .addEventListener(
+        "input",
+        displayOrders
+    );
+
+
+/* =====================================================
+   FILTER
+===================================================== */
+
+document
+    .getElementById(
+        "filterStatus"
+    )
+    .addEventListener(
+        "change",
+        displayOrders
+    );
+
+
+/* =====================================================
+   BUTTON EVENTS
+===================================================== */
+
+document
+    .getElementById(
+        "ordersContainer"
+    )
+    .addEventListener(
+        "click",
+        function(event) {
+
+
+            /* =========================
+               VIEW DETAILS
+            ========================= */
+
+            if (
+                event.target.classList.contains(
+                    "view-details-btn"
+                )
+            ) {
+
+                const index =
+                    Number(
+                        event.target.dataset.index
+                    );
+
+
+                viewDetails(index);
+
+            }
+
+
+            /* =========================
+               DELETE
+            ========================= */
+
+            if (
+                event.target.classList.contains(
+                    "delete-btn"
+                )
+            ) {
+
+                const index =
+                    Number(
+                        event.target.dataset.index
+                    );
+
+
+                deleteOrder(index);
+
+            }
+
+        }
+    );
+
+
+/* =====================================================
+   STATUS CHANGE EVENT
+===================================================== */
+
+document
+    .getElementById(
+        "ordersContainer"
+    )
+    .addEventListener(
+        "change",
+        function(event) {
+
+
+            if (
+                event.target.classList.contains(
+                    "status-select"
+                )
+            ) {
+
+                const index =
+                    Number(
+                        event.target.dataset.index
+                    );
+
+
+                const newStatus =
+                    event.target.value;
+
+
+                changeStatus(
+                    index,
+                    newStatus
+                );
+
+            }
+
+        }
+    );
+
+
+/* =====================================================
+   CHANGE STATUS
+===================================================== */
+
+async function changeStatus(
+    index,
+    newStatus
+) {
+
+    const order =
+        orders[index];
+
+
+    if (!order) {
+
+        return;
+
+    }
+
+
+    try {
+
+        const now =
+            new Date();
+
+
+        const statusUpdatedTime =
+            now.toLocaleString();
+
+
+        /* =========================
+           FIREBASE UPDATE
+        ========================= */
+
+        if (
+            order.firebaseId
+        ) {
+
+            await updateDoc(
+
+                doc(
+                    db,
+                    "orders",
+                    order.firebaseId
+                ),
+
+                {
+
+                    status:
+                        newStatus,
+
+                    statusUpdatedTime:
+                        statusUpdatedTime
+
+                }
+
+            );
+
+        }
+
+
+        /* =========================
+           LOCAL UPDATE
+        ========================= */
+
+        orders[index].status =
+            newStatus;
+
+
+        orders[index].statusUpdatedTime =
+            statusUpdatedTime;
+
+
+        /* =========================
+           LOCAL STORAGE
+        ========================= */
+
+        saveOrdersToLocalStorage();
+
+
+        displayOrders();
+
+    }
+
+
+    catch (error) {
+
+        console.error(
+            "Status Update Error:",
+            error
+        );
+
+
+        alert(
+            "Status update failed. Please try again."
+        );
+
+    }
+
+}
+
+
+/* =====================================================
+   DELETE ORDER
+===================================================== */
+
+async function deleteOrder(
+    index
+) {
+
+    const order =
+        orders[index];
+
+
+    if (!order) {
+
+        return;
+
+    }
+
+
+    const confirmDelete =
+        confirm(
+            "Are you sure you want to delete this order?"
+        );
+
+
+    if (!confirmDelete) {
+
+        return;
+
+    }
+
+
+    try {
+
+
+        /* =========================
+           FIREBASE DELETE
+        ========================= */
+
+        if (
+            order.firebaseId
+        ) {
+
+            await deleteDoc(
+
+                doc(
+                    db,
+                    "orders",
+                    order.firebaseId
+                )
+
+            );
+
+        }
+
+
+        /* =========================
+           REMOVE LOCAL ARRAY
+        ========================= */
+
+        orders.splice(
+            index,
+            1
+        );
+
+
+        /* =========================
+           LOCAL STORAGE
+        ========================= */
+
+        saveOrdersToLocalStorage();
+
+
+        displayOrders();
+
+    }
+
+
+    catch (error) {
+
+        console.error(
+            "Delete Order Error:",
+            error
+        );
+
+
+        alert(
+            "Order could not be deleted. Please try again."
+        );
+
+    }
+
+}
+
+
+/* =====================================================
+   VIEW DETAILS
+===================================================== */
+
+function viewDetails(
+    index
+) {
+
+    const order =
+        orders[index];
+
+
+    if (!order) {
+
+        alert(
+            "Order not found."
+        );
+
+        return;
+
+    }
+
+
+    /* =========================
+       SAVE SELECTED INDEX
+    ========================= */
+
+    localStorage.setItem(
+        "selectedOrderIndex",
+        index
+    );
+
+
+    /* =========================
+       OPEN DETAILS PAGE
+    ========================= */
+
+    window.location.href =
+        "order-details.html?order=" +
+        encodeURIComponent(
+            index
+        );
+
+}
+
+
+/* =====================================================
+   ESCAPE HTML
+===================================================== */
+
+function escapeHTML(
+    value
+) {
+
+    return String(value)
+        .replace(
+            /&/g,
+            "&amp;"
+        )
+        .replace(
+            /</g,
+            "&lt;"
+        )
+        .replace(
+            />/g,
+            "&gt;"
+        )
+        .replace(
+            /"/g,
+            "&quot;"
+        )
+        .replace(
+            /'/g,
+            "&#039;"
+        );
+
+}
 
 
 </script>
 
 
 </body>
+
 </html>
