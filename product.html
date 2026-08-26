@@ -1359,6 +1359,12 @@ async function loadFirebaseDescription() {
                         ? firebaseData.name
                         : currentProduct.name,
 
+price:
+    firebaseData.price !== undefined &&
+    firebaseData.price !== ""
+        ? Number(firebaseData.price)
+        : currentProduct.price,
+
                 brand:
                     firebaseData.brand !== undefined &&
                     firebaseData.brand !== ""
