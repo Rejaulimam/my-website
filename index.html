@@ -3,762 +3,640 @@
 
 <head>
 
-    <meta charset="UTF-8">
+<meta charset="UTF-8">
 
-    <meta
-        name="viewport"
-        content="width=device-width, initial-scale=1.0"
-    >
+<meta
+    name="viewport"
+    content="width=device-width, initial-scale=1.0"
+>
 
-    <title>RK Store</title>
+<title>RK Store</title>
 
+<style>
 
-    <style>
+* {
+    box-sizing: border-box;
+}
 
-        * {
-            box-sizing: border-box;
-        }
+body {
+    margin: 0;
+    font-family: Arial, sans-serif;
+    background-color: #f5f5f5;
+}
 
+/* =========================
+   HEADER
+========================= */
 
-        body {
-            margin: 0;
-            font-family: Arial, sans-serif;
-            background-color: #f5f5f5;
-        }
+h1 {
+    background-color: #ff6600;
+    color: white;
+    text-align: center;
+    padding: 20px;
+    margin: 0;
+    position: relative;
+}
 
+/* =========================
+   THREE DOT BUTTON
+========================= */
 
-        /* =========================
-           HEADER
-        ========================= */
+.three-dot-button {
+    position: absolute;
+    top: 50%;
+    left: 10px;
+    transform: translateY(-50%);
 
-        h1 {
-            background-color: #ff6600;
-            color: white;
-            text-align: center;
-            padding: 20px;
-            margin: 0;
-            position: relative;
-        }
+    width: 38px;
+    height: 38px;
 
+    background: rgba(255,255,255,0.18);
+    color: white;
 
-        /* =========================
-           THREE DOT BUTTON
-        ========================= */
+    border: 1px solid rgba(255,255,255,0.5);
+    border-radius: 7px;
 
-        .three-dot-button {
+    font-size: 23px;
+    font-weight: bold;
 
-            position: absolute;
+    cursor: pointer;
 
-            top: 50%;
-            left: 10px;
+    z-index: 1000;
 
-            transform: translateY(-50%);
+    display: flex;
+    align-items: center;
+    justify-content: center;
 
-            width: 38px;
-            height: 38px;
+    padding: 0;
 
-            background: rgba(255,255,255,0.18);
+    box-shadow:
+        0 2px 6px rgba(0,0,0,0.20);
+}
 
-            color: white;
+.three-dot-button:hover {
+    background: rgba(255,255,255,0.30);
+}
 
-            border: 1px solid rgba(255,255,255,0.5);
+/* =========================
+   HELP BUTTON
+========================= */
 
-            border-radius: 7px;
+.header-help-button {
+    position: absolute;
 
-            font-size: 23px;
+    top: 50%;
+    right: 5px;
 
-            font-weight: bold;
+    transform: translateY(-50%);
 
-            cursor: pointer;
+    background:
+        rgba(255,255,255,0.18);
 
-            z-index: 1000;
+    color: white;
 
-            display: flex;
+    border:
+        1px solid rgba(255,255,255,0.5);
 
-            align-items: center;
+    border-radius: 6px;
 
-            justify-content: center;
+    padding: 7px 6px;
 
-            padding: 0;
+    font-size: 17px;
+    font-weight: bold;
 
-            box-shadow:
-                0 2px 6px rgba(0,0,0,0.20);
-        }
+    white-space: nowrap;
 
+    cursor: pointer;
 
-        .three-dot-button:hover {
+    box-shadow:
+        0 2px 6px rgba(0,0,0,0.20);
+}
 
-            background:
-                rgba(255,255,255,0.30);
+/* =========================
+   THREE DOT MENU
+========================= */
 
-        }
+#threeDotMenu {
+    display: none;
 
+    position: absolute;
 
-        /* =========================
-           HELP LINE HEADER BUTTON
-        ========================= */
+    top: 78px;
+    left: 10px;
 
-        .header-help-button {
+    background: white;
 
-            position: absolute;
+    padding: 10px;
 
-            top: 50%;
-            right: 5px;
+    border-radius: 8px;
 
-            transform: translateY(-50%);
+    box-shadow:
+        0 3px 12px rgba(0,0,0,0.20);
 
-            background:
-                rgba(255,255,255,0.18);
+    z-index: 999;
 
-            color: white;
+    min-width: 220px;
+}
 
-            border:
-                1px solid rgba(255,255,255,0.5);
+#threeDotMenu a {
+    display: block;
 
-            border-radius: 6px;
+    text-decoration: none;
 
-            padding: 7px 6px;
+    color: #222;
 
-            font-size: 17px;
+    font-weight: bold;
 
-            font-weight: bold;
+    padding: 12px 18px;
+}
 
-            white-space: nowrap;
+#threeDotMenu a:first-child {
+    border-bottom: 1px solid #eee;
+}
 
-            cursor: pointer;
+#threeDotMenu a:hover {
+    background: #f5f5f5;
+}
 
-            box-shadow:
-                0 2px 6px rgba(0,0,0,0.20);
-        }
+/* =========================
+   WELCOME
+========================= */
 
+.welcome {
+    background:
+        linear-gradient(
+            135deg,
+            #fff7ed,
+            #ffffff,
+            #fff0e0
+        );
 
-        /* =========================
-           THREE DOT MENU
-        ========================= */
+    text-align: center;
 
-        #threeDotMenu {
+    padding: 28px 15px;
 
-            display: none;
+    margin: 15px 10px 5px;
 
-            position: absolute;
+    border-radius: 14px;
 
-            top: 78px;
+    box-shadow:
+        0 3px 12px rgba(0,0,0,0.10);
 
-            left: 10px;
+    border:
+        1px solid #ffe0c2;
+}
 
-            background: white;
+.welcome h2 {
+    margin: 0;
 
-            padding: 10px;
+    font-size: 22px;
 
-            border-radius: 8px;
+    color: #ff6600;
 
-            box-shadow:
-                0 3px 12px rgba(0,0,0,0.20);
+    font-weight: bold;
+}
 
-            z-index: 999;
+.welcome p {
+    margin: 8px 0 0;
 
-            min-width: 220px;
-        }
+    font-size: 16px;
 
+    color: #666;
+}
 
-        #threeDotMenu a {
+h2 {
+    text-align: center;
+}
 
-            display: block;
+/* =========================
+   PRODUCTS
+========================= */
 
-            text-decoration: none;
+.products {
+    display: grid;
 
-            color: #222;
+    grid-template-columns:
+        repeat(4, 1fr);
 
-            font-weight: bold;
+    gap: 15px;
 
-            padding: 12px 18px;
-        }
+    padding: 15px;
 
+    max-width: 1100px;
 
-        #threeDotMenu a:first-child {
+    margin: auto;
+}
 
-            border-bottom:
-                1px solid #eee;
-        }
+.product {
+    background-color: white;
 
+    padding: 12px;
 
-        #threeDotMenu a:hover {
+    text-align: center;
 
-            background: #f5f5f5;
-        }
+    border-radius: 8px;
 
+    box-shadow:
+        0 2px 8px rgba(0,0,0,0.1);
 
-        /* =========================
-           WELCOME
-        ========================= */
+    transition:
+        transform 0.2s,
+        box-shadow 0.2s;
+}
 
-        .welcome {
+.product:hover {
+    transform:
+        translateY(-4px);
 
-            background:
-                linear-gradient(
-                    135deg,
-                    #fff7ed,
-                    #ffffff,
-                    #fff0e0
-                );
+    box-shadow:
+        0 4px 12px rgba(0,0,0,0.15);
+}
 
-            text-align: center;
+.product img {
+    width: 100%;
 
-            padding: 28px 15px;
+    height: 180px;
 
-            margin: 15px 10px 5px;
+    object-fit: cover;
 
-            border-radius: 14px;
+    border-radius: 8px;
 
-            box-shadow:
-                0 3px 12px rgba(0,0,0,0.10);
+    background: #eee;
+}
 
-            border:
-                1px solid #ffe0c2;
-        }
+.product h3 {
+    font-size: 16px;
 
+    min-height: 42px;
 
-        .welcome h2 {
+    margin: 10px 0 5px;
+}
 
-            margin: 0;
+.product-number {
+    color: #333;
 
-            font-size: 22px;
+    font-weight: bold;
 
-            color: #ff6600;
+    margin-right: 4px;
+}
 
-            font-weight: bold;
-        }
+.product p {
+    font-size: 18px;
 
+    font-weight: bold;
 
-        .welcome p {
+    color: #ff6600;
 
-            margin: 8px 0 0;
+    margin: 8px 0 12px;
+}
 
-            font-size: 16px;
+.product button {
+    margin: 4px 2px;
 
-            color: #666;
-        }
+    cursor: pointer;
+}
 
+button {
+    background-color: #ff6600;
 
-        h2 {
+    color: white;
 
-            text-align: center;
-        }
+    border: none;
 
+    padding: 10px 15px;
 
-        /* =========================
-           PRODUCTS
-        ========================= */
+    border-radius: 5px;
 
-        .products {
+    cursor: pointer;
+}
 
-            display: grid;
+button:hover {
+    opacity: 0.9;
+}
 
-            grid-template-columns:
-                repeat(4, 1fr);
+/* =========================
+   NAVIGATION
+========================= */
 
-            gap: 15px;
+nav {
+    display: flex;
 
-            padding: 15px;
+    justify-content: center;
 
-            max-width: 1100px;
+    align-items: center;
 
-            margin: auto;
-        }
+    flex-wrap: wrap;
 
+    gap: 6px;
+}
 
-        .product {
+nav a {
+    display: inline-block;
 
-            background-color: white;
+    text-decoration: none;
 
-            padding: 12px;
+    color: #222;
 
-            text-align: center;
+    margin: 5px 4px;
 
-            border-radius: 8px;
+    padding: 9px 13px;
 
-            box-shadow:
-                0 2px 8px rgba(0,0,0,0.1);
+    font-size: 17px;
 
-            transition:
-                transform 0.2s,
-                box-shadow 0.2s;
-        }
+    font-weight: bold;
 
+    background:
+        linear-gradient(
+            145deg,
+            #ffffff,
+            #f1f1f1
+        );
 
-        .product:hover {
+    border:
+        1px solid #d5d5d5;
 
-            transform:
-                translateY(-4px);
+    border-radius: 9px;
 
-            box-shadow:
-                0 4px 12px rgba(0,0,0,0.15);
-        }
+    box-shadow:
+        0 3px 0 #b5b5b5,
+        0 5px 10px
+        rgba(0,0,0,0.18);
 
+    transition:
+        all 0.2s ease;
+}
 
-        .product img {
+nav a:hover {
+    transform:
+        translateY(-2px);
 
-            width: 100%;
+    box-shadow:
+        0 7px 0 #18181b,
+        0 10px 15px
+        rgba(0,0,0,0.30);
+}
 
-            height: 180px;
+nav a:active {
+    transform:
+        translateY(4px);
 
-            object-fit: cover;
+    box-shadow:
+        0 1px 0 #18181b,
+        0 3px 6px
+        rgba(0,0,0,0.20);
+}
 
-            border-radius: 8px;
+/* =========================
+   SEARCH
+========================= */
 
-            background: #eee;
-        }
+.search {
+    display: flex;
 
+    justify-content: center;
 
-        .product h3 {
+    align-items: center;
 
-            font-size: 16px;
+    gap: 5px;
 
-            min-height: 42px;
+    padding: 20px 10px;
+}
 
-            margin: 10px 0 5px;
-        }
+.search input {
+    padding: 10px;
 
+    width: 250px;
 
-        .product-number {
+    max-width:
+        calc(100% - 90px);
 
-            color: #333;
+    border:
+        1px solid #ccc;
 
-            font-weight: bold;
+    border-radius: 5px;
+}
 
-            margin-right: 4px;
-        }
+/* =========================
+   CATEGORIES
+========================= */
 
+.categories {
+    background-color: white;
 
-        .product p {
+    padding: 15px;
 
-            font-size: 18px;
+    margin: 10px;
 
-            font-weight: bold;
+    border-radius: 10px;
+}
 
-            color: #ff6600;
+.category-list {
+    display: flex;
 
-            margin: 8px 0 12px;
-        }
+    justify-content: center;
 
+    gap: 10px;
 
-        .product button {
+    flex-wrap: wrap;
+}
 
-            margin: 4px 2px;
+/* =========================
+   HELP LINE
+========================= */
 
-            cursor: pointer;
-        }
+.help-section {
+    text-align: center;
 
+    margin: 20px 10px;
+}
 
-        button {
+.help-button {
+    background-color: #007bff;
 
-            background-color: #ff6600;
+    color: white;
 
-            color: white;
+    border: none;
 
-            border: none;
+    padding: 12px 25px;
 
-            padding: 10px 15px;
+    border-radius: 6px;
 
-            border-radius: 5px;
+    font-size: 16px;
 
-            cursor: pointer;
-        }
+    font-weight: bold;
 
+    cursor: pointer;
+}
 
-        button:hover {
+.help-button:hover {
+    background-color: #0056b3;
+}
 
-            opacity: 0.9;
-        }
+.help-box {
+    display: none;
 
+    background-color: white;
 
-        /* =========================
-           NAVIGATION
-        ========================= */
+    max-width: 400px;
 
-        nav {
+    margin: 12px auto;
 
-            display: flex;
+    padding: 20px;
 
-            justify-content: center;
+    border-radius: 10px;
 
-            align-items: center;
+    box-shadow:
+        0 3px 12px rgba(0,0,0,0.15);
+}
 
-            flex-wrap: wrap;
+.help-box h3 {
+    margin-top: 0;
 
-            gap: 6px;
-        }
+    color: #333;
+}
 
+.help-option {
+    display: block;
 
-        nav a {
+    width: 100%;
 
-            display: inline-block;
+    box-sizing: border-box;
 
-            text-decoration: none;
+    margin: 10px 0;
 
-            color: #222;
+    padding: 12px;
 
-            margin: 5px 4px;
+    border-radius: 6px;
 
-            padding: 9px 13px;
+    text-decoration: none;
 
-            font-size: 17px;
+    color: white;
 
-            font-weight: bold;
+    font-weight: bold;
 
-            background:
-                linear-gradient(
-                    145deg,
-                    #ffffff,
-                    #f1f1f1
-                );
+    cursor: pointer;
+}
 
-            border:
-                1px solid #d5d5d5;
+.whatsapp {
+    background-color: #25D366;
+}
 
-            border-radius: 9px;
+.imo {
+    background-color: #1677ff;
+}
 
-            box-shadow:
-                0 3px 0 #b5b5b5,
-                0 5px 10px
-                rgba(0,0,0,0.18);
+.phone {
+    background-color: #ff6600;
+}
 
-            transition:
-                all 0.2s ease;
-        }
+.email {
+    background-color: #6c63ff;
+}
 
+.help-option:hover {
+    opacity: 0.9;
+}
 
-        nav a:hover {
+/* =========================
+   NO PRODUCT
+========================= */
 
-            transform:
-                translateY(-2px);
+#noProducts {
+    display: none;
 
-            box-shadow:
-                0 7px 0 #18181b,
-                0 10px 15px
-                rgba(0,0,0,0.30);
-        }
+    text-align: center;
 
+    font-size: 18px;
 
-        nav a:active {
+    color: #777;
 
-            transform:
-                translateY(4px);
+    padding: 20px;
+}
 
-            box-shadow:
-                0 1px 0 #18181b,
-                0 3px 6px
-                rgba(0,0,0,0.20);
-        }
+/* =========================
+   FIREBASE STATUS
+========================= */
 
+#firebaseLoading {
+    text-align: center;
 
-        /* =========================
-           SEARCH
-        ========================= */
+    color: #777;
 
-        .search {
+    font-size: 13px;
 
-            display: flex;
+    padding: 5px;
+}
 
-            justify-content: center;
+/* =========================
+   MOBILE
+========================= */
 
-            align-items: center;
+@media (max-width: 700px) {
 
-            gap: 5px;
+    .products {
+        grid-template-columns:
+            repeat(2, 1fr);
 
-            padding: 20px 10px;
-        }
+        gap: 10px;
 
+        padding: 10px;
+    }
 
-        .search input {
+    .search input {
+        width: auto;
 
-            padding: 10px;
+        flex: 1;
 
-            width: 250px;
+        min-width: 0;
+    }
 
-            max-width:
-                calc(100% - 90px);
+    .search button {
+        flex-shrink: 0;
+    }
 
-            border:
-                1px solid #ccc;
+    .product {
+        padding: 8px;
+    }
 
-            border-radius: 5px;
-        }
+    .product img {
+        height: 150px;
+    }
 
+    .product h3 {
+        font-size: 14px;
+    }
 
-        /* =========================
-           CATEGORIES
-        ========================= */
+    .product p {
+        font-size: 16px;
+    }
 
-        .categories {
+    .product button {
+        width: 100%;
 
-            background-color: white;
+        margin: 3px 0;
+    }
 
-            padding: 15px;
+    nav a {
+        margin: 4px 2px;
 
-            margin: 10px;
+        padding: 8px 11px;
 
-            border-radius: 10px;
-        }
+        font-size: 17px;
+    }
 
+    .header-help-button {
+        font-size: 13px;
 
-        .category-list {
+        padding: 6px 5px;
+    }
 
-            display: flex;
+    .three-dot-button {
+        left: 6px;
+    }
 
-            justify-content: center;
+}
 
-            gap: 10px;
-
-            flex-wrap: wrap;
-        }
-
-
-        /* =========================
-           HELP LINE
-        ========================= */
-
-        .help-section {
-
-            text-align: center;
-
-            margin: 20px 10px;
-        }
-
-
-        .help-button {
-
-            background-color: #007bff;
-
-            color: white;
-
-            border: none;
-
-            padding: 12px 25px;
-
-            border-radius: 6px;
-
-            font-size: 16px;
-
-            font-weight: bold;
-
-            cursor: pointer;
-        }
-
-
-        .help-button:hover {
-
-            background-color: #0056b3;
-        }
-
-
-        .help-box {
-
-            display: none;
-
-            background-color: white;
-
-            max-width: 400px;
-
-            margin: 12px auto;
-
-            padding: 20px;
-
-            border-radius: 10px;
-
-            box-shadow:
-                0 3px 12px rgba(0,0,0,0.15);
-        }
-
-
-        .help-box h3 {
-
-            margin-top: 0;
-
-            color: #333;
-        }
-
-
-        .help-option {
-
-            display: block;
-
-            width: 100%;
-
-            box-sizing: border-box;
-
-            margin: 10px 0;
-
-            padding: 12px;
-
-            border-radius: 6px;
-
-            text-decoration: none;
-
-            color: white;
-
-            font-weight: bold;
-
-            cursor: pointer;
-        }
-
-
-        .whatsapp {
-
-            background-color: #25D366;
-        }
-
-
-        .imo {
-
-            background-color: #1677ff;
-        }
-
-
-        .phone {
-
-            background-color: #ff6600;
-        }
-
-
-        .email {
-
-            background-color: #6c63ff;
-        }
-
-
-        .help-option:hover {
-
-            opacity: 0.9;
-        }
-
-
-        /* =========================
-           NO PRODUCT MESSAGE
-        ========================= */
-
-        #noProducts {
-
-            display: none;
-
-            text-align: center;
-
-            font-size: 18px;
-
-            color: #777;
-
-            padding: 20px;
-        }
-
-
-        /* =========================
-           FIREBASE LOADING
-        ========================= */
-
-        #firebaseLoading {
-
-            text-align: center;
-
-            color: #777;
-
-            font-size: 13px;
-
-            padding: 5px;
-
-        }
-
-
-        /* =========================
-           MOBILE
-        ========================= */
-
-        @media (max-width: 700px) {
-
-            .products {
-
-                grid-template-columns:
-                    repeat(2, 1fr);
-
-                gap: 10px;
-
-                padding: 10px;
-            }
-
-
-            .search input {
-
-                width: auto;
-
-                flex: 1;
-
-                min-width: 0;
-            }
-
-
-            .search button {
-
-                flex-shrink: 0;
-            }
-
-
-            .product {
-
-                padding: 8px;
-            }
-
-
-            .product img {
-
-                height: 150px;
-            }
-
-
-            .product h3 {
-
-                font-size: 14px;
-            }
-
-
-            .product p {
-
-                font-size: 16px;
-            }
-
-
-            .product button {
-
-                width: 100%;
-
-                margin: 3px 0;
-            }
-
-
-            nav a {
-
-                margin: 4px 2px;
-
-                padding: 8px 11px;
-
-                font-size: 17px;
-            }
-
-
-            .header-help-button {
-
-                font-size: 13px;
-
-                padding: 6px 5px;
-            }
-
-
-            .three-dot-button {
-
-                left: 6px;
-            }
-
-        }
-
-    </style>
+</style>
 
 </head>
 
@@ -766,1212 +644,1119 @@
 <body>
 
 
-    <!-- =========================
-         HEADER
-    ========================= -->
+<!-- =========================
+     HEADER
+========================= -->
 
-    <h1>
+<h1>
 
-        <button
-            class="three-dot-button"
-            onclick="toggleThreeDotMenu()"
-        >
-            ☰
-        </button>
-
-
-        RK Store
-
-
-        <button
-            class="header-help-button"
-            onclick="toggleHelpLine()"
-        >
-            ☎️ Help Line
-        </button>
-
-    </h1>
-
-
-
-    <!-- =========================
-         HELP BOX
-    ========================= -->
-
-    <div
-        class="help-box"
-        id="helpBox"
+    <button
+        type="button"
+        class="three-dot-button"
+        onclick="toggleThreeDotMenu()"
     >
+        ☰
+    </button>
 
-        <h3>
-            Customer Help Line
-        </h3>
+    RK Store
 
-
-        <a
-            class="help-option whatsapp"
-            href="https://wa.me/8801731099464"
-        >
-            🟢 WhatsApp
-        </a>
-
-
-        <a
-            class="help-option imo"
-            href="imo://chat?phone=8801731099464"
-        >
-            🔵 IMO
-        </a>
-
-
-        <a
-            class="help-option phone"
-            href="tel:01731099464"
-        >
-            📞 Phone
-        </a>
-
-
-        <a
-            class="help-option email"
-            href="mailto:rejaulkarim.bdnet0@gmail.com"
-        >
-            ✉️ Email
-        </a>
-
-    </div>
-
-
-
-    <!-- =========================
-         THREE DOT MENU
-    ========================= -->
-
-    <div
-        id="threeDotMenu"
+    <button
+        type="button"
+        class="header-help-button"
+        onclick="toggleHelpLine()"
     >
+        ☎️ Help Line
+    </button>
 
-        <a
-            href="admin-login.html"
-        >
-            🔐 Admin Login
-        </a>
+</h1>
 
 
-        <a
-            href="admin-product-description.html"
-        >
-            📝 Product Description
-        </a>
+<!-- =========================
+     HELP BOX
+========================= -->
 
-    </div>
+<div
+    class="help-box"
+    id="helpBox"
+>
 
+    <h3>
+        Customer Help Line
+    </h3>
 
+    <a
+        class="help-option whatsapp"
+        href="https://wa.me/8801731099464"
+    >
+        🟢 WhatsApp
+    </a>
 
-    <!-- =========================
-         WELCOME
-    ========================= -->
+    <a
+        class="help-option imo"
+        href="imo://chat?phone=8801731099464"
+    >
+        🔵 IMO
+    </a>
 
-    <div class="welcome">
+    <a
+        class="help-option phone"
+        href="tel:01731099464"
+    >
+        📞 Phone
+    </a>
 
-        <h2>
-            Welcome to RK Store
-        </h2>
+    <a
+        class="help-option email"
+        href="mailto:rejaulkarim.bdnet0@gmail.com"
+    >
+        ✉️ Email
+    </a>
 
-
-        <p>
-            Shop your favorite products with us
-        </p>
-
-    </div>
-
-
-
-    <!-- =========================
-         NAVIGATION
-    ========================= -->
-
-    <nav>
-
-        <a href="#">
-            🏠 Home
-        </a>
-
-
-        <a
-            href="#"
-            onclick="showCart(); return false;"
-        >
-            🛒 Cart
-            (<span id="cartCount">0</span>)
-        </a>
+</div>
 
 
-        <a href="customer-login.html">
-            👤 Customer Login
-        </a>
+<!-- =========================
+     THREE DOT MENU
+========================= -->
+
+<div id="threeDotMenu">
+
+    <a href="admin-login.html">
+        🔐 Admin Login
+    </a>
+
+    <a href="admin-product-description.html">
+        📝 Product Description
+    </a>
+
+</div>
 
 
-        <a href="customer-orders.html">
-            📦 My Orders
-        </a>
+<!-- =========================
+     WELCOME
+========================= -->
 
-    </nav>
-
-
-
-    <!-- =========================
-         SEARCH
-    ========================= -->
-
-    <div class="search">
-
-        <input
-            type="text"
-            id="searchInput"
-            placeholder="Search products..."
-            oninput="searchProducts()"
-        >
-
-
-        <button
-            onclick="searchProducts()"
-        >
-            🔍 Search
-        </button>
-
-    </div>
-
-
-
-    <!-- =========================
-         CATEGORIES
-    ========================= -->
-
-    <div class="categories">
-
-        <h2>
-            Shop by Category
-        </h2>
-
-
-        <div class="category-list">
-
-            <button
-                onclick="showAllProducts()"
-            >
-                🛍️ All Products
-            </button>
-
-
-            <button
-                onclick="filterCategory('Men')"
-            >
-                👕 Men
-            </button>
-
-
-            <button
-                onclick="filterCategory('Women')"
-            >
-                👗 Women
-            </button>
-
-
-            <button
-                onclick="filterCategory('Electronics')"
-            >
-                📱 Electronics
-            </button>
-
-
-            <button
-                onclick="filterCategory('Home & Living')"
-            >
-                🏠 Home & Living
-            </button>
-
-        </div>
-
-    </div>
-
-
+<div class="welcome">
 
     <h2>
-        Our Products
+        Welcome to RK Store
     </h2>
 
-
-    <!-- =========================
-         FIREBASE LOADING
-    ========================= -->
-
-    <div id="firebaseLoading">
-        Loading latest product information...
-    </div>
-
-
-
-    <!-- =========================
-         PRODUCT AREA
-    ========================= -->
-
-    <div
-        class="products"
-        id="productsContainer"
-    >
-    </div>
-
-
-
-    <p id="noProducts">
-        No products found
+    <p>
+        Shop your favorite products with us
     </p>
 
+</div>
+
+
+<!-- =========================
+     NAVIGATION
+========================= -->
 
+<nav>
 
-    <script type="module">
+    <a href="#">
+        🏠 Home
+    </a>
 
+    <a
+        href="#"
+        onclick="showCart(); return false;"
+    >
+        🛒 Cart
+        (<span id="cartCount">0</span>)
+    </a>
 
-        /* =====================================================
-           FIREBASE IMPORT
-        ===================================================== */
+    <a href="customer-login.html">
+        👤 Customer Login
+    </a>
 
-        import {
-            initializeApp
-        } from "https://www.gstatic.com/firebasejs/12.18.0/firebase-app.js";
+    <a href="customer-orders.html">
+        📦 My Orders
+    </a>
 
+</nav>
 
-        import {
-            getFirestore,
-            doc,
-            getDoc
-        } from "https://www.gstatic.com/firebasejs/12.18.0/firebase-firestore.js";
 
+<!-- =========================
+     SEARCH
+========================= -->
 
-        /* =====================================================
-           FIREBASE CONFIG
-        ===================================================== */
+<div class="search">
 
-        const firebaseConfig = {
+    <input
+        type="text"
+        id="searchInput"
+        placeholder="Search products..."
+        oninput="searchProducts()"
+    >
 
-            apiKey:
-                "AIzaSyCkBQaphKKz_Wxd1GgKAVoxqR4taKvzdEM",
+    <button
+        type="button"
+        onclick="searchProducts()"
+    >
+        🔍 Search
+    </button>
 
-            authDomain:
-                "rk-store-5fb24.firebaseapp.com",
+</div>
 
-            projectId:
-                "rk-store-5fb24",
 
-            storageBucket:
-                "rk-store-5fb24.firebasestorage.app",
+<!-- =========================
+     CATEGORIES
+========================= -->
 
-            messagingSenderId:
-                "407275549697",
+<div class="categories">
 
-            appId:
-                "1:407275549697:web:41043b49bf7182cecffc00"
+    <h2>
+        Shop by Category
+    </h2>
 
-        };
+    <div class="category-list">
 
+        <button
+            type="button"
+            onclick="showAllProducts()"
+        >
+            🛍️ All Products
+        </button>
 
-        /* =====================================================
-           INITIALIZE FIREBASE
-        ===================================================== */
+        <button
+            type="button"
+            onclick="filterCategory('Men')"
+        >
+            👕 Men
+        </button>
 
-        const app =
-            initializeApp(
-                firebaseConfig
-            );
+        <button
+            type="button"
+            onclick="filterCategory('Women')"
+        >
+            👗 Women
+        </button>
 
+        <button
+            type="button"
+            onclick="filterCategory('Electronics')"
+        >
+            📱 Electronics
+        </button>
 
-        const db =
-            getFirestore(
-                app
-            );
+        <button
+            type="button"
+            onclick="filterCategory('Home & Living')"
+        >
+            🏠 Home & Living
+        </button>
 
+    </div>
 
-        /* =====================================================
-           PRODUCT DATA
-           PRODUCT 1-5
-        ===================================================== */
+</div>
 
-        const products = [
 
-            {
-                id: 1,
+<h2>
+    Our Products
+</h2>
 
-                name:
-                    "Men's Formal Solid Shirt",
 
-                price:
-                    450,
+<div id="firebaseLoading">
+    Loading latest product information...
+</div>
 
-                category:
-                    "Men",
 
-                image:
-                    "product1/product1.jpg"
-            },
+<!-- =========================
+     PRODUCTS
+========================= -->
 
+<div
+    class="products"
+    id="productsContainer"
+>
+</div>
 
-            {
-                id: 2,
 
-                name:
-                    "Men's Casual Shirt",
+<p id="noProducts">
+    No products found
+</p>
 
-                price:
-                    400,
 
-                category:
-                    "Men",
+<script type="module">
 
-                image:
-                    "product2.jpg"
-            },
 
+/* =====================================================
+   FIREBASE
+===================================================== */
 
-            {
-                id: 3,
+import {
+    initializeApp
+} from "https://www.gstatic.com/firebasejs/12.18.0/firebase-app.js";
 
-                name:
-                    "Men's Casual Check Shirt",
+import {
+    getFirestore,
+    doc,
+    getDoc
+} from "https://www.gstatic.com/firebasejs/12.18.0/firebase-firestore.js";
 
-                price:
-                    480,
 
-                category:
-                    "Men",
+/* =====================================================
+   FIREBASE CONFIG
+===================================================== */
 
-                image:
-                    "product3.jpg"
-            },
+const firebaseConfig = {
 
+    apiKey:
+        "AIzaSyCkBQaphKKz_Wxd1GgKAVoxqR4taKvzdEM",
 
-            {
-                id: 4,
+    authDomain:
+        "rk-store-5fb24.firebaseapp.com",
 
-                name:
-                    "Women's Casual Yellow Dress",
+    projectId:
+        "rk-store-5fb24",
 
-                price:
-                    500,
+    storageBucket:
+        "rk-store-5fb24.firebasestorage.app",
 
-                category:
-                    "Women",
+    messagingSenderId:
+        "407275549697",
 
-                image:
-                    "product4.jpg"
-            },
+    appId:
+        "1:407275549697:web:41043b49bf7182cecffc00"
 
+};
 
-            {
-                id: 5,
 
-                name:
-                    "Women's Casual Dress",
+/* =====================================================
+   INITIALIZE
+===================================================== */
 
-                price:
-                    900,
+const app =
+    initializeApp(firebaseConfig);
 
-                category:
-                    "Women",
+const db =
+    getFirestore(app);
 
-                image:
-                    "product5.jpg"
-            }
 
-        ];
+/* =====================================================
+   PRODUCT DATA
+===================================================== */
 
+const products = [];
 
-        /* =====================================================
-           CATEGORIES
-        ===================================================== */
 
-        const categories = [
+/* =====================================================
+   DEFAULT PRODUCT DATA
+===================================================== */
 
-            "Men",
+const defaultProducts = {
 
-            "Women",
+    1: {
+        name: "Men's Formal Solid Shirt",
+        price: 450,
+        category: "Men",
+        image: "product1/product1.jpg"
+    },
 
-            "Electronics",
+    2: {
+        name: "Men's Casual Shirt",
+        price: 400,
+        category: "Men",
+        image: "product2.jpg"
+    },
 
-            "Home & Living"
+    3: {
+        name: "Men's Casual Check Shirt",
+        price: 480,
+        category: "Men",
+        image: "product3.jpg"
+    },
 
-        ];
+    4: {
+        name: "Women's Casual Yellow Dress",
+        price: 500,
+        category: "Women",
+        image: "product4.jpg"
+    },
 
+    5: {
+        name: "Women's Casual Dress",
+        price: 900,
+        category: "Women",
+        image: "product5.jpg"
+    }
 
-        /* =====================================================
-           PRODUCT 6-100
-        ===================================================== */
+};
 
-        for (
-            let i = 6;
-            i <= 100;
-            i++
-        ) {
 
-            products.push({
+/* =====================================================
+   CATEGORY LIST
+===================================================== */
 
-                id:
-                    i,
+const categories = [
+    "Men",
+    "Women",
+    "Electronics",
+    "Home & Living"
+];
 
-                name:
-                    "Product " + i,
 
-                price:
-                    100 + (i * 10),
+/* =====================================================
+   CREATE PRODUCT 1-100
+===================================================== */
 
-                category:
-                    categories[
-                        (i - 6) %
-                        categories.length
-                    ],
+for (
+    let i = 1;
+    i <= 100;
+    i++
+) {
 
-                image:
-                    "product" + i + ".jpg"
+    const defaultData =
+        defaultProducts[i];
 
-            });
 
-        }
+    products.push({
 
+        id: i,
 
-        /* =====================================================
-           SELECTED CATEGORY
-        ===================================================== */
+        /*
+         * Serial কখনো Firebase-এর
+         * name/price-এর সাথে পরিবর্তন হবে না।
+         */
 
-        let selectedCategory =
-            "All";
+        serial: i,
 
+        name:
+            defaultData
+                ? defaultData.name
+                : "Product " + i,
 
-        /* =====================================================
-           DISPLAY PRODUCTS
-        ===================================================== */
+        price:
+            defaultData
+                ? defaultData.price
+                : 100 + (i * 10),
 
-        function displayProducts(
-            list
-        ) {
+        category:
+            defaultData
+                ? defaultData.category
+                : categories[
+                    (i - 6) %
+                    categories.length
+                ],
 
-            const container =
-                document.getElementById(
-                    "productsContainer"
+        image:
+            defaultData
+                ? defaultData.image
+                : "product" + i + ".jpg"
+
+    });
+
+}
+
+
+/* =====================================================
+   SELECTED CATEGORY
+===================================================== */
+
+let selectedCategory =
+    "All";
+
+
+/* =====================================================
+   DISPLAY PRODUCTS
+===================================================== */
+
+function displayProducts(list) {
+
+    const container =
+        document.getElementById(
+            "productsContainer"
+        );
+
+
+    container.innerHTML = "";
+
+
+    list.forEach(
+        function(product) {
+
+            const card =
+                document.createElement(
+                    "div"
                 );
 
 
-            container.innerHTML =
-                "";
+            card.className =
+                "product";
 
 
-            list.forEach(
+            card.setAttribute(
+                "data-id",
+                product.id
+            );
+
+
+            card.setAttribute(
+                "data-category",
+                product.category
+            );
+
+
+            card.innerHTML = `
+
+                <img
+                    src="${product.image}"
+                    alt="${escapeHTML(product.name)}"
+                    onerror="this.style.background='#eeeeee';"
+                >
+
+                <h3>
+
+                    <span class="product-number">
+
+                        ${product.serial}.
+
+                    </span>
+
+                    ${escapeHTML(product.name)}
+
+                </h3>
+
+                <p>
+                    Price: ৳${Number(product.price) || 0}
+                </p>
+
+                <button
+                    type="button"
+                    onclick="buyProductById(${product.id})"
+                >
+                    Buy Now
+                </button>
+
+                <button
+                    type="button"
+                    onclick="viewProduct(${product.id})"
+                >
+                    View Details
+                </button>
+
+            `;
+
+
+            container.appendChild(card);
+
+        }
+    );
+
+
+    const noProducts =
+        document.getElementById(
+            "noProducts"
+        );
+
+
+    noProducts.style.display =
+        list.length === 0
+            ? "block"
+            : "none";
+
+}
+
+
+/* =====================================================
+   SAFE HTML
+===================================================== */
+
+function escapeHTML(value) {
+
+    return String(value ?? "")
+        .replace(/&/g, "&amp;")
+        .replace(/</g, "&lt;")
+        .replace(/>/g, "&gt;")
+        .replace(/"/g, "&quot;")
+        .replace(/'/g, "&#039;");
+
+}
+
+
+/* =====================================================
+   VIEW PRODUCT
+===================================================== */
+
+window.viewProduct =
+function(productId) {
+
+    window.location.href =
+        "product.html?product=" +
+        productId;
+
+};
+
+
+/* =====================================================
+   BUY PRODUCT
+===================================================== */
+
+window.buyProductById =
+function(productId) {
+
+    const product =
+        products.find(
+            function(item) {
+
+                return (
+                    item.id ===
+                    productId
+                );
+
+            }
+        );
+
+
+    if (!product) {
+
+        alert(
+            "Product not found."
+        );
+
+        return;
+
+    }
+
+
+    let cart =
+        JSON.parse(
+            localStorage.getItem(
+                "cart"
+            )
+        ) || [];
+
+
+    const existingProduct =
+        cart.find(
+            function(item) {
+
+                return (
+                    Number(
+                        item.productId
+                    ) ===
+                    productId
+                );
+
+            }
+        );
+
+
+    if (existingProduct) {
+
+        existingProduct.quantity =
+            (
+                Number(
+                    existingProduct.quantity
+                ) || 1
+            ) + 1;
+
+
+        existingProduct.name =
+            product.name;
+
+
+        existingProduct.price =
+            Number(product.price) || 0;
+
+
+        existingProduct.image =
+            product.image;
+
+    }
+
+    else {
+
+        cart.push({
+
+            productId:
+                productId,
+
+            name:
+                product.name,
+
+            price:
+                Number(product.price) || 0,
+
+            image:
+                product.image,
+
+            quantity:
+                1
+
+        });
+
+    }
+
+
+    localStorage.setItem(
+        "cart",
+        JSON.stringify(cart)
+    );
+
+
+    alert(
+        product.name +
+        " added to cart!"
+    );
+
+
+    updateCartCount();
+
+};
+
+
+/* =====================================================
+   CART
+===================================================== */
+
+window.showCart =
+function() {
+
+    window.location.href =
+        "cart.html";
+
+};
+
+
+/* =====================================================
+   CART COUNT
+===================================================== */
+
+function updateCartCount() {
+
+    const cart =
+        JSON.parse(
+            localStorage.getItem(
+                "cart"
+            )
+        ) || [];
+
+
+    let totalQuantity =
+        0;
+
+
+    cart.forEach(
+        function(item) {
+
+            totalQuantity +=
+                Number(
+                    item.quantity
+                ) || 1;
+
+        }
+    );
+
+
+    document.getElementById(
+        "cartCount"
+    ).innerText =
+        totalQuantity;
+
+}
+
+
+/* =====================================================
+   CATEGORY FILTER
+===================================================== */
+
+window.filterCategory =
+function(category) {
+
+    selectedCategory =
+        category;
+
+    searchProducts();
+
+};
+
+
+/* =====================================================
+   SHOW ALL
+===================================================== */
+
+window.showAllProducts =
+function() {
+
+    selectedCategory =
+        "All";
+
+    searchProducts();
+
+};
+
+
+/* =====================================================
+   SEARCH
+===================================================== */
+
+window.searchProducts =
+function() {
+
+    const searchInput =
+        document.getElementById(
+            "searchInput"
+        );
+
+
+    const searchText =
+        searchInput.value
+            .toLowerCase()
+            .trim();
+
+
+    const filtered =
+        products.filter(
+            function(product) {
+
+                const categoryMatch =
+                    selectedCategory ===
+                    "All"
+                    ||
+                    product.category ===
+                    selectedCategory;
+
+
+                const nameMatch =
+                    String(
+                        product.name
+                    )
+                    .toLowerCase()
+                    .includes(
+                        searchText
+                    );
+
+
+                return (
+                    categoryMatch &&
+                    nameMatch
+                );
+
+            }
+        );
+
+
+    displayProducts(
+        filtered
+    );
+
+};
+
+
+/* =====================================================
+   THREE DOT MENU
+===================================================== */
+
+window.toggleThreeDotMenu =
+function() {
+
+    const menu =
+        document.getElementById(
+            "threeDotMenu"
+        );
+
+
+    menu.style.display =
+        menu.style.display ===
+        "block"
+            ? "none"
+            : "block";
+
+};
+
+
+/* =====================================================
+   HELP LINE
+===================================================== */
+
+window.toggleHelpLine =
+function() {
+
+    const helpBox =
+        document.getElementById(
+            "helpBox"
+        );
+
+
+    helpBox.style.display =
+        helpBox.style.display ===
+        "block"
+            ? "none"
+            : "block";
+
+};
+
+
+/* =====================================================
+   CLOSE THREE DOT MENU
+===================================================== */
+
+document.addEventListener(
+    "click",
+    function(event) {
+
+        const menu =
+            document.getElementById(
+                "threeDotMenu"
+            );
+
+
+        const button =
+            document.querySelector(
+                ".three-dot-button"
+            );
+
+
+        if (
+            menu.style.display ===
+            "block"
+            &&
+            !menu.contains(
+                event.target
+            )
+            &&
+            !button.contains(
+                event.target
+            )
+        ) {
+
+            menu.style.display =
+                "none";
+
+        }
+
+    }
+);
+
+
+/* =====================================================
+   LOAD FIREBASE PRODUCT
+===================================================== */
+
+async function loadFirebaseProduct(
+    product
+) {
+
+    try {
+
+        const productRef =
+            doc(
+                db,
+                "productDescriptions",
+                String(product.id)
+            );
+
+
+        const snapshot =
+            await getDoc(
+                productRef
+            );
+
+
+        if (
+            snapshot.exists()
+        ) {
+
+            const data =
+                snapshot.data();
+
+
+            /* =========================
+               NAME
+            ========================= */
+
+            if (
+                typeof data.name ===
+                "string"
+                &&
+                data.name.trim() !== ""
+            ) {
+
+                product.name =
+                    data.name.trim();
+
+            }
+
+
+            /* =========================
+               PRICE
+            ========================= */
+
+            if (
+                data.price !== undefined
+                &&
+                data.price !== null
+                &&
+                data.price !== ""
+            ) {
+
+                const price =
+                    Number(
+                        data.price
+                    );
+
+
+                if (
+                    Number.isFinite(
+                        price
+                    )
+                ) {
+
+                    product.price =
+                        price;
+
+                }
+
+            }
+
+
+            /* =========================
+               CATEGORY
+            ========================= */
+
+            if (
+                typeof data.category ===
+                "string"
+                &&
+                data.category.trim() !== ""
+            ) {
+
+                product.category =
+                    data.category.trim();
+
+            }
+
+
+            /*
+             * IMPORTANT:
+             *
+             * Firebase-এর serial field
+             * থাকলেও Home Page-এর
+             * product.id/serial পরিবর্তন
+             * করা হবে না।
+             *
+             * তাই Product 1 সবসময় 1,
+             * Product 2 সবসময় 2...
+             */
+
+        }
+
+    }
+
+    catch (error) {
+
+        console.error(
+            "Firebase Product " +
+            product.id +
+            " Error:",
+            error
+        );
+
+    }
+
+}
+
+
+/* =====================================================
+   LOAD ALL FIREBASE PRODUCTS
+===================================================== */
+
+async function loadFirebaseProducts() {
+
+    const loading =
+        document.getElementById(
+            "firebaseLoading"
+        );
+
+
+    loading.innerText =
+        "Loading latest product information...";
+
+
+    try {
+
+        /*
+         * Product 1-100-এর
+         * একই ID দিয়ে Firebase
+         * থেকে data নেওয়া হচ্ছে।
+         */
+
+        const promises =
+            products.map(
                 function(product) {
 
-                    const productCard =
-                        document.createElement(
-                            "div"
-                        );
-
-
-                    productCard.className =
-                        "product";
-
-
-                    productCard.setAttribute(
-                        "data-category",
-                        product.category
-                    );
-
-
-                    productCard.setAttribute(
-                        "data-id",
-                        product.id
-                    );
-
-
-                    productCard.innerHTML = `
-
-                        <img
-                            src="${product.image}"
-                            alt="${product.name}"
-                            onerror="this.style.background='#eeeeee';"
-                        >
-
-
-                        <h3>
-
-                            <span
-                                class="product-number"
-                            >
-                                ${product.id}.
-                            </span>
-
-                            ${product.name}
-
-                        </h3>
-
-
-                        <p>
-                            Price: ৳${product.price}
-                        </p>
-
-
-                        <button
-                            onclick="buyProductById(${product.id})"
-                        >
-                            Buy Now
-                        </button>
-
-
-                        <button
-                            onclick="viewProduct(${product.id})"
-                        >
-                            View Details
-                        </button>
-
-                    `;
-
-
-                    container.appendChild(
-                        productCard
+                    return loadFirebaseProduct(
+                        product
                     );
 
                 }
             );
 
 
-            const noProducts =
-                document.getElementById(
-                    "noProducts"
-                );
-
-
-            if (
-                list.length === 0
-            ) {
-
-                noProducts.style.display =
-                    "block";
-
-            }
-
-            else {
-
-                noProducts.style.display =
-                    "none";
-
-            }
-
-        }
-
-
-        /* =====================================================
-           VIEW PRODUCT DETAILS
-        ===================================================== */
-
-        window.viewProduct =
-        function(productId) {
-
-            window.location.href =
-                "product.html?product=" +
-                productId;
-
-        };
-
-
-        /* =====================================================
-           BUY PRODUCT
-        ===================================================== */
-
-        window.buyProductById =
-        function(productId) {
-
-            const product =
-                products.find(
-                    function(item) {
-
-                        return (
-                            item.id ===
-                            productId
-                        );
-
-                    }
-                );
-
-
-            if (!product) {
-
-                alert(
-                    "Product not found."
-                );
-
-                return;
-
-            }
-
-
-            let cart =
-                JSON.parse(
-                    localStorage.getItem(
-                        "cart"
-                    )
-                ) || [];
-
-
-            const existingProduct =
-                cart.find(
-                    function(item) {
-
-                        return (
-                            Number(
-                                item.productId
-                            ) ===
-                            productId
-                        );
-
-                    }
-                );
-
-
-            if (
-                existingProduct
-            ) {
-
-                existingProduct.quantity =
-                    (
-                        Number(
-                            existingProduct.quantity
-                        ) || 1
-                    ) + 1;
-
-
-                /*
-                 * Home Page-এ Firebase থেকে
-                 * নতুন নাম/দাম এলে Cart-এও
-                 * সর্বশেষ তথ্য রাখা হবে।
-                 */
-
-                existingProduct.name =
-                    product.name;
-
-
-                existingProduct.price =
-                    product.price;
-
-
-                existingProduct.image =
-                    product.image;
-
-            }
-
-
-            else {
-
-                cart.push({
-
-                    productId:
-                        productId,
-
-                    name:
-                        product.name,
-
-                    price:
-                        product.price,
-
-                    image:
-                        product.image,
-
-                    quantity:
-                        1
-
-                });
-
-            }
-
-
-            localStorage.setItem(
-                "cart",
-                JSON.stringify(cart)
-            );
-
-
-            alert(
-                product.name +
-                " added to cart!"
-            );
-
-
-            updateCartCount();
-
-        };
-
-
-        /* =====================================================
-           CART
-        ===================================================== */
-
-        window.showCart =
-        function() {
-
-            window.location.href =
-                "cart.html";
-
-        };
-
-
-        /* =====================================================
-           UPDATE CART COUNT
-        ===================================================== */
-
-        function updateCartCount() {
-
-            const cart =
-                JSON.parse(
-                    localStorage.getItem(
-                        "cart"
-                    )
-                ) || [];
-
-
-            let totalQuantity =
-                0;
-
-
-            cart.forEach(
-                function(item) {
-
-                    totalQuantity +=
-                        Number(
-                            item.quantity
-                        ) || 1;
-
-                }
-            );
-
-
-            document.getElementById(
-                "cartCount"
-            ).innerText =
-                totalQuantity;
-
-        }
-
-
-        /* =====================================================
-           CATEGORY FILTER
-        ===================================================== */
-
-        window.filterCategory =
-        function(category) {
-
-            selectedCategory =
-                category;
-
-
-            searchProducts();
-
-        };
-
-
-        /* =====================================================
-           SHOW ALL PRODUCTS
-        ===================================================== */
-
-        window.showAllProducts =
-        function() {
-
-            selectedCategory =
-                "All";
-
-
-            searchProducts();
-
-        };
-
-
-        /* =====================================================
-           SEARCH
-        ===================================================== */
-
-        window.searchProducts =
-        function() {
-
-            const searchText =
-                document
-                    .getElementById(
-                        "searchInput"
-                    )
-                    .value
-                    .toLowerCase()
-                    .trim();
-
-
-            const filteredProducts =
-                products.filter(
-                    function(product) {
-
-                        const categoryMatch =
-                            selectedCategory ===
-                            "All"
-                            ||
-                            product.category ===
-                            selectedCategory;
-
-
-                        const searchMatch =
-                            product.name
-                                .toLowerCase()
-                                .includes(
-                                    searchText
-                                );
-
-
-                        return (
-                            categoryMatch &&
-                            searchMatch
-                        );
-
-                    }
-                );
-
-
-            displayProducts(
-                filteredProducts
-            );
-
-        };
-
-
-        /* =====================================================
-           THREE DOT MENU
-        ===================================================== */
-
-        window.toggleThreeDotMenu =
-        function() {
-
-            const menu =
-                document.getElementById(
-                    "threeDotMenu"
-                );
-
-
-            if (
-                menu.style.display ===
-                "block"
-            ) {
-
-                menu.style.display =
-                    "none";
-
-            }
-
-            else {
-
-                menu.style.display =
-                    "block";
-
-            }
-
-        };
-
-
-        /* =====================================================
-           HELP LINE
-        ===================================================== */
-
-        window.toggleHelpLine =
-        function() {
-
-            const helpBox =
-                document.getElementById(
-                    "helpBox"
-                );
-
-
-            if (
-                helpBox.style.display ===
-                "block"
-            ) {
-
-                helpBox.style.display =
-                    "none";
-
-            }
-
-            else {
-
-                helpBox.style.display =
-                    "block";
-
-            }
-
-        };
-
-
-        /* =====================================================
-           CLOSE THREE DOT MENU
-           WHEN CLICKING OUTSIDE
-        ===================================================== */
-
-        document.addEventListener(
-            "click",
-            function(event) {
-
-                const menu =
-                    document.getElementById(
-                        "threeDotMenu"
-                    );
-
-
-                const button =
-                    document.querySelector(
-                        ".three-dot-button"
-                    );
-
-
-                if (
-                    menu.style.display ===
-                    "block"
-                    &&
-                    !menu.contains(
-                        event.target
-                    )
-                    &&
-                    !button.contains(
-                        event.target
-                    )
-                ) {
-
-                    menu.style.display =
-                        "none";
-
-                }
-
-            }
+        await Promise.all(
+            promises
         );
 
 
-        /* =====================================================
-           LOAD ONE PRODUCT FROM FIREBASE
-        ===================================================== */
-
-        async function loadFirebaseProduct(
-            product
-        ) {
-
-            try {
-
-                const productRef =
-                    doc(
-                        db,
-                        "productDescriptions",
-                        String(product.id)
-                    );
-
-
-                const snapshot =
-                    await getDoc(
-                        productRef
-                    );
-
-
-                if (
-                    snapshot.exists()
-                ) {
-
-                    const data =
-                        snapshot.data();
-
-
-                    /* =========================
-                       PRODUCT NAME
-                    ========================= */
-
-                    if (
-                        data.name !== undefined
-                        &&
-                        data.name !== ""
-                    ) {
-
-                        product.name =
-                            data.name;
-
-                    }
-
-
-                    /* =========================
-                       PRODUCT PRICE
-                    ========================= */
-
-                    if (
-                        data.price !== undefined
-                        &&
-                        data.price !== ""
-                    ) {
-
-                        const firebasePrice =
-                            Number(
-                                data.price
-                            );
-
-
-                        if (
-                            !isNaN(
-                                firebasePrice
-                            )
-                        ) {
-
-                            product.price =
-                                firebasePrice;
-
-                        }
-
-                    }
-
-
-                    /* =========================
-                       PRODUCT CATEGORY
-                    ========================= */
-
-                    if (
-                        data.category !== undefined
-                        &&
-                        data.category !== ""
-                    ) {
-
-                        product.category =
-                            data.category;
-
-                    }
-
-                }
-
-            }
-
-            catch (error) {
-
-                console.error(
-                    "Product " +
-                    product.id +
-                    " Firebase Error:",
-                    error
-                );
-
-            }
-
-        }
-
-
-        /* =====================================================
-           LOAD ALL PRODUCTS FROM FIREBASE
-        ===================================================== */
-
-        async function loadFirebaseProducts() {
-
-            const loading =
-                document.getElementById(
-                    "firebaseLoading"
-                );
-
-
-            try {
-
-                /*
-                 * Product 1-100-এর Firebase data
-                 * একসাথে load করা হবে।
-                 */
-
-                const promises =
-                    products.map(
-                        function(product) {
-
-                            return loadFirebaseProduct(
-                                product
-                            );
-
-                        }
-                    );
-
-
-                await Promise.all(
-                    promises
-                );
-
-
-                /*
-                 * Firebase-এর তথ্য আসার পরে
-                 * Home Page নতুন তথ্য দিয়ে
-                 * আবার display হবে।
-                 */
-
-                searchProducts();
-
-
-                loading.innerText =
-                    "✓ Latest product information loaded";
-
-
-                loading.style.color =
-                    "#198754";
-
-
-            }
-
-            catch (error) {
-
-                console.error(
-                    "Firebase Products Error:",
-                    error
-                );
-
-
-                /*
-                 * Firebase সমস্যা হলেও
-                 * default products থাকবে।
-                 */
-
-                searchProducts();
-
-
-                loading.innerText =
-                    "";
-
-            }
-
-        }
-
-
-        /* =====================================================
-           INITIAL LOAD
-        ===================================================== */
-
         /*
-         * প্রথমে default products দেখানো হবে।
+         * Firebase data আসার পরে
+         * Home Page আবার render হবে।
          */
 
-        displayProducts(
-            products
+        searchProducts();
+
+
+        loading.innerText =
+            "✓ Latest product information loaded";
+
+
+        loading.style.color =
+            "#198754";
+
+    }
+
+    catch (error) {
+
+        console.error(
+            "Firebase Loading Error:",
+            error
         );
 
 
-        updateCartCount();
+        searchProducts();
 
 
-        /* =====================================================
-           FIREBASE UPDATE
-        ===================================================== */
+        loading.innerText =
+            "";
 
-        /*
-         * এরপর Firestore থেকে
-         * Product 1-100-এর সর্বশেষ
-         * Name / Price / Category
-         * নেওয়া হবে।
-         */
+    }
 
-        loadFirebaseProducts();
+}
 
 
-    </script>
+/* =====================================================
+   INITIAL DISPLAY
+===================================================== */
+
+displayProducts(
+    products
+);
+
+
+updateCartCount();
+
+
+/* =====================================================
+   LOAD FIREBASE
+===================================================== */
+
+loadFirebaseProducts();
+
+
+</script>
 
 
 </body>
