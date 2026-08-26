@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
 
     <meta charset="UTF-8">
@@ -25,6 +26,10 @@
             background-color: #f5f5f5;
         }
 
+
+        /* =========================
+           HEADER
+        ========================= */
 
         h1 {
             background-color: #ff6600;
@@ -356,6 +361,8 @@
             padding: 10px 15px;
 
             border-radius: 5px;
+
+            cursor: pointer;
         }
 
 
@@ -864,7 +871,7 @@
 
 
     <!-- =========================
-         NAV
+         NAVIGATION
     ========================= -->
 
     <nav>
@@ -981,7 +988,6 @@
 
     <!-- =========================
          PRODUCT AREA
-         100 PRODUCTS GENERATED HERE
     ========================= -->
 
     <div
@@ -1003,74 +1009,133 @@
 
         /* =====================================================
            PRODUCT DATA
-           PRODUCT 1-5 = YOUR EXISTING PRODUCTS
-           PRODUCT 6-100 = READY FOR NEW PRODUCTS
         ===================================================== */
-
 
         const products = [
 
             {
                 id: 1,
-                name: "Men's Formal Solid Shirt",
-                price: 450,
-                category: "Men",
-                image: "product1.jpg"
+
+                name:
+                    "Men's Formal Solid Shirt",
+
+                price:
+                    450,
+
+                category:
+                    "Men",
+
+                /*
+                 * Product 1-এর ছবি product1 folder-এর ভিতরে
+                 */
+                image:
+                    "product1/product1.jpg"
             },
+
 
             {
                 id: 2,
-                name: "Men's Casual Shirt",
-                price: 400,
-                category: "Men",
-                image: "product2.jpg"
+
+                name:
+                    "Men's Casual Shirt",
+
+                price:
+                    400,
+
+                category:
+                    "Men",
+
+                image:
+                    "product2.jpg"
             },
+
 
             {
                 id: 3,
-                name: "Men's Casual Check Shirt",
-                price: 480,
-                category: "Men",
-                image: "product3.jpg"
+
+                name:
+                    "Men's Casual Check Shirt",
+
+                price:
+                    480,
+
+                category:
+                    "Men",
+
+                image:
+                    "product3.jpg"
             },
+
 
             {
                 id: 4,
-                name: "Women's Casual Yellow Dress",
-                price: 500,
-                category: "Women",
-                image: "product4.jpg"
+
+                name:
+                    "Women's Casual Yellow Dress",
+
+                price:
+                    500,
+
+                category:
+                    "Women",
+
+                image:
+                    "product4.jpg"
             },
+
 
             {
                 id: 5,
-                name: "Women's Casual Dress",
-                price: 900,
-                category: "Women",
-                image: "product5.jpg"
+
+                name:
+                    "Women's Casual Dress",
+
+                price:
+                    900,
+
+                category:
+                    "Women",
+
+                image:
+                    "product5.jpg"
             }
 
         ];
+
+
+
+        /* =====================================================
+           CATEGORIES
+        ===================================================== */
+
+        const categories = [
+
+            "Men",
+
+            "Women",
+
+            "Electronics",
+
+            "Home & Living"
+
+        ];
+
 
 
         /* =====================================================
            PRODUCT 6-100
         ===================================================== */
 
-
-        const categories = [
-            "Men",
-            "Women",
-            "Electronics",
-            "Home & Living"
-        ];
-
-
-        for (let i = 6; i <= 100; i++) {
+        for (
+            let i = 6;
+            i <= 100;
+            i++
+        ) {
 
             products.push({
 
-                id: i,
+                id:
+                    i,
 
                 name:
                     "Product " + i,
@@ -1079,7 +1144,10 @@
                     100 + (i * 10),
 
                 category:
-                    categories[(i - 6) % categories.length],
+                    categories[
+                        (i - 6) %
+                        categories.length
+                    ],
 
                 image:
                     "product" + i + ".jpg"
@@ -1094,7 +1162,8 @@
            SELECTED CATEGORY
         ===================================================== */
 
-        let selectedCategory = "All";
+        let selectedCategory =
+            "All";
 
 
 
@@ -1110,80 +1179,84 @@
                 );
 
 
-            container.innerHTML = "";
+            container.innerHTML =
+                "";
 
 
-            list.forEach(function(product) {
+            list.forEach(
+                function(product) {
+
+                    const productCard =
+                        document.createElement(
+                            "div"
+                        );
 
 
-                const productCard =
-                    document.createElement("div");
+                    productCard.className =
+                        "product";
 
 
-                productCard.className =
-                    "product";
+                    productCard.setAttribute(
+                        "data-category",
+                        product.category
+                    );
 
 
-                productCard.setAttribute(
-                    "data-category",
-                    product.category
-                );
+                    productCard.setAttribute(
+                        "data-id",
+                        product.id
+                    );
 
 
-                productCard.setAttribute(
-                    "data-id",
-                    product.id
-                );
+                    productCard.innerHTML = `
 
-
-                productCard.innerHTML = `
-
-                    <img
-                        src="${product.image}"
-                        alt="${product.name}"
-                        onerror="this.style.background='#eeeeee';"
-                    >
-
-
-                    <h3>
-
-                        <span
-                            class="product-number"
+                        <img
+                            src="${product.image}"
+                            alt="${product.name}"
+                            onerror="this.style.background='#eeeeee';"
                         >
-                            ${product.id}.
-                        </span>
-
-                        ${product.name}
-
-                    </h3>
 
 
-                    <p>
-                        Price: ৳${product.price}
-                    </p>
+                        <h3>
+
+                            <span
+                                class="product-number"
+                            >
+                                ${product.id}.
+                            </span>
+
+                            ${product.name}
+
+                        </h3>
 
 
-                    <button
-                        onclick="buyProductById(${product.id})"
-                    >
-                        Buy Now
-                    </button>
+                        <p>
+                            Price: ৳${product.price}
+                        </p>
 
 
-                    <button
-                        onclick="viewProduct(${product.id})"
-                    >
-                        View Details
-                    </button>
-
-                `;
+                        <button
+                            onclick="buyProductById(${product.id})"
+                        >
+                            Buy Now
+                        </button>
 
 
-                container.appendChild(
-                    productCard
-                );
+                        <button
+                            onclick="viewProduct(${product.id})"
+                        >
+                            View Details
+                        </button>
 
-            });
+                    `;
+
+
+                    container.appendChild(
+                        productCard
+                    );
+
+                }
+            );
 
 
             const noProducts =
@@ -1192,12 +1265,16 @@
                 );
 
 
-            if (list.length === 0) {
+            if (
+                list.length === 0
+            ) {
 
                 noProducts.style.display =
                     "block";
 
-            } else {
+            }
+
+            else {
 
                 noProducts.style.display =
                     "none";
@@ -1228,12 +1305,14 @@
 
         function buyProductById(productId) {
 
-
             const product =
                 products.find(
                     function(item) {
 
-                        return item.id === productId;
+                        return (
+                            item.id ===
+                            productId
+                        );
 
                     }
                 );
@@ -1252,25 +1331,62 @@
 
             let cart =
                 JSON.parse(
-                    localStorage.getItem("cart")
+                    localStorage.getItem(
+                        "cart"
+                    )
                 ) || [];
 
 
-            cart.push({
+            /*
+             * Product ID রাখা হচ্ছে
+             * যাতে Product Details page
+             * এবং Cart-এর মধ্যে product
+             * সঠিকভাবে চিনতে পারে।
+             */
 
-                name:
-                    product.name,
+            const existingProduct =
+                cart.find(
+                    function(item) {
 
-                price:
-                    product.price,
+                        return (
+                            item.productId ===
+                            productId
+                        );
 
-                image:
-                    product.image,
+                    }
+                );
 
-                quantity:
-                    1
 
-            });
+            if (existingProduct) {
+
+                existingProduct.quantity =
+                    (existingProduct.quantity || 1) +
+                    1;
+
+            }
+
+            else {
+
+                cart.push({
+
+                    productId:
+                        productId,
+
+                    name:
+                        product.name,
+
+                    price:
+                        product.price,
+
+                    image:
+                        product.image,
+
+                    quantity:
+                        1
+
+                });
+
+            }
 
 
             localStorage.setItem(
@@ -1304,22 +1420,31 @@
 
 
 
+        /* =====================================================
+           UPDATE CART COUNT
+        ===================================================== */
+
         function updateCartCount() {
 
             const cart =
                 JSON.parse(
-                    localStorage.getItem("cart")
+                    localStorage.getItem(
+                        "cart"
+                    )
                 ) || [];
 
 
-            let totalQuantity = 0;
+            let totalQuantity =
+                0;
 
 
             cart.forEach(
                 function(item) {
 
                     totalQuantity +=
-                        item.quantity || 1;
+                        Number(
+                            item.quantity
+                        ) || 1;
 
                 }
             );
@@ -1338,10 +1463,13 @@
            CATEGORY FILTER
         ===================================================== */
 
-        function filterCategory(category) {
+        function filterCategory(
+            category
+        ) {
 
             selectedCategory =
                 category;
+
 
             searchProducts();
 
@@ -1349,10 +1477,15 @@
 
 
 
+        /* =====================================================
+           SHOW ALL PRODUCTS
+        ===================================================== */
+
         function showAllProducts() {
 
             selectedCategory =
                 "All";
+
 
             searchProducts();
 
@@ -1365,7 +1498,6 @@
         ===================================================== */
 
         function searchProducts() {
-
 
             const searchText =
                 document
@@ -1381,12 +1513,12 @@
                 products.filter(
                     function(product) {
 
-
                         const categoryMatch =
-                            selectedCategory === "All"
+                            selectedCategory ===
+                            "All"
                             ||
                             product.category ===
-                                selectedCategory;
+                            selectedCategory;
 
 
                         const searchMatch =
@@ -1420,7 +1552,6 @@
 
         function toggleThreeDotMenu() {
 
-
             const menu =
                 document.getElementById(
                     "threeDotMenu"
@@ -1435,7 +1566,9 @@
                 menu.style.display =
                     "none";
 
-            } else {
+            }
+
+            else {
 
                 menu.style.display =
                     "block";
@@ -1452,7 +1585,6 @@
 
         function toggleHelpLine() {
 
-
             const helpBox =
                 document.getElementById(
                     "helpBox"
@@ -1467,7 +1599,9 @@
                 helpBox.style.display =
                     "none";
 
-            } else {
+            }
+
+            else {
 
                 helpBox.style.display =
                     "block";
@@ -1487,7 +1621,6 @@
             "click",
             function(event) {
 
-
                 const menu =
                     document.getElementById(
                         "threeDotMenu"
@@ -1501,11 +1634,16 @@
 
 
                 if (
-                    menu.style.display === "block"
+                    menu.style.display ===
+                    "block"
                     &&
-                    !menu.contains(event.target)
+                    !menu.contains(
+                        event.target
+                    )
                     &&
-                    !button.contains(event.target)
+                    !button.contains(
+                        event.target
+                    )
                 ) {
 
                     menu.style.display =
@@ -1534,4 +1672,5 @@
 
 
 </body>
+
 </html>
