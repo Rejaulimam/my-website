@@ -1,17 +1,30 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
+
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <meta
+        name="viewport"
+        content="width=device-width, initial-scale=1.0"
+    >
 
     <title>RK Store</title>
 
+
     <style>
+
+        * {
+            box-sizing: border-box;
+        }
+
+
         body {
             margin: 0;
             font-family: Arial, sans-serif;
             background-color: #f5f5f5;
         }
+
 
         h1 {
             background-color: #ff6600;
@@ -22,80 +35,167 @@
             position: relative;
         }
 
+
         /* =========================
            THREE DOT BUTTON
-           TOP LEFT OF RK STORE
         ========================= */
 
         .three-dot-button {
+
             position: absolute;
+
             top: 50%;
             left: 10px;
+
             transform: translateY(-50%);
 
             width: 38px;
             height: 38px;
 
             background: rgba(255,255,255,0.18);
+
             color: white;
 
             border: 1px solid rgba(255,255,255,0.5);
+
             border-radius: 7px;
 
             font-size: 23px;
+
             font-weight: bold;
 
             cursor: pointer;
+
             z-index: 1000;
 
             display: flex;
+
             align-items: center;
+
             justify-content: center;
 
             padding: 0;
 
-            box-shadow: 0 2px 6px rgba(0,0,0,0.20);
+            box-shadow:
+                0 2px 6px rgba(0,0,0,0.20);
         }
+
 
         .three-dot-button:hover {
-            background: rgba(255,255,255,0.30);
+
+            background:
+                rgba(255,255,255,0.30);
+
         }
 
+
+        /* =========================
+           HELP LINE HEADER BUTTON
+        ========================= */
+
         .header-help-button {
+
             position: absolute;
+
             top: 50%;
             right: 5px;
+
             transform: translateY(-50%);
 
-            background: rgba(255,255,255,0.18);
+            background:
+                rgba(255,255,255,0.18);
+
             color: white;
 
-            border: 1px solid rgba(255,255,255,0.5);
+            border:
+                1px solid rgba(255,255,255,0.5);
+
             border-radius: 6px;
 
             padding: 7px 6px;
 
             font-size: 17px;
+
             font-weight: bold;
 
             white-space: nowrap;
 
             cursor: pointer;
 
-            box-shadow: 0 2px 6px rgba(0,0,0,0.20);
+            box-shadow:
+                0 2px 6px rgba(0,0,0,0.20);
         }
 
+
         /* =========================
-           BEAUTIFUL WELCOME
+           THREE DOT MENU
+        ========================= */
+
+        #threeDotMenu {
+
+            display: none;
+
+            position: absolute;
+
+            top: 78px;
+
+            left: 10px;
+
+            background: white;
+
+            padding: 10px;
+
+            border-radius: 8px;
+
+            box-shadow:
+                0 3px 12px rgba(0,0,0,0.20);
+
+            z-index: 999;
+
+            min-width: 220px;
+        }
+
+
+        #threeDotMenu a {
+
+            display: block;
+
+            text-decoration: none;
+
+            color: #222;
+
+            font-weight: bold;
+
+            padding: 12px 18px;
+        }
+
+
+        #threeDotMenu a:first-child {
+
+            border-bottom:
+                1px solid #eee;
+        }
+
+
+        #threeDotMenu a:hover {
+
+            background: #f5f5f5;
+        }
+
+
+        /* =========================
+           WELCOME
         ========================= */
 
         .welcome {
-            background: linear-gradient(
-                135deg,
-                #fff7ed,
-                #ffffff,
-                #fff0e0
-            );
+
+            background:
+                linear-gradient(
+                    135deg,
+                    #fff7ed,
+                    #ffffff,
+                    #fff0e0
+                );
 
             text-align: center;
 
@@ -108,417 +208,652 @@
             box-shadow:
                 0 3px 12px rgba(0,0,0,0.10);
 
-            border: 1px solid #ffe0c2;
+            border:
+                1px solid #ffe0c2;
         }
 
+
         .welcome h2 {
+
             margin: 0;
+
             font-size: 22px;
+
             color: #ff6600;
+
             font-weight: bold;
         }
 
+
         .welcome p {
+
             margin: 8px 0 0;
+
             font-size: 16px;
+
             color: #666;
         }
 
+
         h2 {
+
             text-align: center;
         }
 
+
+        /* =========================
+           PRODUCTS
+        ========================= */
+
         .products {
+
             display: grid;
-            grid-template-columns: repeat(4, 1fr);
+
+            grid-template-columns:
+                repeat(4, 1fr);
+
             gap: 15px;
+
             padding: 15px;
+
             max-width: 1100px;
+
             margin: auto;
         }
 
+
         .product {
+
             background-color: white;
+
             padding: 12px;
+
             text-align: center;
+
             border-radius: 8px;
-            box-shadow: 0 2px 8px rgba(0,0,0,0.1);
-            transition: transform 0.2s, box-shadow 0.2s;
+
+            box-shadow:
+                0 2px 8px rgba(0,0,0,0.1);
+
+            transition:
+                transform 0.2s,
+                box-shadow 0.2s;
         }
+
 
         .product:hover {
-            transform: translateY(-4px);
-            box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+
+            transform:
+                translateY(-4px);
+
+            box-shadow:
+                0 4px 12px rgba(0,0,0,0.15);
         }
+
 
         .product img {
+
             width: 100%;
+
             height: 180px;
+
             object-fit: cover;
+
             border-radius: 8px;
+
+            background: #eee;
         }
 
+
         .product h3 {
+
             font-size: 16px;
+
             min-height: 42px;
+
             margin: 10px 0 5px;
         }
 
-        /* =========================
-           PRODUCT SERIAL NUMBER
-        ========================= */
 
         .product-number {
+
             color: #333;
+
             font-weight: bold;
+
             margin-right: 4px;
         }
 
+
         .product p {
+
             font-size: 18px;
+
             font-weight: bold;
+
             color: #ff6600;
+
             margin: 8px 0 12px;
         }
 
+
         .product button {
+
             margin: 4px 2px;
+
             cursor: pointer;
         }
 
+
         button {
+
             background-color: #ff6600;
+
             color: white;
+
             border: none;
+
             padding: 10px 15px;
+
             border-radius: 5px;
         }
 
+
+        button:hover {
+
+            opacity: 0.9;
+        }
+
+
+        /* =========================
+           NAVIGATION
+        ========================= */
+
         nav {
+
             display: flex;
+
             justify-content: center;
+
             align-items: center;
+
             flex-wrap: wrap;
+
             gap: 6px;
         }
 
+
         nav a {
+
             display: inline-block;
+
             text-decoration: none;
+
             color: #222;
 
             margin: 5px 4px;
+
             padding: 9px 13px;
 
             font-size: 17px;
+
             font-weight: bold;
 
-            background: linear-gradient(
-                145deg,
-                #ffffff,
-                #f1f1f1
-            );
+            background:
+                linear-gradient(
+                    145deg,
+                    #ffffff,
+                    #f1f1f1
+                );
 
-            border: 1px solid #d5d5d5;
+            border:
+                1px solid #d5d5d5;
+
             border-radius: 9px;
 
             box-shadow:
                 0 3px 0 #b5b5b5,
-                0 5px 10px rgba(0, 0, 0, 0.18);
+                0 5px 10px
+                rgba(0,0,0,0.18);
 
-            transition: all 0.2s ease;
+            transition:
+                all 0.2s ease;
         }
 
+
         nav a:hover {
-            transform: translateY(-2px);
+
+            transform:
+                translateY(-2px);
 
             box-shadow:
                 0 7px 0 #18181b,
-                0 10px 15px rgba(0, 0, 0, 0.30);
+                0 10px 15px
+                rgba(0,0,0,0.30);
         }
 
+
         nav a:active {
-            transform: translateY(4px);
+
+            transform:
+                translateY(4px);
 
             box-shadow:
                 0 1px 0 #18181b,
-                0 3px 6px rgba(0, 0, 0, 0.20);
+                0 3px 6px
+                rgba(0,0,0,0.20);
         }
 
+
+        /* =========================
+           SEARCH
+        ========================= */
+
         .search {
+
             display: flex;
+
             justify-content: center;
+
             align-items: center;
+
             gap: 5px;
+
             padding: 20px 10px;
         }
 
+
+        .search input {
+
+            padding: 10px;
+
+            width: 250px;
+
+            max-width:
+                calc(100% - 90px);
+
+            border:
+                1px solid #ccc;
+
+            border-radius: 5px;
+        }
+
+
+        /* =========================
+           CATEGORIES
+        ========================= */
+
         .categories {
+
             background-color: white;
+
             padding: 15px;
+
             margin: 10px;
+
             border-radius: 10px;
         }
 
+
         .category-list {
+
             display: flex;
+
             justify-content: center;
+
             gap: 10px;
+
             flex-wrap: wrap;
         }
 
-        .search input {
-            padding: 10px;
-            width: 250px;
-            max-width: calc(100% - 90px);
-            border: 1px solid #ccc;
-            border-radius: 5px;
-        }
 
         /* =========================
            HELP LINE
         ========================= */
 
         .help-section {
+
             text-align: center;
+
             margin: 20px 10px;
         }
 
+
         .help-button {
+
             background-color: #007bff;
+
             color: white;
+
             border: none;
+
             padding: 12px 25px;
+
             border-radius: 6px;
+
             font-size: 16px;
+
             font-weight: bold;
+
             cursor: pointer;
         }
 
+
         .help-button:hover {
+
             background-color: #0056b3;
         }
 
+
         .help-box {
+
             display: none;
+
             background-color: white;
+
             max-width: 400px;
+
             margin: 12px auto;
+
             padding: 20px;
+
             border-radius: 10px;
-            box-shadow: 0 3px 12px rgba(0,0,0,0.15);
+
+            box-shadow:
+                0 3px 12px rgba(0,0,0,0.15);
         }
 
+
         .help-box h3 {
+
             margin-top: 0;
+
             color: #333;
         }
 
+
         .help-option {
+
             display: block;
+
             width: 100%;
+
             box-sizing: border-box;
+
             margin: 10px 0;
+
             padding: 12px;
+
             border-radius: 6px;
+
             text-decoration: none;
+
             color: white;
+
             font-weight: bold;
+
             cursor: pointer;
         }
 
+
         .whatsapp {
+
             background-color: #25D366;
         }
 
+
         .imo {
+
             background-color: #1677ff;
         }
 
+
         .phone {
+
             background-color: #ff6600;
         }
 
+
         .email {
+
             background-color: #6c63ff;
         }
 
+
         .help-option:hover {
+
             opacity: 0.9;
         }
+
+
+        /* =========================
+           NO PRODUCT MESSAGE
+        ========================= */
+
+        #noProducts {
+
+            display: none;
+
+            text-align: center;
+
+            font-size: 18px;
+
+            color: #777;
+
+            padding: 20px;
+        }
+
+
+        /* =========================
+           MOBILE
+        ========================= */
 
         @media (max-width: 700px) {
 
             .products {
-                grid-template-columns: repeat(2, 1fr);
+
+                grid-template-columns:
+                    repeat(2, 1fr);
+
                 gap: 10px;
+
                 padding: 10px;
             }
 
+
             .search input {
+
                 width: auto;
+
                 flex: 1;
+
                 min-width: 0;
             }
 
+
             .search button {
+
                 flex-shrink: 0;
             }
 
+
             .product {
+
                 padding: 8px;
             }
 
+
             .product img {
+
                 height: 150px;
             }
 
+
             .product h3 {
+
                 font-size: 14px;
             }
 
+
             .product p {
+
                 font-size: 16px;
             }
 
+
             .product button {
+
                 width: 100%;
+
                 margin: 3px 0;
             }
 
+
             nav a {
+
                 margin: 4px 2px;
+
                 padding: 8px 11px;
+
                 font-size: 17px;
             }
+
+
+            .header-help-button {
+
+                font-size: 13px;
+
+                padding: 6px 5px;
+            }
+
+
+            .three-dot-button {
+
+                left: 6px;
+            }
+
         }
 
     </style>
+
 </head>
+
 
 <body>
 
+
     <!-- =========================
-         RK STORE HEADER
-         THREE DOT BUTTON
+         HEADER
     ========================= -->
 
     <h1>
 
-        <!-- LEFT: THREE DOT BUTTON -->
         <button
             class="three-dot-button"
-            onclick="toggleThreeDotMenu()">
+            onclick="toggleThreeDotMenu()"
+        >
             ☰
         </button>
 
+
         RK Store
 
-        <!-- RIGHT: HELP LINE BUTTON -->
+
         <button
             class="header-help-button"
-            onclick="toggleHelpLine()">
+            onclick="toggleHelpLine()"
+        >
             ☎️ Help Line
         </button>
 
     </h1>
 
+
+
+    <!-- =========================
+         HELP BOX
+    ========================= -->
+
     <div
         class="help-box"
-        id="helpBox">
+        id="helpBox"
+    >
 
-        <h3>Customer Help Line</h3>
+        <h3>
+            Customer Help Line
+        </h3>
+
 
         <a
             class="help-option whatsapp"
-            href="https://wa.me/8801731099464">
+            href="https://wa.me/8801731099464"
+        >
             🟢 WhatsApp
         </a>
 
+
         <a
             class="help-option imo"
-            href="imo://chat?phone=8801731099464">
+            href="imo://chat?phone=8801731099464"
+        >
             🔵 IMO
         </a>
 
+
         <a
             class="help-option phone"
-            href="tel:01731099464">
+            href="tel:01731099464"
+        >
             📞 Phone
         </a>
 
+
         <a
             class="help-option email"
-            href="mailto:rejaulkarim.bdnet0@gmail.com">
+            href="mailto:rejaulkarim.bdnet0@gmail.com"
+        >
             ✉️ Email
         </a>
 
     </div>
 
+
+
     <!-- =========================
          THREE DOT MENU
     ========================= -->
 
-    <!-- =========================
-     THREE DOT MENU
-========================= -->
+    <div
+        id="threeDotMenu"
+    >
 
-<div
-    id="threeDotMenu"
-    style="
-        display:none;
-        position:absolute;
-        top:78px;
-        left:10px;
-        background:white;
-        padding:10px;
-        border-radius:8px;
-        box-shadow:0 3px 12px rgba(0,0,0,0.20);
-        z-index:999;
-        min-width:220px;
-    ">
+        <a
+            href="admin-login.html"
+        >
+            🔐 Admin Login
+        </a>
 
 
-    <!-- ADMIN LOGIN -->
+        <a
+            href="admin-product-description.html"
+        >
+            📝 Product Description
+        </a>
 
-    <a
-        href="admin-login.html"
-        style="
-            display:block;
-            text-decoration:none;
-            color:#222;
-            font-weight:bold;
-            padding:12px 18px;
-            border-bottom:1px solid #eee;
-        ">
-        🔐 Admin Login
-    </a>
+    </div>
 
 
-    <!-- PRODUCT DESCRIPTION -->
-
-    <a
-        href="admin-product-description.html"
-        style="
-            display:block;
-            text-decoration:none;
-            color:#222;
-            font-weight:bold;
-            padding:12px 18px;
-        ">
-        📝 Product Description
-    </a>
-
-
-</div>
 
     <!-- =========================
-         WELCOME SECTION
+         WELCOME
     ========================= -->
 
     <div class="welcome">
 
-        <h2>Welcome to RK Store</h2>
+        <h2>
+            Welcome to RK Store
+        </h2>
+
 
         <p>
             Shop your favorite products with us
@@ -526,25 +861,40 @@
 
     </div>
 
+
+
+    <!-- =========================
+         NAV
+    ========================= -->
+
     <nav>
 
         <a href="#">
             🏠 Home
         </a>
 
-        <a href="#" onclick="showCart(); return false;">
-            🛒 Cart (<span id="cartCount">0</span>)
+
+        <a
+            href="#"
+            onclick="showCart(); return false;"
+        >
+            🛒 Cart
+            (<span id="cartCount">0</span>)
         </a>
+
 
         <a href="customer-login.html">
             👤 Customer Login
         </a>
+
 
         <a href="customer-orders.html">
             📦 My Orders
         </a>
 
     </nav>
+
+
 
     <!-- =========================
          SEARCH
@@ -559,35 +909,61 @@
             oninput="searchProducts()"
         >
 
-        <button onclick="searchProducts()">
+
+        <button
+            onclick="searchProducts()"
+        >
             🔍 Search
         </button>
 
     </div>
 
+
+
+    <!-- =========================
+         CATEGORIES
+    ========================= -->
+
     <div class="categories">
 
-        <h2>Shop by Category</h2>
+        <h2>
+            Shop by Category
+        </h2>
+
 
         <div class="category-list">
 
-            <button onclick="showAllProducts()">
+            <button
+                onclick="showAllProducts()"
+            >
                 🛍️ All Products
             </button>
 
-            <button onclick="filterCategory('Men')">
+
+            <button
+                onclick="filterCategory('Men')"
+            >
                 👕 Men
             </button>
 
-            <button onclick="filterCategory('Women')">
+
+            <button
+                onclick="filterCategory('Women')"
+            >
                 👗 Women
             </button>
 
-            <button onclick="filterCategory('Electronics')">
+
+            <button
+                onclick="filterCategory('Electronics')"
+            >
                 📱 Electronics
             </button>
 
-            <button onclick="filterCategory('Home & Living')">
+
+            <button
+                onclick="filterCategory('Home & Living')"
+            >
                 🏠 Home & Living
             </button>
 
@@ -595,392 +971,567 @@
 
     </div>
 
-    <h2>Our Products</h2>
 
-    <div class="products">
 
-        <!-- Product 1 -->
+    <h2>
+        Our Products
+    </h2>
 
-        <div class="product" data-category="Men">
 
-            <img
-                src="product1.jpg"
-                alt="Men's Formal Solid Shirt"
-                width="100%"
-                style="border-radius: 8px;">
 
-            <h3>
-                <span class="product-number">1.</span>
-                Men's Formal Solid Shirt
-            </h3>
+    <!-- =========================
+         PRODUCT AREA
+         100 PRODUCTS GENERATED HERE
+    ========================= -->
 
-            <p>Price: ৳450</p>
-
-            <button
-                onclick="buyProduct('Men\'s Formal Solid Shirt')">
-                Buy Now
-            </button>
-
-            <button
-                onclick="window.location.href='product.html?product=1'">
-                View Details
-            </button>
-
-        </div>
-
-        <!-- Product 2 -->
-
-        <div class="product" data-category="Men">
-
-            <img
-                src="product2.jpg"
-                alt="Men's Casual Shirt"
-                width="100%"
-                style="border-radius: 8px;">
-
-            <h3>
-                <span class="product-number">2.</span>
-                Men's Casual Shirt
-            </h3>
-
-            <p>Price: ৳400</p>
-
-            <button
-                onclick="buyProduct('Men\'s Casual Shirt')">
-                Buy Now
-            </button>
-
-            <button
-                onclick="window.location.href='product.html?product=2'">
-                View Details
-            </button>
-
-        </div>
-
-        <!-- Product 3 -->
-
-        <div class="product" data-category="Men">
-
-            <img
-                src="product3.jpg"
-                alt="Men's Casual Check Shirt"
-                width="100%"
-                style="border-radius: 8px;">
-
-            <h3>
-                <span class="product-number">3.</span>
-                Men's Casual Check Shirt
-            </h3>
-
-            <p>Price: ৳480</p>
-
-            <button
-                onclick="buyProduct('Men\'s Casual Check Shirt')">
-                Buy Now
-            </button>
-
-            <button
-                onclick="window.location.href='product.html?product=3'">
-                View Details
-            </button>
-
-        </div>
-
-        <!-- Product 4 -->
-
-        <div class="product" data-category="Women">
-
-            <img
-                src="product4.jpg"
-                alt="Women's Casual Yellow Dress"
-                width="100%"
-                style="border-radius: 8px;">
-
-            <h3>
-                <span class="product-number">4.</span>
-                Women's Casual Yellow Dress
-            </h3>
-
-            <p>Price: ৳500</p>
-
-            <button
-                onclick="buyProduct('Women\'s Casual Yellow Dress')">
-                Buy Now
-            </button>
-
-            <button
-                onclick="window.location.href='product.html?product=4'">
-                View Details
-            </button>
-
-        </div>
-
-        <!-- Product 5 -->
-
-        <div class="product" data-category="Women">
-
-            <img
-                src="product5.jpg"
-                alt="Women's Casual Dress"
-                width="100%"
-                style="border-radius: 8px;">
-
-            <h3>
-                <span class="product-number">5.</span>
-                Women's Casual Dress
-            </h3>
-
-            <p>Price: ৳900</p>
-
-            <button
-                onclick="buyProduct('Women\'s Casual Dress')">
-                Buy Now
-            </button>
-
-            <button
-                onclick="window.location.href='product.html?product=5'">
-                View Details
-            </button>
-
-        </div>
-
+    <div
+        class="products"
+        id="productsContainer"
+    >
     </div>
 
-    <p
-        id="noProducts"
-        style="display:none; text-align:center; font-size:18px; color:#777;">
+
+
+    <p id="noProducts">
         No products found
     </p>
 
+
+
     <script>
 
-        /* =========================
-           THREE DOT MENU FUNCTION
-        ========================= */
 
-        function toggleThreeDotMenu() {
+        /* =====================================================
+           PRODUCT DATA
+           PRODUCT 1-5 = YOUR EXISTING PRODUCTS
+           PRODUCT 6-100 = READY FOR NEW PRODUCTS
+        ===================================================== */
 
-            const menu =
-                document.getElementById("threeDotMenu");
 
-            if (menu.style.display === "block") {
+        const products = [
 
-                menu.style.display = "none";
+            {
+                id: 1,
+                name: "Men's Formal Solid Shirt",
+                price: 450,
+                category: "Men",
+                image: "product1.jpg"
+            },
+
+            {
+                id: 2,
+                name: "Men's Casual Shirt",
+                price: 400,
+                category: "Men",
+                image: "product2.jpg"
+            },
+
+            {
+                id: 3,
+                name: "Men's Casual Check Shirt",
+                price: 480,
+                category: "Men",
+                image: "product3.jpg"
+            },
+
+            {
+                id: 4,
+                name: "Women's Casual Yellow Dress",
+                price: 500,
+                category: "Women",
+                image: "product4.jpg"
+            },
+
+            {
+                id: 5,
+                name: "Women's Casual Dress",
+                price: 900,
+                category: "Women",
+                image: "product5.jpg"
+            }
+
+        ];
+
+
+        /* =====================================================
+           PRODUCT 6-100
+        ===================================================== */
+
+
+        const categories = [
+            "Men",
+            "Women",
+            "Electronics",
+            "Home & Living"
+        ];
+
+
+        for (let i = 6; i <= 100; i++) {
+
+            products.push({
+
+                id: i,
+
+                name:
+                    "Product " + i,
+
+                price:
+                    100 + (i * 10),
+
+                category:
+                    categories[(i - 6) % categories.length],
+
+                image:
+                    "product" + i + ".jpg"
+
+            });
+
+        }
+
+
+
+        /* =====================================================
+           SELECTED CATEGORY
+        ===================================================== */
+
+        let selectedCategory = "All";
+
+
+
+        /* =====================================================
+           DISPLAY PRODUCTS
+        ===================================================== */
+
+        function displayProducts(list) {
+
+            const container =
+                document.getElementById(
+                    "productsContainer"
+                );
+
+
+            container.innerHTML = "";
+
+
+            list.forEach(function(product) {
+
+
+                const productCard =
+                    document.createElement("div");
+
+
+                productCard.className =
+                    "product";
+
+
+                productCard.setAttribute(
+                    "data-category",
+                    product.category
+                );
+
+
+                productCard.setAttribute(
+                    "data-id",
+                    product.id
+                );
+
+
+                productCard.innerHTML = `
+
+                    <img
+                        src="${product.image}"
+                        alt="${product.name}"
+                        onerror="this.style.background='#eeeeee';"
+                    >
+
+
+                    <h3>
+
+                        <span
+                            class="product-number"
+                        >
+                            ${product.id}.
+                        </span>
+
+                        ${product.name}
+
+                    </h3>
+
+
+                    <p>
+                        Price: ৳${product.price}
+                    </p>
+
+
+                    <button
+                        onclick="buyProductById(${product.id})"
+                    >
+                        Buy Now
+                    </button>
+
+
+                    <button
+                        onclick="viewProduct(${product.id})"
+                    >
+                        View Details
+                    </button>
+
+                `;
+
+
+                container.appendChild(
+                    productCard
+                );
+
+            });
+
+
+            const noProducts =
+                document.getElementById(
+                    "noProducts"
+                );
+
+
+            if (list.length === 0) {
+
+                noProducts.style.display =
+                    "block";
 
             } else {
 
-                menu.style.display = "block";
+                noProducts.style.display =
+                    "none";
 
             }
 
         }
 
-        /* =========================
-           HELP LINE FUNCTION
-        ========================= */
 
-        function toggleHelpLine() {
 
-            const helpBox =
-                document.getElementById("helpBox");
+        /* =====================================================
+           VIEW PRODUCT DETAILS
+        ===================================================== */
 
-            if (helpBox.style.display === "block") {
+        function viewProduct(productId) {
 
-                helpBox.style.display = "none";
-
-            } else {
-
-                helpBox.style.display = "block";
-
-            }
+            window.location.href =
+                "product.html?product=" +
+                productId;
 
         }
 
-        /* =========================
-           CART FUNCTION
-        ========================= */
 
-        function buyProduct(productName) {
+
+        /* =====================================================
+           BUY PRODUCT
+        ===================================================== */
+
+        function buyProductById(productId) {
+
+
+            const product =
+                products.find(
+                    function(item) {
+
+                        return item.id === productId;
+
+                    }
+                );
+
+
+            if (!product) {
+
+                alert(
+                    "Product not found."
+                );
+
+                return;
+
+            }
+
 
             let cart =
-                JSON.parse(localStorage.getItem("cart")) || [];
+                JSON.parse(
+                    localStorage.getItem("cart")
+                ) || [];
 
-            let price = 0;
-
-            if (productName === "Men's Formal Solid Shirt") {
-                price = 450;
-            }
-
-            if (productName === "Men's Casual Shirt") {
-                price = 400;
-            }
-
-            if (productName === "Men's Casual Check Shirt") {
-                price = 480;
-            }
-
-            if (productName === "Women's Casual Yellow Dress") {
-                price = 500;
-            }
-
-            if (productName === "Women's Casual Dress") {
-                price = 900;
-            }
-
-            let image = "";
-
-            if (productName === "Men's Formal Solid Shirt") {
-                image = "product1.jpg";
-            }
-
-            if (productName === "Men's Casual Shirt") {
-                image = "product2.jpg";
-            }
-
-            if (productName === "Men's Casual Check Shirt") {
-                image = "product3.jpg";
-            }
-
-            if (productName === "Women's Casual Yellow Dress") {
-                image = "product4.jpg";
-            }
-
-            if (productName === "Women's Casual Dress") {
-                image = "product5.jpg";
-            }
 
             cart.push({
 
-                name: productName,
-                price: price,
-                image: image,
-                quantity: 1
+                name:
+                    product.name,
+
+                price:
+                    product.price,
+
+                image:
+                    product.image,
+
+                quantity:
+                    1
 
             });
+
 
             localStorage.setItem(
                 "cart",
                 JSON.stringify(cart)
             );
 
-            alert(productName + " added to cart!");
+
+            alert(
+                product.name +
+                " added to cart!"
+            );
+
 
             updateCartCount();
 
         }
 
+
+
+        /* =====================================================
+           CART
+        ===================================================== */
+
         function showCart() {
 
-            window.location.href = "cart.html";
+            window.location.href =
+                "cart.html";
 
         }
+
+
 
         function updateCartCount() {
 
             const cart =
-                JSON.parse(localStorage.getItem("cart")) || [];
+                JSON.parse(
+                    localStorage.getItem("cart")
+                ) || [];
+
 
             let totalQuantity = 0;
 
-            cart.forEach(function(item) {
 
-                totalQuantity += item.quantity || 1;
+            cart.forEach(
+                function(item) {
 
-            });
+                    totalQuantity +=
+                        item.quantity || 1;
 
-            document.getElementById("cartCount").innerText =
+                }
+            );
+
+
+            document.getElementById(
+                "cartCount"
+            ).innerText =
                 totalQuantity;
 
         }
 
-        updateCartCount();
 
-        /* =========================
-           CATEGORY
-        ========================= */
 
-        let selectedCategory = "All";
+        /* =====================================================
+           CATEGORY FILTER
+        ===================================================== */
 
         function filterCategory(category) {
 
-            selectedCategory = category;
+            selectedCategory =
+                category;
 
             searchProducts();
 
         }
+
+
 
         function showAllProducts() {
 
-            selectedCategory = "All";
+            selectedCategory =
+                "All";
 
             searchProducts();
 
         }
 
-        /* =========================
+
+
+        /* =====================================================
            SEARCH
-        ========================= */
+        ===================================================== */
 
         function searchProducts() {
 
+
             const searchText =
                 document
-                    .getElementById("searchInput")
+                    .getElementById(
+                        "searchInput"
+                    )
                     .value
-                    .toLowerCase();
+                    .toLowerCase()
+                    .trim();
 
-            let foundProducts = 0;
 
-            const products =
-                document.querySelectorAll(".product");
+            const filteredProducts =
+                products.filter(
+                    function(product) {
 
-            products.forEach(function(product) {
 
-                const productName =
-                    product
-                        .querySelector("h3")
-                        .innerText
-                        .toLowerCase();
+                        const categoryMatch =
+                            selectedCategory === "All"
+                            ||
+                            product.category ===
+                                selectedCategory;
 
-                const productCategory =
-                    product.getAttribute("data-category");
 
-                const categoryMatch =
-                    selectedCategory === "All" ||
-                    productCategory === selectedCategory;
+                        const searchMatch =
+                            product.name
+                                .toLowerCase()
+                                .includes(
+                                    searchText
+                                );
 
-                const searchMatch =
-                    productName.includes(searchText);
 
-                if (categoryMatch && searchMatch) {
+                        return (
+                            categoryMatch &&
+                            searchMatch
+                        );
 
-                    product.style.display = "";
-                    foundProducts++;
+                    }
+                );
 
-                } else {
 
-                    product.style.display = "none";
+            displayProducts(
+                filteredProducts
+            );
 
-                }
+        }
 
-            });
 
-            const noProducts =
-                document.getElementById("noProducts");
 
-            if (foundProducts === 0) {
+        /* =====================================================
+           THREE DOT MENU
+        ===================================================== */
 
-                noProducts.style.display = "block";
+        function toggleThreeDotMenu() {
+
+
+            const menu =
+                document.getElementById(
+                    "threeDotMenu"
+                );
+
+
+            if (
+                menu.style.display ===
+                "block"
+            ) {
+
+                menu.style.display =
+                    "none";
 
             } else {
 
-                noProducts.style.display = "none";
+                menu.style.display =
+                    "block";
 
             }
 
         }
 
+
+
+        /* =====================================================
+           HELP LINE
+        ===================================================== */
+
+        function toggleHelpLine() {
+
+
+            const helpBox =
+                document.getElementById(
+                    "helpBox"
+                );
+
+
+            if (
+                helpBox.style.display ===
+                "block"
+            ) {
+
+                helpBox.style.display =
+                    "none";
+
+            } else {
+
+                helpBox.style.display =
+                    "block";
+
+            }
+
+        }
+
+
+
+        /* =====================================================
+           CLOSE THREE DOT MENU
+           WHEN CLICKING OUTSIDE
+        ===================================================== */
+
+        document.addEventListener(
+            "click",
+            function(event) {
+
+
+                const menu =
+                    document.getElementById(
+                        "threeDotMenu"
+                    );
+
+
+                const button =
+                    document.querySelector(
+                        ".three-dot-button"
+                    );
+
+
+                if (
+                    menu.style.display === "block"
+                    &&
+                    !menu.contains(event.target)
+                    &&
+                    !button.contains(event.target)
+                ) {
+
+                    menu.style.display =
+                        "none";
+
+                }
+
+            }
+        );
+
+
+
+        /* =====================================================
+           INITIAL LOAD
+        ===================================================== */
+
+        displayProducts(
+            products
+        );
+
+
+        updateCartCount();
+
+
     </script>
+
 
 </body>
 </html>
