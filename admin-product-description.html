@@ -10,7 +10,7 @@
         content="width=device-width, initial-scale=1.0"
     >
 
-    <title>RK Store - Product Description Manager</title>
+    <title>RK Store - Product Description</title>
 
 
     <style>
@@ -22,33 +22,31 @@
 
         body {
             margin: 0;
+
             font-family: Arial, sans-serif;
+
             background: #f5f5f5;
         }
 
 
-        /* =========================
-           HEADER
-        ========================= */
-
         h1 {
-            background-color: #ff6600;
+            background: #ff6600;
+
             color: white;
+
             text-align: center;
+
             padding: 20px;
+
             margin: 0;
         }
 
 
-        /* =========================
-           MAIN BOX
-        ========================= */
-
-        .manager-box {
+        .container {
 
             width: 95%;
 
-            max-width: 600px;
+            max-width: 800px;
 
             margin: 20px auto;
 
@@ -59,55 +57,55 @@
             border-radius: 10px;
 
             box-shadow:
-                0 2px 10px rgba(0,0,0,0.15);
-
+                0 2px 10px rgba(0,0,0,0.12);
         }
 
 
-        /* =========================
-           TITLE
-        ========================= */
+        .admin-status {
 
-        .manager-title {
+            background: #e8f5e9;
+
+            color: #198754;
+
+            padding: 12px;
+
+            border-radius: 7px;
 
             text-align: center;
 
-            color: #333;
-
-            margin-top: 0;
+            font-weight: bold;
 
             margin-bottom: 20px;
-
         }
 
 
-        /* =========================
-           FORM ROW
-        ========================= */
+        .row {
 
-        .form-group {
+            display: flex;
+
+            gap: 15px;
+
+            align-items: center;
 
             margin-bottom: 15px;
-
         }
 
 
-        .form-group label {
+        .row label {
 
-            display: block;
+            width: 180px;
 
             font-weight: bold;
 
-            margin-bottom: 6px;
-
             color: #333;
-
         }
 
 
-        .form-group input,
-        .form-group select,
-        .form-group textarea {
+        .row input,
+        .row textarea,
+        .row select {
+
+            flex: 1;
 
             width: 100%;
 
@@ -118,92 +116,34 @@
             border-radius: 6px;
 
             font-size: 15px;
-
-            font-family: Arial, sans-serif;
-
         }
 
 
-        .form-group textarea {
+        textarea {
 
             min-height: 110px;
 
             resize: vertical;
-
         }
 
-
-        /* =========================
-           SERIAL SELECT
-        ========================= */
-
-        #productSerial {
-
-            background-color: #fff7ed;
-
-            border: 2px solid #ff6600;
-
-            font-weight: bold;
-
-        }
-
-
-        /* =========================
-           BUTTONS
-        ========================= */
 
         .button-area {
 
-            display: flex;
+            text-align: center;
 
-            gap: 10px;
-
-            margin-top: 20px;
-
+            margin-top: 25px;
         }
 
 
-        .save-button {
+        button {
 
-            flex: 1;
-
-            background-color: #ff6600;
+            background: #ff6600;
 
             color: white;
 
             border: none;
 
-            padding: 13px;
-
-            border-radius: 6px;
-
-            font-size: 16px;
-
-            font-weight: bold;
-
-            cursor: pointer;
-
-        }
-
-
-        .save-button:hover {
-
-            background-color: #e65c00;
-
-        }
-
-
-        .clear-button {
-
-            width: 120px;
-
-            background-color: #777;
-
-            color: white;
-
-            border: none;
-
-            padding: 13px;
+            padding: 12px 22px;
 
             border-radius: 6px;
 
@@ -211,19 +151,35 @@
 
             cursor: pointer;
 
+            margin: 5px;
         }
 
 
-        .clear-button:hover {
+        button:hover {
 
-            background-color: #555;
-
+            background: #e65c00;
         }
 
 
-        /* =========================
-           STATUS MESSAGE
-        ========================= */
+        button:disabled {
+
+            background: #999;
+
+            cursor: not-allowed;
+        }
+
+
+        .back-button {
+
+            background: #555;
+        }
+
+
+        .back-button:hover {
+
+            background: #333;
+        }
+
 
         #message {
 
@@ -234,82 +190,74 @@
             font-weight: bold;
 
             min-height: 20px;
-
         }
 
 
-        /* =========================
-           ADMIN INFO
-        ========================= */
+        .preview {
 
-        .admin-info {
+            margin-top: 30px;
 
-            background: #f8f8f8;
+            padding: 18px;
 
-            border-left: 4px solid #ff6600;
+            background: #fafafa;
 
-            padding: 10px;
+            border: 1px solid #ddd;
 
-            margin-bottom: 20px;
-
-            font-size: 14px;
-
-            color: #555;
-
+            border-radius: 8px;
         }
 
 
-        /* =========================
-           BACK BUTTON
-        ========================= */
-
-        .back-button {
-
-            display: block;
+        .preview h2 {
 
             text-align: center;
 
-            margin-top: 20px;
-
-            text-decoration: none;
-
             color: #ff6600;
 
-            font-weight: bold;
-
+            margin-top: 0;
         }
 
 
-        /* =========================
-           MOBILE
-        ========================= */
+        .preview-item {
 
-        @media (max-width: 500px) {
+            padding: 8px 0;
 
-            .manager-box {
+            border-bottom: 1px solid #eee;
+        }
 
-                width: 100%;
 
-                margin: 0;
+        .preview-item:last-child {
 
-                border-radius: 0;
+            border-bottom: none;
+        }
 
-                min-height: calc(100vh - 70px);
 
+        .preview-item strong {
+
+            color: #333;
+        }
+
+
+        @media (max-width: 600px) {
+
+            .row {
+
+                display: block;
             }
 
 
-            .button-area {
+            .row label {
 
-                flex-direction: column;
-
-            }
-
-
-            .clear-button {
+                display: block;
 
                 width: 100%;
 
+                margin-bottom: 6px;
+            }
+
+
+            .container {
+
+                padding: 15px;
             }
 
         }
@@ -322,820 +270,983 @@
 <body>
 
 
-    <h1>
-        RK Store Admin
-    </h1>
+<h1>
+    RK Store - Product Description
+</h1>
 
 
-    <div class="manager-box">
 
+<div class="container">
 
-        <h2 class="manager-title">
-            Product Description Manager
-        </h2>
 
+    <div
+        class="admin-status"
+        id="adminStatus"
+    >
+        Checking Admin Login...
+    </div>
 
-        <div class="admin-info">
 
-            🔐 Admin Only
 
-            <br>
+    <!-- =========================
+         PRODUCT SELECT
+    ========================= -->
 
-            এখানে Product 1 থেকে Product 100 পর্যন্ত
-            Description পরিবর্তন করা যাবে।
+    <div class="row">
 
-        </div>
+        <label>
+            Product Serial Number:
+        </label>
 
 
-        <!-- =========================
-             PRODUCT SERIAL
-        ========================= -->
+        <select id="productSerial">
 
-        <div class="form-group">
+            <option value="1">
+                Product 1
+            </option>
 
-            <label>
-                Product Serial Number:
-            </label>
+            <option value="2">
+                Product 2
+            </option>
 
+            <option value="3">
+                Product 3
+            </option>
 
-            <select id="productSerial">
+            <option value="4">
+                Product 4
+            </option>
 
-                <!-- 1-100 generated by JavaScript -->
+            <option value="5">
+                Product 5
+            </option>
 
-            </select>
-
-        </div>
-
-
-        <!-- =========================
-             PRODUCT NAME
-        ========================= -->
-
-        <div class="form-group">
-
-            <label>
-                Product Name:
-            </label>
-
-
-            <input
-                type="text"
-                id="productName"
-                placeholder="Enter product name"
-            >
-
-        </div>
-
-
-        <!-- =========================
-             BRAND
-        ========================= -->
-
-        <div class="form-group">
-
-            <label>
-                Brand:
-            </label>
-
-
-            <input
-                type="text"
-                id="brand"
-                placeholder="Enter brand"
-            >
-
-        </div>
-
-
-        <!-- =========================
-             CATEGORY
-        ========================= -->
-
-        <div class="form-group">
-
-            <label>
-                Category:
-            </label>
-
-
-            <input
-                type="text"
-                id="category"
-                placeholder="Enter category"
-            >
-
-        </div>
-
-
-        <!-- =========================
-             COLOR
-        ========================= -->
-
-        <div class="form-group">
-
-            <label>
-                Color:
-            </label>
-
-
-            <input
-                type="text"
-                id="color"
-                placeholder="Enter product color"
-            >
-
-        </div>
-
-
-        <!-- =========================
-             SIZE
-        ========================= -->
-
-        <div class="form-group">
-
-            <label>
-                Size / Dimension:
-            </label>
-
-
-            <input
-                type="text"
-                id="size"
-                placeholder="Example: M, L, XL"
-            >
-
-        </div>
-
-
-        <!-- =========================
-             MATERIAL
-        ========================= -->
-
-        <div class="form-group">
-
-            <label>
-                Material:
-            </label>
-
-
-            <input
-                type="text"
-                id="material"
-                placeholder="Enter material"
-            >
-
-        </div>
-
-
-        <!-- =========================
-             PRODUCT DETAILS
-        ========================= -->
-
-        <div class="form-group">
-
-            <label>
-                Product Details:
-            </label>
-
-
-            <textarea
-                id="details"
-                placeholder="Write product details here..."
-            ></textarea>
-
-        </div>
-
-
-        <!-- =========================
-             BUTTONS
-        ========================= -->
-
-        <div class="button-area">
-
-            <button
-                class="save-button"
-                id="saveButton">
-
-                💾 Save Product Description
-
-            </button>
-
-
-            <button
-                class="clear-button"
-                id="clearButton">
-
-                Clear
-
-            </button>
-
-        </div>
-
-
-        <!-- =========================
-             MESSAGE
-        ========================= -->
-
-        <div id="message"></div>
-
-
-        <!-- =========================
-             BACK
-        ========================= -->
-
-        <a
-            href="orders.html"
-            class="back-button">
-
-            ← Back to Orders
-
-        </a>
-
+        </select>
 
     </div>
 
 
 
     <!-- =========================
-         FIREBASE
+         DESCRIPTION FORM
     ========================= -->
 
-    <script type="module">
+    <div class="row">
+
+        <label>
+            Product Name:
+        </label>
+
+        <input
+            type="text"
+            id="productName"
+            placeholder="Product Name"
+        >
+
+    </div>
 
 
-        import {
-            initializeApp
+
+    <div class="row">
+
+        <label>
+            Brand:
+        </label>
+
+        <input
+            type="text"
+            id="brand"
+            placeholder="Brand"
+        >
+
+    </div>
+
+
+
+    <div class="row">
+
+        <label>
+            Category:
+        </label>
+
+        <input
+            type="text"
+            id="category"
+            placeholder="Category"
+        >
+
+    </div>
+
+
+
+    <div class="row">
+
+        <label>
+            Color:
+        </label>
+
+        <input
+            type="text"
+            id="color"
+            placeholder="Color"
+        >
+
+    </div>
+
+
+
+    <div class="row">
+
+        <label>
+            Size / Dimension:
+        </label>
+
+        <input
+            type="text"
+            id="size"
+            placeholder="M, L, XL"
+        >
+
+    </div>
+
+
+
+    <div class="row">
+
+        <label>
+            Material:
+        </label>
+
+        <input
+            type="text"
+            id="material"
+            placeholder="Cotton"
+        >
+
+    </div>
+
+
+
+    <div class="row">
+
+        <label>
+            Product Details:
+        </label>
+
+        <textarea
+            id="productDetails"
+            placeholder="Write product details..."
+        ></textarea>
+
+    </div>
+
+
+
+    <!-- =========================
+         BUTTONS
+    ========================= -->
+
+    <div class="button-area">
+
+        <button
+            id="saveButton"
+        >
+            💾 Save Description
+        </button>
+
+
+        <button
+            class="back-button"
+            onclick="window.location.href='orders.html'"
+        >
+            ← Back
+        </button>
+
+    </div>
+
+
+
+    <div id="message"></div>
+
+
+
+    <!-- =========================
+         PREVIEW
+    ========================= -->
+
+    <div class="preview">
+
+        <h2>
+            Product Description Preview
+        </h2>
+
+
+        <div class="preview-item">
+
+            <strong>
+                Product Serial Number:
+            </strong>
+
+            <span id="previewSerial">
+                1
+            </span>
+
+        </div>
+
+
+        <div class="preview-item">
+
+            <strong>
+                Product Name:
+            </strong>
+
+            <span id="previewName">
+            </span>
+
+        </div>
+
+
+        <div class="preview-item">
+
+            <strong>
+                Brand:
+            </strong>
+
+            <span id="previewBrand">
+            </span>
+
+        </div>
+
+
+        <div class="preview-item">
+
+            <strong>
+                Category:
+            </strong>
+
+            <span id="previewCategory">
+            </span>
+
+        </div>
+
+
+        <div class="preview-item">
+
+            <strong>
+                Color:
+            </strong>
+
+            <span id="previewColor">
+            </span>
+
+        </div>
+
+
+        <div class="preview-item">
+
+            <strong>
+                Size / Dimension:
+            </strong>
+
+            <span id="previewSize">
+            </span>
+
+        </div>
+
+
+        <div class="preview-item">
+
+            <strong>
+                Material:
+            </strong>
+
+            <span id="previewMaterial">
+            </span>
+
+        </div>
+
+
+        <div class="preview-item">
+
+            <strong>
+                Product Details:
+            </strong>
+
+            <span id="previewDetails">
+            </span>
+
+        </div>
+
+    </div>
+
+
+</div>
+
+
+
+<script type="module">
+
+
+/* =========================
+   FIREBASE
+========================= */
+
+
+import {
+    initializeApp
+} from "https://www.gstatic.com/firebasejs/12.18.0/firebase-app.js";
+
+
+import {
+    getAuth,
+    onAuthStateChanged,
+    signOut
+} from "https://www.gstatic.com/firebasejs/12.18.0/firebase-auth.js";
+
+
+import {
+    getFirestore,
+    doc,
+    setDoc,
+    getDoc
+} from "https://www.gstatic.com/firebasejs/12.18.0/firebase-firestore.js";
+
+
+
+/* =========================
+   FIREBASE CONFIG
+   SAME AS YOUR ADMIN LOGIN
+========================= */
+
+
+const firebaseConfig = {
+
+    apiKey:
+        "AIzaSyCkBQaphKKz_Wxd1GgKAVoxqR4taKvzdEM",
+
+    authDomain:
+        "rk-store-5fb24.firebaseapp.com",
+
+    projectId:
+        "rk-store-5fb24",
+
+    storageBucket:
+        "rk-store-5fb24.firebasestorage.app",
+
+    messagingSenderId:
+        "407275549697",
+
+    appId:
+        "1:407275549697:web:41043b49bf7182cecffc00"
+
+};
+
+
+
+/* =========================
+   INITIALIZE
+========================= */
+
+
+const app =
+    initializeApp(firebaseConfig);
+
+
+const auth =
+    getAuth(app);
+
+
+const db =
+    getFirestore(app);
+
+
+
+/* =========================
+   ADMIN EMAIL
+========================= */
+
+
+const ADMIN_EMAIL =
+    "REJAUL.IMAM@gmail.com";
+
+
+
+/* =========================
+   ELEMENTS
+========================= */
+
+
+const adminStatus =
+    document.getElementById(
+        "adminStatus"
+    );
+
+
+const saveButton =
+    document.getElementById(
+        "saveButton"
+    );
+
+
+const productSerial =
+    document.getElementById(
+        "productSerial"
+    );
+
+
+
+/* =========================
+   PRODUCT DEFAULT DATA
+========================= */
+
+
+const defaultProducts = {
+
+    "1": {
+        name: "Men's Formal Solid Shirt",
+        brand: "RK Store",
+        category: "Men",
+        color: "Black",
+        size: "M, L, XL",
+        material: "Cotton",
+        details:
+            "Premium quality formal shirt suitable for regular and formal use."
+    },
+
+    "2": {
+        name: "Men's Casual Shirt",
+        brand: "RK Store",
+        category: "Men",
+        color: "",
+        size: "",
+        material: "",
+        details: ""
+    },
+
+    "3": {
+        name: "Men's Casual Check Shirt",
+        brand: "RK Store",
+        category: "Men",
+        color: "",
+        size: "",
+        material: "",
+        details: ""
+    },
+
+    "4": {
+        name: "Women's Casual Yellow Dress",
+        brand: "RK Store",
+        category: "Women",
+        color: "",
+        size: "",
+        material: "",
+        details: ""
+    },
+
+    "5": {
+        name: "Women's Casual Dress",
+        brand: "RK Store",
+        category: "Women",
+        color: "",
+        size: "",
+        material: "",
+        details: ""
+    }
+
+};
+
+
+
+/* =========================
+   AUTH CHECK
+========================= */
+
+
+onAuthStateChanged(
+    auth,
+    async function(user) {
+
+
+        if (
+            !user ||
+            !user.email ||
+            user.email.toLowerCase() !==
+            ADMIN_EMAIL.toLowerCase()
+        ) {
+
+
+            adminStatus.style.background =
+                "#ffebee";
+
+
+            adminStatus.style.color =
+                "#d32f2f";
+
+
+            adminStatus.innerText =
+                "🔒 Admin Login Required";
+
+
+            saveButton.disabled = true;
+
+
+            setTimeout(
+                function() {
+
+                    window.location.href =
+                        "admin-login.html";
+
+                },
+                1000
+            );
+
+
+            return;
+
         }
-        from
-        "https://www.gstatic.com/firebasejs/12.18.0/firebase-app.js";
-
-
-        import {
-            getAuth,
-            onAuthStateChanged
-        }
-        from
-        "https://www.gstatic.com/firebasejs/12.18.0/firebase-auth.js";
-
-
-        import {
-            getFirestore,
-            doc,
-            getDoc,
-            setDoc
-        }
-        from
-        "https://www.gstatic.com/firebasejs/12.18.0/firebase-firestore.js";
 
 
 
         /* =========================
-           FIREBASE CONFIG
+           ADMIN VERIFIED
         ========================= */
 
-        const firebaseConfig = {
 
-            apiKey:
-                "AIzaSyCkBQaphKKz_Wxd1GgKAVoxqR4taKvzdEM",
+        adminStatus.style.background =
+            "#e8f5e9";
 
-            authDomain:
-                "rk-store-5fb24.firebaseapp.com",
 
-            projectId:
-                "rk-store-5fb24",
+        adminStatus.style.color =
+            "#198754";
 
-            storageBucket:
-                "rk-store-5fb24.firebasestorage.app",
 
-            messagingSenderId:
-                "407275549697",
+        adminStatus.innerText =
+            "🔐 Admin Access Granted: " +
+            user.email;
 
-            appId:
-                "1:407275549697:web:41043b49bf7182cecffc00"
+
+        saveButton.disabled = false;
+
+
+        await loadProduct();
+
+    }
+);
+
+
+
+/* =========================
+   LOAD PRODUCT
+========================= */
+
+
+async function loadProduct() {
+
+
+    const serial =
+        productSerial.value;
+
+
+    try {
+
+
+        const productRef =
+            doc(
+                db,
+                "productDescriptions",
+                serial
+            );
+
+
+        const snapshot =
+            await getDoc(productRef);
+
+
+
+        if (snapshot.exists()) {
+
+
+            const data =
+                snapshot.data();
+
+
+            fillForm(data);
+
+        }
+
+        else {
+
+
+            fillForm(
+                defaultProducts[serial]
+            );
+
+        }
+
+
+    }
+
+    catch (error) {
+
+
+        console.error(
+            "Load Description Error:",
+            error
+        );
+
+
+        fillForm(
+            defaultProducts[serial]
+        );
+
+    }
+
+}
+
+
+
+/* =========================
+   FILL FORM
+========================= */
+
+
+function fillForm(data) {
+
+
+    data =
+        data || {};
+
+
+    document.getElementById(
+        "productName"
+    ).value =
+        data.name || "";
+
+
+    document.getElementById(
+        "brand"
+    ).value =
+        data.brand || "";
+
+
+    document.getElementById(
+        "category"
+    ).value =
+        data.category || "";
+
+
+    document.getElementById(
+        "color"
+    ).value =
+        data.color || "";
+
+
+    document.getElementById(
+        "size"
+    ).value =
+        data.size || "";
+
+
+    document.getElementById(
+        "material"
+    ).value =
+        data.material || "";
+
+
+    document.getElementById(
+        "productDetails"
+    ).value =
+        data.details || "";
+
+
+    updatePreview();
+
+}
+
+
+
+/* =========================
+   PRODUCT CHANGE
+========================= */
+
+
+productSerial.addEventListener(
+    "change",
+    async function() {
+
+        await loadProduct();
+
+    }
+);
+
+
+
+/* =========================
+   SAVE DESCRIPTION
+========================= */
+
+
+saveButton.addEventListener(
+    "click",
+    async function() {
+
+
+        const serial =
+            productSerial.value;
+
+
+        const data = {
+
+            serial: serial,
+
+            name:
+                document.getElementById(
+                    "productName"
+                ).value.trim(),
+
+            brand:
+                document.getElementById(
+                    "brand"
+                ).value.trim(),
+
+            category:
+                document.getElementById(
+                    "category"
+                ).value.trim(),
+
+            color:
+                document.getElementById(
+                    "color"
+                ).value.trim(),
+
+            size:
+                document.getElementById(
+                    "size"
+                ).value.trim(),
+
+            material:
+                document.getElementById(
+                    "material"
+                ).value.trim(),
+
+            details:
+                document.getElementById(
+                    "productDetails"
+                ).value.trim(),
+
+            updatedAt:
+                new Date().toISOString()
 
         };
 
 
 
-        /* =========================
-           FIREBASE INITIALIZE
-        ========================= */
-
-        const app =
-            initializeApp(firebaseConfig);
-
-
-        const auth =
-            getAuth(app);
-
-
-        const db =
-            getFirestore(app);
-
-
-
-        /* =========================
-           ADMIN EMAIL
-        ========================= */
-
-        const ADMIN_EMAIL =
-            "REJAUL.IMAM@gmail.com";
-
-
-
-        /* =========================
-           ELEMENTS
-        ========================= */
-
-        const serialSelect =
-            document.getElementById(
-                "productSerial"
-            );
-
-
-        const productName =
-            document.getElementById(
-                "productName"
-            );
-
-
-        const brand =
-            document.getElementById(
-                "brand"
-            );
-
-
-        const category =
-            document.getElementById(
-                "category"
-            );
-
-
-        const color =
-            document.getElementById(
-                "color"
-            );
-
-
-        const size =
-            document.getElementById(
-                "size"
-            );
-
-
-        const material =
-            document.getElementById(
-                "material"
-            );
-
-
-        const details =
-            document.getElementById(
-                "details"
-            );
-
-
-        const message =
-            document.getElementById(
-                "message"
-            );
-
-
-        const saveButton =
-            document.getElementById(
-                "saveButton"
-            );
-
-
-        const clearButton =
-            document.getElementById(
-                "clearButton"
-            );
-
-
-
-        /* =========================
-           CREATE PRODUCT 1-100
-        ========================= */
-
-        for (
-            let i = 1;
-            i <= 100;
-            i++
+        if (
+            data.name === ""
         ) {
 
-            const option =
-                document.createElement(
-                    "option"
-                );
-
-
-            option.value =
-                i;
-
-
-            option.textContent =
-                "Product " + i;
-
-
-            serialSelect.appendChild(
-                option
+            showMessage(
+                "Please enter Product Name.",
+                "red"
             );
+
+            return;
 
         }
 
 
 
-        /* =========================
-           CHECK ADMIN LOGIN
-        ========================= */
-
-        onAuthStateChanged(
-            auth,
-            async function(user) {
+        saveButton.disabled =
+            true;
 
 
-                if (!user) {
-
-                    alert(
-                        "Admin login required."
-                    );
-
-
-                    window.location.href =
-                        "admin-login.html";
-
-
-                    return;
-
-                }
-
-
-                if (
-                    !user.email ||
-                    user.email.toLowerCase() !==
-                    ADMIN_EMAIL.toLowerCase()
-                ) {
-
-                    alert(
-                        "You are not authorized as Admin."
-                    );
-
-
-                    window.location.href =
-                        "admin-login.html";
-
-
-                    return;
-
-                }
-
-
-                /* =========================
-                   ADMIN VERIFIED
-                ========================= */
-
-                message.style.color =
-                    "green";
-
-
-                message.innerText =
-                    "Admin verified.";
-
-
-                await loadProductDescription(
-                    serialSelect.value
-                );
-
-            }
-        );
+        saveButton.innerText =
+            "Saving...";
 
 
 
-        /* =========================
-           LOAD DESCRIPTION
-        ========================= */
-
-        async function loadProductDescription(
-            serial
-        ) {
+        try {
 
 
-            message.innerText =
-                "Loading Product " +
+            await setDoc(
+
+                doc(
+                    db,
+                    "productDescriptions",
+                    serial
+                ),
+
+                data
+
+            );
+
+
+            showMessage(
+                "✅ Product " +
                 serial +
-                "...";
+                " description saved successfully!",
+                "green"
+            );
 
 
-            message.style.color =
-                "#555";
-
-
-            try {
-
-
-                const productRef =
-                    doc(
-                        db,
-                        "productDescriptions",
-                        String(serial)
-                    );
-
-
-                const productSnapshot =
-                    await getDoc(
-                        productRef
-                    );
-
-
-                if (
-                    productSnapshot.exists()
-                ) {
-
-
-                    const data =
-                        productSnapshot.data();
-
-
-                    productName.value =
-                        data.productName || "";
-
-
-                    brand.value =
-                        data.brand || "";
-
-
-                    category.value =
-                        data.category || "";
-
-
-                    color.value =
-                        data.color || "";
-
-
-                    size.value =
-                        data.size || "";
-
-
-                    material.value =
-                        data.material || "";
-
-
-                    details.value =
-                        data.details || "";
-
-
-                    message.style.color =
-                        "green";
-
-
-                    message.innerText =
-                        "Product " +
-                        serial +
-                        " description loaded.";
-
-                }
-
-                else {
-
-
-                    clearFieldsOnly();
-
-
-                    message.style.color =
-                        "#777";
-
-
-                    message.innerText =
-                        "Product " +
-                        serial +
-                        " has no saved description yet.";
-
-                }
-
-            }
-
-
-            catch (error) {
-
-
-                console.error(
-                    "Load Error:",
-                    error
-                );
-
-
-                message.style.color =
-                    "red";
-
-
-                message.innerText =
-                    "Unable to load product description.";
-
-            }
+            updatePreview();
 
         }
 
 
+        catch (error) {
 
-        /* =========================
-           SERIAL CHANGE
-        ========================= */
 
-        serialSelect.addEventListener(
-            "change",
-            function() {
+            console.error(
+                "Save Description Error:",
+                error
+            );
 
-                loadProductDescription(
-                    serialSelect.value
-                );
 
-            }
-        );
-
-
-
-        /* =========================
-           SAVE DESCRIPTION
-        ========================= */
-
-        saveButton.addEventListener(
-            "click",
-            async function() {
-
-
-                const serial =
-                    serialSelect.value;
-
-
-                const data = {
-
-                    serialNumber:
-                        Number(serial),
-
-                    productName:
-                        productName.value.trim(),
-
-                    brand:
-                        brand.value.trim(),
-
-                    category:
-                        category.value.trim(),
-
-                    color:
-                        color.value.trim(),
-
-                    size:
-                        size.value.trim(),
-
-                    material:
-                        material.value.trim(),
-
-                    details:
-                        details.value.trim()
-
-                };
-
-
-                /* =========================
-                   VALIDATION
-                ========================= */
-
-                if (
-                    data.productName === ""
-                ) {
-
-                    message.style.color =
-                        "red";
-
-
-                    message.innerText =
-                        "Please enter Product Name.";
-
-                    return;
-
-                }
-
-
-                saveButton.disabled =
-                    true;
-
-
-                saveButton.innerText =
-                    "Saving...";
-
-
-                try {
-
-
-                    /* =========================
-                       SAVE FIRESTORE
-                    ========================= */
-
-                    await setDoc(
-
-                        doc(
-                            db,
-                            "productDescriptions",
-                            String(serial)
-                        ),
-
-                        data
-
-                    );
-
-
-                    message.style.color =
-                        "green";
-
-
-                    message.innerText =
-                        "Product " +
-                        serial +
-                        " description saved successfully!";
-
-
-                }
-
-
-                catch (error) {
-
-
-                    console.error(
-                        "Save Error:",
-                        error
-                    );
-
-
-                    message.style.color =
-                        "red";
-
-
-                    message.innerText =
-                        error.message;
-
-                }
-
-
-                saveButton.disabled =
-                    false;
-
-
-                saveButton.innerText =
-                    "💾 Save Product Description";
-
-            }
-        );
-
-
-
-        /* =========================
-           CLEAR BUTTON
-        ========================= */
-
-        clearButton.addEventListener(
-            "click",
-            function() {
-
-                clearFieldsOnly();
-
-
-                message.style.color =
-                    "#777";
-
-
-                message.innerText =
-                    "Fields cleared.";
-
-            }
-        );
-
-
-
-        /* =========================
-           CLEAR FIELDS
-        ========================= */
-
-        function clearFieldsOnly() {
-
-            productName.value = "";
-
-            brand.value = "";
-
-            category.value = "";
-
-            color.value = "";
-
-            size.value = "";
-
-            material.value = "";
-
-            details.value = "";
+            showMessage(
+                "❌ Save failed: " +
+                error.message,
+                "red"
+            );
 
         }
 
 
-    </script>
+        saveButton.disabled =
+            false;
+
+
+        saveButton.innerText =
+            "💾 Save Description";
+
+    }
+);
+
+
+
+/* =========================
+   PREVIEW
+========================= */
+
+
+function updatePreview() {
+
+
+    document.getElementById(
+        "previewSerial"
+    ).innerText =
+        productSerial.value;
+
+
+    document.getElementById(
+        "previewName"
+    ).innerText =
+        document.getElementById(
+            "productName"
+        ).value;
+
+
+    document.getElementById(
+        "previewBrand"
+    ).innerText =
+        document.getElementById(
+            "brand"
+        ).value;
+
+
+    document.getElementById(
+        "previewCategory"
+    ).innerText =
+        document.getElementById(
+            "category"
+        ).value;
+
+
+    document.getElementById(
+        "previewColor"
+    ).innerText =
+        document.getElementById(
+            "color"
+        ).value;
+
+
+    document.getElementById(
+        "previewSize"
+    ).innerText =
+        document.getElementById(
+            "size"
+        ).value;
+
+
+    document.getElementById(
+        "previewMaterial"
+    ).innerText =
+        document.getElementById(
+            "material"
+        ).value;
+
+
+    document.getElementById(
+        "previewDetails"
+    ).innerText =
+        document.getElementById(
+            "productDetails"
+        ).value;
+
+}
+
+
+
+/* =========================
+   LIVE PREVIEW
+========================= */
+
+
+document
+    .querySelectorAll(
+        "input, textarea"
+    )
+    .forEach(
+        function(element) {
+
+            element.addEventListener(
+                "input",
+                updatePreview
+            );
+
+        }
+    );
+
+
+
+/* =========================
+   MESSAGE
+========================= */
+
+
+function showMessage(
+    text,
+    color
+) {
+
+    const message =
+        document.getElementById(
+            "message"
+        );
+
+
+    message.style.color =
+        color;
+
+
+    message.innerText =
+        text;
+
+}
+
+
+
+</script>
 
 
 </body>
