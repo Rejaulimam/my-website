@@ -1,0 +1,1143 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta
+        name="viewport"
+        content="width=device-width, initial-scale=1.0"
+    >
+
+    <title>RK Store - Product Description Manager</title>
+
+
+    <style>
+
+        * {
+            box-sizing: border-box;
+        }
+
+
+        body {
+            margin: 0;
+            font-family: Arial, sans-serif;
+            background: #f5f5f5;
+        }
+
+
+        /* =========================
+           HEADER
+        ========================= */
+
+        h1 {
+            background-color: #ff6600;
+            color: white;
+            text-align: center;
+            padding: 20px;
+            margin: 0;
+        }
+
+
+        /* =========================
+           MAIN BOX
+        ========================= */
+
+        .manager-box {
+
+            width: 95%;
+
+            max-width: 600px;
+
+            margin: 20px auto;
+
+            background: white;
+
+            padding: 20px;
+
+            border-radius: 10px;
+
+            box-shadow:
+                0 2px 10px rgba(0,0,0,0.15);
+
+        }
+
+
+        /* =========================
+           TITLE
+        ========================= */
+
+        .manager-title {
+
+            text-align: center;
+
+            color: #333;
+
+            margin-top: 0;
+
+            margin-bottom: 20px;
+
+        }
+
+
+        /* =========================
+           FORM ROW
+        ========================= */
+
+        .form-group {
+
+            margin-bottom: 15px;
+
+        }
+
+
+        .form-group label {
+
+            display: block;
+
+            font-weight: bold;
+
+            margin-bottom: 6px;
+
+            color: #333;
+
+        }
+
+
+        .form-group input,
+        .form-group select,
+        .form-group textarea {
+
+            width: 100%;
+
+            padding: 11px;
+
+            border: 1px solid #ccc;
+
+            border-radius: 6px;
+
+            font-size: 15px;
+
+            font-family: Arial, sans-serif;
+
+        }
+
+
+        .form-group textarea {
+
+            min-height: 110px;
+
+            resize: vertical;
+
+        }
+
+
+        /* =========================
+           SERIAL SELECT
+        ========================= */
+
+        #productSerial {
+
+            background-color: #fff7ed;
+
+            border: 2px solid #ff6600;
+
+            font-weight: bold;
+
+        }
+
+
+        /* =========================
+           BUTTONS
+        ========================= */
+
+        .button-area {
+
+            display: flex;
+
+            gap: 10px;
+
+            margin-top: 20px;
+
+        }
+
+
+        .save-button {
+
+            flex: 1;
+
+            background-color: #ff6600;
+
+            color: white;
+
+            border: none;
+
+            padding: 13px;
+
+            border-radius: 6px;
+
+            font-size: 16px;
+
+            font-weight: bold;
+
+            cursor: pointer;
+
+        }
+
+
+        .save-button:hover {
+
+            background-color: #e65c00;
+
+        }
+
+
+        .clear-button {
+
+            width: 120px;
+
+            background-color: #777;
+
+            color: white;
+
+            border: none;
+
+            padding: 13px;
+
+            border-radius: 6px;
+
+            font-size: 16px;
+
+            cursor: pointer;
+
+        }
+
+
+        .clear-button:hover {
+
+            background-color: #555;
+
+        }
+
+
+        /* =========================
+           STATUS MESSAGE
+        ========================= */
+
+        #message {
+
+            text-align: center;
+
+            margin-top: 15px;
+
+            font-weight: bold;
+
+            min-height: 20px;
+
+        }
+
+
+        /* =========================
+           ADMIN INFO
+        ========================= */
+
+        .admin-info {
+
+            background: #f8f8f8;
+
+            border-left: 4px solid #ff6600;
+
+            padding: 10px;
+
+            margin-bottom: 20px;
+
+            font-size: 14px;
+
+            color: #555;
+
+        }
+
+
+        /* =========================
+           BACK BUTTON
+        ========================= */
+
+        .back-button {
+
+            display: block;
+
+            text-align: center;
+
+            margin-top: 20px;
+
+            text-decoration: none;
+
+            color: #ff6600;
+
+            font-weight: bold;
+
+        }
+
+
+        /* =========================
+           MOBILE
+        ========================= */
+
+        @media (max-width: 500px) {
+
+            .manager-box {
+
+                width: 100%;
+
+                margin: 0;
+
+                border-radius: 0;
+
+                min-height: calc(100vh - 70px);
+
+            }
+
+
+            .button-area {
+
+                flex-direction: column;
+
+            }
+
+
+            .clear-button {
+
+                width: 100%;
+
+            }
+
+        }
+
+    </style>
+
+</head>
+
+
+<body>
+
+
+    <h1>
+        RK Store Admin
+    </h1>
+
+
+    <div class="manager-box">
+
+
+        <h2 class="manager-title">
+            Product Description Manager
+        </h2>
+
+
+        <div class="admin-info">
+
+            🔐 Admin Only
+
+            <br>
+
+            এখানে Product 1 থেকে Product 100 পর্যন্ত
+            Description পরিবর্তন করা যাবে।
+
+        </div>
+
+
+        <!-- =========================
+             PRODUCT SERIAL
+        ========================= -->
+
+        <div class="form-group">
+
+            <label>
+                Product Serial Number:
+            </label>
+
+
+            <select id="productSerial">
+
+                <!-- 1-100 generated by JavaScript -->
+
+            </select>
+
+        </div>
+
+
+        <!-- =========================
+             PRODUCT NAME
+        ========================= -->
+
+        <div class="form-group">
+
+            <label>
+                Product Name:
+            </label>
+
+
+            <input
+                type="text"
+                id="productName"
+                placeholder="Enter product name"
+            >
+
+        </div>
+
+
+        <!-- =========================
+             BRAND
+        ========================= -->
+
+        <div class="form-group">
+
+            <label>
+                Brand:
+            </label>
+
+
+            <input
+                type="text"
+                id="brand"
+                placeholder="Enter brand"
+            >
+
+        </div>
+
+
+        <!-- =========================
+             CATEGORY
+        ========================= -->
+
+        <div class="form-group">
+
+            <label>
+                Category:
+            </label>
+
+
+            <input
+                type="text"
+                id="category"
+                placeholder="Enter category"
+            >
+
+        </div>
+
+
+        <!-- =========================
+             COLOR
+        ========================= -->
+
+        <div class="form-group">
+
+            <label>
+                Color:
+            </label>
+
+
+            <input
+                type="text"
+                id="color"
+                placeholder="Enter product color"
+            >
+
+        </div>
+
+
+        <!-- =========================
+             SIZE
+        ========================= -->
+
+        <div class="form-group">
+
+            <label>
+                Size / Dimension:
+            </label>
+
+
+            <input
+                type="text"
+                id="size"
+                placeholder="Example: M, L, XL"
+            >
+
+        </div>
+
+
+        <!-- =========================
+             MATERIAL
+        ========================= -->
+
+        <div class="form-group">
+
+            <label>
+                Material:
+            </label>
+
+
+            <input
+                type="text"
+                id="material"
+                placeholder="Enter material"
+            >
+
+        </div>
+
+
+        <!-- =========================
+             PRODUCT DETAILS
+        ========================= -->
+
+        <div class="form-group">
+
+            <label>
+                Product Details:
+            </label>
+
+
+            <textarea
+                id="details"
+                placeholder="Write product details here..."
+            ></textarea>
+
+        </div>
+
+
+        <!-- =========================
+             BUTTONS
+        ========================= -->
+
+        <div class="button-area">
+
+            <button
+                class="save-button"
+                id="saveButton">
+
+                💾 Save Product Description
+
+            </button>
+
+
+            <button
+                class="clear-button"
+                id="clearButton">
+
+                Clear
+
+            </button>
+
+        </div>
+
+
+        <!-- =========================
+             MESSAGE
+        ========================= -->
+
+        <div id="message"></div>
+
+
+        <!-- =========================
+             BACK
+        ========================= -->
+
+        <a
+            href="orders.html"
+            class="back-button">
+
+            ← Back to Orders
+
+        </a>
+
+
+    </div>
+
+
+
+    <!-- =========================
+         FIREBASE
+    ========================= -->
+
+    <script type="module">
+
+
+        import {
+            initializeApp
+        }
+        from
+        "https://www.gstatic.com/firebasejs/12.18.0/firebase-app.js";
+
+
+        import {
+            getAuth,
+            onAuthStateChanged
+        }
+        from
+        "https://www.gstatic.com/firebasejs/12.18.0/firebase-auth.js";
+
+
+        import {
+            getFirestore,
+            doc,
+            getDoc,
+            setDoc
+        }
+        from
+        "https://www.gstatic.com/firebasejs/12.18.0/firebase-firestore.js";
+
+
+
+        /* =========================
+           FIREBASE CONFIG
+        ========================= */
+
+        const firebaseConfig = {
+
+            apiKey:
+                "AIzaSyCkBQaphKKz_Wxd1GgKAVoxqR4taKvzdEM",
+
+            authDomain:
+                "rk-store-5fb24.firebaseapp.com",
+
+            projectId:
+                "rk-store-5fb24",
+
+            storageBucket:
+                "rk-store-5fb24.firebasestorage.app",
+
+            messagingSenderId:
+                "407275549697",
+
+            appId:
+                "1:407275549697:web:41043b49bf7182cecffc00"
+
+        };
+
+
+
+        /* =========================
+           FIREBASE INITIALIZE
+        ========================= */
+
+        const app =
+            initializeApp(firebaseConfig);
+
+
+        const auth =
+            getAuth(app);
+
+
+        const db =
+            getFirestore(app);
+
+
+
+        /* =========================
+           ADMIN EMAIL
+        ========================= */
+
+        const ADMIN_EMAIL =
+            "REJAUL.IMAM@gmail.com";
+
+
+
+        /* =========================
+           ELEMENTS
+        ========================= */
+
+        const serialSelect =
+            document.getElementById(
+                "productSerial"
+            );
+
+
+        const productName =
+            document.getElementById(
+                "productName"
+            );
+
+
+        const brand =
+            document.getElementById(
+                "brand"
+            );
+
+
+        const category =
+            document.getElementById(
+                "category"
+            );
+
+
+        const color =
+            document.getElementById(
+                "color"
+            );
+
+
+        const size =
+            document.getElementById(
+                "size"
+            );
+
+
+        const material =
+            document.getElementById(
+                "material"
+            );
+
+
+        const details =
+            document.getElementById(
+                "details"
+            );
+
+
+        const message =
+            document.getElementById(
+                "message"
+            );
+
+
+        const saveButton =
+            document.getElementById(
+                "saveButton"
+            );
+
+
+        const clearButton =
+            document.getElementById(
+                "clearButton"
+            );
+
+
+
+        /* =========================
+           CREATE PRODUCT 1-100
+        ========================= */
+
+        for (
+            let i = 1;
+            i <= 100;
+            i++
+        ) {
+
+            const option =
+                document.createElement(
+                    "option"
+                );
+
+
+            option.value =
+                i;
+
+
+            option.textContent =
+                "Product " + i;
+
+
+            serialSelect.appendChild(
+                option
+            );
+
+        }
+
+
+
+        /* =========================
+           CHECK ADMIN LOGIN
+        ========================= */
+
+        onAuthStateChanged(
+            auth,
+            async function(user) {
+
+
+                if (!user) {
+
+                    alert(
+                        "Admin login required."
+                    );
+
+
+                    window.location.href =
+                        "admin-login.html";
+
+
+                    return;
+
+                }
+
+
+                if (
+                    !user.email ||
+                    user.email.toLowerCase() !==
+                    ADMIN_EMAIL.toLowerCase()
+                ) {
+
+                    alert(
+                        "You are not authorized as Admin."
+                    );
+
+
+                    window.location.href =
+                        "admin-login.html";
+
+
+                    return;
+
+                }
+
+
+                /* =========================
+                   ADMIN VERIFIED
+                ========================= */
+
+                message.style.color =
+                    "green";
+
+
+                message.innerText =
+                    "Admin verified.";
+
+
+                await loadProductDescription(
+                    serialSelect.value
+                );
+
+            }
+        );
+
+
+
+        /* =========================
+           LOAD DESCRIPTION
+        ========================= */
+
+        async function loadProductDescription(
+            serial
+        ) {
+
+
+            message.innerText =
+                "Loading Product " +
+                serial +
+                "...";
+
+
+            message.style.color =
+                "#555";
+
+
+            try {
+
+
+                const productRef =
+                    doc(
+                        db,
+                        "productDescriptions",
+                        String(serial)
+                    );
+
+
+                const productSnapshot =
+                    await getDoc(
+                        productRef
+                    );
+
+
+                if (
+                    productSnapshot.exists()
+                ) {
+
+
+                    const data =
+                        productSnapshot.data();
+
+
+                    productName.value =
+                        data.productName || "";
+
+
+                    brand.value =
+                        data.brand || "";
+
+
+                    category.value =
+                        data.category || "";
+
+
+                    color.value =
+                        data.color || "";
+
+
+                    size.value =
+                        data.size || "";
+
+
+                    material.value =
+                        data.material || "";
+
+
+                    details.value =
+                        data.details || "";
+
+
+                    message.style.color =
+                        "green";
+
+
+                    message.innerText =
+                        "Product " +
+                        serial +
+                        " description loaded.";
+
+                }
+
+                else {
+
+
+                    clearFieldsOnly();
+
+
+                    message.style.color =
+                        "#777";
+
+
+                    message.innerText =
+                        "Product " +
+                        serial +
+                        " has no saved description yet.";
+
+                }
+
+            }
+
+
+            catch (error) {
+
+
+                console.error(
+                    "Load Error:",
+                    error
+                );
+
+
+                message.style.color =
+                    "red";
+
+
+                message.innerText =
+                    "Unable to load product description.";
+
+            }
+
+        }
+
+
+
+        /* =========================
+           SERIAL CHANGE
+        ========================= */
+
+        serialSelect.addEventListener(
+            "change",
+            function() {
+
+                loadProductDescription(
+                    serialSelect.value
+                );
+
+            }
+        );
+
+
+
+        /* =========================
+           SAVE DESCRIPTION
+        ========================= */
+
+        saveButton.addEventListener(
+            "click",
+            async function() {
+
+
+                const serial =
+                    serialSelect.value;
+
+
+                const data = {
+
+                    serialNumber:
+                        Number(serial),
+
+                    productName:
+                        productName.value.trim(),
+
+                    brand:
+                        brand.value.trim(),
+
+                    category:
+                        category.value.trim(),
+
+                    color:
+                        color.value.trim(),
+
+                    size:
+                        size.value.trim(),
+
+                    material:
+                        material.value.trim(),
+
+                    details:
+                        details.value.trim()
+
+                };
+
+
+                /* =========================
+                   VALIDATION
+                ========================= */
+
+                if (
+                    data.productName === ""
+                ) {
+
+                    message.style.color =
+                        "red";
+
+
+                    message.innerText =
+                        "Please enter Product Name.";
+
+                    return;
+
+                }
+
+
+                saveButton.disabled =
+                    true;
+
+
+                saveButton.innerText =
+                    "Saving...";
+
+
+                try {
+
+
+                    /* =========================
+                       SAVE FIRESTORE
+                    ========================= */
+
+                    await setDoc(
+
+                        doc(
+                            db,
+                            "productDescriptions",
+                            String(serial)
+                        ),
+
+                        data
+
+                    );
+
+
+                    message.style.color =
+                        "green";
+
+
+                    message.innerText =
+                        "Product " +
+                        serial +
+                        " description saved successfully!";
+
+
+                }
+
+
+                catch (error) {
+
+
+                    console.error(
+                        "Save Error:",
+                        error
+                    );
+
+
+                    message.style.color =
+                        "red";
+
+
+                    message.innerText =
+                        error.message;
+
+                }
+
+
+                saveButton.disabled =
+                    false;
+
+
+                saveButton.innerText =
+                    "💾 Save Product Description";
+
+            }
+        );
+
+
+
+        /* =========================
+           CLEAR BUTTON
+        ========================= */
+
+        clearButton.addEventListener(
+            "click",
+            function() {
+
+                clearFieldsOnly();
+
+
+                message.style.color =
+                    "#777";
+
+
+                message.innerText =
+                    "Fields cleared.";
+
+            }
+        );
+
+
+
+        /* =========================
+           CLEAR FIELDS
+        ========================= */
+
+        function clearFieldsOnly() {
+
+            productName.value = "";
+
+            brand.value = "";
+
+            category.value = "";
+
+            color.value = "";
+
+            size.value = "";
+
+            material.value = "";
+
+            details.value = "";
+
+        }
+
+
+    </script>
+
+
+</body>
+
+</html>
