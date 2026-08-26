@@ -652,6 +652,23 @@
 
 
         /* =========================
+           FIREBASE LOADING
+        ========================= */
+
+        #firebaseLoading {
+
+            text-align: center;
+
+            color: #777;
+
+            font-size: 13px;
+
+            padding: 5px;
+
+        }
+
+
+        /* =========================
            MOBILE
         ========================= */
 
@@ -985,6 +1002,15 @@
     </h2>
 
 
+    <!-- =========================
+         FIREBASE LOADING
+    ========================= -->
+
+    <div id="firebaseLoading">
+        Loading latest product information...
+    </div>
+
+
 
     <!-- =========================
          PRODUCT AREA
@@ -1004,11 +1030,71 @@
 
 
 
-    <script>
+    <script type="module">
+
+
+        /* =====================================================
+           FIREBASE IMPORT
+        ===================================================== */
+
+        import {
+            initializeApp
+        } from "https://www.gstatic.com/firebasejs/12.18.0/firebase-app.js";
+
+
+        import {
+            getFirestore,
+            doc,
+            getDoc
+        } from "https://www.gstatic.com/firebasejs/12.18.0/firebase-firestore.js";
+
+
+        /* =====================================================
+           FIREBASE CONFIG
+        ===================================================== */
+
+        const firebaseConfig = {
+
+            apiKey:
+                "AIzaSyCkBQaphKKz_Wxd1GgKAVoxqR4taKvzdEM",
+
+            authDomain:
+                "rk-store-5fb24.firebaseapp.com",
+
+            projectId:
+                "rk-store-5fb24",
+
+            storageBucket:
+                "rk-store-5fb24.firebasestorage.app",
+
+            messagingSenderId:
+                "407275549697",
+
+            appId:
+                "1:407275549697:web:41043b49bf7182cecffc00"
+
+        };
+
+
+        /* =====================================================
+           INITIALIZE FIREBASE
+        ===================================================== */
+
+        const app =
+            initializeApp(
+                firebaseConfig
+            );
+
+
+        const db =
+            getFirestore(
+                app
+            );
 
 
         /* =====================================================
            PRODUCT DATA
+           PRODUCT 1-5
         ===================================================== */
 
         const products = [
@@ -1025,9 +1111,6 @@
                 category:
                     "Men",
 
-                /*
-                 * Product 1-এর ছবি product1 folder-এর ভিতরে
-                 */
                 image:
                     "product1/product1.jpg"
             },
@@ -1103,7 +1186,6 @@
         ];
 
 
-
         /* =====================================================
            CATEGORIES
         ===================================================== */
@@ -1119,7 +1201,6 @@
             "Home & Living"
 
         ];
-
 
 
         /* =====================================================
@@ -1157,7 +1238,6 @@
         }
 
 
-
         /* =====================================================
            SELECTED CATEGORY
         ===================================================== */
@@ -1166,12 +1246,13 @@
             "All";
 
 
-
         /* =====================================================
            DISPLAY PRODUCTS
         ===================================================== */
 
-        function displayProducts(list) {
+        function displayProducts(
+            list
+        ) {
 
             const container =
                 document.getElementById(
@@ -1284,26 +1365,26 @@
         }
 
 
-
         /* =====================================================
            VIEW PRODUCT DETAILS
         ===================================================== */
 
-        function viewProduct(productId) {
+        window.viewProduct =
+        function(productId) {
 
             window.location.href =
                 "product.html?product=" +
                 productId;
 
-        }
-
+        };
 
 
         /* =====================================================
            BUY PRODUCT
         ===================================================== */
 
-        function buyProductById(productId) {
+        window.buyProductById =
+        function(productId) {
 
             const product =
                 products.find(
@@ -1337,19 +1418,14 @@
                 ) || [];
 
 
-            /*
-             * Product ID রাখা হচ্ছে
-             * যাতে Product Details page
-             * এবং Cart-এর মধ্যে product
-             * সঠিকভাবে চিনতে পারে।
-             */
-
             const existingProduct =
                 cart.find(
                     function(item) {
 
                         return (
-                            item.productId ===
+                            Number(
+                                item.productId
+                            ) ===
                             productId
                         );
 
@@ -1357,13 +1433,37 @@
                 );
 
 
-            if (existingProduct) {
+            if (
+                existingProduct
+            ) {
 
                 existingProduct.quantity =
-                    (existingProduct.quantity || 1) +
-                    1;
+                    (
+                        Number(
+                            existingProduct.quantity
+                        ) || 1
+                    ) + 1;
+
+
+                /*
+                 * Home Page-এ Firebase থেকে
+                 * নতুন নাম/দাম এলে Cart-এও
+                 * সর্বশেষ তথ্য রাখা হবে।
+                 */
+
+                existingProduct.name =
+                    product.name;
+
+
+                existingProduct.price =
+                    product.price;
+
+
+                existingProduct.image =
+                    product.image;
 
             }
+
 
             else {
 
@@ -1403,21 +1503,20 @@
 
             updateCartCount();
 
-        }
-
+        };
 
 
         /* =====================================================
            CART
         ===================================================== */
 
-        function showCart() {
+        window.showCart =
+        function() {
 
             window.location.href =
                 "cart.html";
 
-        }
-
+        };
 
 
         /* =====================================================
@@ -1458,14 +1557,12 @@
         }
 
 
-
         /* =====================================================
            CATEGORY FILTER
         ===================================================== */
 
-        function filterCategory(
-            category
-        ) {
+        window.filterCategory =
+        function(category) {
 
             selectedCategory =
                 category;
@@ -1473,15 +1570,15 @@
 
             searchProducts();
 
-        }
-
+        };
 
 
         /* =====================================================
            SHOW ALL PRODUCTS
         ===================================================== */
 
-        function showAllProducts() {
+        window.showAllProducts =
+        function() {
 
             selectedCategory =
                 "All";
@@ -1489,15 +1586,15 @@
 
             searchProducts();
 
-        }
-
+        };
 
 
         /* =====================================================
            SEARCH
         ===================================================== */
 
-        function searchProducts() {
+        window.searchProducts =
+        function() {
 
             const searchText =
                 document
@@ -1542,15 +1639,15 @@
                 filteredProducts
             );
 
-        }
-
+        };
 
 
         /* =====================================================
            THREE DOT MENU
         ===================================================== */
 
-        function toggleThreeDotMenu() {
+        window.toggleThreeDotMenu =
+        function() {
 
             const menu =
                 document.getElementById(
@@ -1575,15 +1672,15 @@
 
             }
 
-        }
-
+        };
 
 
         /* =====================================================
            HELP LINE
         ===================================================== */
 
-        function toggleHelpLine() {
+        window.toggleHelpLine =
+        function() {
 
             const helpBox =
                 document.getElementById(
@@ -1608,8 +1705,7 @@
 
             }
 
-        }
-
+        };
 
 
         /* =====================================================
@@ -1655,10 +1751,203 @@
         );
 
 
+        /* =====================================================
+           LOAD ONE PRODUCT FROM FIREBASE
+        ===================================================== */
+
+        async function loadFirebaseProduct(
+            product
+        ) {
+
+            try {
+
+                const productRef =
+                    doc(
+                        db,
+                        "productDescriptions",
+                        String(product.id)
+                    );
+
+
+                const snapshot =
+                    await getDoc(
+                        productRef
+                    );
+
+
+                if (
+                    snapshot.exists()
+                ) {
+
+                    const data =
+                        snapshot.data();
+
+
+                    /* =========================
+                       PRODUCT NAME
+                    ========================= */
+
+                    if (
+                        data.name !== undefined
+                        &&
+                        data.name !== ""
+                    ) {
+
+                        product.name =
+                            data.name;
+
+                    }
+
+
+                    /* =========================
+                       PRODUCT PRICE
+                    ========================= */
+
+                    if (
+                        data.price !== undefined
+                        &&
+                        data.price !== ""
+                    ) {
+
+                        const firebasePrice =
+                            Number(
+                                data.price
+                            );
+
+
+                        if (
+                            !isNaN(
+                                firebasePrice
+                            )
+                        ) {
+
+                            product.price =
+                                firebasePrice;
+
+                        }
+
+                    }
+
+
+                    /* =========================
+                       PRODUCT CATEGORY
+                    ========================= */
+
+                    if (
+                        data.category !== undefined
+                        &&
+                        data.category !== ""
+                    ) {
+
+                        product.category =
+                            data.category;
+
+                    }
+
+                }
+
+            }
+
+            catch (error) {
+
+                console.error(
+                    "Product " +
+                    product.id +
+                    " Firebase Error:",
+                    error
+                );
+
+            }
+
+        }
+
+
+        /* =====================================================
+           LOAD ALL PRODUCTS FROM FIREBASE
+        ===================================================== */
+
+        async function loadFirebaseProducts() {
+
+            const loading =
+                document.getElementById(
+                    "firebaseLoading"
+                );
+
+
+            try {
+
+                /*
+                 * Product 1-100-এর Firebase data
+                 * একসাথে load করা হবে।
+                 */
+
+                const promises =
+                    products.map(
+                        function(product) {
+
+                            return loadFirebaseProduct(
+                                product
+                            );
+
+                        }
+                    );
+
+
+                await Promise.all(
+                    promises
+                );
+
+
+                /*
+                 * Firebase-এর তথ্য আসার পরে
+                 * Home Page নতুন তথ্য দিয়ে
+                 * আবার display হবে।
+                 */
+
+                searchProducts();
+
+
+                loading.innerText =
+                    "✓ Latest product information loaded";
+
+
+                loading.style.color =
+                    "#198754";
+
+
+            }
+
+            catch (error) {
+
+                console.error(
+                    "Firebase Products Error:",
+                    error
+                );
+
+
+                /*
+                 * Firebase সমস্যা হলেও
+                 * default products থাকবে।
+                 */
+
+                searchProducts();
+
+
+                loading.innerText =
+                    "";
+
+            }
+
+        }
+
 
         /* =====================================================
            INITIAL LOAD
         ===================================================== */
+
+        /*
+         * প্রথমে default products দেখানো হবে।
+         */
 
         displayProducts(
             products
@@ -1666,6 +1955,20 @@
 
 
         updateCartCount();
+
+
+        /* =====================================================
+           FIREBASE UPDATE
+        ===================================================== */
+
+        /*
+         * এরপর Firestore থেকে
+         * Product 1-100-এর সর্বশেষ
+         * Name / Price / Category
+         * নেওয়া হবে।
+         */
+
+        loadFirebaseProducts();
 
 
     </script>
