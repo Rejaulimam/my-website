@@ -436,9 +436,7 @@
 <div class="product-details">
 
 
-    <!-- =========================
-         IMAGE SLIDER
-    ========================= -->
+    <!-- IMAGE SLIDER -->
 
     <div class="image-slider">
 
@@ -469,9 +467,7 @@
     </div>
 
 
-    <!-- =========================
-         IMAGE DOTS
-    ========================= -->
+    <!-- IMAGE DOTS -->
 
     <div
         class="image-dots"
@@ -480,9 +476,7 @@
     </div>
 
 
-    <!-- =========================
-         PRODUCT INFORMATION
-    ========================= -->
+    <!-- PRODUCT INFORMATION -->
 
     <h2 id="productName">
         Loading Product...
@@ -499,9 +493,7 @@
     </p>
 
 
-    <!-- =========================
-         FIREBASE UPDATE NOTICE
-    ========================= -->
+    <!-- FIREBASE NOTICE -->
 
     <div
         id="firebaseUpdated"
@@ -511,9 +503,7 @@
     </div>
 
 
-    <!-- =========================
-         ADD TO CART
-    ========================= -->
+    <!-- ADD TO CART -->
 
     <button
         type="button"
@@ -524,9 +514,7 @@
     </button>
 
 
-    <!-- =========================
-         BUY NOW
-    ========================= -->
+    <!-- BUY NOW -->
 
     <button
         type="button"
@@ -537,9 +525,7 @@
     </button>
 
 
-    <!-- =========================
-         PRODUCT DESCRIPTION
-    ========================= -->
+    <!-- PRODUCT DESCRIPTION -->
 
     <div class="product-description">
 
@@ -573,6 +559,22 @@
             <div
                 class="description-value"
                 id="descriptionProductName"
+            >
+                -
+            </div>
+
+        </div>
+
+
+        <div class="description-row">
+
+            <div class="description-label">
+                Price:
+            </div>
+
+            <div
+                class="description-value"
+                id="descriptionProductPrice"
             >
                 -
             </div>
@@ -692,7 +694,7 @@
 
 
 /* =====================================================
-   FIREBASE IMPORT
+   FIREBASE
 ===================================================== */
 
 import {
@@ -706,10 +708,6 @@ import {
     getDoc
 } from "https://www.gstatic.com/firebasejs/12.18.0/firebase-firestore.js";
 
-
-/* =====================================================
-   FIREBASE CONFIG
-===================================================== */
 
 const firebaseConfig = {
 
@@ -733,10 +731,6 @@ const firebaseConfig = {
 
 };
 
-
-/* =====================================================
-   INITIALIZE FIREBASE
-===================================================== */
 
 const app =
     initializeApp(firebaseConfig);
@@ -765,12 +759,10 @@ const productNumber =
 
 
 /* =====================================================
-   PRODUCT DATA
-   PRODUCT 1-5
+   PRODUCT DATA 1-5
 ===================================================== */
 
 const productData = {
-
 
     "1": {
 
@@ -1000,7 +992,7 @@ for (
             "Product " + i,
 
         price:
-            0,
+            100 + (i * 10),
 
         brand:
             "RK Store",
@@ -1021,21 +1013,6 @@ for (
             ""
 
     };
-
-}
-
-
-/* =====================================================
-   CHECK PRODUCT
-===================================================== */
-
-if (
-    !product ||
-    productNumber < 1 ||
-    productNumber > 100
-) {
-
-    showProductNotFound();
 
 }
 
@@ -1089,9 +1066,7 @@ function showProduct(data) {
         0;
 
 
-    /* =========================
-       IMAGE
-    ========================= */
+    /* IMAGE */
 
     if (
         productImages.length > 0
@@ -1114,9 +1089,7 @@ function showProduct(data) {
     }
 
 
-    /* =========================
-       NAME
-    ========================= */
+    /* NAME */
 
     document.getElementById(
         "productName"
@@ -1125,9 +1098,7 @@ function showProduct(data) {
         "Product";
 
 
-    /* =========================
-       PRICE
-    ========================= */
+    /* PRICE */
 
     document.getElementById(
         "productPrice"
@@ -1136,18 +1107,14 @@ function showProduct(data) {
         Number(data.price || 0);
 
 
-    /* =========================
-       DESCRIPTION
-    ========================= */
+    /* DESCRIPTION */
 
     showDescription(
         data
     );
 
 
-    /* =========================
-       DOTS
-    ========================= */
+    /* DOTS */
 
     createImageDots();
 
@@ -1171,6 +1138,13 @@ function showDescription(data) {
     ).textContent =
         data.name ||
         "";
+
+
+    document.getElementById(
+        "descriptionProductPrice"
+    ).textContent =
+        "৳" +
+        Number(data.price || 0);
 
 
     document.getElementById(
@@ -1331,10 +1305,6 @@ async function loadFirebaseDescription() {
             );
 
 
-        /* =========================
-           FIRESTORE DATA EXISTS
-        ========================= */
-
         if (
             snapshot.exists()
         ) {
@@ -1344,9 +1314,7 @@ async function loadFirebaseDescription() {
 
 
             /*
-             * Firebase-এর নতুন তথ্য
-             * আগের product data-এর সাথে
-             * merge করা হচ্ছে।
+             * Firebase data merge
              */
 
             currentProduct = {
@@ -1359,11 +1327,13 @@ async function loadFirebaseDescription() {
                         ? firebaseData.name
                         : currentProduct.name,
 
-price:
-    firebaseData.price !== undefined &&
-    firebaseData.price !== ""
-        ? Number(firebaseData.price)
-        : currentProduct.price,
+
+                price:
+                    firebaseData.price !== undefined &&
+                    firebaseData.price !== ""
+                        ? Number(firebaseData.price)
+                        : currentProduct.price,
+
 
                 brand:
                     firebaseData.brand !== undefined &&
@@ -1371,11 +1341,13 @@ price:
                         ? firebaseData.brand
                         : currentProduct.brand,
 
+
                 category:
                     firebaseData.category !== undefined &&
                     firebaseData.category !== ""
                         ? firebaseData.category
                         : currentProduct.category,
+
 
                 color:
                     firebaseData.color !== undefined &&
@@ -1383,17 +1355,20 @@ price:
                         ? firebaseData.color
                         : currentProduct.color,
 
+
                 size:
                     firebaseData.size !== undefined &&
                     firebaseData.size !== ""
                         ? firebaseData.size
                         : currentProduct.size,
 
+
                 material:
                     firebaseData.material !== undefined &&
                     firebaseData.material !== ""
                         ? firebaseData.material
                         : currentProduct.material,
+
 
                 details:
                     firebaseData.details !== undefined &&
@@ -1404,26 +1379,14 @@ price:
             };
 
 
-            /* =========================
-               UPDATE SCREEN
-            ========================= */
-
             showProduct(
                 currentProduct
             );
 
 
-            /* =========================
-               UPDATE NOTICE
-            ========================= */
-
-            const updatedNotice =
-                document.getElementById(
-                    "firebaseUpdated"
-                );
-
-
-            updatedNotice.style.display =
+            document.getElementById(
+                "firebaseUpdated"
+            ).style.display =
                 "block";
 
         }
@@ -1442,11 +1405,6 @@ price:
             error
         );
 
-
-        /*
-         * Firebase কাজ না করলেও
-         * default product information থাকবে।
-         */
 
         loading.textContent =
             "";
@@ -1775,6 +1733,9 @@ document.getElementById(
 
         const cartItem = {
 
+            productId:
+                productNumber,
+
             name:
                 currentProduct.name,
 
@@ -1826,10 +1787,6 @@ document.getElementById(
         }
 
         else {
-
-            cartItem.productId =
-                productNumber;
-
 
             cart.push(
                 cartItem
@@ -1977,7 +1934,7 @@ if (
 
 
 /* =====================================================
-   LOAD LATEST FIREBASE DATA
+   LOAD FIREBASE
 ===================================================== */
 
 loadFirebaseDescription();
