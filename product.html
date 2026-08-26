@@ -10,7 +10,8 @@
         content="width=device-width, initial-scale=1.0"
     >
 
-    <title>Product Details</title>
+    <title>RK Store - Product Details</title>
+
 
     <style>
 
@@ -18,11 +19,13 @@
             box-sizing: border-box;
         }
 
+
         body {
             margin: 0;
             font-family: Arial, sans-serif;
             background-color: #f5f5f5;
         }
+
 
         h1 {
             background-color: #ff6600;
@@ -31,6 +34,7 @@
             padding: 20px;
             margin: 0;
         }
+
 
         /* =========================
            PRODUCT DETAILS
@@ -55,6 +59,7 @@
             width: calc(100% - 20px);
         }
 
+
         /* =========================
            IMAGE SLIDER
         ========================= */
@@ -73,6 +78,7 @@
             border-radius: 10px;
         }
 
+
         .image-slider img {
             width: 100%;
 
@@ -86,6 +92,7 @@
 
             background-color: #f5f5f5;
         }
+
 
         /* =========================
            SLIDER BUTTONS
@@ -124,18 +131,22 @@
             z-index: 5;
         }
 
+
         .slider-button:hover {
             background-color:
                 rgba(0,0,0,0.8);
         }
 
+
         .prev-button {
             left: 10px;
         }
 
+
         .next-button {
             right: 10px;
         }
+
 
         /* =========================
            IMAGE DOTS
@@ -146,6 +157,7 @@
 
             margin-top: 12px;
         }
+
 
         .image-dot {
             display: inline-block;
@@ -163,11 +175,35 @@
             cursor: pointer;
         }
 
+
         .image-dot.active {
             background-color: #ff6600;
 
             transform: scale(1.2);
         }
+
+
+        /* =========================
+           PRODUCT NAME
+        ========================= */
+
+        #productName {
+            margin-top: 20px;
+
+            margin-bottom: 10px;
+
+            color: #333;
+        }
+
+
+        #productPrice {
+            font-size: 20px;
+
+            font-weight: bold;
+
+            color: #ff6600;
+        }
+
 
         /* =========================
            ACTION BUTTONS
@@ -191,9 +227,11 @@
             font-size: 15px;
         }
 
+
         button.action-button:hover {
             background-color: #e65c00;
         }
+
 
         /* =========================
            PRODUCT DESCRIPTION
@@ -217,6 +255,7 @@
                 0 2px 6px rgba(0,0,0,0.08);
         }
 
+
         .product-description h3 {
 
             margin: 0 0 15px 0;
@@ -231,6 +270,7 @@
 
             font-size: 20px;
         }
+
 
         .description-row {
 
@@ -247,9 +287,11 @@
             line-height: 1.5;
         }
 
+
         .description-row:last-child {
             border-bottom: none;
         }
+
 
         .description-label {
 
@@ -260,6 +302,7 @@
             color: #333;
         }
 
+
         .description-value {
 
             width: 55%;
@@ -268,6 +311,7 @@
 
             word-break: break-word;
         }
+
 
         .description-loading {
 
@@ -279,6 +323,31 @@
 
             margin-top: 10px;
         }
+
+
+        /* =========================
+           FIREBASE UPDATE NOTICE
+        ========================= */
+
+        .firebase-updated {
+
+            display: none;
+
+            margin-top: 10px;
+
+            padding: 8px;
+
+            border-radius: 5px;
+
+            background: #e8f5e9;
+
+            color: #198754;
+
+            font-size: 13px;
+
+            text-align: center;
+        }
+
 
         /* =========================
            MOBILE
@@ -301,13 +370,16 @@
                 box-shadow: none;
             }
 
+
             .image-slider {
                 max-width: 100%;
             }
 
+
             .image-slider img {
                 height: 350px;
             }
+
 
             .slider-button {
 
@@ -318,6 +390,7 @@
                 font-size: 21px;
             }
 
+
             .product-description {
 
                 margin-top: 20px;
@@ -325,17 +398,21 @@
                 padding: 12px;
             }
 
+
             .product-description h3 {
                 font-size: 18px;
             }
+
 
             .description-row {
                 font-size: 14px;
             }
 
+
             .description-label {
                 width: 45%;
             }
+
 
             .description-value {
                 width: 55%;
@@ -367,26 +444,26 @@
 
         <img
             id="productImage"
-            src="product1.jpg"
+            src="product1/product1.jpg"
             alt="Product"
         >
+
 
         <button
             type="button"
             class="slider-button prev-button"
-            id="prevButton">
-
+            id="prevButton"
+        >
             ‹
-
         </button>
+
 
         <button
             type="button"
             class="slider-button next-button"
-            id="nextButton">
-
+            id="nextButton"
+        >
             ›
-
         </button>
 
     </div>
@@ -398,7 +475,8 @@
 
     <div
         class="image-dots"
-        id="imageDots">
+        id="imageDots"
+    >
     </div>
 
 
@@ -407,12 +485,12 @@
     ========================= -->
 
     <h2 id="productName">
-        Men's Formal Solid Shirt
+        Loading Product...
     </h2>
 
 
     <p id="productPrice">
-        Price: ৳450
+        Price: ৳0
     </p>
 
 
@@ -422,16 +500,27 @@
 
 
     <!-- =========================
+         FIREBASE UPDATE NOTICE
+    ========================= -->
+
+    <div
+        id="firebaseUpdated"
+        class="firebase-updated"
+    >
+        ✅ Latest product information loaded
+    </div>
+
+
+    <!-- =========================
          ADD TO CART
     ========================= -->
 
     <button
         type="button"
         class="action-button"
-        id="addToCart">
-
+        id="addToCart"
+    >
         Add to Cart
-
     </button>
 
 
@@ -442,10 +531,9 @@
     <button
         type="button"
         class="action-button"
-        id="buyNow">
-
+        id="buyNow"
+    >
         Buy Now
-
     </button>
 
 
@@ -468,8 +556,9 @@
 
             <div
                 class="description-value"
-                id="productSerial">
-                1
+                id="productSerial"
+            >
+                -
             </div>
 
         </div>
@@ -483,8 +572,9 @@
 
             <div
                 class="description-value"
-                id="descriptionProductName">
-                Men's Formal Solid Shirt
+                id="descriptionProductName"
+            >
+                -
             </div>
 
         </div>
@@ -498,8 +588,9 @@
 
             <div
                 class="description-value"
-                id="productBrand">
-                RK Store
+                id="productBrand"
+            >
+                -
             </div>
 
         </div>
@@ -513,8 +604,9 @@
 
             <div
                 class="description-value"
-                id="productCategory">
-                Men
+                id="productCategory"
+            >
+                -
             </div>
 
         </div>
@@ -528,8 +620,9 @@
 
             <div
                 class="description-value"
-                id="productColor">
-                Black
+                id="productColor"
+            >
+                -
             </div>
 
         </div>
@@ -538,13 +631,14 @@
         <div class="description-row">
 
             <div class="description-label">
-                Size:
+                Size / Dimension:
             </div>
 
             <div
                 class="description-value"
-                id="productSize">
-                M, L, XL
+                id="productSize"
+            >
+                -
             </div>
 
         </div>
@@ -558,8 +652,9 @@
 
             <div
                 class="description-value"
-                id="productMaterial">
-                Cotton
+                id="productMaterial"
+            >
+                -
             </div>
 
         </div>
@@ -573,8 +668,9 @@
 
             <div
                 class="description-value"
-                id="productDetailsText">
-                Premium quality formal shirt suitable for regular and formal use.
+                id="productDetailsText"
+            >
+                -
             </div>
 
         </div>
@@ -582,7 +678,8 @@
 
         <div
             class="description-loading"
-            id="descriptionLoading">
+            id="descriptionLoading"
+        >
         </div>
 
     </div>
@@ -644,6 +741,7 @@ const firebaseConfig = {
 const app =
     initializeApp(firebaseConfig);
 
+
 const db =
     getFirestore(app);
 
@@ -657,40 +755,18 @@ const params =
         window.location.search
     );
 
+
 const product =
     params.get("product");
 
 
-/* =====================================================
-   CHECK PRODUCT NUMBER
-===================================================== */
-
 const productNumber =
-    parseInt(product);
-
-
-if (
-    !productNumber ||
-    productNumber < 1 ||
-    productNumber > 100
-) {
-
-    document.getElementById(
-        "productName"
-    ).textContent =
-        "Product Not Found";
-
-    document.getElementById(
-        "productPrice"
-    ).textContent =
-        "";
-
-}
+    Number(product);
 
 
 /* =====================================================
    PRODUCT DATA
-   আগের Product 1-5 সম্পূর্ণ রাখা হয়েছে
+   PRODUCT 1-5
 ===================================================== */
 
 const productData = {
@@ -903,7 +979,7 @@ const productData = {
 
 
 /* =====================================================
-   PRODUCT 6-100 AUTOMATIC DATA
+   PRODUCT 6-100
 ===================================================== */
 
 for (
@@ -950,33 +1026,38 @@ for (
 
 
 /* =====================================================
-   SELECT PRODUCT
+   CHECK PRODUCT
 ===================================================== */
 
-let currentProduct =
-    productData[product];
+if (
+    !product ||
+    productNumber < 1 ||
+    productNumber > 100
+) {
+
+    showProductNotFound();
+
+}
 
 
 /* =====================================================
-   IF PRODUCT EXISTS
+   CURRENT PRODUCT
 ===================================================== */
 
-if (currentProduct) {
-
-    showProduct(
-        currentProduct
-    );
-
-}
+let currentProduct =
+    productData[String(productNumber)];
 
 
 /* =====================================================
    SLIDER VARIABLES
 ===================================================== */
 
-let currentImageIndex = 0;
+let currentImageIndex =
+    0;
 
-let productImages = [];
+
+let productImages =
+    [];
 
 
 /* =====================================================
@@ -985,46 +1066,88 @@ let productImages = [];
 
 function showProduct(data) {
 
+    if (!data) {
+
+        showProductNotFound();
+
+        return;
+
+    }
+
+
+    currentProduct =
+        data;
+
+
     productImages =
-        data.images || [];
+        Array.isArray(data.images)
+            ? data.images
+            : [];
 
-    currentImageIndex = 0;
 
+    currentImageIndex =
+        0;
+
+
+    /* =========================
+       IMAGE
+    ========================= */
 
     if (
         productImages.length > 0
     ) {
 
-        document.getElementById(
-            "productImage"
-        ).src =
+        const image =
+            document.getElementById(
+                "productImage"
+            );
+
+
+        image.src =
             productImages[0];
 
-        document.getElementById(
-            "productImage"
-        ).alt =
-            data.name || "Product";
+
+        image.alt =
+            data.name ||
+            "Product";
 
     }
 
 
+    /* =========================
+       NAME
+    ========================= */
+
     document.getElementById(
         "productName"
     ).textContent =
-        data.name || "Product";
+        data.name ||
+        "Product";
 
+
+    /* =========================
+       PRICE
+    ========================= */
 
     document.getElementById(
         "productPrice"
     ).textContent =
         "Price: ৳" +
-        (data.price || 0);
+        Number(data.price || 0);
 
+
+    /* =========================
+       DESCRIPTION
+    ========================= */
 
     showDescription(
         data
     );
 
+
+    /* =========================
+       DOTS
+    ========================= */
 
     createImageDots();
 
@@ -1040,49 +1163,56 @@ function showDescription(data) {
     document.getElementById(
         "productSerial"
     ).textContent =
-        product || "";
+        productNumber;
 
 
     document.getElementById(
         "descriptionProductName"
     ).textContent =
-        data.name || "";
+        data.name ||
+        "";
 
 
     document.getElementById(
         "productBrand"
     ).textContent =
-        data.brand || "";
+        data.brand ||
+        "";
 
 
     document.getElementById(
         "productCategory"
     ).textContent =
-        data.category || "";
+        data.category ||
+        "";
 
 
     document.getElementById(
         "productColor"
     ).textContent =
-        data.color || "";
+        data.color ||
+        "";
 
 
     document.getElementById(
         "productSize"
     ).textContent =
-        data.size || "";
+        data.size ||
+        "";
 
 
     document.getElementById(
         "productMaterial"
     ).textContent =
-        data.material || "";
+        data.material ||
+        "";
 
 
     document.getElementById(
         "productDetailsText"
     ).textContent =
-        data.details || "";
+        data.details ||
+        "";
 
 }
 
@@ -1101,6 +1231,15 @@ function createImageDots() {
 
     dotsContainer.innerHTML =
         "";
+
+
+    if (
+        productImages.length <= 1
+    ) {
+
+        return;
+
+    }
 
 
     productImages.forEach(
@@ -1150,8 +1289,7 @@ function createImageDots() {
 
 
 /* =====================================================
-   LOAD FIRESTORE DESCRIPTION
-   Product 1-100
+   LOAD FIREBASE DESCRIPTION
 ===================================================== */
 
 async function loadFirebaseDescription() {
@@ -1183,7 +1321,7 @@ async function loadFirebaseDescription() {
             doc(
                 db,
                 "productDescriptions",
-                product
+                String(productNumber)
             );
 
 
@@ -1192,6 +1330,10 @@ async function loadFirebaseDescription() {
                 productRef
             );
 
+
+        /* =========================
+           FIRESTORE DATA EXISTS
+        ========================= */
 
         if (
             snapshot.exists()
@@ -1202,8 +1344,9 @@ async function loadFirebaseDescription() {
 
 
             /*
-             * Firestore-এর তথ্য
-             * পুরোনো তথ্যের উপর বসানো হবে।
+             * Firebase-এর নতুন তথ্য
+             * আগের product data-এর সাথে
+             * merge করা হচ্ছে।
              */
 
             currentProduct = {
@@ -1211,43 +1354,71 @@ async function loadFirebaseDescription() {
                 ...currentProduct,
 
                 name:
-                    firebaseData.name ||
-                    currentProduct.name,
+                    firebaseData.name !== undefined &&
+                    firebaseData.name !== ""
+                        ? firebaseData.name
+                        : currentProduct.name,
 
                 brand:
-                    firebaseData.brand ||
-                    currentProduct.brand,
+                    firebaseData.brand !== undefined &&
+                    firebaseData.brand !== ""
+                        ? firebaseData.brand
+                        : currentProduct.brand,
 
                 category:
-                    firebaseData.category ||
-                    currentProduct.category,
+                    firebaseData.category !== undefined &&
+                    firebaseData.category !== ""
+                        ? firebaseData.category
+                        : currentProduct.category,
 
                 color:
-                    firebaseData.color ||
-                    currentProduct.color,
+                    firebaseData.color !== undefined &&
+                    firebaseData.color !== ""
+                        ? firebaseData.color
+                        : currentProduct.color,
 
                 size:
-                    firebaseData.size ||
-                    currentProduct.size,
+                    firebaseData.size !== undefined &&
+                    firebaseData.size !== ""
+                        ? firebaseData.size
+                        : currentProduct.size,
 
                 material:
-                    firebaseData.material ||
-                    currentProduct.material,
+                    firebaseData.material !== undefined &&
+                    firebaseData.material !== ""
+                        ? firebaseData.material
+                        : currentProduct.material,
 
                 details:
-                    firebaseData.details ||
-                    currentProduct.details
+                    firebaseData.details !== undefined &&
+                    firebaseData.details !== ""
+                        ? firebaseData.details
+                        : currentProduct.details
 
             };
 
 
-            /*
-             * Updated product screen-এ দেখানো
-             */
+            /* =========================
+               UPDATE SCREEN
+            ========================= */
 
             showProduct(
                 currentProduct
             );
+
+
+            /* =========================
+               UPDATE NOTICE
+            ========================= */
+
+            const updatedNotice =
+                document.getElementById(
+                    "firebaseUpdated"
+                );
+
+
+            updatedNotice.style.display =
+                "block";
 
         }
 
@@ -1256,6 +1427,7 @@ async function loadFirebaseDescription() {
             "";
 
     }
+
 
     catch (error) {
 
@@ -1266,8 +1438,8 @@ async function loadFirebaseDescription() {
 
 
         /*
-         * Firebase না চললেও
-         * পুরোনো product data থাকবে।
+         * Firebase কাজ না করলেও
+         * default product information থাকবে।
          */
 
         loading.textContent =
@@ -1279,10 +1451,29 @@ async function loadFirebaseDescription() {
 
 
 /* =====================================================
-   LOAD FIRESTORE
+   SHOW PRODUCT NOT FOUND
 ===================================================== */
 
-loadFirebaseDescription();
+function showProductNotFound() {
+
+    document.getElementById(
+        "productName"
+    ).textContent =
+        "Product Not Found";
+
+
+    document.getElementById(
+        "productPrice"
+    ).textContent =
+        "";
+
+
+    document.getElementById(
+        "productSerial"
+    ).textContent =
+        "-";
+
+}
 
 
 /* =====================================================
@@ -1293,6 +1484,16 @@ function showImage(index) {
 
     if (
         productImages.length === 0
+    ) {
+
+        return;
+
+    }
+
+
+    if (
+        index < 0 ||
+        index >= productImages.length
     ) {
 
         return;
@@ -1426,9 +1627,12 @@ document.getElementById(
    MOBILE SWIPE
 ===================================================== */
 
-let touchStartX = 0;
+let touchStartX =
+    0;
 
-let touchEndX = 0;
+
+let touchEndX =
+    0;
 
 
 const imageSlider =
@@ -1455,6 +1659,7 @@ imageSlider.addEventListener(
         touchEndX =
             event.changedTouches[0].screenX;
 
+
         handleSwipe();
 
     }
@@ -1467,8 +1672,18 @@ imageSlider.addEventListener(
 
 function handleSwipe() {
 
+    if (
+        productImages.length <= 1
+    ) {
+
+        return;
+
+    }
+
+
     const swipeDistance =
-        touchEndX - touchStartX;
+        touchEndX -
+        touchStartX;
 
 
     if (
@@ -1493,6 +1708,7 @@ function handleSwipe() {
         );
 
     }
+
 
     else if (
         swipeDistance > 50
@@ -1557,10 +1773,17 @@ document.getElementById(
                 currentProduct.name,
 
             price:
-                currentProduct.price,
+                Number(
+                    currentProduct.price
+                ) || 0,
 
             image:
-                currentProduct.images[0],
+                currentProduct.images &&
+                currentProduct.images.length > 0
+
+                    ? currentProduct.images[0]
+
+                    : "",
 
             quantity:
                 1
@@ -1570,9 +1793,20 @@ document.getElementById(
 
         const existingProduct =
             cart.find(
-                item =>
-                    item.name ===
-                    currentProduct.name
+                function(item) {
+
+                    return (
+                        item.productId ===
+                        productNumber
+                    )
+                    ||
+                    (
+                        !item.productId &&
+                        item.name ===
+                        currentProduct.name
+                    );
+
+                }
             );
 
 
@@ -1586,6 +1820,10 @@ document.getElementById(
         }
 
         else {
+
+            cartItem.productId =
+                productNumber;
+
 
             cart.push(
                 cartItem
@@ -1642,14 +1880,24 @@ document.getElementById(
 
         const cartItem = {
 
+            productId:
+                productNumber,
+
             name:
                 currentProduct.name,
 
             price:
-                currentProduct.price,
+                Number(
+                    currentProduct.price
+                ) || 0,
 
             image:
-                currentProduct.images[0],
+                currentProduct.images &&
+                currentProduct.images.length > 0
+
+                    ? currentProduct.images[0]
+
+                    : "",
 
             quantity:
                 1
@@ -1659,9 +1907,20 @@ document.getElementById(
 
         const existingProduct =
             cart.find(
-                item =>
-                    item.name ===
-                    currentProduct.name
+                function(item) {
+
+                    return (
+                        item.productId ===
+                        productNumber
+                    )
+                    ||
+                    (
+                        !item.productId &&
+                        item.name ===
+                        currentProduct.name
+                    );
+
+                }
             );
 
 
@@ -1696,7 +1955,30 @@ document.getElementById(
 );
 
 
+/* =====================================================
+   FIRST LOAD
+===================================================== */
+
+if (
+    currentProduct
+) {
+
+    showProduct(
+        currentProduct
+    );
+
+}
+
+
+/* =====================================================
+   LOAD LATEST FIREBASE DATA
+===================================================== */
+
+loadFirebaseDescription();
+
+
 </script>
+
 
 </body>
 
