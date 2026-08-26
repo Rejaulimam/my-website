@@ -78,115 +78,177 @@
         .row input,
         .row textarea,
         .row select {
+
             flex: 1;
+
             width: 100%;
+
             padding: 11px;
+
             border: 1px solid #ccc;
+
             border-radius: 6px;
+
             font-size: 15px;
         }
 
 
         textarea {
+
             min-height: 110px;
+
             resize: vertical;
         }
 
 
         .button-area {
+
             text-align: center;
+
             margin-top: 25px;
         }
 
 
         button {
+
             background: #ff6600;
+
             color: white;
+
             border: none;
+
             padding: 12px 22px;
+
             border-radius: 6px;
+
             font-size: 16px;
+
             cursor: pointer;
+
             margin: 5px;
         }
 
 
         button:hover {
+
             background: #e65c00;
         }
 
 
         button:disabled {
+
             background: #999;
+
             cursor: not-allowed;
         }
 
 
         .back-button {
+
             background: #555;
         }
 
 
         .back-button:hover {
+
             background: #333;
         }
 
 
         #message {
+
             text-align: center;
+
             margin-top: 15px;
+
             font-weight: bold;
+
             min-height: 20px;
         }
 
 
         .preview {
+
             margin-top: 30px;
+
             padding: 18px;
+
             background: #fafafa;
+
             border: 1px solid #ddd;
+
             border-radius: 8px;
         }
 
 
         .preview h2 {
+
             text-align: center;
+
             color: #ff6600;
+
             margin-top: 0;
         }
 
 
         .preview-item {
+
             padding: 8px 0;
+
             border-bottom: 1px solid #eee;
         }
 
 
         .preview-item:last-child {
+
             border-bottom: none;
         }
 
 
         .preview-item strong {
+
             color: #333;
+        }
+
+
+        .price-input {
+
+            color: #ff6600;
+
+            font-weight: bold;
+        }
+
+
+        .price-preview {
+
+            color: #ff6600;
+
+            font-weight: bold;
+
+            font-size: 18px;
         }
 
 
         @media (max-width: 600px) {
 
             .row {
+
                 display: block;
             }
 
 
             .row label {
+
                 display: block;
+
                 width: 100%;
+
                 margin-bottom: 6px;
             }
 
 
             .container {
+
                 padding: 15px;
             }
 
@@ -221,8 +283,7 @@
 
 
     <!-- =========================
-         PRODUCT SELECT
-         PRODUCT 1 - 100
+         PRODUCT SERIAL NUMBER
     ========================= -->
 
     <div class="row">
@@ -234,114 +295,7 @@
 
         <select id="productSerial">
 
-            <option value="1">Product 1</option>
-            <option value="2">Product 2</option>
-            <option value="3">Product 3</option>
-            <option value="4">Product 4</option>
-            <option value="5">Product 5</option>
-            <option value="6">Product 6</option>
-            <option value="7">Product 7</option>
-            <option value="8">Product 8</option>
-            <option value="9">Product 9</option>
-            <option value="10">Product 10</option>
-            <option value="11">Product 11</option>
-            <option value="12">Product 12</option>
-            <option value="13">Product 13</option>
-            <option value="14">Product 14</option>
-            <option value="15">Product 15</option>
-            <option value="16">Product 16</option>
-            <option value="17">Product 17</option>
-            <option value="18">Product 18</option>
-            <option value="19">Product 19</option>
-            <option value="20">Product 20</option>
-
-            <option value="21">Product 21</option>
-            <option value="22">Product 22</option>
-            <option value="23">Product 23</option>
-            <option value="24">Product 24</option>
-            <option value="25">Product 25</option>
-            <option value="26">Product 26</option>
-            <option value="27">Product 27</option>
-            <option value="28">Product 28</option>
-            <option value="29">Product 29</option>
-            <option value="30">Product 30</option>
-
-            <option value="31">Product 31</option>
-            <option value="32">Product 32</option>
-            <option value="33">Product 33</option>
-            <option value="34">Product 34</option>
-            <option value="35">Product 35</option>
-            <option value="36">Product 36</option>
-            <option value="37">Product 37</option>
-            <option value="38">Product 38</option>
-            <option value="39">Product 39</option>
-            <option value="40">Product 40</option>
-
-            <option value="41">Product 41</option>
-            <option value="42">Product 42</option>
-            <option value="43">Product 43</option>
-            <option value="44">Product 44</option>
-            <option value="45">Product 45</option>
-            <option value="46">Product 46</option>
-            <option value="47">Product 47</option>
-            <option value="48">Product 48</option>
-            <option value="49">Product 49</option>
-            <option value="50">Product 50</option>
-
-            <option value="51">Product 51</option>
-            <option value="52">Product 52</option>
-            <option value="53">Product 53</option>
-            <option value="54">Product 54</option>
-            <option value="55">Product 55</option>
-            <option value="56">Product 56</option>
-            <option value="57">Product 57</option>
-            <option value="58">Product 58</option>
-            <option value="59">Product 59</option>
-            <option value="60">Product 60</option>
-
-            <option value="61">Product 61</option>
-            <option value="62">Product 62</option>
-            <option value="63">Product 63</option>
-            <option value="64">Product 64</option>
-            <option value="65">Product 65</option>
-            <option value="66">Product 66</option>
-            <option value="67">Product 67</option>
-            <option value="68">Product 68</option>
-            <option value="69">Product 69</option>
-            <option value="70">Product 70</option>
-
-            <option value="71">Product 71</option>
-            <option value="72">Product 72</option>
-            <option value="73">Product 73</option>
-            <option value="74">Product 74</option>
-            <option value="75">Product 75</option>
-            <option value="76">Product 76</option>
-            <option value="77">Product 77</option>
-            <option value="78">Product 78</option>
-            <option value="79">Product 79</option>
-            <option value="80">Product 80</option>
-
-            <option value="81">Product 81</option>
-            <option value="82">Product 82</option>
-            <option value="83">Product 83</option>
-            <option value="84">Product 84</option>
-            <option value="85">Product 85</option>
-            <option value="86">Product 86</option>
-            <option value="87">Product 87</option>
-            <option value="88">Product 88</option>
-            <option value="89">Product 89</option>
-            <option value="90">Product 90</option>
-
-            <option value="91">Product 91</option>
-            <option value="92">Product 92</option>
-            <option value="93">Product 93</option>
-            <option value="94">Product 94</option>
-            <option value="95">Product 95</option>
-            <option value="96">Product 96</option>
-            <option value="97">Product 97</option>
-            <option value="98">Product 98</option>
-            <option value="99">Product 99</option>
-            <option value="100">Product 100</option>
+            <!-- 1 - 100 automatically generated -->
 
         </select>
 
@@ -358,10 +312,34 @@
             Product Name:
         </label>
 
+
         <input
             type="text"
             id="productName"
             placeholder="Product Name"
+        >
+
+    </div>
+
+
+    <!-- =========================
+         PRICE
+    ========================= -->
+
+    <div class="row">
+
+        <label>
+            Price (৳):
+        </label>
+
+
+        <input
+            type="number"
+            id="productPrice"
+            class="price-input"
+            placeholder="Product Price"
+            min="0"
+            step="1"
         >
 
     </div>
@@ -376,6 +354,7 @@
         <label>
             Brand:
         </label>
+
 
         <input
             type="text"
@@ -396,6 +375,7 @@
             Category:
         </label>
 
+
         <input
             type="text"
             id="category"
@@ -414,6 +394,7 @@
         <label>
             Color:
         </label>
+
 
         <input
             type="text"
@@ -434,6 +415,7 @@
             Size / Dimension:
         </label>
 
+
         <input
             type="text"
             id="size"
@@ -453,6 +435,7 @@
             Material:
         </label>
 
+
         <input
             type="text"
             id="material"
@@ -463,7 +446,7 @@
 
 
     <!-- =========================
-         DETAILS
+         PRODUCT DETAILS
     ========================= -->
 
     <div class="row">
@@ -471,6 +454,7 @@
         <label>
             Product Details:
         </label>
+
 
         <textarea
             id="productDetails"
@@ -487,7 +471,9 @@
     <div class="button-area">
 
         <button id="saveButton">
-            💾 Save Description
+
+            💾 Save Product
+
         </button>
 
 
@@ -495,7 +481,9 @@
             class="back-button"
             onclick="window.location.href='orders.html'"
         >
+
             ← Back
+
         </button>
 
     </div>
@@ -511,7 +499,7 @@
     <div class="preview">
 
         <h2>
-            Product Description Preview
+            Product Preview
         </h2>
 
 
@@ -535,6 +523,20 @@
             </strong>
 
             <span id="previewName"></span>
+
+        </div>
+
+
+        <div class="preview-item">
+
+            <strong>
+                Price:
+            </strong>
+
+            <span
+                id="previewPrice"
+                class="price-preview"
+            ></span>
 
         </div>
 
@@ -708,62 +710,193 @@ const productSerial =
     );
 
 
+const productName =
+    document.getElementById(
+        "productName"
+    );
+
+
+const productPrice =
+    document.getElementById(
+        "productPrice"
+    );
+
+
 /* =====================================================
-   EXISTING PRODUCT 1-5 DEFAULT DATA
-   আগের তথ্য রাখা হয়েছে
+   CREATE PRODUCT 1-100
+===================================================== */
+
+for (
+    let i = 1;
+    i <= 100;
+    i++
+) {
+
+    const option =
+        document.createElement(
+            "option"
+        );
+
+    option.value = i;
+
+    option.textContent =
+        "Product " + i;
+
+    productSerial.appendChild(
+        option
+    );
+
+}
+
+
+/* =====================================================
+   DEFAULT PRODUCTS
 ===================================================== */
 
 const defaultProducts = {
 
     "1": {
-        name: "Men's Formal Solid Shirt",
-        brand: "RK Store",
-        category: "Men",
-        color: "Black",
-        size: "M, L, XL",
-        material: "Cotton",
+
+        name:
+            "Men's Formal Solid Shirt",
+
+        price:
+            450,
+
+        brand:
+            "RK Store",
+
+        category:
+            "Men",
+
+        color:
+            "Black",
+
+        size:
+            "M, L, XL",
+
+        material:
+            "Cotton",
+
         details:
             "Premium quality formal shirt suitable for regular and formal use."
+
     },
+
 
     "2": {
-        name: "Men's Casual Shirt",
-        brand: "RK Store",
-        category: "Men",
-        color: "",
-        size: "",
-        material: "",
-        details: ""
+
+        name:
+            "Men's Casual Shirt",
+
+        price:
+            400,
+
+        brand:
+            "RK Store",
+
+        category:
+            "Men",
+
+        color:
+            "",
+
+        size:
+            "",
+
+        material:
+            "",
+
+        details:
+            ""
+
     },
+
 
     "3": {
-        name: "Men's Casual Check Shirt",
-        brand: "RK Store",
-        category: "Men",
-        color: "",
-        size: "",
-        material: "",
-        details: ""
+
+        name:
+            "Men's Casual Check Shirt",
+
+        price:
+            480,
+
+        brand:
+            "RK Store",
+
+        category:
+            "Men",
+
+        color:
+            "",
+
+        size:
+            "",
+
+        material:
+            "",
+
+        details:
+            ""
+
     },
+
 
     "4": {
-        name: "Women's Casual Yellow Dress",
-        brand: "RK Store",
-        category: "Women",
-        color: "",
-        size: "",
-        material: "",
-        details: ""
+
+        name:
+            "Women's Casual Yellow Dress",
+
+        price:
+            500,
+
+        brand:
+            "RK Store",
+
+        category:
+            "Women",
+
+        color:
+            "",
+
+        size:
+            "",
+
+        material:
+            "",
+
+        details:
+            ""
+
     },
 
+
     "5": {
-        name: "Women's Casual Dress",
-        brand: "RK Store",
-        category: "Women",
-        color: "",
-        size: "",
-        material: "",
-        details: ""
+
+        name:
+            "Women's Casual Dress",
+
+        price:
+            900,
+
+        brand:
+            "RK Store",
+
+        category:
+            "Women",
+
+        color:
+            "",
+
+        size:
+            "",
+
+        material:
+            "",
+
+        details:
+            ""
+
     }
 
 };
@@ -774,8 +907,11 @@ const defaultProducts = {
 ===================================================== */
 
 onAuthStateChanged(
+
     auth,
+
     async function(user) {
+
 
         /* =========================
            NOT ADMIN
@@ -799,6 +935,7 @@ onAuthStateChanged(
 
             saveButton.disabled =
                 true;
+
 
             setTimeout(
                 function() {
@@ -833,18 +970,15 @@ onAuthStateChanged(
             false;
 
 
-        /* =========================
-           LOAD CURRENT PRODUCT
-        ========================= */
-
         await loadProduct();
 
     }
+
 );
 
 
 /* =====================================================
-   LOAD PRODUCT FROM FIRESTORE
+   LOAD PRODUCT
 ===================================================== */
 
 async function loadProduct() {
@@ -869,11 +1003,9 @@ async function loadProduct() {
             );
 
 
-        /* =========================
-           FIRESTORE DATA EXISTS
-        ========================= */
-
-        if (snapshot.exists()) {
+        if (
+            snapshot.exists()
+        ) {
 
             const data =
                 snapshot.data();
@@ -882,10 +1014,6 @@ async function loadProduct() {
 
         }
 
-
-        /* =========================
-           PRODUCT 1-5 DEFAULT
-        ========================= */
 
         else if (
             defaultProducts[serial]
@@ -898,21 +1026,33 @@ async function loadProduct() {
         }
 
 
-        /* =========================
-           PRODUCT 6-100
-        ========================= */
-
         else {
 
             fillForm({
 
-                name: "",
-                brand: "",
-                category: "",
-                color: "",
-                size: "",
-                material: "",
-                details: ""
+                name:
+                    "Product " + serial,
+
+                price:
+                    0,
+
+                brand:
+                    "",
+
+                category:
+                    "",
+
+                color:
+                    "",
+
+                size:
+                    "",
+
+                material:
+                    "",
+
+                details:
+                    ""
 
             });
 
@@ -930,14 +1070,10 @@ async function loadProduct() {
     catch (error) {
 
         console.error(
-            "Load Description Error:",
+            "Load Product Error:",
             error
         );
 
-
-        /* =========================
-           FALLBACK
-        ========================= */
 
         if (
             defaultProducts[serial]
@@ -953,13 +1089,29 @@ async function loadProduct() {
 
             fillForm({
 
-                name: "",
-                brand: "",
-                category: "",
-                color: "",
-                size: "",
-                material: "",
-                details: ""
+                name:
+                    "Product " + serial,
+
+                price:
+                    0,
+
+                brand:
+                    "",
+
+                category:
+                    "",
+
+                color:
+                    "",
+
+                size:
+                    "",
+
+                material:
+                    "",
+
+                details:
+                    ""
 
             });
 
@@ -980,10 +1132,12 @@ function fillForm(data) {
         data || {};
 
 
-    document.getElementById(
-        "productName"
-    ).value =
+    productName.value =
         data.name || "";
+
+
+    productPrice.value =
+        data.price ?? 0;
 
 
     document.getElementById(
@@ -1028,39 +1182,55 @@ function fillForm(data) {
 
 
 /* =====================================================
-   PRODUCT CHANGE
+   PRODUCT SERIAL CHANGE
 ===================================================== */
 
 productSerial.addEventListener(
+
     "change",
+
     async function() {
 
         await loadProduct();
 
     }
+
 );
 
 
 /* =====================================================
-   SAVE DESCRIPTION
+   SAVE PRODUCT
 ===================================================== */
 
 saveButton.addEventListener(
+
     "click",
+
     async function() {
+
 
         const serial =
             productSerial.value;
 
 
+        const price =
+            Number(
+                productPrice.value
+            );
+
+
         const data = {
 
-            serial: serial,
+            serial:
+                serial,
 
             name:
-                document.getElementById(
-                    "productName"
-                ).value.trim(),
+                productName.value.trim(),
+
+            price:
+                isNaN(price)
+                ? 0
+                : price,
 
             brand:
                 document.getElementById(
@@ -1099,7 +1269,7 @@ saveButton.addEventListener(
 
 
         /* =========================
-           PRODUCT NAME REQUIRED
+           NAME REQUIRED
         ========================= */
 
         if (
@@ -1116,6 +1286,24 @@ saveButton.addEventListener(
         }
 
 
+        /* =========================
+           PRICE VALIDATION
+        ========================= */
+
+        if (
+            data.price < 0
+        ) {
+
+            showMessage(
+                "Please enter a valid Price.",
+                "red"
+            );
+
+            return;
+
+        }
+
+
         saveButton.disabled =
             true;
 
@@ -1124,6 +1312,7 @@ saveButton.addEventListener(
 
 
         try {
+
 
             /* =========================
                SAVE TO FIRESTORE
@@ -1146,7 +1335,7 @@ saveButton.addEventListener(
 
                 "✅ Product " +
                 serial +
-                " description saved successfully!",
+                " saved successfully!",
 
                 "green"
 
@@ -1161,7 +1350,7 @@ saveButton.addEventListener(
         catch (error) {
 
             console.error(
-                "Save Description Error:",
+                "Save Product Error:",
                 error
             );
 
@@ -1182,9 +1371,10 @@ saveButton.addEventListener(
             false;
 
         saveButton.innerText =
-            "💾 Save Description";
+            "💾 Save Product";
 
     }
+
 );
 
 
@@ -1193,6 +1383,7 @@ saveButton.addEventListener(
 ===================================================== */
 
 function updatePreview() {
+
 
     document.getElementById(
         "previewSerial"
@@ -1203,9 +1394,19 @@ function updatePreview() {
     document.getElementById(
         "previewName"
     ).innerText =
-        document.getElementById(
-            "productName"
-        ).value;
+        productName.value;
+
+
+    const price =
+        productPrice.value;
+
+
+    document.getElementById(
+        "previewPrice"
+    ).innerText =
+        price === ""
+        ? ""
+        : "৳" + price;
 
 
     document.getElementById(
