@@ -890,6 +890,7 @@ import {
     initializeApp
 } from "https://www.gstatic.com/firebasejs/12.18.0/firebase-app.js";
 
+
 import {
     getFirestore,
     doc,
@@ -925,7 +926,7 @@ const firebaseConfig = {
 
 
 /* =====================================================
-   INITIALIZE
+   INITIALIZE FIREBASE
 ===================================================== */
 
 const app =
@@ -1017,8 +1018,7 @@ for (
         id: i,
 
         /*
-         * Serial কখনো Firebase-এর
-         * name/price-এর সাথে পরিবর্তন হবে না।
+         * PRODUCT SERIAL IS FIXED
          */
 
         serial: i,
@@ -1120,7 +1120,7 @@ function displayProducts(list) {
                 </h3>
 
                 <p>
-                    Price: ৳${Number(product.price) || 0}
+                    Price: ৳${formatPrice(product.price)}
                 </p>
 
                 <button
@@ -1156,6 +1156,32 @@ function displayProducts(list) {
         list.length === 0
             ? "block"
             : "none";
+
+}
+
+
+/* =====================================================
+   PRICE FORMAT
+===================================================== */
+
+function formatPrice(price) {
+
+    const number =
+        Number(price);
+
+
+    if (
+        !Number.isFinite(number)
+    ) {
+
+        return "0";
+
+    }
+
+
+    return number.toLocaleString(
+        "en-US"
+    );
 
 }
 
@@ -1253,6 +1279,10 @@ function(productId) {
                 ) || 1
             ) + 1;
 
+
+        /*
+         * UPDATE CURRENT PRODUCT DATA
+         */
 
         existingProduct.name =
             product.name;
@@ -1557,92 +1587,112 @@ async function loadFirebaseProduct(
 
 
         if (
-            snapshot.exists()
+            !snapshot.exists()
         ) {
 
-            const data =
-                snapshot.data();
+            return;
+
+        }
 
 
-            /* =========================
-               NAME
-            ========================= */
+        const data =
+            snapshot.data();
+
+
+        /* =================================================
+           PRODUCT NAME
+        ================================================= */
+
+        if (
+            data.name !== undefined
+            &&
+            data.name !== null
+        ) {
+
+            const firebaseName =
+                String(data.name).trim();
+
 
             if (
-                typeof data.name ===
-                "string"
-                &&
-                data.name.trim() !== ""
+                firebaseName !== ""
             ) {
 
                 product.name =
-                    data.name.trim();
+                    firebaseName;
 
             }
 
+        }
 
-            /* =========================
-               PRICE
-            ========================= */
+
+        /* =================================================
+           PRODUCT PRICE
+        ================================================= */
+
+        if (
+            data.price !== undefined
+            &&
+            data.price !== null
+        ) {
+
+            const firebasePrice =
+                Number(data.price);
+
 
             if (
-                data.price !== undefined
-                &&
-                data.price !== null
-                &&
-                data.price !== ""
+                Number.isFinite(
+                    firebasePrice
+                )
             ) {
 
-                const price =
-                    Number(
-                        data.price
-                    );
-
-
-                if (
-                    Number.isFinite(
-                        price
-                    )
-                ) {
-
-                    product.price =
-                        price;
-
-                }
+                product.price =
+                    firebasePrice;
 
             }
 
+        }
 
-            /* =========================
-               CATEGORY
-            ========================= */
+
+        /* =================================================
+           PRODUCT CATEGORY
+        ================================================= */
+
+        if (
+            data.category !== undefined
+            &&
+            data.category !== null
+        ) {
+
+            const firebaseCategory =
+                String(
+                    data.category
+                ).trim();
+
 
             if (
-                typeof data.category ===
-                "string"
-                &&
-                data.category.trim() !== ""
+                firebaseCategory !== ""
             ) {
 
                 product.category =
-                    data.category.trim();
+                    firebaseCategory;
 
             }
 
-
-            /*
-             * IMPORTANT:
-             *
-             * Firebase-এর serial field
-             * থাকলেও Home Page-এর
-             * product.id/serial পরিবর্তন
-             * করা হবে না।
-             *
-             * তাই Product 1 সবসময় 1,
-             * Product 2 সবসময় 2...
-             */
-
         }
+
+
+        /*
+         * IMPORTANT
+         *
+         * Firebase serial কখনো
+         * Home Page-এর ID পরিবর্তন করবে না।
+         *
+         * Product 1 = 1
+         * Product 2 = 2
+         * Product 3 = 3
+         *
+         * সবসময় স্থির থাকবে।
+         */
 
     }
 
@@ -1679,9 +1729,8 @@ async function loadFirebaseProducts() {
     try {
 
         /*
-         * Product 1-100-এর
-         * একই ID দিয়ে Firebase
-         * থেকে data নেওয়া হচ্ছে।
+         * Firebase থেকে Product 1-100
+         * আলাদা আলাদা document পড়া হচ্ছে।
          */
 
         const promises =
@@ -1702,8 +1751,8 @@ async function loadFirebaseProducts() {
 
 
         /*
-         * Firebase data আসার পরে
-         * Home Page আবার render হবে।
+         * Firebase data সম্পূর্ণ
+         * আসার পরে Home Page render হবে।
          */
 
         searchProducts();
@@ -1750,7 +1799,7 @@ updateCartCount();
 
 
 /* =====================================================
-   LOAD FIREBASE
+   LOAD FIREBASE DATA
 ===================================================== */
 
 loadFirebaseProducts();
