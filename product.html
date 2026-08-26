@@ -5,7 +5,10 @@
 
     <meta charset="UTF-8">
 
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta
+        name="viewport"
+        content="width=device-width, initial-scale=1.0"
+    >
 
     <title>Product Details</title>
 
@@ -28,7 +31,6 @@
             padding: 20px;
             margin: 0;
         }
-
 
         /* =========================
            PRODUCT DETAILS
@@ -53,7 +55,6 @@
             width: calc(100% - 20px);
         }
 
-
         /* =========================
            IMAGE SLIDER
         ========================= */
@@ -72,7 +73,6 @@
             border-radius: 10px;
         }
 
-
         .image-slider img {
             width: 100%;
 
@@ -86,7 +86,6 @@
 
             background-color: #f5f5f5;
         }
-
 
         /* =========================
            SLIDER BUTTONS
@@ -125,22 +124,18 @@
             z-index: 5;
         }
 
-
         .slider-button:hover {
             background-color:
                 rgba(0,0,0,0.8);
         }
 
-
         .prev-button {
             left: 10px;
         }
 
-
         .next-button {
             right: 10px;
         }
-
 
         /* =========================
            IMAGE DOTS
@@ -151,7 +146,6 @@
 
             margin-top: 12px;
         }
-
 
         .image-dot {
             display: inline-block;
@@ -169,13 +163,11 @@
             cursor: pointer;
         }
 
-
         .image-dot.active {
             background-color: #ff6600;
 
             transform: scale(1.2);
         }
-
 
         /* =========================
            ACTION BUTTONS
@@ -199,11 +191,9 @@
             font-size: 15px;
         }
 
-
         button.action-button:hover {
             background-color: #e65c00;
         }
-
 
         /* =========================
            PRODUCT DESCRIPTION
@@ -227,7 +217,6 @@
                 0 2px 6px rgba(0,0,0,0.08);
         }
 
-
         .product-description h3 {
 
             margin: 0 0 15px 0;
@@ -242,7 +231,6 @@
 
             font-size: 20px;
         }
-
 
         .description-row {
 
@@ -259,13 +247,9 @@
             line-height: 1.5;
         }
 
-
         .description-row:last-child {
-
             border-bottom: none;
-
         }
-
 
         .description-label {
 
@@ -276,7 +260,6 @@
             color: #333;
         }
 
-
         .description-value {
 
             width: 55%;
@@ -285,11 +268,6 @@
 
             word-break: break-word;
         }
-
-
-        /* =========================
-           DESCRIPTION LOADING
-        ========================= */
 
         .description-loading {
 
@@ -301,7 +279,6 @@
 
             margin-top: 10px;
         }
-
 
         /* =========================
            MOBILE
@@ -324,17 +301,13 @@
                 box-shadow: none;
             }
 
-
             .image-slider {
                 max-width: 100%;
             }
 
-
             .image-slider img {
-
                 height: 350px;
             }
-
 
             .slider-button {
 
@@ -345,41 +318,27 @@
                 font-size: 21px;
             }
 
-
             .product-description {
 
                 margin-top: 20px;
 
                 padding: 12px;
-
             }
-
 
             .product-description h3 {
-
                 font-size: 18px;
-
             }
-
 
             .description-row {
-
                 font-size: 14px;
-
             }
-
 
             .description-label {
-
                 width: 45%;
-
             }
 
-
             .description-value {
-
                 width: 55%;
-
             }
 
         }
@@ -392,1271 +351,1352 @@
 <body>
 
 
-    <h1>
-        Product Details
-    </h1>
+<h1>
+    Product Details
+</h1>
 
 
-    <div class="product-details">
+<div class="product-details">
 
 
-        <!-- =========================
-             IMAGE SLIDER
-        ========================= -->
+    <!-- =========================
+         IMAGE SLIDER
+    ========================= -->
 
-        <div class="image-slider">
+    <div class="image-slider">
 
-
-            <img
-                id="productImage"
-                src="product1.jpg"
-                alt="Product"
-            >
-
-
-            <button
-                type="button"
-                class="slider-button prev-button"
-                id="prevButton">
-
-                ‹
-
-            </button>
-
-
-            <button
-                type="button"
-                class="slider-button next-button"
-                id="nextButton">
-
-                ›
-
-            </button>
-
-
-        </div>
-
-
-        <!-- =========================
-             IMAGE DOTS
-        ========================= -->
-
-        <div
-            class="image-dots"
-            id="imageDots">
-        </div>
-
-
-        <!-- =========================
-             PRODUCT INFORMATION
-        ========================= -->
-
-        <h2 id="productName">
-            Men's Formal Solid Shirt
-        </h2>
-
-
-        <p id="productPrice">
-            Price: ৳450
-        </p>
-
-
-        <p>
-            This is a product from RK Store.
-        </p>
-
-
-        <!-- =========================
-             ADD TO CART
-        ========================= -->
+        <img
+            id="productImage"
+            src="product1.jpg"
+            alt="Product"
+        >
 
         <button
             type="button"
-            class="action-button"
-            id="addToCart">
+            class="slider-button prev-button"
+            id="prevButton">
 
-            Add to Cart
+            ‹
 
         </button>
-
-
-        <!-- =========================
-             BUY NOW
-        ========================= -->
 
         <button
             type="button"
-            class="action-button"
-            id="buyNow">
+            class="slider-button next-button"
+            id="nextButton">
 
-            Buy Now
+            ›
 
         </button>
-
-
-        <!-- =========================
-             PRODUCT DESCRIPTION
-        ========================= -->
-
-        <div class="product-description">
-
-            <h3>
-                Product Description
-            </h3>
-
-
-            <div class="description-row">
-
-                <div class="description-label">
-                    Product Serial Number:
-                </div>
-
-                <div
-                    class="description-value"
-                    id="productSerial">
-                    1
-                </div>
-
-            </div>
-
-
-            <div class="description-row">
-
-                <div class="description-label">
-                    Product Name:
-                </div>
-
-                <div
-                    class="description-value"
-                    id="descriptionProductName">
-                    Men's Formal Solid Shirt
-                </div>
-
-            </div>
-
-
-            <div class="description-row">
-
-                <div class="description-label">
-                    Brand:
-                </div>
-
-                <div
-                    class="description-value"
-                    id="productBrand">
-                    RK Store
-                </div>
-
-            </div>
-
-
-            <div class="description-row">
-
-                <div class="description-label">
-                    Category:
-                </div>
-
-                <div
-                    class="description-value"
-                    id="productCategory">
-                    Men
-                </div>
-
-            </div>
-
-
-            <div class="description-row">
-
-                <div class="description-label">
-                    Color:
-                </div>
-
-                <div
-                    class="description-value"
-                    id="productColor">
-                    Black
-                </div>
-
-            </div>
-
-
-            <div class="description-row">
-
-                <div class="description-label">
-                    Size:
-                </div>
-
-                <div
-                    class="description-value"
-                    id="productSize">
-                    M, L, XL
-                </div>
-
-            </div>
-
-
-            <div class="description-row">
-
-                <div class="description-label">
-                    Material:
-                </div>
-
-                <div
-                    class="description-value"
-                    id="productMaterial">
-                    Cotton
-                </div>
-
-            </div>
-
-
-            <div class="description-row">
-
-                <div class="description-label">
-                    Product Details:
-                </div>
-
-                <div
-                    class="description-value"
-                    id="productDetailsText">
-                    Premium quality formal shirt suitable for regular and formal use.
-                </div>
-
-            </div>
-
-
-            <div
-                class="description-loading"
-                id="descriptionLoading">
-            </div>
-
-        </div>
-
 
     </div>
 
 
-
     <!-- =========================
-         FIREBASE + JAVASCRIPT
+         IMAGE DOTS
     ========================= -->
 
-    <script type="module">
+    <div
+        class="image-dots"
+        id="imageDots">
+    </div>
 
 
-        /* =========================
-           FIREBASE IMPORT
-        ========================= */
+    <!-- =========================
+         PRODUCT INFORMATION
+    ========================= -->
 
-        import {
-            initializeApp
-        } from "https://www.gstatic.com/firebasejs/12.18.0/firebase-app.js";
-
-
-        import {
-            getFirestore,
-            doc,
-            getDoc
-        } from "https://www.gstatic.com/firebasejs/12.18.0/firebase-firestore.js";
+    <h2 id="productName">
+        Men's Formal Solid Shirt
+    </h2>
 
 
+    <p id="productPrice">
+        Price: ৳450
+    </p>
 
-        /* =========================
-           FIREBASE CONFIG
-           SAME AS ADMIN PAGE
-        ========================= */
 
-        const firebaseConfig = {
+    <p>
+        This is a product from RK Store.
+    </p>
 
-            apiKey:
-                "AIzaSyCkBQaphKKz_Wxd1GgKAVoxqR4taKvzdEM",
 
-            authDomain:
-                "rk-store-5fb24.firebaseapp.com",
+    <!-- =========================
+         ADD TO CART
+    ========================= -->
 
-            projectId:
-                "rk-store-5fb24",
+    <button
+        type="button"
+        class="action-button"
+        id="addToCart">
 
-            storageBucket:
-                "rk-store-5fb24.firebasestorage.app",
+        Add to Cart
 
-            messagingSenderId:
-                "407275549697",
+    </button>
 
-            appId:
-                "1:407275549697:web:41043b49bf7182cecffc00"
+
+    <!-- =========================
+         BUY NOW
+    ========================= -->
+
+    <button
+        type="button"
+        class="action-button"
+        id="buyNow">
+
+        Buy Now
+
+    </button>
+
+
+    <!-- =========================
+         PRODUCT DESCRIPTION
+    ========================= -->
+
+    <div class="product-description">
+
+        <h3>
+            Product Description
+        </h3>
+
+
+        <div class="description-row">
+
+            <div class="description-label">
+                Product Serial Number:
+            </div>
+
+            <div
+                class="description-value"
+                id="productSerial">
+                1
+            </div>
+
+        </div>
+
+
+        <div class="description-row">
+
+            <div class="description-label">
+                Product Name:
+            </div>
+
+            <div
+                class="description-value"
+                id="descriptionProductName">
+                Men's Formal Solid Shirt
+            </div>
+
+        </div>
+
+
+        <div class="description-row">
+
+            <div class="description-label">
+                Brand:
+            </div>
+
+            <div
+                class="description-value"
+                id="productBrand">
+                RK Store
+            </div>
+
+        </div>
+
+
+        <div class="description-row">
+
+            <div class="description-label">
+                Category:
+            </div>
+
+            <div
+                class="description-value"
+                id="productCategory">
+                Men
+            </div>
+
+        </div>
+
+
+        <div class="description-row">
+
+            <div class="description-label">
+                Color:
+            </div>
+
+            <div
+                class="description-value"
+                id="productColor">
+                Black
+            </div>
+
+        </div>
+
+
+        <div class="description-row">
+
+            <div class="description-label">
+                Size:
+            </div>
+
+            <div
+                class="description-value"
+                id="productSize">
+                M, L, XL
+            </div>
+
+        </div>
+
+
+        <div class="description-row">
+
+            <div class="description-label">
+                Material:
+            </div>
+
+            <div
+                class="description-value"
+                id="productMaterial">
+                Cotton
+            </div>
+
+        </div>
+
+
+        <div class="description-row">
+
+            <div class="description-label">
+                Product Details:
+            </div>
+
+            <div
+                class="description-value"
+                id="productDetailsText">
+                Premium quality formal shirt suitable for regular and formal use.
+            </div>
+
+        </div>
+
+
+        <div
+            class="description-loading"
+            id="descriptionLoading">
+        </div>
+
+    </div>
+
+
+</div>
+
+
+<script type="module">
+
+
+/* =====================================================
+   FIREBASE IMPORT
+===================================================== */
+
+import {
+    initializeApp
+} from "https://www.gstatic.com/firebasejs/12.18.0/firebase-app.js";
+
+
+import {
+    getFirestore,
+    doc,
+    getDoc
+} from "https://www.gstatic.com/firebasejs/12.18.0/firebase-firestore.js";
+
+
+/* =====================================================
+   FIREBASE CONFIG
+===================================================== */
+
+const firebaseConfig = {
+
+    apiKey:
+        "AIzaSyCkBQaphKKz_Wxd1GgKAVoxqR4taKvzdEM",
+
+    authDomain:
+        "rk-store-5fb24.firebaseapp.com",
+
+    projectId:
+        "rk-store-5fb24",
+
+    storageBucket:
+        "rk-store-5fb24.firebasestorage.app",
+
+    messagingSenderId:
+        "407275549697",
+
+    appId:
+        "1:407275549697:web:41043b49bf7182cecffc00"
+
+};
+
+
+/* =====================================================
+   INITIALIZE FIREBASE
+===================================================== */
+
+const app =
+    initializeApp(firebaseConfig);
+
+const db =
+    getFirestore(app);
+
+
+/* =====================================================
+   GET PRODUCT NUMBER
+===================================================== */
+
+const params =
+    new URLSearchParams(
+        window.location.search
+    );
+
+const product =
+    params.get("product");
+
+
+/* =====================================================
+   CHECK PRODUCT NUMBER
+===================================================== */
+
+const productNumber =
+    parseInt(product);
+
+
+if (
+    !productNumber ||
+    productNumber < 1 ||
+    productNumber > 100
+) {
+
+    document.getElementById(
+        "productName"
+    ).textContent =
+        "Product Not Found";
+
+    document.getElementById(
+        "productPrice"
+    ).textContent =
+        "";
+
+}
+
+
+/* =====================================================
+   PRODUCT DATA
+   আগের Product 1-5 সম্পূর্ণ রাখা হয়েছে
+===================================================== */
+
+const productData = {
+
+
+    "1": {
+
+        images: [
+
+            "product1/product1.jpg",
+            "product1/product2.jpg",
+            "product1/product3.jpg",
+            "product1/product4.jpg",
+            "product1/product5.jpg",
+            "product1/product6.jpg"
+
+        ],
+
+        name:
+            "Men's Formal Solid Shirt",
+
+        price:
+            450,
+
+        brand:
+            "RK Store",
+
+        category:
+            "Men",
+
+        color:
+            "Black",
+
+        size:
+            "M, L, XL",
+
+        material:
+            "Cotton",
+
+        details:
+            "Premium quality formal shirt suitable for regular and formal use."
+
+    },
+
+
+    "2": {
+
+        images: [
+
+            "product2.jpg",
+            "product2-2.jpg",
+            "product2-3.jpg",
+            "product2-4.jpg",
+            "product2-5.jpg",
+            "product2-6.jpg",
+            "product2-7.jpg"
+
+        ],
+
+        name:
+            "Men's Casual Shirt",
+
+        price:
+            400,
+
+        brand:
+            "RK Store",
+
+        category:
+            "Men",
+
+        color:
+            "Blue",
+
+        size:
+            "M, L, XL",
+
+        material:
+            "Cotton",
+
+        details:
+            "Comfortable casual shirt suitable for everyday use."
+
+    },
+
+
+    "3": {
+
+        images: [
+
+            "product3.jpg",
+            "product3-2.jpg",
+            "product3-3.jpg",
+            "product3-4.jpg",
+            "product3-5.jpg",
+            "product3-6.jpg",
+            "product3-7.jpg"
+
+        ],
+
+        name:
+            "Men's Casual Check Shirt",
+
+        price:
+            480,
+
+        brand:
+            "RK Store",
+
+        category:
+            "Men",
+
+        color:
+            "Check Pattern",
+
+        size:
+            "M, L, XL",
+
+        material:
+            "Cotton",
+
+        details:
+            "Stylish checked casual shirt designed for comfortable everyday wear."
+
+    },
+
+
+    "4": {
+
+        images: [
+
+            "product4.jpg",
+            "product4-2.jpg",
+            "product4-3.jpg",
+            "product4-4.jpg",
+            "product4-5.jpg",
+            "product4-6.jpg",
+            "product4-7.jpg"
+
+        ],
+
+        name:
+            "Women's Casual Yellow Dress",
+
+        price:
+            500,
+
+        brand:
+            "RK Store",
+
+        category:
+            "Women",
+
+        color:
+            "Yellow",
+
+        size:
+            "M, L, XL",
+
+        material:
+            "Cotton",
+
+        details:
+            "Beautiful casual yellow dress suitable for regular and casual occasions."
+
+    },
+
+
+    "5": {
+
+        images: [
+
+            "product5.jpg",
+            "product5-2.jpg",
+            "product5-3.jpg",
+            "product5-4.jpg",
+            "product5-5.jpg",
+            "product5-6.jpg",
+            "product5-7.jpg"
+
+        ],
+
+        name:
+            "Women's Casual Dress",
+
+        price:
+            900,
+
+        brand:
+            "RK Store",
+
+        category:
+            "Women",
+
+        color:
+            "Mixed",
+
+        size:
+            "M, L, XL",
+
+        material:
+            "Cotton",
+
+        details:
+            "Comfortable women's casual dress with a stylish design for everyday use."
+
+    }
+
+};
+
+
+/* =====================================================
+   PRODUCT 6-100 AUTOMATIC DATA
+===================================================== */
+
+for (
+    let i = 6;
+    i <= 100;
+    i++
+) {
+
+    productData[String(i)] = {
+
+        images: [
+
+            "product" + i + ".jpg"
+
+        ],
+
+        name:
+            "Product " + i,
+
+        price:
+            0,
+
+        brand:
+            "RK Store",
+
+        category:
+            "",
+
+        color:
+            "",
+
+        size:
+            "",
+
+        material:
+            "",
+
+        details:
+            ""
+
+    };
+
+}
+
+
+/* =====================================================
+   SELECT PRODUCT
+===================================================== */
+
+let currentProduct =
+    productData[product];
+
+
+/* =====================================================
+   IF PRODUCT EXISTS
+===================================================== */
+
+if (currentProduct) {
+
+    showProduct(
+        currentProduct
+    );
+
+}
+
+
+/* =====================================================
+   SLIDER VARIABLES
+===================================================== */
+
+let currentImageIndex = 0;
+
+let productImages = [];
+
+
+/* =====================================================
+   SHOW PRODUCT
+===================================================== */
+
+function showProduct(data) {
+
+    productImages =
+        data.images || [];
+
+    currentImageIndex = 0;
+
+
+    if (
+        productImages.length > 0
+    ) {
+
+        document.getElementById(
+            "productImage"
+        ).src =
+            productImages[0];
+
+        document.getElementById(
+            "productImage"
+        ).alt =
+            data.name || "Product";
+
+    }
+
+
+    document.getElementById(
+        "productName"
+    ).textContent =
+        data.name || "Product";
+
+
+    document.getElementById(
+        "productPrice"
+    ).textContent =
+        "Price: ৳" +
+        (data.price || 0);
+
+
+    showDescription(
+        data
+    );
+
+
+    createImageDots();
+
+}
+
+
+/* =====================================================
+   SHOW DESCRIPTION
+===================================================== */
+
+function showDescription(data) {
+
+    document.getElementById(
+        "productSerial"
+    ).textContent =
+        product || "";
+
+
+    document.getElementById(
+        "descriptionProductName"
+    ).textContent =
+        data.name || "";
+
+
+    document.getElementById(
+        "productBrand"
+    ).textContent =
+        data.brand || "";
+
+
+    document.getElementById(
+        "productCategory"
+    ).textContent =
+        data.category || "";
+
+
+    document.getElementById(
+        "productColor"
+    ).textContent =
+        data.color || "";
+
+
+    document.getElementById(
+        "productSize"
+    ).textContent =
+        data.size || "";
+
+
+    document.getElementById(
+        "productMaterial"
+    ).textContent =
+        data.material || "";
+
+
+    document.getElementById(
+        "productDetailsText"
+    ).textContent =
+        data.details || "";
+
+}
+
+
+/* =====================================================
+   CREATE IMAGE DOTS
+===================================================== */
+
+function createImageDots() {
+
+    const dotsContainer =
+        document.getElementById(
+            "imageDots"
+        );
+
+
+    dotsContainer.innerHTML =
+        "";
+
+
+    productImages.forEach(
+        function(image, index) {
+
+            const dot =
+                document.createElement(
+                    "span"
+                );
+
+
+            dot.className =
+                "image-dot";
+
+
+            if (
+                index === 0
+            ) {
+
+                dot.classList.add(
+                    "active"
+                );
+
+            }
+
+
+            dot.addEventListener(
+                "click",
+                function() {
+
+                    showImage(
+                        index
+                    );
+
+                }
+            );
+
+
+            dotsContainer.appendChild(
+                dot
+            );
+
+        }
+    );
+
+}
+
+
+/* =====================================================
+   LOAD FIRESTORE DESCRIPTION
+   Product 1-100
+===================================================== */
+
+async function loadFirebaseDescription() {
+
+    if (
+        !product ||
+        productNumber < 1 ||
+        productNumber > 100
+    ) {
+
+        return;
+
+    }
+
+
+    const loading =
+        document.getElementById(
+            "descriptionLoading"
+        );
+
+
+    try {
+
+        loading.textContent =
+            "Loading latest product information...";
+
+
+        const productRef =
+            doc(
+                db,
+                "productDescriptions",
+                product
+            );
+
+
+        const snapshot =
+            await getDoc(
+                productRef
+            );
+
+
+        if (
+            snapshot.exists()
+        ) {
+
+            const firebaseData =
+                snapshot.data();
+
+
+            /*
+             * Firestore-এর তথ্য
+             * পুরোনো তথ্যের উপর বসানো হবে।
+             */
+
+            currentProduct = {
+
+                ...currentProduct,
+
+                name:
+                    firebaseData.name ||
+                    currentProduct.name,
+
+                brand:
+                    firebaseData.brand ||
+                    currentProduct.brand,
+
+                category:
+                    firebaseData.category ||
+                    currentProduct.category,
+
+                color:
+                    firebaseData.color ||
+                    currentProduct.color,
+
+                size:
+                    firebaseData.size ||
+                    currentProduct.size,
+
+                material:
+                    firebaseData.material ||
+                    currentProduct.material,
+
+                details:
+                    firebaseData.details ||
+                    currentProduct.details
+
+            };
+
+
+            /*
+             * Updated product screen-এ দেখানো
+             */
+
+            showProduct(
+                currentProduct
+            );
+
+        }
+
+
+        loading.textContent =
+            "";
+
+    }
+
+    catch (error) {
+
+        console.error(
+            "Firebase Description Error:",
+            error
+        );
+
+
+        /*
+         * Firebase না চললেও
+         * পুরোনো product data থাকবে।
+         */
+
+        loading.textContent =
+            "";
+
+    }
+
+}
+
+
+/* =====================================================
+   LOAD FIRESTORE
+===================================================== */
+
+loadFirebaseDescription();
+
+
+/* =====================================================
+   SHOW IMAGE
+===================================================== */
+
+function showImage(index) {
+
+    if (
+        productImages.length === 0
+    ) {
+
+        return;
+
+    }
+
+
+    currentImageIndex =
+        index;
+
+
+    document.getElementById(
+        "productImage"
+    ).src =
+        productImages[
+            currentImageIndex
+        ];
+
+
+    const dots =
+        document.querySelectorAll(
+            ".image-dot"
+        );
+
+
+    dots.forEach(
+        function(dot, i) {
+
+            dot.classList.remove(
+                "active"
+            );
+
+
+            if (
+                i === currentImageIndex
+            ) {
+
+                dot.classList.add(
+                    "active"
+                );
+
+            }
+
+        }
+    );
+
+}
+
+
+/* =====================================================
+   NEXT IMAGE
+===================================================== */
+
+document.getElementById(
+    "nextButton"
+).addEventListener(
+    "click",
+    function() {
+
+        if (
+            productImages.length === 0
+        ) {
+
+            return;
+
+        }
+
+
+        currentImageIndex++;
+
+
+        if (
+            currentImageIndex >=
+            productImages.length
+        ) {
+
+            currentImageIndex = 0;
+
+        }
+
+
+        showImage(
+            currentImageIndex
+        );
+
+    }
+);
+
+
+/* =====================================================
+   PREVIOUS IMAGE
+===================================================== */
+
+document.getElementById(
+    "prevButton"
+).addEventListener(
+    "click",
+    function() {
+
+        if (
+            productImages.length === 0
+        ) {
+
+            return;
+
+        }
+
+
+        currentImageIndex--;
+
+
+        if (
+            currentImageIndex < 0
+        ) {
+
+            currentImageIndex =
+                productImages.length - 1;
+
+        }
+
+
+        showImage(
+            currentImageIndex
+        );
+
+    }
+);
+
+
+/* =====================================================
+   MOBILE SWIPE
+===================================================== */
+
+let touchStartX = 0;
+
+let touchEndX = 0;
+
+
+const imageSlider =
+    document.querySelector(
+        ".image-slider"
+    );
+
+
+imageSlider.addEventListener(
+    "touchstart",
+    function(event) {
+
+        touchStartX =
+            event.changedTouches[0].screenX;
+
+    }
+);
+
+
+imageSlider.addEventListener(
+    "touchend",
+    function(event) {
+
+        touchEndX =
+            event.changedTouches[0].screenX;
+
+        handleSwipe();
+
+    }
+);
+
+
+/* =====================================================
+   HANDLE SWIPE
+===================================================== */
+
+function handleSwipe() {
+
+    const swipeDistance =
+        touchEndX - touchStartX;
+
+
+    if (
+        swipeDistance < -50
+    ) {
+
+        currentImageIndex++;
+
+
+        if (
+            currentImageIndex >=
+            productImages.length
+        ) {
+
+            currentImageIndex = 0;
+
+        }
+
+
+        showImage(
+            currentImageIndex
+        );
+
+    }
+
+    else if (
+        swipeDistance > 50
+    ) {
+
+        currentImageIndex--;
+
+
+        if (
+            currentImageIndex < 0
+        ) {
+
+            currentImageIndex =
+                productImages.length - 1;
+
+        }
+
+
+        showImage(
+            currentImageIndex
+        );
+
+    }
+
+}
+
+
+/* =====================================================
+   ADD TO CART
+===================================================== */
+
+document.getElementById(
+    "addToCart"
+).addEventListener(
+    "click",
+    function() {
+
+        if (
+            !currentProduct
+        ) {
+
+            alert(
+                "Product not found!"
+            );
+
+            return;
+
+        }
+
+
+        let cart =
+            JSON.parse(
+                localStorage.getItem(
+                    "cart"
+                )
+            ) || [];
+
+
+        const cartItem = {
+
+            name:
+                currentProduct.name,
+
+            price:
+                currentProduct.price,
+
+            image:
+                currentProduct.images[0],
+
+            quantity:
+                1
 
         };
 
 
-
-        /* =========================
-           INITIALIZE FIREBASE
-        ========================= */
-
-        const app =
-            initializeApp(firebaseConfig);
-
-
-        const db =
-            getFirestore(app);
-
-
-
-        /* =========================
-           GET PRODUCT NUMBER
-        ========================= */
-
-        const params =
-            new URLSearchParams(
-                window.location.search
+        const existingProduct =
+            cart.find(
+                item =>
+                    item.name ===
+                    currentProduct.name
             );
 
 
-        const product =
-            params.get("product");
+        if (
+            existingProduct
+        ) {
 
+            existingProduct.quantity +=
+                1;
 
+        }
 
-        /* =========================
-           PRODUCT DATA
-           IMAGES + FALLBACK DATA
-        ========================= */
+        else {
 
-        const productData = {
+            cart.push(
+                cartItem
+            );
 
+        }
 
-            "1": {
 
-                images: [
+        localStorage.setItem(
+            "cart",
+            JSON.stringify(cart)
+        );
 
-                    "product1/product1.jpg",
-                    "product1/product2.jpg",
-                    "product1/product3.jpg",
-                    "product1/product4.jpg",
-                    "product1/product5.jpg",
-                    "product1/product6.jpg"
 
-                ],
+        alert(
+            currentProduct.name +
+            " added to cart!"
+        );
 
-                name:
-                    "Men's Formal Solid Shirt",
+    }
+);
 
-                price:
-                    450,
 
-                brand:
-                    "RK Store",
+/* =====================================================
+   BUY NOW
+===================================================== */
 
-                category:
-                    "Men",
+document.getElementById(
+    "buyNow"
+).addEventListener(
+    "click",
+    function() {
 
-                color:
-                    "Black",
+        if (
+            !currentProduct
+        ) {
 
-                size:
-                    "M, L, XL",
+            alert(
+                "Product not found!"
+            );
 
-                material:
-                    "Cotton",
+            return;
 
-                details:
-                    "Premium quality formal shirt suitable for regular and formal use."
+        }
 
-            },
 
+        let cart =
+            JSON.parse(
+                localStorage.getItem(
+                    "cart"
+                )
+            ) || [];
 
-            "2": {
 
-                images: [
+        const cartItem = {
 
-                    "product2.jpg",
-                    "product2-2.jpg",
-                    "product2-3.jpg",
-                    "product2-4.jpg",
-                    "product2-5.jpg",
-                    "product2-6.jpg",
-                    "product2-7.jpg"
+            name:
+                currentProduct.name,
 
-                ],
+            price:
+                currentProduct.price,
 
-                name:
-                    "Men's Casual Shirt",
+            image:
+                currentProduct.images[0],
 
-                price:
-                    400,
-
-                brand:
-                    "RK Store",
-
-                category:
-                    "Men",
-
-                color:
-                    "Blue",
-
-                size:
-                    "M, L, XL",
-
-                material:
-                    "Cotton",
-
-                details:
-                    "Comfortable casual shirt suitable for everyday use."
-
-            },
-
-
-            "3": {
-
-                images: [
-
-                    "product3.jpg",
-                    "product3-2.jpg",
-                    "product3-3.jpg",
-                    "product3-4.jpg",
-                    "product3-5.jpg",
-                    "product3-6.jpg",
-                    "product3-7.jpg"
-
-                ],
-
-                name:
-                    "Men's Casual Check Shirt",
-
-                price:
-                    480,
-
-                brand:
-                    "RK Store",
-
-                category:
-                    "Men",
-
-                color:
-                    "Check Pattern",
-
-                size:
-                    "M, L, XL",
-
-                material:
-                    "Cotton",
-
-                details:
-                    "Stylish checked casual shirt designed for comfortable everyday wear."
-
-            },
-
-
-            "4": {
-
-                images: [
-
-                    "product4.jpg",
-                    "product4-2.jpg",
-                    "product4-3.jpg",
-                    "product4-4.jpg",
-                    "product4-5.jpg",
-                    "product4-6.jpg",
-                    "product4-7.jpg"
-
-                ],
-
-                name:
-                    "Women's Casual Yellow Dress",
-
-                price:
-                    500,
-
-                brand:
-                    "RK Store",
-
-                category:
-                    "Women",
-
-                color:
-                    "Yellow",
-
-                size:
-                    "M, L, XL",
-
-                material:
-                    "Cotton",
-
-                details:
-                    "Beautiful casual yellow dress suitable for regular and casual occasions."
-
-            },
-
-
-            "5": {
-
-                images: [
-
-                    "product5.jpg",
-                    "product5-2.jpg",
-                    "product5-3.jpg",
-                    "product5-4.jpg",
-                    "product5-5.jpg",
-                    "product5-6.jpg",
-                    "product5-7.jpg"
-
-                ],
-
-                name:
-                    "Women's Casual Dress",
-
-                price:
-                    900,
-
-                brand:
-                    "RK Store",
-
-                category:
-                    "Women",
-
-                color:
-                    "Mixed",
-
-                size:
-                    "M, L, XL",
-
-                material:
-                    "Cotton",
-
-                details:
-                    "Comfortable women's casual dress with a stylish design for everyday use."
-
-            }
+            quantity:
+                1
 
         };
 
 
-
-        /* =========================
-           SELECT PRODUCT
-        ========================= */
-
-        const selectedProduct =
-            productData[product];
-
-
-
-        /* =========================
-           SLIDER VARIABLES
-        ========================= */
-
-        let currentImageIndex = 0;
-
-        let productImages = [];
-
-
-
-        /* =========================
-           SHOW SELECTED PRODUCT
-        ========================= */
-
-        if (selectedProduct) {
-
-
-            productImages =
-                selectedProduct.images;
-
-
-            document.getElementById(
-                "productImage"
-            ).src =
-                productImages[0];
-
-
-            document.getElementById(
-                "productImage"
-            ).alt =
-                selectedProduct.name;
-
-
-            document.getElementById(
-                "productName"
-            ).textContent =
-                selectedProduct.name;
-
-
-            document.getElementById(
-                "productPrice"
-            ).textContent =
-                "Price: ৳" +
-                selectedProduct.price;
-
-
-
-            /* =========================
-               FALLBACK DESCRIPTION
-            ========================= */
-
-            showDescription(
-                selectedProduct
+        const existingProduct =
+            cart.find(
+                item =>
+                    item.name ===
+                    currentProduct.name
             );
 
 
+        if (
+            existingProduct
+        ) {
 
-            /* =========================
-               CREATE IMAGE DOTS
-            ========================= */
-
-            const dotsContainer =
-                document.getElementById(
-                    "imageDots"
-                );
-
-
-            dotsContainer.innerHTML = "";
-
-
-            productImages.forEach(
-                function(image, index) {
-
-
-                    const dot =
-                        document.createElement(
-                            "span"
-                        );
-
-
-                    dot.className =
-                        "image-dot";
-
-
-                    if (index === 0) {
-
-                        dot.classList.add(
-                            "active"
-                        );
-
-                    }
-
-
-                    dot.addEventListener(
-                        "click",
-                        function() {
-
-                            showImage(index);
-
-                        }
-                    );
-
-
-                    dotsContainer.appendChild(
-                        dot
-                    );
-
-                }
-            );
-
+            existingProduct.quantity +=
+                1;
 
         }
 
+        else {
 
-
-        /* =========================
-           SHOW DESCRIPTION
-        ========================= */
-
-        function showDescription(data) {
-
-
-            document.getElementById(
-                "productSerial"
-            ).textContent =
-                product;
-
-
-            document.getElementById(
-                "descriptionProductName"
-            ).textContent =
-                data.name || "";
-
-
-            document.getElementById(
-                "productBrand"
-            ).textContent =
-                data.brand || "";
-
-
-            document.getElementById(
-                "productCategory"
-            ).textContent =
-                data.category || "";
-
-
-            document.getElementById(
-                "productColor"
-            ).textContent =
-                data.color || "";
-
-
-            document.getElementById(
-                "productSize"
-            ).textContent =
-                data.size || "";
-
-
-            document.getElementById(
-                "productMaterial"
-            ).textContent =
-                data.material || "";
-
-
-            document.getElementById(
-                "productDetailsText"
-            ).textContent =
-                data.details || "";
-
-        }
-
-
-
-        /* =========================
-           LOAD DESCRIPTION FROM FIRESTORE
-        ========================= */
-
-        async function loadFirebaseDescription() {
-
-
-            if (!selectedProduct) {
-
-                return;
-
-            }
-
-
-            const loading =
-                document.getElementById(
-                    "descriptionLoading"
-                );
-
-
-            try {
-
-
-                loading.textContent =
-                    "Loading latest product information...";
-
-
-                const productRef =
-                    doc(
-                        db,
-                        "productDescriptions",
-                        product
-                    );
-
-
-                const snapshot =
-                    await getDoc(
-                        productRef
-                    );
-
-
-                if (
-                    snapshot.exists()
-                ) {
-
-
-                    const firebaseData =
-                        snapshot.data();
-
-
-                    const updatedProduct = {
-
-                        name:
-                            firebaseData.name ||
-                            selectedProduct.name,
-
-                        brand:
-                            firebaseData.brand ||
-                            selectedProduct.brand,
-
-                        category:
-                            firebaseData.category ||
-                            selectedProduct.category,
-
-                        color:
-                            firebaseData.color ||
-                            selectedProduct.color,
-
-                        size:
-                            firebaseData.size ||
-                            selectedProduct.size,
-
-                        material:
-                            firebaseData.material ||
-                            selectedProduct.material,
-
-                        details:
-                            firebaseData.details ||
-                            selectedProduct.details
-
-                    };
-
-
-                    showDescription(
-                        updatedProduct
-                    );
-
-                }
-
-
-                loading.textContent = "";
-
-
-            }
-
-            catch (error) {
-
-
-                console.error(
-                    "Firebase Description Error:",
-                    error
-                );
-
-
-                /*
-                   Firebase থেকে না এলে
-                   পুরোনো Product Data
-                   আগেই দেখানো থাকবে।
-                */
-
-                loading.textContent = "";
-
-            }
-
-        }
-
-
-
-        /* =========================
-           LOAD FIREBASE DESCRIPTION
-        ========================= */
-
-        loadFirebaseDescription();
-
-
-
-        /* =========================
-           SHOW IMAGE
-        ========================= */
-
-        function showImage(index) {
-
-
-            if (
-                productImages.length === 0
-            ) {
-
-                return;
-
-            }
-
-
-            currentImageIndex = index;
-
-
-            document.getElementById(
-                "productImage"
-            ).src =
-                productImages[
-                    currentImageIndex
-                ];
-
-
-
-            /* UPDATE DOTS */
-
-            const dots =
-                document.querySelectorAll(
-                    ".image-dot"
-                );
-
-
-            dots.forEach(
-                function(dot, i) {
-
-
-                    dot.classList.remove(
-                        "active"
-                    );
-
-
-                    if (
-                        i === currentImageIndex
-                    ) {
-
-                        dot.classList.add(
-                            "active"
-                        );
-
-                    }
-
-                }
+            cart.push(
+                cartItem
             );
 
         }
 
 
-
-        /* =========================
-           NEXT IMAGE
-        ========================= */
-
-        document.getElementById(
-            "nextButton"
-        ).addEventListener(
-            "click",
-            function() {
-
-
-                if (
-                    productImages.length === 0
-                ) {
-
-                    return;
-
-                }
-
-
-                currentImageIndex++;
-
-
-                if (
-                    currentImageIndex >=
-                    productImages.length
-                ) {
-
-                    currentImageIndex = 0;
-
-                }
-
-
-                showImage(
-                    currentImageIndex
-                );
-
-            }
+        localStorage.setItem(
+            "cart",
+            JSON.stringify(cart)
         );
 
 
+        window.location.href =
+            "cart.html";
 
-        /* =========================
-           PREVIOUS IMAGE
-        ========================= */
+    }
+);
 
-        document.getElementById(
-            "prevButton"
-        ).addEventListener(
-            "click",
-            function() {
 
-
-                if (
-                    productImages.length === 0
-                ) {
-
-                    return;
-
-                }
-
-
-                currentImageIndex--;
-
-
-                if (
-                    currentImageIndex < 0
-                ) {
-
-                    currentImageIndex =
-                        productImages.length - 1;
-
-                }
-
-
-                showImage(
-                    currentImageIndex
-                );
-
-            }
-        );
-
-
-
-        /* =========================
-           MOBILE SWIPE
-        ========================= */
-
-        let touchStartX = 0;
-
-        let touchEndX = 0;
-
-
-        const imageSlider =
-            document.querySelector(
-                ".image-slider"
-            );
-
-
-        imageSlider.addEventListener(
-            "touchstart",
-            function(event) {
-
-                touchStartX =
-                    event.changedTouches[0].screenX;
-
-            }
-        );
-
-
-        imageSlider.addEventListener(
-            "touchend",
-            function(event) {
-
-                touchEndX =
-                    event.changedTouches[0].screenX;
-
-                handleSwipe();
-
-            }
-        );
-
-
-
-        /* =========================
-           HANDLE SWIPE
-        ========================= */
-
-        function handleSwipe() {
-
-
-            const swipeDistance =
-                touchEndX - touchStartX;
-
-
-            if (
-                swipeDistance < -50
-            ) {
-
-
-                currentImageIndex++;
-
-
-                if (
-                    currentImageIndex >=
-                    productImages.length
-                ) {
-
-                    currentImageIndex = 0;
-
-                }
-
-
-                showImage(
-                    currentImageIndex
-                );
-
-            }
-
-
-            else if (
-                swipeDistance > 50
-            ) {
-
-
-                currentImageIndex--;
-
-
-                if (
-                    currentImageIndex < 0
-                ) {
-
-                    currentImageIndex =
-                        productImages.length - 1;
-
-                }
-
-
-                showImage(
-                    currentImageIndex
-                );
-
-            }
-
-        }
-
-
-
-        /* =========================
-           ADD TO CART
-        ========================= */
-
-        document.getElementById(
-            "addToCart"
-        ).addEventListener(
-            "click",
-            function() {
-
-
-                if (!selectedProduct) {
-
-                    alert(
-                        "Product not found!"
-                    );
-
-                    return;
-
-                }
-
-
-                let cart =
-                    JSON.parse(
-                        localStorage.getItem(
-                            "cart"
-                        )
-                    ) || [];
-
-
-                const cartItem = {
-
-                    name:
-                        selectedProduct.name,
-
-                    price:
-                        selectedProduct.price,
-
-                    image:
-                        selectedProduct.images[0],
-
-                    quantity:
-                        1
-
-                };
-
-
-                const existingProduct =
-                    cart.find(
-                        item =>
-                            item.name ===
-                            selectedProduct.name
-                    );
-
-
-                if (existingProduct) {
-
-                    existingProduct.quantity += 1;
-
-                }
-
-                else {
-
-                    cart.push(cartItem);
-
-                }
-
-
-                localStorage.setItem(
-                    "cart",
-                    JSON.stringify(cart)
-                );
-
-
-                alert(
-                    selectedProduct.name +
-                    " added to cart!"
-                );
-
-            }
-        );
-
-
-
-        /* =========================
-           BUY NOW
-        ========================= */
-
-        document.getElementById(
-            "buyNow"
-        ).addEventListener(
-            "click",
-            function() {
-
-
-                if (!selectedProduct) {
-
-                    alert(
-                        "Product not found!"
-                    );
-
-                    return;
-
-                }
-
-
-                let cart =
-                    JSON.parse(
-                        localStorage.getItem(
-                            "cart"
-                        )
-                    ) || [];
-
-
-                const cartItem = {
-
-                    name:
-                        selectedProduct.name,
-
-                    price:
-                        selectedProduct.price,
-
-                    image:
-                        selectedProduct.images[0],
-
-                    quantity:
-                        1
-
-                };
-
-
-                const existingProduct =
-                    cart.find(
-                        item =>
-                            item.name ===
-                            selectedProduct.name
-                    );
-
-
-                if (existingProduct) {
-
-                    existingProduct.quantity += 1;
-
-                }
-
-                else {
-
-                    cart.push(cartItem);
-
-                }
-
-
-                localStorage.setItem(
-                    "cart",
-                    JSON.stringify(cart)
-                );
-
-
-                window.location.href =
-                    "cart.html";
-
-            }
-        );
-
-
-    </script>
+</script>
 
 </body>
 
