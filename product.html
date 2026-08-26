@@ -288,6 +288,22 @@
 
 
         /* =========================
+           DESCRIPTION LOADING
+        ========================= */
+
+        .description-loading {
+
+            text-align: center;
+
+            color: #777;
+
+            font-size: 14px;
+
+            margin-top: 10px;
+        }
+
+
+        /* =========================
            MOBILE
         ========================= */
 
@@ -608,6 +624,12 @@
 
             </div>
 
+
+            <div
+                class="description-loading"
+                id="descriptionLoading">
+            </div>
+
         </div>
 
 
@@ -615,7 +637,70 @@
 
 
 
-    <script>
+    <!-- =========================
+         FIREBASE + JAVASCRIPT
+    ========================= -->
+
+    <script type="module">
+
+
+        /* =========================
+           FIREBASE IMPORT
+        ========================= */
+
+        import {
+            initializeApp
+        } from "https://www.gstatic.com/firebasejs/12.18.0/firebase-app.js";
+
+
+        import {
+            getFirestore,
+            doc,
+            getDoc
+        } from "https://www.gstatic.com/firebasejs/12.18.0/firebase-firestore.js";
+
+
+
+        /* =========================
+           FIREBASE CONFIG
+           SAME AS ADMIN PAGE
+        ========================= */
+
+        const firebaseConfig = {
+
+            apiKey:
+                "AIzaSyCkBQaphKKz_Wxd1GgKAVoxqR4taKvzdEM",
+
+            authDomain:
+                "rk-store-5fb24.firebaseapp.com",
+
+            projectId:
+                "rk-store-5fb24",
+
+            storageBucket:
+                "rk-store-5fb24.firebasestorage.app",
+
+            messagingSenderId:
+                "407275549697",
+
+            appId:
+                "1:407275549697:web:41043b49bf7182cecffc00"
+
+        };
+
+
+
+        /* =========================
+           INITIALIZE FIREBASE
+        ========================= */
+
+        const app =
+            initializeApp(firebaseConfig);
+
+
+        const db =
+            getFirestore(app);
+
 
 
         /* =========================
@@ -635,7 +720,7 @@
 
         /* =========================
            PRODUCT DATA
-           IMAGES + DESCRIPTION
+           IMAGES + FALLBACK DATA
         ========================= */
 
         const productData = {
@@ -905,55 +990,12 @@
 
 
             /* =========================
-               PRODUCT DESCRIPTION DATA
+               FALLBACK DESCRIPTION
             ========================= */
 
-            document.getElementById(
-                "productSerial"
-            ).textContent =
-                product;
-
-
-            document.getElementById(
-                "descriptionProductName"
-            ).textContent =
-                selectedProduct.name;
-
-
-            document.getElementById(
-                "productBrand"
-            ).textContent =
-                selectedProduct.brand;
-
-
-            document.getElementById(
-                "productCategory"
-            ).textContent =
-                selectedProduct.category;
-
-
-            document.getElementById(
-                "productColor"
-            ).textContent =
-                selectedProduct.color;
-
-
-            document.getElementById(
-                "productSize"
-            ).textContent =
-                selectedProduct.size;
-
-
-            document.getElementById(
-                "productMaterial"
-            ).textContent =
-                selectedProduct.material;
-
-
-            document.getElementById(
-                "productDetailsText"
-            ).textContent =
-                selectedProduct.details;
+            showDescription(
+                selectedProduct
+            );
 
 
 
@@ -1010,7 +1052,192 @@
                 }
             );
 
+
         }
+
+
+
+        /* =========================
+           SHOW DESCRIPTION
+        ========================= */
+
+        function showDescription(data) {
+
+
+            document.getElementById(
+                "productSerial"
+            ).textContent =
+                product;
+
+
+            document.getElementById(
+                "descriptionProductName"
+            ).textContent =
+                data.name || "";
+
+
+            document.getElementById(
+                "productBrand"
+            ).textContent =
+                data.brand || "";
+
+
+            document.getElementById(
+                "productCategory"
+            ).textContent =
+                data.category || "";
+
+
+            document.getElementById(
+                "productColor"
+            ).textContent =
+                data.color || "";
+
+
+            document.getElementById(
+                "productSize"
+            ).textContent =
+                data.size || "";
+
+
+            document.getElementById(
+                "productMaterial"
+            ).textContent =
+                data.material || "";
+
+
+            document.getElementById(
+                "productDetailsText"
+            ).textContent =
+                data.details || "";
+
+        }
+
+
+
+        /* =========================
+           LOAD DESCRIPTION FROM FIRESTORE
+        ========================= */
+
+        async function loadFirebaseDescription() {
+
+
+            if (!selectedProduct) {
+
+                return;
+
+            }
+
+
+            const loading =
+                document.getElementById(
+                    "descriptionLoading"
+                );
+
+
+            try {
+
+
+                loading.textContent =
+                    "Loading latest product information...";
+
+
+                const productRef =
+                    doc(
+                        db,
+                        "productDescriptions",
+                        product
+                    );
+
+
+                const snapshot =
+                    await getDoc(
+                        productRef
+                    );
+
+
+                if (
+                    snapshot.exists()
+                ) {
+
+
+                    const firebaseData =
+                        snapshot.data();
+
+
+                    const updatedProduct = {
+
+                        name:
+                            firebaseData.name ||
+                            selectedProduct.name,
+
+                        brand:
+                            firebaseData.brand ||
+                            selectedProduct.brand,
+
+                        category:
+                            firebaseData.category ||
+                            selectedProduct.category,
+
+                        color:
+                            firebaseData.color ||
+                            selectedProduct.color,
+
+                        size:
+                            firebaseData.size ||
+                            selectedProduct.size,
+
+                        material:
+                            firebaseData.material ||
+                            selectedProduct.material,
+
+                        details:
+                            firebaseData.details ||
+                            selectedProduct.details
+
+                    };
+
+
+                    showDescription(
+                        updatedProduct
+                    );
+
+                }
+
+
+                loading.textContent = "";
+
+
+            }
+
+            catch (error) {
+
+
+                console.error(
+                    "Firebase Description Error:",
+                    error
+                );
+
+
+                /*
+                   Firebase থেকে না এলে
+                   পুরোনো Product Data
+                   আগেই দেখানো থাকবে।
+                */
+
+                loading.textContent = "";
+
+            }
+
+        }
+
+
+
+        /* =========================
+           LOAD FIREBASE DESCRIPTION
+        ========================= */
+
+        loadFirebaseDescription();
 
 
 
