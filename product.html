@@ -41,6 +41,7 @@
         ========================= */
 
         .product-details {
+
             background-color: white;
 
             margin: 20px auto;
@@ -65,6 +66,7 @@
         ========================= */
 
         .image-slider {
+
             position: relative;
 
             width: 100%;
@@ -80,6 +82,7 @@
 
 
         .image-slider img {
+
             width: 100%;
 
             height: 350px;
@@ -99,6 +102,7 @@
         ========================= */
 
         .slider-button {
+
             position: absolute;
 
             top: 50%;
@@ -133,17 +137,20 @@
 
 
         .slider-button:hover {
+
             background-color:
                 rgba(0,0,0,0.8);
         }
 
 
         .prev-button {
+
             left: 10px;
         }
 
 
         .next-button {
+
             right: 10px;
         }
 
@@ -153,6 +160,7 @@
         ========================= */
 
         .image-dots {
+
             text-align: center;
 
             margin-top: 12px;
@@ -160,6 +168,7 @@
 
 
         .image-dot {
+
             display: inline-block;
 
             width: 10px;
@@ -177,6 +186,7 @@
 
 
         .image-dot.active {
+
             background-color: #ff6600;
 
             transform: scale(1.2);
@@ -188,6 +198,7 @@
         ========================= */
 
         #productName {
+
             margin-top: 20px;
 
             margin-bottom: 10px;
@@ -197,6 +208,7 @@
 
 
         #productPrice {
+
             font-size: 20px;
 
             font-weight: bold;
@@ -210,6 +222,7 @@
         ========================= */
 
         button.action-button {
+
             background-color: #ff6600;
 
             color: white;
@@ -229,6 +242,7 @@
 
 
         button.action-button:hover {
+
             background-color: #e65c00;
         }
 
@@ -289,6 +303,7 @@
 
 
         .description-row:last-child {
+
             border-bottom: none;
         }
 
@@ -372,11 +387,13 @@
 
 
             .image-slider {
+
                 max-width: 100%;
             }
 
 
             .image-slider img {
+
                 height: 350px;
             }
 
@@ -400,21 +417,25 @@
 
 
             .product-description h3 {
+
                 font-size: 18px;
             }
 
 
             .description-row {
+
                 font-size: 14px;
             }
 
 
             .description-label {
+
                 width: 45%;
             }
 
 
             .description-value {
+
                 width: 55%;
             }
 
@@ -436,13 +457,15 @@
 <div class="product-details">
 
 
-    <!-- IMAGE SLIDER -->
+    <!-- =========================
+         IMAGE SLIDER
+    ========================= -->
 
     <div class="image-slider">
 
         <img
             id="productImage"
-            src="product1/product1.jpg"
+            src=""
             alt="Product"
         >
 
@@ -467,7 +490,9 @@
     </div>
 
 
-    <!-- IMAGE DOTS -->
+    <!-- =========================
+         IMAGE DOTS
+    ========================= -->
 
     <div
         class="image-dots"
@@ -476,7 +501,9 @@
     </div>
 
 
-    <!-- PRODUCT INFORMATION -->
+    <!-- =========================
+         PRODUCT INFORMATION
+    ========================= -->
 
     <h2 id="productName">
         Loading Product...
@@ -493,7 +520,9 @@
     </p>
 
 
-    <!-- FIREBASE NOTICE -->
+    <!-- =========================
+         FIREBASE NOTICE
+    ========================= -->
 
     <div
         id="firebaseUpdated"
@@ -503,7 +532,9 @@
     </div>
 
 
-    <!-- ADD TO CART -->
+    <!-- =========================
+         ADD TO CART
+    ========================= -->
 
     <button
         type="button"
@@ -514,7 +545,9 @@
     </button>
 
 
-    <!-- BUY NOW -->
+    <!-- =========================
+         BUY NOW
+    ========================= -->
 
     <button
         type="button"
@@ -525,7 +558,9 @@
     </button>
 
 
-    <!-- PRODUCT DESCRIPTION -->
+    <!-- =========================
+         PRODUCT DESCRIPTION
+    ========================= -->
 
     <div class="product-description">
 
@@ -764,6 +799,7 @@ const productNumber =
 
 const productData = {
 
+
     "1": {
 
         images: [
@@ -806,55 +842,54 @@ const productData = {
 
     "2": {
 
-    images: [
+        images: [
 
-        "product2/product1.jpg",
-        "product2/product2.jpg",
-        "product2/product3.jpg",
-        "product2/product4.jpg",
-        "product2/product5.jpg",
-        "product2/product6.jpg"
+            "product2/product1.jpg",
+            "product2/product2.jpg",
+            "product2/product3.jpg",
+            "product2/product4.jpg",
+            "product2/product5.jpg",
+            "product2/product6.jpg"
 
-    ],
+        ],
 
-    name:
-        "Men's Casual Shirt",
+        name:
+            "Men's Casual Shirt",
 
-    price:
-        400,
+        price:
+            400,
 
-    brand:
-        "RK Store",
+        brand:
+            "RK Store",
 
-    category:
-        "Men",
+        category:
+            "Men",
 
-    color:
-        "Blue",
+        color:
+            "Blue",
 
-    size:
-        "M, L, XL",
+        size:
+            "M, L, XL",
 
-    material:
-        "Cotton",
+        material:
+            "Cotton",
 
-    details:
-        "Comfortable casual shirt suitable for everyday use."
+        details:
+            "Comfortable casual shirt suitable for everyday use."
 
-},
+    },
 
 
     "3": {
 
         images: [
 
-            "product3.jpg",
-            "product3-2.jpg",
-            "product3-3.jpg",
-            "product3-4.jpg",
-            "product3-5.jpg",
-            "product3-6.jpg",
-            "product3-7.jpg"
+            "product3/product1.jpg",
+            "product3/product2.jpg",
+            "product3/product3.jpg",
+            "product3/product4.jpg",
+            "product3/product5.jpg",
+            "product3/product6.jpg"
 
         ],
 
@@ -889,13 +924,12 @@ const productData = {
 
         images: [
 
-            "product4.jpg",
-            "product4-2.jpg",
-            "product4-3.jpg",
-            "product4-4.jpg",
-            "product4-5.jpg",
-            "product4-6.jpg",
-            "product4-7.jpg"
+            "product4/product1.jpg",
+            "product4/product2.jpg",
+            "product4/product3.jpg",
+            "product4/product4.jpg",
+            "product4/product5.jpg",
+            "product4/product6.jpg"
 
         ],
 
@@ -930,13 +964,12 @@ const productData = {
 
         images: [
 
-            "product5.jpg",
-            "product5-2.jpg",
-            "product5-3.jpg",
-            "product5-4.jpg",
-            "product5-5.jpg",
-            "product5-6.jpg",
-            "product5-7.jpg"
+            "product5/product1.jpg",
+            "product5/product2.jpg",
+            "product5/product3.jpg",
+            "product5/product4.jpg",
+            "product5/product5.jpg",
+            "product5/product6.jpg"
 
         ],
 
@@ -971,6 +1004,7 @@ const productData = {
 
 /* =====================================================
    PRODUCT 6-100
+   EVERY PRODUCT HAS 6 IMAGES
 ===================================================== */
 
 for (
@@ -983,7 +1017,12 @@ for (
 
         images: [
 
-            "product" + i + ".jpg"
+            "product" + i + "/product1.jpg",
+            "product" + i + "/product2.jpg",
+            "product" + i + "/product3.jpg",
+            "product" + i + "/product4.jpg",
+            "product" + i + "/product5.jpg",
+            "product" + i + "/product6.jpg"
 
         ],
 
@@ -1065,7 +1104,9 @@ function showProduct(data) {
         0;
 
 
-    /* IMAGE */
+    /* =========================
+       IMAGE
+    ========================= */
 
     if (
         productImages.length > 0
@@ -1088,7 +1129,9 @@ function showProduct(data) {
     }
 
 
-    /* NAME */
+    /* =========================
+       NAME
+    ========================= */
 
     document.getElementById(
         "productName"
@@ -1097,7 +1140,9 @@ function showProduct(data) {
         "Product";
 
 
-    /* PRICE */
+    /* =========================
+       PRICE
+    ========================= */
 
     document.getElementById(
         "productPrice"
@@ -1106,14 +1151,18 @@ function showProduct(data) {
         Number(data.price || 0);
 
 
-    /* DESCRIPTION */
+    /* =========================
+       DESCRIPTION
+    ========================= */
 
     showDescription(
         data
     );
 
 
-    /* DOTS */
+    /* =========================
+       DOTS
+    ========================= */
 
     createImageDots();
 
@@ -1312,13 +1361,14 @@ async function loadFirebaseDescription() {
                 snapshot.data();
 
 
-            /*
-             * Firebase data merge
-             */
+            /* =========================
+               FIREBASE DATA MERGE
+            ========================= */
 
             currentProduct = {
 
                 ...currentProduct,
+
 
                 name:
                     firebaseData.name !== undefined &&
@@ -1436,6 +1486,54 @@ function showProductNotFound() {
     ).textContent =
         "-";
 
+
+    document.getElementById(
+        "descriptionProductName"
+    ).textContent =
+        "-";
+
+
+    document.getElementById(
+        "descriptionProductPrice"
+    ).textContent =
+        "-";
+
+
+    document.getElementById(
+        "productBrand"
+    ).textContent =
+        "-";
+
+
+    document.getElementById(
+        "productCategory"
+    ).textContent =
+        "-";
+
+
+    document.getElementById(
+        "productColor"
+    ).textContent =
+        "-";
+
+
+    document.getElementById(
+        "productSize"
+    ).textContent =
+        "-";
+
+
+    document.getElementById(
+        "productMaterial"
+    ).textContent =
+        "-";
+
+
+    document.getElementById(
+        "productDetailsText"
+    ).textContent =
+        "-";
+
 }
 
 
@@ -1533,7 +1631,8 @@ document.getElementById(
             productImages.length
         ) {
 
-            currentImageIndex = 0;
+            currentImageIndex =
+                0;
 
         }
 
@@ -1649,6 +1748,8 @@ function handleSwipe() {
         touchStartX;
 
 
+    /* SWIPE LEFT */
+
     if (
         swipeDistance < -50
     ) {
@@ -1661,7 +1762,8 @@ function handleSwipe() {
             productImages.length
         ) {
 
-            currentImageIndex = 0;
+            currentImageIndex =
+                0;
 
         }
 
@@ -1672,6 +1774,8 @@ function handleSwipe() {
 
     }
 
+
+    /* SWIPE RIGHT */
 
     else if (
         swipeDistance > 50
@@ -1762,14 +1866,19 @@ document.getElementById(
                 function(item) {
 
                     return (
+
                         item.productId ===
                         productNumber
+
                     )
                     ||
                     (
+
                         !item.productId &&
+
                         item.name ===
                         currentProduct.name
+
                     );
 
                 }
@@ -1872,14 +1981,19 @@ document.getElementById(
                 function(item) {
 
                     return (
+
                         item.productId ===
                         productNumber
+
                     )
                     ||
                     (
+
                         !item.productId &&
+
                         item.name ===
                         currentProduct.name
+
                     );
 
                 }
@@ -1928,6 +2042,12 @@ if (
     showProduct(
         currentProduct
     );
+
+}
+
+else {
+
+    showProductNotFound();
 
 }
 
