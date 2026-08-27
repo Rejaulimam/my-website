@@ -34,6 +34,7 @@ body {
     margin-right: 8px;
 }
 
+
 /* =========================
    HEADER
 ========================= */
@@ -46,6 +47,7 @@ h1 {
     margin: 0;
     position: relative;
 }
+
 
 /* =========================
    THREE DOT BUTTON
@@ -87,6 +89,7 @@ h1 {
     background: rgba(255,255,255,0.30);
 }
 
+
 /* =========================
    HELP BUTTON
 ========================= */
@@ -121,6 +124,7 @@ h1 {
     box-shadow:
         0 2px 6px rgba(0,0,0,0.20);
 }
+
 
 /* =========================
    THREE DOT MENU
@@ -167,6 +171,7 @@ h1 {
 #threeDotMenu a:hover {
     background: #f5f5f5;
 }
+
 
 /* =========================
    WELCOME
@@ -217,6 +222,7 @@ h1 {
 h2 {
     text-align: center;
 }
+
 
 /* =========================
    PRODUCTS
@@ -272,6 +278,8 @@ h2 {
     border-radius: 8px;
 
     background: #eee;
+
+    display: block;
 }
 
 .product h3 {
@@ -323,6 +331,7 @@ button {
 button:hover {
     opacity: 0.9;
 }
+
 
 /* =========================
    NAVIGATION
@@ -396,6 +405,7 @@ nav a:active {
         rgba(0,0,0,0.20);
 }
 
+
 /* =========================
    SEARCH
 ========================= */
@@ -425,6 +435,11 @@ nav a:active {
 
     border-radius: 5px;
 }
+
+.search button {
+    flex-shrink: 0;
+}
+
 
 /* =========================
    CATEGORIES
@@ -491,6 +506,7 @@ nav a:active {
         0 1px 0 #b5b5b5,
         0 2px 5px rgba(0,0,0,0.18);
 }
+
 
 /* =========================
    HELP LINE
@@ -589,6 +605,7 @@ nav a:active {
     opacity: 0.9;
 }
 
+
 /* =========================
    NO PRODUCT
 ========================= */
@@ -605,6 +622,7 @@ nav a:active {
     padding: 20px;
 }
 
+
 /* =========================
    FIREBASE STATUS
 ========================= */
@@ -618,6 +636,7 @@ nav a:active {
 
     padding: 5px;
 }
+
 
 /* =========================
    MOBILE
@@ -1002,7 +1021,7 @@ const products = [];
 
 
 /* =====================================================
-   DEFAULT PRODUCT DATA
+   DEFAULT PRODUCT INFORMATION
 ===================================================== */
 
 const defaultProducts = {
@@ -1010,36 +1029,31 @@ const defaultProducts = {
     1: {
         name: "Men's Formal Solid Shirt",
         price: 450,
-        category: "Men",
-        image: "product1/product1.jpg"
+        category: "Men"
     },
 
     2: {
         name: "Men's Casual Shirt",
         price: 400,
-        category: "Men",
-        image: "product2/product1.jpg"
+        category: "Men"
     },
 
     3: {
         name: "Men's Casual Check Shirt",
         price: 480,
-        category: "Men",
-        image: "product3/product1.jpg"
+        category: "Men"
     },
 
     4: {
         name: "Women's Casual Yellow Dress",
         price: 500,
-        category: "Women",
-        image: "product4/product1.jpg"
+        category: "Women"
     },
 
     5: {
         name: "Women's Casual Dress",
         price: 900,
-        category: "Women",
-        image: "product5/product1.jpg"
+        category: "Women"
     }
 
 };
@@ -1058,8 +1072,27 @@ const categories = [
 
 
 /* =====================================================
-   CREATE PRODUCT 1-100
+   AUTOMATIC PRODUCT 1-100
 ===================================================== */
+
+/*
+   IMPORTANT:
+
+   এখানে Product 1-100 আলাদা করে
+   image path লিখতে হচ্ছে না।
+
+   Product 1
+   → product1/product1.jpg
+
+   Product 2
+   → product2/product1.jpg
+
+   Product 3
+   → product3/product1.jpg
+
+   Product 100
+   → product100/product1.jpg
+*/
 
 for (
     let i = 1;
@@ -1074,10 +1107,6 @@ for (
     products.push({
 
         id: i,
-
-        /*
-         * PRODUCT SERIAL IS FIXED
-         */
 
         serial: i,
 
@@ -1100,22 +1129,13 @@ for (
                 ],
 
         /*
-         * IMPORTANT:
-         *
-         * Product 1:
-         * product1/product1.jpg
-         *
-         * Product 2:
-         * product2/product1.jpg
-         *
-         * Product 100:
-         * product100/product1.jpg
+         * AUTOMATIC IMAGE
          */
 
         image:
-            defaultData
-                ? defaultData.image
-                : "product" + i + "/product1.jpg"
+            "./product" +
+            i +
+            "/product1.jpg"
 
     });
 
@@ -1175,15 +1195,14 @@ function displayProducts(list) {
                 <img
                     src="${product.image}"
                     alt="${escapeHTML(product.name)}"
-                    onerror="this.style.background='#eeeeee';"
+                    loading="lazy"
+                    onerror="handleProductImageError(this)"
                 >
 
                 <h3>
 
                     <span class="product-number">
-
                         ${product.serial}.
-
                     </span>
 
                     ${escapeHTML(product.name)}
@@ -1229,6 +1248,54 @@ function displayProducts(list) {
             : "none";
 
 }
+
+
+/* =====================================================
+   IMAGE ERROR HANDLER
+===================================================== */
+
+window.handleProductImageError =
+function(image) {
+
+    /*
+     * কোনো product-এর ছবি না থাকলে
+     * broken-image icon না দেখিয়ে
+     * পরিষ্কার placeholder রাখা হবে।
+     */
+
+    image.onerror = null;
+
+    image.src =
+        "data:image/svg+xml;charset=UTF-8," +
+        encodeURIComponent(`
+            <svg xmlns="http://www.w3.org/2000/svg"
+                 width="600"
+                 height="450"
+                 viewBox="0 0 600 450">
+
+                <rect
+                    width="600"
+                    height="450"
+                    fill="#eeeeee"
+                />
+
+                <text
+                    x="300"
+                    y="225"
+                    text-anchor="middle"
+                    dominant-baseline="middle"
+                    font-family="Arial"
+                    font-size="24"
+                    fill="#999999">
+
+                    Image not available
+
+                </text>
+
+            </svg>
+        `);
+
+};
 
 
 /* =====================================================
@@ -1351,10 +1418,6 @@ function(productId) {
             ) + 1;
 
 
-        /*
-         * UPDATE CURRENT PRODUCT DATA
-         */
-
         existingProduct.name =
             product.name;
 
@@ -1476,7 +1539,7 @@ function(category) {
 
 
 /* =====================================================
-   SHOW ALL
+   SHOW ALL PRODUCTS
 ===================================================== */
 
 window.showAllProducts =
@@ -1634,7 +1697,7 @@ document.addEventListener(
 
 
 /* =====================================================
-   LOAD FIREBASE PRODUCT
+   LOAD ONE FIREBASE PRODUCT
 ===================================================== */
 
 async function loadFirebaseProduct(
@@ -1670,9 +1733,7 @@ async function loadFirebaseProduct(
             snapshot.data();
 
 
-        /* =================================================
-           PRODUCT NAME
-        ================================================= */
+        /* PRODUCT NAME */
 
         if (
             data.name !== undefined
@@ -1681,7 +1742,9 @@ async function loadFirebaseProduct(
         ) {
 
             const firebaseName =
-                String(data.name).trim();
+                String(
+                    data.name
+                ).trim();
 
 
             if (
@@ -1696,9 +1759,7 @@ async function loadFirebaseProduct(
         }
 
 
-        /* =================================================
-           PRODUCT PRICE
-        ================================================= */
+        /* PRODUCT PRICE */
 
         if (
             data.price !== undefined
@@ -1707,7 +1768,9 @@ async function loadFirebaseProduct(
         ) {
 
             const firebasePrice =
-                Number(data.price);
+                Number(
+                    data.price
+                );
 
 
             if (
@@ -1724,9 +1787,7 @@ async function loadFirebaseProduct(
         }
 
 
-        /* =================================================
-           PRODUCT CATEGORY
-        ================================================= */
+        /* PRODUCT CATEGORY */
 
         if (
             data.category !== undefined
@@ -1750,20 +1811,6 @@ async function loadFirebaseProduct(
             }
 
         }
-
-
-        /*
-         * IMPORTANT
-         *
-         * Firebase serial কখনো
-         * Home Page-এর ID পরিবর্তন করবে না।
-         *
-         * Product 1 = 1
-         * Product 2 = 2
-         * Product 3 = 3
-         *
-         * Product 100 = 100
-         */
 
     }
 
@@ -1799,11 +1846,6 @@ async function loadFirebaseProducts() {
 
     try {
 
-        /*
-         * Firebase থেকে Product 1-100
-         * আলাদা আলাদা document পড়া হচ্ছে।
-         */
-
         const promises =
             products.map(
                 function(product) {
@@ -1820,11 +1862,6 @@ async function loadFirebaseProducts() {
             promises
         );
 
-
-        /*
-         * Firebase data সম্পূর্ণ
-         * আসার পরে Home Page render হবে।
-         */
 
         searchProducts();
 
@@ -1870,7 +1907,7 @@ updateCartCount();
 
 
 /* =====================================================
-   LOAD FIREBASE DATA
+   LOAD FIREBASE
 ===================================================== */
 
 loadFirebaseProducts();
