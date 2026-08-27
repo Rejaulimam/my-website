@@ -33,6 +33,7 @@ body {
     vertical-align: middle;
     margin-right: 8px;
 }
+
 /* =========================
    HEADER
 ========================= */
@@ -466,7 +467,7 @@ nav a:active {
 
     border-radius: 10px;
 
-    padding:7px 11px;
+    padding: 7px 11px;
 
     font-size: 14px;
 
@@ -490,7 +491,6 @@ nav a:active {
         0 1px 0 #b5b5b5,
         0 2px 5px rgba(0,0,0,0.18);
 }
-
 
 /* =========================
    HELP LINE
@@ -710,11 +710,11 @@ nav a:active {
         ☰
     </button>
 
-<img
-    src="rk-store-logo.jpg"
-    alt="RK Store Logo"
-    class="store-logo"
->
+    <img
+        src="rk-store-logo.jpg"
+        alt="RK Store Logo"
+        class="store-logo"
+    >
 
     RK Store
 
@@ -1015,31 +1015,31 @@ const defaultProducts = {
     },
 
     2: {
-    name: "Men's Casual Shirt",
-    price: 400,
-    category: "Men",
-    image: "product2/product1.jpg"
-},
+        name: "Men's Casual Shirt",
+        price: 400,
+        category: "Men",
+        image: "product2/product1.jpg"
+    },
 
     3: {
         name: "Men's Casual Check Shirt",
         price: 480,
         category: "Men",
-        image: "product3.jpg"
+        image: "product3/product1.jpg"
     },
 
     4: {
         name: "Women's Casual Yellow Dress",
         price: 500,
         category: "Women",
-        image: "product4.jpg"
+        image: "product4/product1.jpg"
     },
 
     5: {
         name: "Women's Casual Dress",
         price: 900,
         category: "Women",
-        image: "product5.jpg"
+        image: "product5/product1.jpg"
     }
 
 };
@@ -1099,10 +1099,23 @@ for (
                     categories.length
                 ],
 
+        /*
+         * IMPORTANT:
+         *
+         * Product 1:
+         * product1/product1.jpg
+         *
+         * Product 2:
+         * product2/product1.jpg
+         *
+         * Product 100:
+         * product100/product1.jpg
+         */
+
         image:
             defaultData
                 ? defaultData.image
-                : "product" + i + ".jpg"
+                : "product" + i + "/product1.jpg"
 
     });
 
@@ -1639,9 +1652,9 @@ async function loadFirebaseProduct(
 
 
         const snapshot =
-    await getDocFromServer(
-        productRef
-    );
+            await getDocFromServer(
+                productRef
+            );
 
 
         if (
@@ -1749,7 +1762,7 @@ async function loadFirebaseProduct(
          * Product 2 = 2
          * Product 3 = 3
          *
-         * সবসময় স্থির থাকবে।
+         * Product 100 = 100
          */
 
     }
