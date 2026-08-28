@@ -1959,6 +1959,41 @@ updateCartCount();
 loadFirebaseProducts();
 
 
+
+<!-- =========================
+     REGISTER SERVICE WORKER
+========================= -->
+
+<script>
+if ("serviceWorker" in navigator) {
+
+    window.addEventListener("load", function () {
+
+        navigator.serviceWorker.register("./sw.js")
+            .then(function (registration) {
+
+                console.log(
+                    "RK Store Service Worker registered:",
+                    registration.scope
+                );
+
+            })
+            .catch(function (error) {
+
+                console.error(
+                    "Service Worker registration failed:",
+                    error
+                );
+
+            });
+
+    });
+
+}
+</script>
+
+
+
 </script>
 
 
