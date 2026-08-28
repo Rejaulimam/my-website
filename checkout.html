@@ -153,33 +153,42 @@
         </select>
 
 
-        <div
-            id="paymentDetails"
-            style="display:none;"
-        >
+        <div id="paymentDetails" style="display:none;">
 
-            <label for="paymentNumber">
-                Payment Number
-            </label>
+    <div
+        id="paymentMessage"
+        style="
+            background:#fff3cd;
+            color:#856404;
+            padding:12px;
+            border-radius:6px;
+            margin-top:10px;
+        "
+    >
+        Online payment gateway is not connected yet.
+    </div>
 
-            <input
-                type="tel"
-                id="paymentNumber"
-                placeholder="Enter bKash/Nagad number"
-            >
+    <label for="paymentNumber">
+        Payment Number
+    </label>
 
+    <input
+        type="tel"
+        id="paymentNumber"
+        placeholder="Enter payment number"
+    >
 
-            <label for="transactionId">
-                Transaction ID
-            </label>
+    <label for="transactionId">
+        Transaction ID
+    </label>
 
-            <input
-                type="text"
-                id="transactionId"
-                placeholder="Enter Transaction ID"
-            >
+    <input
+        type="text"
+        id="transactionId"
+        placeholder="Enter Transaction ID"
+    >
 
-        </div>
+</div>
 
 
         <button
