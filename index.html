@@ -1691,6 +1691,23 @@ function() {
             "threeDotMenu"
         );
 
+    const admin =
+        JSON.parse(
+            localStorage.getItem(
+                "adminLoggedIn"
+            )
+        ) === true;
+
+
+    if (!admin) {
+
+        window.location.href =
+            "admin-login.html";
+
+        return;
+
+    }
+
 
     menu.style.display =
         menu.style.display ===
