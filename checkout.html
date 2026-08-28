@@ -614,27 +614,21 @@ window.placeOrder =
 
 
         /* ==================================================
-           PAYMENT VALIDATION
-        ================================================== */
+   PAYMENT VALIDATION
+================================================== */
 
-        if (
-            paymentMethod === "bkash" ||
-            paymentMethod === "nagad"
-        ) {
+if (
+    paymentMethod === "bkash" ||
+    paymentMethod === "nagad"
+) {
 
-            if (
-                paymentNumber === "" ||
-                transactionId === ""
-            ) {
+    alert(
+        "Online payment is not available yet. Please select Cash on Delivery."
+    );
 
-                alert(
-                    "Please enter Payment Number and Transaction ID."
-                );
+    return;
 
-                return;
-            }
-
-        }
+}
 
 
         /* ==================================================
