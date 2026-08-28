@@ -1,127 +1,60 @@
-const CACHE_NAME = "rk-store-cache-v1";
+const CACHE_NAME = "rk-store-v1";
 
-const OFFLINE_FILES = [
+const APP_FILES = [
     "./",
-    "./index.html"
+    "./index.html",
+    "./manifest.json",
+    "./icon-192.png",
+    "./icon-512.png"
 ];
 
+self.addEventListener("install", event => {
+    event.waitUntil(
+        caches.open(CACHE_NAME)
+            .then(cache => cache.addAll(APP_FILES))
+    );
 
-/* =========================
-   INSTALL
-========================= */
+    self.skipWaiting();
+});
 
-self.addEventListener(
-    "install",
-    function(event) {
+self.addEventListener("activate", event => {
+    event.waitUntil(
+        caches.keys().then(cacheNames => {
+            return Promise.all(
+                cacheNames
+                    .filter(name => name !== CACHE_NAME)
+                    .map(name => caches.delete(name))
+            );
+        })
+    );
 
-        self.skipWaiting();
+    self.clients.claim();
+});
 
-        event.waitUntil(
-            caches.open(CACHE_NAME)
-                .then(function(cache) {
-
-                    return cache.addAll(
-                        OFFLINE_FILES
-                    );
-
-                })
-        );
-
+self.addEventListener("fetch", event => {
+    if (event.request.method !== "GET") {
+        return;
     }
-);
 
+    event.respondWith(
+        fetch(event.request)
+            .then(response => {
 
-/* =========================
-   ACTIVATE
-========================= */
+                const responseClone =
+                    response.clone();
 
-self.addEventListener(
-    "activate",
-    function(event) {
+                caches.open(CACHE_NAME)
+                    .then(cache => {
+                        cache.put(
+                            event.request,
+                            responseClone
+                        );
+                    });
 
-        event.waitUntil(
-
-            caches.keys()
-                .then(function(cacheNames) {
-
-                    return Promise.all(
-
-                        cacheNames
-                            .filter(function(name) {
-
-                                return (
-                                    name !== CACHE_NAME
-                                );
-
-                            })
-                            .map(function(name) {
-
-                                return caches.delete(
-                                    name
-                                );
-
-                            })
-
-                    );
-
-                })
-                .then(function() {
-
-                    return self.clients.claim();
-
-                })
-
-        );
-
-    }
-);
-
-
-/* =========================
-   FETCH
-   NETWORK FIRST
-========================= */
-
-self.addEventListener(
-    "fetch",
-    function(event) {
-
-        if (
-            event.request.method !== "GET"
-        ) {
-
-            return;
-
-        }
-
-
-        event.respondWith(
-
-            fetch(event.request)
-                .then(function(response) {
-
-                    /*
-                     * নতুন ফাইল পাওয়া গেলে
-                     * নতুন ফাইলই ব্যবহার হবে।
-                     */
-
-                    return response;
-
-                })
-                .catch(function() {
-
-                    /*
-                     * Internet না থাকলে
-                     * Cache থেকে চেষ্টা করবে।
-                     */
-
-                    return caches.match(
-                        event.request
-                    );
-
-                })
-
-        );
-
-    }
-);
+                return response;
+            })
+            .catch(() => {
+                return caches.match(event.request);
+            })
+    );
+});
