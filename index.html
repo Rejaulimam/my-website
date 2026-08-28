@@ -73,13 +73,17 @@ body {
 .store-logo {
     width: 45px;
     height: 45px;
-    object-fit: contain;
-    border-radius: 8px;
-    display: inline-block;
-    vertical-align: middle;
-    margin-right: 8px;
-}
 
+    object-fit: contain;
+
+    border-radius: 8px;
+
+    display: block;
+
+    margin-right: 8px;
+
+    flex-shrink: 0;
+}
 
 /* =========================
    HEADER
@@ -88,12 +92,22 @@ body {
 h1 {
     background-color: #ff6600;
     color: white;
-    text-align: center;
-    padding: 20px;
     margin: 0;
-    position: relative;
-}
+    padding: 10px 70px 10px 60px;
 
+    position: relative;
+
+    min-height: 65px;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    font-size: 28px;
+    font-weight: bold;
+
+    white-space: nowrap;
+}
 
 /* =========================
    THREE DOT BUTTON
@@ -144,23 +158,21 @@ h1 {
     position: absolute;
 
     top: 50%;
-    right: 5px;
+    right: 8px;
 
     transform: translateY(-50%);
 
-    background:
-        rgba(255,255,255,0.18);
+    background: rgba(255,255,255,0.18);
 
     color: white;
 
-    border:
-        1px solid rgba(255,255,255,0.5);
+    border: 1px solid rgba(255,255,255,0.5);
 
     border-radius: 6px;
 
-    padding: 7px 6px;
+    padding: 7px 8px;
 
-    font-size: 17px;
+    font-size: 16px;
     font-weight: bold;
 
     white-space: nowrap;
@@ -169,6 +181,8 @@ h1 {
 
     box-shadow:
         0 2px 6px rgba(0,0,0,0.20);
+
+    z-index: 10;
 }
 
 
