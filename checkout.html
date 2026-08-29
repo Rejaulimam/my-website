@@ -957,6 +957,103 @@ divisionSelect.addEventListener(
 
 );
 
+
+
+/* ==================================================
+   DISTRICT CHANGE
+================================================== */
+
+districtSelect.addEventListener(
+
+    "change",
+
+    function() {
+
+        resetSelect(
+            upazilaSelect,
+            "Select Upazila / Thana"
+        );
+
+        resetSelect(
+            unionSelect,
+            "Select Union"
+        );
+
+        upazilaSelect.disabled = true;
+        unionSelect.disabled = true;
+
+        if (this.value === "") {
+            return;
+        }
+
+        const division =
+            locationData[
+                Number(divisionSelect.value)
+            ];
+
+        if (!division) {
+            return;
+        }
+
+        const districts =
+            division.districts ||
+            division.district ||
+            division.children;
+
+        if (!Array.isArray(districts)) {
+            return;
+        }
+
+        const district =
+            districts[
+                Number(this.value)
+            ];
+
+        if (!district) {
+            return;
+        }
+
+        const upazilas =
+            district.upazilas ||
+            district.upazila ||
+            district.children;
+
+        if (!Array.isArray(upazilas)) {
+            console.log(
+                "Upazila data not found:",
+                district
+            );
+            return;
+        }
+
+        upazilas.forEach(
+
+            function(upazila, index) {
+
+                addOption(
+
+                    upazilaSelect,
+
+                    index,
+
+                    upazila.bn_name ||
+                    upazila.name ||
+                    upazila.upazila_name
+
+                );
+
+            }
+
+        );
+
+        upazilaSelect.disabled = false;
+
+    }
+
+);
+
+
+
 /* ==================================================
    UPAZILA CHANGE
 ================================================== */
