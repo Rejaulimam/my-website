@@ -1098,12 +1098,17 @@ upazilaSelect.addEventListener(
         }
 
 
-        const district =
-            division.districts[
-                Number(
-                    districtSelect.value
-                )
-            ];
+        const districts =
+    division.districts ||
+    division.district ||
+    division.children;
+
+const district =
+    districts[
+        Number(
+            districtSelect.value
+        )
+    ];
 
 
         if (!district) {
@@ -1113,10 +1118,15 @@ upazilaSelect.addEventListener(
         }
 
 
-        const upazila =
-            district.upazilas[
-                Number(this.value)
-            ];
+        const upazilas =
+    district.upazilas ||
+    district.upazila ||
+    district.children;
+
+const upazila =
+    upazilas[
+        Number(this.value)
+    ];
 
 
         if (
