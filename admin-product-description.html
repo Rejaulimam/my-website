@@ -1189,6 +1189,11 @@ function fillForm(data) {
     ).value =
         data.material || "";
 
+document.getElementById(
+    "stock"
+).value =
+    data.stock ?? 0;
+
 
     document.getElementById(
         "productDetails"
@@ -1281,6 +1286,16 @@ saveButton.addEventListener(
                 document.getElementById(
                     "productDetails"
                 ).value.trim(),
+
+stock:
+    Math.max(
+        0,
+        Number(
+            document.getElementById(
+                "stock"
+            ).value
+        ) || 0
+    ),
 
             updatedAt:
                 new Date().toISOString()
