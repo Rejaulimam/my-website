@@ -1878,9 +1878,36 @@ async function loadFirebaseProduct(
 
             }
 
-        }
+}
+
+
+/* PRODUCT STOCK */
+
+if (
+    data.stock !== undefined
+    &&
+    data.stock !== null
+) {
+
+    const firebaseStock =
+        Number(data.stock);
+
+    if (
+        Number.isFinite(firebaseStock)
+        &&
+        firebaseStock >= 0
+    ) {
+
+        product.stock =
+            firebaseStock;
 
     }
+
+}
+
+        }
+
+    
 
     catch (error) {
 
