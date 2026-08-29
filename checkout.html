@@ -3,198 +3,138 @@
 
 <head>
 
-    <meta charset="UTF-8">
+<meta charset="UTF-8">
+
+<meta
+    name="viewport"
+    content="width=device-width, initial-scale=1.0"
+>
 
-    <meta
-        name="viewport"
-        content="width=device-width, initial-scale=1.0"
-    >
+<title>RK Store - Checkout</title>
 
-    <title>RK Store - Checkout</title>
 
+<style>
 
-    <style>
+body {
+    margin: 0;
+    font-family: Arial, sans-serif;
+    background-color: #f5f5f5;
+}
 
-        body {
 
-            margin: 0;
+h1 {
+    background-color: #ff6600;
+    color: white;
+    text-align: center;
+    padding: 20px;
+    margin: 0;
+}
 
-            font-family: Arial, sans-serif;
 
-            background-color: #f5f5f5;
+.checkout-container {
+    width: 90%;
+    max-width: 600px;
+    margin: 30px auto;
+    background-color: white;
+    padding: 20px;
+    border-radius: 8px;
+    box-shadow: 0 0 5px #ccc;
+}
 
-        }
 
+.checkout-container label {
+    display: block;
+    margin-top: 15px;
+    margin-bottom: 5px;
+    font-size: 18px;
+}
 
-        h1 {
 
-            background-color: #ff6600;
+.checkout-container input,
+.checkout-container textarea,
+.checkout-container select {
+    display: block;
+    width: 100%;
+    box-sizing: border-box;
+    padding: 10px;
+    font-size: 16px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    background-color: white;
+}
 
-            color: white;
 
-            text-align: center;
+.checkout-container textarea {
+    height: 100px;
+    resize: vertical;
+}
 
-            padding: 20px;
 
-            margin: 0;
+.checkout-container select:disabled {
+    background-color: #eeeeee;
+    color: #777;
+}
 
-        }
 
+#placeOrderButton {
+    margin-top: 15px;
+    width: 100%;
+    padding: 12px 20px;
+    font-size: 16px;
+    background-color: #ff6600;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+}
 
-        .checkout-container {
 
-            width: 90%;
+#placeOrderButton:disabled {
+    background-color: #999;
+    cursor: not-allowed;
+}
 
-            max-width: 600px;
 
-            margin: 30px auto;
+.summary-item {
+    border-bottom: 1px solid #ddd;
+    padding: 10px 0;
+}
 
-            background-color: white;
 
-            padding: 20px;
+.total {
+    text-align: right;
+}
 
-            border-radius: 8px;
 
-            box-shadow: 0 0 5px #ccc;
+#authStatus {
+    text-align: center;
+    color: #666;
+    margin-bottom: 15px;
+}
 
-        }
 
+.address-title {
+    margin-top: 25px;
+    margin-bottom: 5px;
+}
 
-        .checkout-container label {
 
-            display: block;
+.address-note {
+    font-size: 13px;
+    color: #777;
+    margin-top: 8px;
+    line-height: 1.5;
+}
 
-            margin-top: 15px;
 
-            margin-bottom: 5px;
+.location-loading {
+    color: #777;
+    font-size: 14px;
+    margin-top: 8px;
+}
 
-            font-size: 18px;
 
-        }
-
-
-        .checkout-container input,
-        .checkout-container textarea,
-        .checkout-container select {
-
-            display: block;
-
-            width: 100%;
-
-            box-sizing: border-box;
-
-            padding: 10px;
-
-            font-size: 16px;
-
-            border: 1px solid #ccc;
-
-            border-radius: 5px;
-
-            background-color: white;
-
-        }
-
-
-        .checkout-container textarea {
-
-            height: 100px;
-
-            resize: vertical;
-
-        }
-
-
-        #placeOrderButton {
-
-            margin-top: 15px;
-
-            width: 100%;
-
-            padding: 12px 20px;
-
-            font-size: 16px;
-
-            background-color: #ff6600;
-
-            color: white;
-
-            border: none;
-
-            border-radius: 5px;
-
-            cursor: pointer;
-
-        }
-
-
-        #placeOrderButton:disabled {
-
-            background-color: #999;
-
-            cursor: not-allowed;
-
-        }
-
-
-        .summary-item {
-
-            border-bottom: 1px solid #ddd;
-
-            padding: 10px 0;
-
-        }
-
-
-        .total {
-
-            text-align: right;
-
-        }
-
-
-        #authStatus {
-
-            text-align: center;
-
-            color: #666;
-
-            margin-bottom: 15px;
-
-        }
-
-
-        .address-title {
-
-            margin-top: 25px;
-
-            margin-bottom: 5px;
-
-        }
-
-
-        .address-note {
-
-            font-size: 13px;
-
-            color: #777;
-
-            margin-top: 5px;
-
-        }
-
-
-        .location-loading {
-
-            color: #777;
-
-            font-size: 14px;
-
-            margin-top: 5px;
-
-        }
-
-    </style>
+</style>
 
 </head>
 
@@ -202,335 +142,278 @@
 <body>
 
 
-    <h1>RK Store - Checkout</h1>
+<h1>RK Store - Checkout</h1>
 
 
-    <div class="checkout-container">
+<div class="checkout-container">
 
 
-        <div id="authStatus">
+<div id="authStatus">
+    Checking customer login...
+</div>
 
-            Checking customer login...
 
-        </div>
+<div id="orderSummary"></div>
 
 
-        <div id="orderSummary"></div>
+<h2>Customer Information</h2>
 
 
-        <h2>Customer Information</h2>
+<label for="name">
+    Name
+</label>
 
 
-        <label for="name">
+<input
+    type="text"
+    id="name"
+    placeholder="Enter your name"
+>
 
-            Name
 
-        </label>
+<label for="mobile">
+    Mobile Number
+</label>
 
 
-        <input
-            type="text"
-            id="name"
-            placeholder="Enter your name"
-        >
+<input
+    type="tel"
+    id="mobile"
+    placeholder="Enter your mobile number"
+>
 
 
-        <label for="mobile">
+<!-- =========================================
+     DELIVERY ADDRESS
+========================================== -->
 
-            Mobile Number
 
-        </label>
+<h2 class="address-title">
+    Delivery Address
+</h2>
 
 
-        <input
-            type="tel"
-            id="mobile"
-            placeholder="Enter your mobile number"
-        >
+<label for="division">
+    Division
+</label>
 
 
-        <!-- =========================================
-             ADDRESS
-        ========================================== -->
+<select id="division">
 
+    <option value="">
+        Select Division
+    </option>
 
-        <h2 class="address-title">
+</select>
 
-            Delivery Address
 
-        </h2>
+<label for="district">
+    District
+</label>
 
 
-        <label for="division">
+<select id="district" disabled>
 
-            Division
+    <option value="">
+        Select District
+    </option>
 
-        </label>
+</select>
 
 
-        <select id="division">
+<label for="upazila">
+    Upazila / Thana
+</label>
 
-            <option value="">
 
-                Select Division
+<select id="upazila" disabled>
 
-            </option>
+    <option value="">
+        Select Upazila / Thana
+    </option>
 
-        </select>
+</select>
 
 
-        <label for="district">
+<label for="union">
+    Union
+</label>
 
-            District
 
-        </label>
+<select id="union" disabled>
 
+    <option value="">
+        Select Union
+    </option>
 
-        <select id="district" disabled>
+</select>
 
-            <option value="">
 
-                Select District
+<label for="ward">
+    Ward
+</label>
 
-            </option>
 
-        </select>
+<select id="ward">
 
+    <option value="">
+        Select Ward
+    </option>
 
-        <label for="upazila">
+    <option value="1">
+        Ward 1
+    </option>
 
-            Upazila / Thana
+    <option value="2">
+        Ward 2
+    </option>
 
-        </label>
+    <option value="3">
+        Ward 3
+    </option>
 
+    <option value="4">
+        Ward 4
+    </option>
 
-        <select id="upazila" disabled>
+    <option value="5">
+        Ward 5
+    </option>
 
-            <option value="">
+    <option value="6">
+        Ward 6
+    </option>
 
-                Select Upazila / Thana
+    <option value="7">
+        Ward 7
+    </option>
 
-            </option>
+    <option value="8">
+        Ward 8
+    </option>
 
-        </select>
+    <option value="9">
+        Ward 9
+    </option>
 
+</select>
 
-        <label for="union">
 
-            Union / Area
+<label for="address">
+    Detailed Address
+</label>
 
-        </label>
 
+<textarea
+    id="address"
+    placeholder="House / Road / Village / Other details"
+></textarea>
 
-        <select id="union" disabled>
 
-            <option value="">
+<div class="address-note">
 
-                Select Union / Area
+    Select Division, District, Upazila/Thana,
+    Union and Ward, then enter your detailed address.
 
-            </option>
+</div>
 
-        </select>
 
+<div
+    id="locationLoading"
+    class="location-loading"
+></div>
 
-        <label for="ward">
 
-            Ward
 
-        </label>
+<!-- =========================================
+     PAYMENT
+========================================== -->
 
 
-        <select id="ward">
+<label for="paymentMethod">
+    Payment Method
+</label>
 
-            <option value="">
 
-                Select Ward
+<select id="paymentMethod">
 
-            </option>
+    <option value="cod">
+        Cash on Delivery
+    </option>
 
-            <option value="1">
+    <option value="bkash">
+        bKash
+    </option>
 
-                Ward 1
+    <option value="nagad">
+        Nagad
+    </option>
 
-            </option>
+</select>
 
-            <option value="2">
 
-                Ward 2
+<div
+    id="paymentDetails"
+    style="display:none;"
+>
 
-            </option>
 
-            <option value="3">
+<div
+    id="paymentMessage"
+    style="
+        background:#fff3cd;
+        color:#856404;
+        padding:12px;
+        border-radius:6px;
+        margin-top:10px;
+    "
+>
 
-                Ward 3
+    Online payment gateway is not connected yet.
 
-            </option>
+</div>
 
-            <option value="4">
 
-                Ward 4
+<label for="paymentNumber">
+    Payment Number
+</label>
 
-            </option>
 
-            <option value="5">
+<input
+    type="tel"
+    id="paymentNumber"
+    placeholder="Enter payment number"
+>
 
-                Ward 5
 
-            </option>
+<label for="transactionId">
+    Transaction ID
+</label>
 
-            <option value="6">
 
-                Ward 6
+<input
+    type="text"
+    id="transactionId"
+    placeholder="Enter Transaction ID"
+>
 
-            </option>
 
-            <option value="7">
+</div>
 
-                Ward 7
 
-            </option>
+<button
+    type="button"
+    id="placeOrderButton"
+    onclick="placeOrder()"
+>
 
-            <option value="8">
+    Place Order
 
-                Ward 8
+</button>
 
-            </option>
 
-            <option value="9">
+</div>
 
-                Ward 9
-
-            </option>
-
-        </select>
-
-
-        <label for="address">
-
-            Detailed Address
-
-        </label>
-
-
-        <textarea
-            id="address"
-            placeholder="House / Road / Village / Other details"
-        ></textarea>
-
-
-        <div class="address-note">
-
-            Please select Division, District, Upazila/Thana,
-            Union/Area and Ward.
-
-        </div>
-
-
-        <div
-            id="locationLoading"
-            class="location-loading"
-        ></div>
-
-
-        <!-- =========================================
-             PAYMENT
-        ========================================== -->
-
-
-        <label for="paymentMethod">
-
-            Payment Method
-
-        </label>
-
-
-        <select id="paymentMethod">
-
-            <option value="cod">
-
-                Cash on Delivery
-
-            </option>
-
-            <option value="bkash">
-
-                bKash
-
-            </option>
-
-            <option value="nagad">
-
-                Nagad
-
-            </option>
-
-        </select>
-
-
-        <div
-            id="paymentDetails"
-            style="display:none;"
-        >
-
-
-            <div
-                id="paymentMessage"
-                style="
-                    background:#fff3cd;
-                    color:#856404;
-                    padding:12px;
-                    border-radius:6px;
-                    margin-top:10px;
-                "
-            >
-
-                Online payment gateway is not connected yet.
-
-            </div>
-
-
-            <label for="paymentNumber">
-
-                Payment Number
-
-            </label>
-
-
-            <input
-                type="tel"
-                id="paymentNumber"
-                placeholder="Enter payment number"
-            >
-
-
-            <label for="transactionId">
-
-                Transaction ID
-
-            </label>
-
-
-            <input
-                type="text"
-                id="transactionId"
-                placeholder="Enter Transaction ID"
-            >
-
-        </div>
-
-
-        <button
-            type="button"
-            id="placeOrderButton"
-            onclick="placeOrder()"
-        >
-
-            Place Order
-
-        </button>
-
-
-    </div>
 
 
 <script type="module">
@@ -553,11 +436,8 @@ from "https://www.gstatic.com/firebasejs/12.18.0/firebase-app.js";
 import {
 
     getFirestore,
-
     collection,
-
     addDoc,
-
     serverTimestamp
 
 }
@@ -568,7 +448,6 @@ from "https://www.gstatic.com/firebasejs/12.18.0/firebase-firestore.js";
 import {
 
     getAuth,
-
     onAuthStateChanged
 
 }
@@ -612,24 +491,15 @@ const firebaseConfig = {
 
 
 const app =
-
-    initializeApp(
-        firebaseConfig
-    );
+    initializeApp(firebaseConfig);
 
 
 const db =
-
-    getFirestore(
-        app
-    );
+    getFirestore(app);
 
 
 const auth =
-
-    getAuth(
-        app
-    );
+    getAuth(app);
 
 
 
@@ -651,7 +521,6 @@ onAuthStateChanged(
 
 
         const authStatus =
-
             document.getElementById(
                 "authStatus"
             );
@@ -659,16 +528,8 @@ onAuthStateChanged(
 
         if (user) {
 
-            console.log(
-                "Checkout Customer:",
-                user.uid
-            );
-
-
             authStatus.innerText =
-
                 "Customer logged in: " +
-
                 (
                     user.email ||
                     "Customer"
@@ -680,18 +541,14 @@ onAuthStateChanged(
 
 
             const nameInput =
-
                 document.getElementById(
                     "name"
                 );
 
 
             if (
-
                 nameInput.value.trim() === "" &&
-
                 user.displayName
-
             ) {
 
                 nameInput.value =
@@ -703,15 +560,8 @@ onAuthStateChanged(
 
         else {
 
-            console.log(
-                "Checkout: No customer logged in"
-            );
-
-
             authStatus.innerText =
-
                 "Customer login required.";
-
 
             authStatus.style.color =
                 "red";
@@ -733,14 +583,12 @@ function showOrderSummary() {
 
 
     const cart =
-
         JSON.parse(
             localStorage.getItem("cart")
         ) || [];
 
 
     const summary =
-
         document.getElementById(
             "orderSummary"
         );
@@ -749,7 +597,6 @@ function showOrderSummary() {
     if (cart.length === 0) {
 
         summary.innerHTML =
-
             "<p>Your cart is empty.</p>";
 
         return;
@@ -761,7 +608,6 @@ function showOrderSummary() {
 
 
     let html =
-
         "<h2>Order Summary</h2>";
 
 
@@ -769,23 +615,15 @@ function showOrderSummary() {
 
         function(product) {
 
-
             const quantity =
-
-                Number(
-                    product.quantity
-                ) || 1;
+                Number(product.quantity) || 1;
 
 
             const price =
-
-                Number(
-                    product.price
-                ) || 0;
+                Number(product.price) || 0;
 
 
             const subtotal =
-
                 price * quantity;
 
 
@@ -821,9 +659,7 @@ function showOrderSummary() {
     html += `
 
         <h2 class="total">
-
             Total: ৳${total}
-
         </h2>
 
     `;
@@ -852,37 +688,27 @@ const LOCATION_DATA_URL =
 let locationData = [];
 
 
-
 const divisionSelect =
-
-    document.getElementById(
-        "division"
-    );
+    document.getElementById("division");
 
 
 const districtSelect =
-
-    document.getElementById(
-        "district"
-    );
+    document.getElementById("district");
 
 
 const upazilaSelect =
-
-    document.getElementById(
-        "upazila"
-    );
+    document.getElementById("upazila");
 
 
 const unionSelect =
+    document.getElementById("union");
 
-    document.getElementById(
-        "union"
-    );
+
+const wardSelect =
+    document.getElementById("ward");
 
 
 const locationLoading =
-
     document.getElementById(
         "locationLoading"
     );
@@ -890,16 +716,13 @@ const locationLoading =
 
 
 /* ==================================================
-   SELECT HELPER
+   RESET SELECT
 ================================================== */
 
 
 function resetSelect(
-
     selectElement,
-
     text
-
 ) {
 
     selectElement.innerHTML =
@@ -913,30 +736,28 @@ function resetSelect(
 
 
 /* ==================================================
-   ADD OPTIONS
+   ADD OPTION
 ================================================== */
 
 
 function addOption(
-
     selectElement,
-
     value,
-
     text
-
 ) {
 
     const option =
-
         document.createElement(
             "option"
         );
 
 
-    option.value = value;
+    option.value =
+        value;
 
-    option.textContent = text;
+
+    option.textContent =
+        text;
 
 
     selectElement.appendChild(
@@ -957,14 +778,11 @@ async function loadLocationData() {
 
     try {
 
-
         locationLoading.textContent =
-
             "Loading address list...";
 
 
         const response =
-
             await fetch(
                 LOCATION_DATA_URL
             );
@@ -980,7 +798,6 @@ async function loadLocationData() {
 
 
         locationData =
-
             await response.json();
 
 
@@ -993,7 +810,6 @@ async function loadLocationData() {
         locationData.forEach(
 
             function(division, index) {
-
 
                 addOption(
 
@@ -1012,14 +828,12 @@ async function loadLocationData() {
 
 
         locationLoading.textContent =
-
-            "Address list ready.";
+            "";
 
 
     }
 
     catch (error) {
-
 
         console.error(
             "Location Data Error:",
@@ -1028,13 +842,11 @@ async function loadLocationData() {
 
 
         locationLoading.textContent =
-
-            "Address list could not be loaded. Please refresh the page.";
+            "Address list could not be loaded. Please refresh.";
 
     }
 
 }
-
 
 
 loadLocationData();
@@ -1053,10 +865,6 @@ divisionSelect.addEventListener(
     function() {
 
 
-        const divisionIndex =
-            this.value;
-
-
         resetSelect(
             districtSelect,
             "Select District"
@@ -1071,20 +879,23 @@ divisionSelect.addEventListener(
 
         resetSelect(
             unionSelect,
-            "Select Union / Area"
+            "Select Union"
         );
 
 
-        districtSelect.disabled = true;
-
-        upazilaSelect.disabled = true;
-
-        unionSelect.disabled = true;
+        districtSelect.disabled =
+            true;
 
 
-        if (
-            divisionIndex === ""
-        ) {
+        upazilaSelect.disabled =
+            true;
+
+
+        unionSelect.disabled =
+            true;
+
+
+        if (this.value === "") {
 
             return;
 
@@ -1092,17 +903,16 @@ divisionSelect.addEventListener(
 
 
         const division =
-
             locationData[
-                Number(
-                    divisionIndex
-                )
+                Number(this.value)
             ];
 
 
         if (
             !division ||
-            !division.districts
+            !Array.isArray(
+                division.districts
+            )
         ) {
 
             return;
@@ -1113,7 +923,6 @@ divisionSelect.addEventListener(
         division.districts.forEach(
 
             function(district, index) {
-
 
                 addOption(
 
@@ -1131,7 +940,8 @@ divisionSelect.addEventListener(
         );
 
 
-        districtSelect.disabled = false;
+        districtSelect.disabled =
+            false;
 
     }
 
@@ -1151,17 +961,6 @@ districtSelect.addEventListener(
     function() {
 
 
-        const divisionIndex =
-
-            Number(
-                divisionSelect.value
-            );
-
-
-        const districtIndex =
-            this.value;
-
-
         resetSelect(
             upazilaSelect,
             "Select Upazila / Thana"
@@ -1170,18 +969,19 @@ districtSelect.addEventListener(
 
         resetSelect(
             unionSelect,
-            "Select Union / Area"
+            "Select Union"
         );
 
 
-        upazilaSelect.disabled = true;
+        upazilaSelect.disabled =
+            true;
 
-        unionSelect.disabled = true;
+
+        unionSelect.disabled =
+            true;
 
 
-        if (
-            districtIndex === ""
-        ) {
+        if (this.value === "") {
 
             return;
 
@@ -1189,16 +989,14 @@ districtSelect.addEventListener(
 
 
         const division =
-
             locationData[
-                divisionIndex
+                Number(
+                    divisionSelect.value
+                )
             ];
 
 
-        if (
-            !division ||
-            !division.districts
-        ) {
+        if (!division) {
 
             return;
 
@@ -1206,17 +1004,16 @@ districtSelect.addEventListener(
 
 
         const district =
-
             division.districts[
-                Number(
-                    districtIndex
-                )
+                Number(this.value)
             ];
 
 
         if (
             !district ||
-            !district.upazilas
+            !Array.isArray(
+                district.upazilas
+            )
         ) {
 
             return;
@@ -1227,7 +1024,6 @@ districtSelect.addEventListener(
         district.upazilas.forEach(
 
             function(upazila, index) {
-
 
                 addOption(
 
@@ -1245,7 +1041,8 @@ districtSelect.addEventListener(
         );
 
 
-        upazilaSelect.disabled = false;
+        upazilaSelect.disabled =
+            false;
 
     }
 
@@ -1265,36 +1062,17 @@ upazilaSelect.addEventListener(
     function() {
 
 
-        const divisionIndex =
-
-            Number(
-                divisionSelect.value
-            );
-
-
-        const districtIndex =
-
-            Number(
-                districtSelect.value
-            );
-
-
-        const upazilaIndex =
-            this.value;
-
-
         resetSelect(
             unionSelect,
-            "Select Union / Area"
+            "Select Union"
         );
 
 
-        unionSelect.disabled = true;
+        unionSelect.disabled =
+            true;
 
 
-        if (
-            upazilaIndex === ""
-        ) {
+        if (this.value === "") {
 
             return;
 
@@ -1302,9 +1080,10 @@ upazilaSelect.addEventListener(
 
 
         const division =
-
             locationData[
-                divisionIndex
+                Number(
+                    divisionSelect.value
+                )
             ];
 
 
@@ -1316,9 +1095,10 @@ upazilaSelect.addEventListener(
 
 
         const district =
-
             division.districts[
-                districtIndex
+                Number(
+                    districtSelect.value
+                )
             ];
 
 
@@ -1330,17 +1110,16 @@ upazilaSelect.addEventListener(
 
 
         const upazila =
-
             district.upazilas[
-                Number(
-                    upazilaIndex
-                )
+                Number(this.value)
             ];
 
 
         if (
             !upazila ||
-            !upazila.unions
+            !Array.isArray(
+                upazila.unions
+            )
         ) {
 
             return;
@@ -1351,7 +1130,6 @@ upazilaSelect.addEventListener(
         upazila.unions.forEach(
 
             function(union, index) {
-
 
                 addOption(
 
@@ -1369,7 +1147,8 @@ upazilaSelect.addEventListener(
         );
 
 
-        unionSelect.disabled = false;
+        unionSelect.disabled =
+            false;
 
     }
 
@@ -1383,11 +1162,7 @@ upazilaSelect.addEventListener(
 
 
 document
-
-    .getElementById(
-        "paymentMethod"
-    )
-
+    .getElementById("paymentMethod")
     .addEventListener(
 
         "change",
@@ -1396,18 +1171,14 @@ document
 
 
             const paymentDetails =
-
                 document.getElementById(
                     "paymentDetails"
                 );
 
 
             if (
-
                 this.value === "bkash" ||
-
                 this.value === "nagad"
-
             ) {
 
                 paymentDetails.style.display =
@@ -1435,231 +1206,186 @@ document
 
 window.placeOrder =
 
-    async function() {
+async function() {
 
 
-        const button =
-
-            document.getElementById(
-                "placeOrderButton"
-            );
-
-
-        const user =
-            auth.currentUser;
-
-
-        console.log(
-            "Place Order User:",
-            user
+    const button =
+        document.getElementById(
+            "placeOrderButton"
         );
 
 
-        /* =========================================
-           LOGIN CHECK
-        ========================================== */
+    const user =
+        auth.currentUser;
 
 
-        if (!user) {
+    /* =========================================
+       LOGIN CHECK
+    ========================================== */
 
-            alert(
-                "Please login to your customer account first."
-            );
 
+    if (!user) {
 
-            window.location.href =
-                "customer-login.html";
+        alert(
+            "Please login to your customer account first."
+        );
 
 
-            return;
+        window.location.href =
+            "customer-login.html";
 
-        }
 
+        return;
 
-        currentUser =
-            user;
+    }
 
 
+    currentUser =
+        user;
 
-        /* =========================================
-           CUSTOMER INFORMATION
-        ========================================== */
 
 
-        const name =
+    /* =========================================
+       CUSTOMER INFORMATION
+    ========================================== */
 
-            document
 
-                .getElementById(
-                    "name"
-                )
+    const name =
+        document
+            .getElementById("name")
+            .value
+            .trim();
 
-                .value
 
-                .trim();
+    const mobile =
+        document
+            .getElementById("mobile")
+            .value
+            .trim();
 
 
-        const mobile =
 
-            document
+    /* =========================================
+       ADDRESS VALUES
+    ========================================== */
 
-                .getElementById(
-                    "mobile"
-                )
 
-                .value
+    const divisionValue =
+        divisionSelect.value;
 
-                .trim();
 
+    const districtValue =
+        districtSelect.value;
 
 
-        /* =========================================
-           ADDRESS INFORMATION
-        ========================================== */
+    const upazilaValue =
+        upazilaSelect.value;
 
 
-        const divisionValue =
+    const unionValue =
+        unionSelect.value;
 
-            divisionSelect.value;
 
+    const wardValue =
+        wardSelect.value;
 
-        const districtValue =
 
-            districtSelect.value;
+    const detailedAddress =
+        document
+            .getElementById("address")
+            .value
+            .trim();
 
 
-        const upazilaValue =
 
-            upazilaSelect.value;
+    /* =========================================
+       ADDRESS NAMES
+    ========================================== */
 
 
-        const unionValue =
+    let divisionName = "";
 
-            unionSelect.value;
+    let districtName = "";
 
+    let upazilaName = "";
 
-        const wardValue =
+    let unionName = "";
 
-            document.getElementById(
-                "ward"
-            ).value;
 
+    if (divisionValue !== "") {
 
-        const detailedAddress =
 
-            document
+        const division =
+            locationData[
+                Number(divisionValue)
+            ];
 
-                .getElementById(
-                    "address"
-                )
 
-                .value
+        if (division) {
 
-                .trim();
 
+            divisionName =
+                division.bn_name ||
+                division.name;
 
 
-        /* =========================================
-           GET ADDRESS NAMES
-        ========================================== */
+            if (
+                districtValue !== "" &&
+                division.districts
+            ) {
 
 
-        let divisionName = "";
+                const district =
+                    division.districts[
+                        Number(districtValue)
+                    ];
 
-        let districtName = "";
 
-        let upazilaName = "";
+                if (district) {
 
-        let unionName = "";
 
+                    districtName =
+                        district.bn_name ||
+                        district.name;
 
-        if (
-            divisionValue !== ""
-        ) {
 
-            const division =
+                    if (
+                        upazilaValue !== "" &&
+                        district.upazilas
+                    ) {
 
-                locationData[
-                    Number(
-                        divisionValue
-                    )
-                ];
 
+                        const upazila =
+                            district.upazilas[
+                                Number(upazilaValue)
+                            ];
 
-            if (division) {
 
-                divisionName =
+                        if (upazila) {
 
-                    division.bn_name ||
-                    division.name;
 
+                            upazilaName =
+                                upazila.bn_name ||
+                                upazila.name;
 
-                if (
-                    districtValue !== "" &&
-                    division.districts
-                ) {
 
-                    const district =
+                            if (
+                                unionValue !== "" &&
+                                upazila.unions
+                            ) {
 
-                        division.districts[
-                            Number(
-                                districtValue
-                            )
-                        ];
 
+                                const union =
+                                    upazila.unions[
+                                        Number(unionValue)
+                                    ];
 
-                    if (district) {
 
-                        districtName =
+                                if (union) {
 
-                            district.bn_name ||
-                            district.name;
-
-
-                        if (
-                            upazilaValue !== "" &&
-                            district.upazilas
-                        ) {
-
-                            const upazila =
-
-                                district.upazilas[
-                                    Number(
-                                        upazilaValue
-                                    )
-                                ];
-
-
-                            if (upazila) {
-
-                                upazilaName =
-
-                                    upazila.bn_name ||
-                                    upazila.name;
-
-
-                                if (
-                                    unionValue !== "" &&
-                                    upazila.unions
-                                ) {
-
-                                    const union =
-
-                                        upazila.unions[
-                                            Number(
-                                                unionValue
-                                            )
-                                        ];
-
-
-                                    if (union) {
-
-                                        unionName =
-
-                                            union.bn_name ||
-                                            union.name;
-
-                                    }
+                                    unionName =
+                                        union.bn_name ||
+                                        union.name;
 
                                 }
 
@@ -1675,449 +1401,422 @@ window.placeOrder =
 
         }
 
-
-
-        /* =========================================
-           PAYMENT INFORMATION
-        ========================================== */
-
-
-        const paymentMethod =
-
-            document
-
-                .getElementById(
-                    "paymentMethod"
-                )
-
-                .value;
-
-
-        const paymentNumber =
-
-            document
-
-                .getElementById(
-                    "paymentNumber"
-                )
-
-                .value
-
-                .trim();
-
-
-        const transactionId =
-
-            document
-
-                .getElementById(
-                    "transactionId"
-                )
-
-                .value
-
-                .trim();
+    }
 
 
 
-        /* =========================================
-           VALIDATION
-        ========================================== */
+    /* =========================================
+       PAYMENT
+    ========================================== */
 
 
-        if (
+    const paymentMethod =
+        document
+            .getElementById(
+                "paymentMethod"
+            )
+            .value;
 
-            name === "" ||
 
-            mobile === "" ||
+    const paymentNumber =
+        document
+            .getElementById(
+                "paymentNumber"
+            )
+            .value
+            .trim();
 
-            divisionValue === "" ||
 
-            districtValue === "" ||
+    const transactionId =
+        document
+            .getElementById(
+                "transactionId"
+            )
+            .value
+            .trim();
 
-            upazilaValue === "" ||
 
-            unionValue === "" ||
 
-            wardValue === "" ||
+    /* =========================================
+       VALIDATION
+    ========================================== */
 
-            detailedAddress === ""
 
-        ) {
+    if (
 
-            alert(
-                "Please fill in all customer and delivery address information."
-            );
+        name === "" ||
 
-            return;
+        mobile === "" ||
+
+        divisionValue === "" ||
+
+        districtValue === "" ||
+
+        upazilaValue === "" ||
+
+        unionValue === "" ||
+
+        wardValue === "" ||
+
+        detailedAddress === ""
+
+    ) {
+
+        alert(
+            "Please fill in all customer and delivery address information."
+        );
+
+        return;
+
+    }
+
+
+
+    /* =========================================
+       PAYMENT VALIDATION
+    ========================================== */
+
+
+    if (
+        paymentMethod === "bkash" ||
+        paymentMethod === "nagad"
+    ) {
+
+        alert(
+            "Online payment is not available yet. Please select Cash on Delivery."
+        );
+
+        return;
+
+    }
+
+
+
+    /* =========================================
+       CART
+    ========================================== */
+
+
+    const cart =
+        JSON.parse(
+            localStorage.getItem("cart")
+        ) || [];
+
+
+    if (cart.length === 0) {
+
+        alert(
+            "Your cart is empty."
+        );
+
+        return;
+
+    }
+
+
+
+    /* =========================================
+       TOTAL
+    ========================================== */
+
+
+    let totalAmount = 0;
+
+
+    cart.forEach(
+
+        function(product) {
+
+
+            const quantity =
+                Number(
+                    product.quantity
+                ) || 1;
+
+
+            const price =
+                Number(
+                    product.price
+                ) || 0;
+
+
+            totalAmount +=
+                price * quantity;
 
         }
 
+    );
 
 
-        /* =========================================
-           PAYMENT VALIDATION
-        ========================================== */
+
+    /* =========================================
+       ORDER ID
+    ========================================== */
 
 
-        if (
+    const orderId =
+        "RK-" + Date.now();
 
-            paymentMethod === "bkash" ||
 
-            paymentMethod === "nagad"
 
-        ) {
+    /* =========================================
+       FULL ADDRESS
+    ========================================== */
 
-            alert(
-                "Online payment is not available yet. Please select Cash on Delivery."
+
+    const fullAddress =
+
+        "Division: " +
+        divisionName +
+
+        ", District: " +
+        districtName +
+
+        ", Upazila/Thana: " +
+        upazilaName +
+
+        ", Union: " +
+        unionName +
+
+        ", Ward: " +
+        wardValue +
+
+        ", Details: " +
+        detailedAddress;
+
+
+
+    /* =========================================
+       ORDER DATA
+    ========================================== */
+
+
+    const order = {
+
+
+        orderId:
+            orderId,
+
+
+        customerId:
+            currentUser.uid,
+
+
+        customerEmail:
+            currentUser.email || "",
+
+
+        customerName:
+            name,
+
+
+        customerMobile:
+            mobile,
+
+
+        /* OLD FIELD */
+
+        customerAddress:
+            fullAddress,
+
+
+        /* NEW ADDRESS FIELDS */
+
+        division:
+            divisionName,
+
+
+        district:
+            districtName,
+
+
+        upazila:
+            upazilaName,
+
+
+        unionArea:
+            unionName,
+
+
+        ward:
+            wardValue,
+
+
+        detailedAddress:
+            detailedAddress,
+
+
+        paymentMethod:
+            paymentMethod,
+
+
+        paymentNumber:
+            paymentNumber,
+
+
+        transactionId:
+            transactionId,
+
+
+        products:
+            cart,
+
+
+        totalAmount:
+            totalAmount,
+
+
+        status:
+            "Pending",
+
+
+        dateTime:
+            new Date().toLocaleString(),
+
+
+        createdAt:
+            serverTimestamp()
+
+    };
+
+
+
+    /* =========================================
+       BUTTON LOCK
+    ========================================== */
+
+
+    button.disabled =
+        true;
+
+
+    button.innerText =
+        "Placing Order...";
+
+
+
+    /* =========================================
+       FIRESTORE SAVE
+    ========================================== */
+
+
+    try {
+
+
+        const docRef =
+
+            await addDoc(
+
+                collection(
+                    db,
+                    "orders"
+                ),
+
+                order
+
             );
 
-            return;
 
-        }
-
-
-
-        /* =========================================
-           CART
-        ========================================== */
+        console.log(
+            "Order saved:",
+            docRef.id
+        );
 
 
-        const cart =
+
+        /* =====================================
+           LOCAL COPY
+        ====================================== */
+
+
+        let orders =
 
             JSON.parse(
+
                 localStorage.getItem(
-                    "cart"
+                    "orders"
                 )
+
             ) || [];
 
 
-        if (
-            cart.length === 0
-        ) {
+        orders.push({
 
-            alert(
-                "Your cart is empty."
-            );
+            ...order,
 
-            return;
+            firebaseId:
+                docRef.id,
 
-        }
+            createdAt:
+                new Date().toISOString()
 
-
-
-        /* =========================================
-           TOTAL AMOUNT
-        ========================================== */
+        });
 
 
-        let totalAmount = 0;
+        localStorage.setItem(
 
+            "orders",
 
-        cart.forEach(
-
-            function(product) {
-
-
-                const quantity =
-
-                    Number(
-                        product.quantity
-                    ) || 1;
-
-
-                const price =
-
-                    Number(
-                        product.price
-                    ) || 0;
-
-
-                totalAmount +=
-
-                    price * quantity;
-
-            }
+            JSON.stringify(
+                orders
+            )
 
         );
 
 
 
-        /* =========================================
-           ORDER ID
-        ========================================== */
+        /* =====================================
+           CLEAR CART
+        ====================================== */
 
 
-        const orderId =
+        localStorage.removeItem(
+            "cart"
+        );
 
-            "RK-" +
-            Date.now();
 
 
+        /* =====================================
+           SUCCESS
+        ====================================== */
 
-        /* =========================================
-           COMPLETE ADDRESS
-        ========================================== */
 
+        alert(
+            "Order placed successfully!"
+        );
 
-        const fullAddress =
 
-            "Division: " +
-            divisionName +
+        window.location.href =
+            "index.html";
 
-            ", District: " +
-            districtName +
 
-            ", Upazila/Thana: " +
-            upazilaName +
+    }
 
-            ", Union/Area: " +
-            unionName +
 
-            ", Ward: " +
-            wardValue +
+    catch (error) {
 
-            ", Details: " +
-            detailedAddress;
 
+        console.error(
+            "Firebase Order Error:",
+            error
+        );
 
 
-        /* =========================================
-           ORDER DATA
-        ========================================== */
-
-
-        const order = {
-
-
-            orderId:
-                orderId,
-
-
-            customerId:
-                currentUser.uid,
-
-
-            customerEmail:
-                currentUser.email || "",
-
-
-            customerName:
-                name,
-
-
-            customerMobile:
-                mobile,
-
-
-            /* OLD ADDRESS FIELD */
-
-            customerAddress:
-                fullAddress,
-
-
-            /* NEW ADDRESS FIELDS */
-
-            division:
-                divisionName,
-
-
-            district:
-                districtName,
-
-
-            upazila:
-                upazilaName,
-
-
-            unionArea:
-                unionName,
-
-
-            ward:
-                wardValue,
-
-
-            detailedAddress:
-                detailedAddress,
-
-
-            paymentMethod:
-                paymentMethod,
-
-
-            paymentNumber:
-                paymentNumber,
-
-
-            transactionId:
-                transactionId,
-
-
-            products:
-                cart,
-
-
-            totalAmount:
-                totalAmount,
-
-
-            status:
-                "Pending",
-
-
-            dateTime:
-                new Date().toLocaleString(),
-
-
-            createdAt:
-                serverTimestamp()
-
-        };
-
-
-
-        /* =========================================
-           BUTTON LOCK
-        ========================================== */
+        alert(
+            "Order could not be placed. Please try again."
+        );
 
 
         button.disabled =
-            true;
+            false;
 
 
         button.innerText =
-            "Placing Order...";
+            "Place Order";
 
+    }
 
-
-        /* =========================================
-           SAVE TO FIRESTORE
-        ========================================== */
-
-
-        try {
-
-
-            const docRef =
-
-                await addDoc(
-
-                    collection(
-                        db,
-                        "orders"
-                    ),
-
-                    order
-
-                );
-
-
-            console.log(
-                "Order saved:",
-                docRef.id
-            );
-
-
-
-            /* =====================================
-               SAVE LOCAL COPY
-            ====================================== */
-
-
-            let orders =
-
-                JSON.parse(
-
-                    localStorage.getItem(
-                        "orders"
-                    )
-
-                ) || [];
-
-
-            orders.push({
-
-                ...order,
-
-                firebaseId:
-                    docRef.id,
-
-                createdAt:
-                    new Date().toISOString()
-
-            });
-
-
-            localStorage.setItem(
-
-                "orders",
-
-                JSON.stringify(
-                    orders
-                )
-
-            );
-
-
-
-            /* =====================================
-               CLEAR CART
-            ====================================== */
-
-
-            localStorage.removeItem(
-                "cart"
-            );
-
-
-
-            /* =====================================
-               SUCCESS
-            ====================================== */
-
-
-            alert(
-                "Order placed successfully!"
-            );
-
-
-            window.location.href =
-                "index.html";
-
-
-        }
-
-
-        catch (error) {
-
-
-            console.error(
-
-                "Firebase Order Error:",
-
-                error
-
-            );
-
-
-            alert(
-
-                "Order could not be placed. Please try again."
-
-            );
-
-
-            button.disabled =
-                false;
-
-
-            button.innerText =
-                "Place Order";
-
-        }
-
-    };
+};
 
 
 </script>
