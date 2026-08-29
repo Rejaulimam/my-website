@@ -915,16 +915,40 @@ divisionSelect.addEventListener(
             ];
 
 
-        if (
-            !division ||
-            !Array.isArray(
-                division.districts
-            )
-        ) {
+      const division =
+    locationData[
+        Number(this.value)
+    ];
 
-            return;
+if (!division) {
+    return;
+}
 
-        }
+const districts =
+    division.districts ||
+    division.district ||
+    division.children;
+
+if (!Array.isArray(districts)) {
+    console.log("District data not found:", division);
+    return;
+}
+
+districts.forEach(
+    function(district, index) {
+
+        addOption(
+            districtSelect,
+            index,
+            district.bn_name ||
+            district.name ||
+            district.district_name
+        );
+
+    }
+);
+
+districtSelect.disabled = false;
 
 
         division.districts.forEach(
