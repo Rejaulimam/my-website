@@ -981,89 +981,80 @@ districtSelect.disabled = false;
 
 
 /* ==================================================
-   DISTRICT CHANGE
+   DIVISION CHANGE
 ================================================== */
 
-
-districtSelect.addEventListener(
+divisionSelect.addEventListener(
 
     "change",
 
     function() {
 
+        resetSelect(
+            districtSelect,
+            "Select District"
+        );
 
         resetSelect(
             upazilaSelect,
             "Select Upazila / Thana"
         );
 
-
         resetSelect(
             unionSelect,
             "Select Union"
         );
 
-
-        upazilaSelect.disabled =
-            true;
-
-
-        unionSelect.disabled =
-            true;
-
+        districtSelect.disabled = true;
+        upazilaSelect.disabled = true;
+        unionSelect.disabled = true;
 
         if (this.value === "") {
-
             return;
-
         }
-
 
         const division =
             locationData[
-                Number(
-                    divisionSelect.value
-                )
-            ];
-
-
-        if (!division) {
-
-            return;
-
-        }
-
-
-        const district =
-            division.districts[
                 Number(this.value)
             ];
 
-
-        if (
-            !district ||
-            !Array.isArray(
-                district.upazilas
-            )
-        ) {
-
+        if (!division) {
+            console.log("Division not found");
             return;
-
         }
 
+        /* Get District List */
 
-        district.upazilas.forEach(
+        const districts =
+            division.districts ||
+            division.district ||
+            division.children;
 
-            function(upazila, index) {
+        if (!Array.isArray(districts)) {
+
+            console.log(
+                "District data not found:",
+                division
+            );
+
+            return;
+        }
+
+        /* Add Districts */
+
+        districts.forEach(
+
+            function(district, index) {
 
                 addOption(
 
-                    upazilaSelect,
+                    districtSelect,
 
                     index,
 
-                    upazila.bn_name ||
-                    upazila.name
+                    district.bn_name ||
+                    district.name ||
+                    district.district_name
 
                 );
 
@@ -1071,15 +1062,11 @@ districtSelect.addEventListener(
 
         );
 
-
-        upazilaSelect.disabled =
-            false;
+        districtSelect.disabled = false;
 
     }
 
 );
-
-
 
 /* ==================================================
    UPAZILA CHANGE
