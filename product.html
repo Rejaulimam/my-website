@@ -1045,6 +1045,16 @@ function showProduct(data) {
             data.price
         );
 
+document.getElementById(
+    "productStock"
+).textContent =
+    "Stock: " +
+    (
+        data.stock !== undefined
+            ? data.stock
+            : 0
+    ) +
+    " pcs";
 
     /* =========================
        DESCRIPTION
