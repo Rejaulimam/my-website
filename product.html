@@ -1669,6 +1669,16 @@ async function loadFirebaseDescription() {
 
                         : currentProduct.details,
 
+stock:
+    firebaseData.stock !== undefined &&
+    firebaseData.stock !== ""
+
+        ? Number(
+            firebaseData.stock
+        )
+
+        : currentProduct.stock
+
             };
 
 
