@@ -365,24 +365,45 @@
     </div>
 
 
-    <!-- =========================
-         CATEGORY
-    ========================= -->
+   <!-- =========================
+     CATEGORY
+========================= -->
 
-    <div class="row">
+<div class="row">
 
-        <label>
-            Category:
-        </label>
+    <label>
+        Category:
+    </label>
 
+    <select id="category">
 
-        <input
-            type="text"
-            id="category"
-            placeholder="Category"
-        >
+        <option value="">
+            Select Category
+        </option>
 
-    </div>
+        <option value="Men">
+            Men
+        </option>
+
+        <option value="Women">
+            Women
+        </option>
+
+        <option value="Kids">
+            Kids
+        </option>
+
+        <option value="Electronics">
+            Electronics
+        </option>
+
+        <option value="Home & Living">
+            Home & Living
+        </option>
+
+    </select>
+
+</div>
 
 
     <!-- =========================
@@ -1500,13 +1521,18 @@ function updatePreview() {
 
 document
     .querySelectorAll(
-        "input, textarea"
+        "input, textarea, select"
     )
     .forEach(
         function(element) {
 
             element.addEventListener(
                 "input",
+                updatePreview
+            );
+
+            element.addEventListener(
+                "change",
                 updatePreview
             );
 
