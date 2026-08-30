@@ -1635,23 +1635,21 @@ async function() {
 
 
 
-    /* =========================================
-       PAYMENT VALIDATION
-    ========================================== */
+    /* =====================================
+   PAYMENT VALIDATION
+===================================== */
 
+if (
+    paymentMethod !== "cod"
+) {
 
-    if (
-        paymentMethod === "bkash" ||
-        paymentMethod === "nagad"
-    ) {
+    alert(
+        "This payment method is not available yet. Please select Cash on Delivery."
+    );
 
-        alert(
-            "Online payment is not available yet. Please select Cash on Delivery."
-        );
+    return;
 
-        return;
-
-    }
+}
 
 
 
