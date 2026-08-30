@@ -1498,26 +1498,26 @@ function(productId) {
 
     if (existingProduct) {
 
-        existingProduct.quantity =
-            (
-                Number(
-                    existingProduct.quantity
-                ) || 1
-            ) + 1;
+    existingProduct.quantity =
+        (
+            Number(
+                existingProduct.quantity
+            ) || 1
+        ) + 1;
 
+    existingProduct.serial =
+        product.serial;
 
-        existingProduct.name =
-            product.name;
+    existingProduct.name =
+        product.name;
 
+    existingProduct.price =
+        Number(product.price) || 0;
 
-        existingProduct.price =
-            Number(product.price) || 0;
+    existingProduct.image =
+        product.image;
 
-
-        existingProduct.image =
-            product.image;
-
-    }
+}
 
     else {
 
@@ -1525,6 +1525,8 @@ function(productId) {
 
             productId:
                 productId,
+serial:
+    product.serial,
 
             name:
                 product.name,
