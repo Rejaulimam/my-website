@@ -2193,17 +2193,28 @@ async function() {
            GENERAL ERROR
         ====================================== */
 
-        alert(
-            "Order could not be placed. Please try again."
-        );
+        console.error(
+    "Firebase Error Code:",
+    error.code
+);
 
+console.error(
+    "Firebase Error Message:",
+    error.message
+);
 
-        button.disabled =
-            false;
+alert(
+    "Order Error: " +
+    (error.code || "Unknown") +
+    "\n\n" +
+    (error.message || "Unknown error")
+);
 
+button.disabled =
+    false;
 
-        button.innerText =
-            "Place Order";
+button.innerText =
+    "Place Order";
 
     }
 
