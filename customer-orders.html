@@ -1156,6 +1156,21 @@ function loadCustomerOrders(
                             </p>
 
 
+
+${
+    order.deliveryTime
+        ? `
+
+            <div class="expected-delivery">
+
+                Expected Delivery:
+                ${order.deliveryTime}
+
+            </div>
+
+        `
+        : ""
+}
                             <p class="order-info">
 
                                 <strong>
