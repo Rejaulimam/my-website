@@ -1,17 +1,26 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
+
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <meta
+        name="viewport"
+        content="width=device-width, initial-scale=1.0"
+    >
 
     <title>Shopping Cart</title>
 
+
     <style>
+
         body {
             margin: 0;
             font-family: Arial, sans-serif;
             background-color: #f5f5f5;
         }
+
 
         h1 {
             background-color: #ff6600;
@@ -21,11 +30,13 @@
             margin: 0;
         }
 
+
         .cart-container {
             width: 90%;
             max-width: 600px;
             margin: 30px auto;
         }
+
 
         .cart-item {
             background-color: white;
@@ -35,14 +46,17 @@
             box-shadow: 0 0 5px #ccc;
         }
 
+
         .cart-item h2 {
             margin: 0 0 10px;
         }
+
 
         .price {
             color: #ff6600;
             font-weight: bold;
         }
+
 
         .remove-btn {
             background-color: red;
@@ -53,6 +67,7 @@
             cursor: pointer;
         }
 
+
         .total {
             background-color: white;
             padding: 15px;
@@ -62,236 +77,1010 @@
             border-radius: 8px;
         }
 
+
         .empty {
             text-align: center;
             font-size: 20px;
             margin-top: 50px;
         }
-.quantity-control {
-    display: flex;
-    align-items: center;
-    gap: 10px;
-    margin: 10px 0;
-}
 
-.quantity-control button {
-    width: 35px;
-    height: 35px;
-    font-size: 20px;
-    font-weight: bold;
-    cursor: pointer;
-    border: 1px solid #ccc;
-    background-color: #f5f5f5;
-    border-radius: 5px;
-}
 
-.quantity-control span {
-    font-size: 18px;
-    font-weight: bold;
-    min-width: 25px;
-    text-align: center;
-}
+        .quantity-control {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            margin: 10px 0;
+        }
 
-.checkout-btn {
-    display: block;
-    width: 100%;
-    margin-top: 15px;
-    background-color: #ff6600;
-    color: white;
-    border: none;
-    padding: 14px;
-    font-size: 18px;
-    font-weight: bold;
-    border-radius: 6px;
-    cursor: pointer;
-}
 
-.checkout-btn:hover {
-    background-color: #e65c00;
-}
+        .quantity-control button {
+            width: 35px;
+            height: 35px;
+            font-size: 20px;
+            font-weight: bold;
+            cursor: pointer;
+            border: 1px solid #ccc;
+            background-color: #f5f5f5;
+            border-radius: 5px;
+        }
+
+
+        .quantity-control span {
+            font-size: 18px;
+            font-weight: bold;
+            min-width: 25px;
+            text-align: center;
+        }
+
+
+        .quantity-control button:disabled {
+            opacity: 0.45;
+            cursor: not-allowed;
+        }
+
+
+        .stock-info {
+            color: #198754;
+            font-size: 14px;
+            font-weight: bold;
+            margin: 6px 0;
+        }
+
+
+        .out-of-stock {
+            color: red;
+            font-size: 14px;
+            font-weight: bold;
+            margin: 6px 0;
+        }
+
+
+        .checkout-btn {
+            display: block;
+            width: 100%;
+            margin-top: 15px;
+            background-color: #ff6600;
+            color: white;
+            border: none;
+            padding: 14px;
+            font-size: 18px;
+            font-weight: bold;
+            border-radius: 6px;
+            cursor: pointer;
+        }
+
+
+        .checkout-btn:hover {
+            background-color: #e65c00;
+        }
 
     </style>
+
 </head>
+
 
 <body>
 
-    <h1>RK Store - Cart</h1>
 
-    <div class="cart-container" id="cart-container">
+    <h1>
+        RK Store - Cart
+    </h1>
+
+
+    <div
+        class="cart-container"
+        id="cart-container"
+    >
     </div>
 
-    <script>
 
-        function showCart() {
 
-            const cart =
-                JSON.parse(localStorage.getItem("cart")) || [];
+    <!-- =====================================================
+         FIREBASE CART STOCK SYSTEM
+    ===================================================== -->
 
-cart.forEach(product => {
-    if (!product.quantity || isNaN(product.quantity)) {
-        product.quantity = 1;
-    }
-});
-          
-localStorage.setItem("cart", JSON.stringify(cart));
+    <script type="module">
 
-  const container =
-                document.getElementById("cart-container");
 
-            container.innerHTML = "";
+        /* =====================================================
+           FIREBASE
+        ===================================================== */
 
-            if (cart.length === 0) {
+        import {
+            initializeApp
+        } from "https://www.gstatic.com/firebasejs/12.18.0/firebase-app.js";
 
-                container.innerHTML =
-                    '<p class="empty">Your cart is empty.</p>';
 
-                return;
+        import {
+            getFirestore,
+            doc,
+            getDocFromServer
+        } from "https://www.gstatic.com/firebasejs/12.18.0/firebase-firestore.js";
+
+
+
+        /* =====================================================
+           FIREBASE CONFIG
+        ===================================================== */
+
+        const firebaseConfig = {
+
+            apiKey:
+                "AIzaSyCkBQaphKKz_Wxd1GgKAVoxqR4taKvzdEM",
+
+            authDomain:
+                "rk-store-5fb24.firebaseapp.com",
+
+            projectId:
+                "rk-store-5fb24",
+
+            storageBucket:
+                "rk-store-5fb24.firebasestorage.app",
+
+            messagingSenderId:
+                "407275549697",
+
+            appId:
+                "1:407275549697:web:41043b49bf7182cecffc00"
+
+        };
+
+
+
+        /* =====================================================
+           INITIALIZE FIREBASE
+        ===================================================== */
+
+        const app =
+            initializeApp(firebaseConfig);
+
+
+        const db =
+            getFirestore(app);
+
+
+
+        /* =====================================================
+           LOAD CURRENT STOCK
+        ===================================================== */
+
+        async function getProductStock(productId) {
+
+            try {
+
+                const productRef =
+                    doc(
+                        db,
+                        "productDescriptions",
+                        String(productId)
+                    );
+
+
+                const snapshot =
+                    await getDocFromServer(
+                        productRef
+                    );
+
+
+                if (
+                    !snapshot.exists()
+                ) {
+
+                    return 0;
+
+                }
+
+
+                const data =
+                    snapshot.data();
+
+
+                const stock =
+                    Number(data.stock);
+
+
+                if (
+                    Number.isFinite(stock)
+                    &&
+                    stock >= 0
+                ) {
+
+                    return stock;
+
+                }
+
+
+                return 0;
+
             }
 
-            let total = 0;
+            catch (error) {
 
-            cart.forEach((product, index) => {
-
-total += product.price * product.quantity;
-
-                const item = document.createElement("div");
-
-                item.className = "cart-item";
-
-item.innerHTML = `
-    <img src="${product.image}"
-         alt="${product.name}"
-         style="width:100%; max-width:200px; height:180px; object-fit:cover; border-radius:8px;">
-
-    <h2>${product.name}</h2>
-
-    <p class="price">
-        Price: ৳${product.price} × ${product.quantity}
-    </p>
-
-    <p>
-    Subtotal: ৳${product.price * product.quantity}
-</p>
-    <div class="quantity-control">
-        <button onclick="decreaseQuantity(${index})">−</button>
-        <span>${product.quantity}</span>
-        <button onclick="increaseQuantity(${index})">+</button>
-    </div>
-
-    <button
-        class="remove-btn"
-        onclick="removeFromCart(${index})">
-        Remove
-    </button>
-`;
+                console.error(
+                    "Stock loading error:",
+                    error
+                );
 
 
+                return null;
 
+            }
 
-
-
-
-
-
-
-
-
-
-                container.appendChild(item);
-
-            });
-
-
-            const totalDiv =
-                document.createElement("div");
-
-            totalDiv.className = "total";
-
-            totalDiv.textContent =
-                "Total: ৳" + total;
-
-            container.appendChild(totalDiv);
-
-const checkoutBtn =
-    document.createElement("button");
-
-checkoutBtn.textContent = "Checkout";
-
-checkoutBtn.className = "checkout-btn";
-
-checkoutBtn.onclick = function() {
-    window.location.href = "checkout.html";
-};
-
-
-
-container.appendChild(checkoutBtn);
         }
 
 
 
+        /* =====================================================
+           LOAD STOCK FOR ALL CART PRODUCTS
+        ===================================================== */
 
-
-
-
-
-
-
-
-
- 
-function increaseQuantity(index) {
-
-    let cart =
-        JSON.parse(localStorage.getItem("cart")) || [];
-
-    cart[index].quantity++;
-
-    localStorage.setItem(
-        "cart",
-        JSON.stringify(cart)
-    );
-
-    showCart();
-}
-
-
-function decreaseQuantity(index) {
-
-    let cart =
-        JSON.parse(localStorage.getItem("cart")) || [];
-
-    if (cart[index].quantity > 1) {
-        cart[index].quantity--;
-    }
-
-    localStorage.setItem(
-        "cart",
-        JSON.stringify(cart)
-    );
-
-    showCart();
-}
-        function removeFromCart(index) {
+        async function loadCartStocks() {
 
             let cart =
-                JSON.parse(localStorage.getItem("cart")) || [];
+                JSON.parse(
+                    localStorage.getItem(
+                        "cart"
+                    )
+                ) || [];
 
-            cart.splice(index, 1);
 
-            localStorage.setItem(
-                "cart",
-                JSON.stringify(cart)
+            if (
+                cart.length === 0
+            ) {
+
+                showCart();
+
+                return;
+
+            }
+
+
+            const stockPromises =
+                cart.map(
+                    function(product) {
+
+                        return getProductStock(
+                            product.productId
+                        );
+
+                    }
+                );
+
+
+            const stocks =
+                await Promise.all(
+                    stockPromises
+                );
+
+
+            let cartChanged =
+                false;
+
+
+            cart.forEach(
+                function(product, index) {
+
+                    const stock =
+                        stocks[index];
+
+
+                    /*
+                     * Firebase error হলে
+                     * existing quantity নষ্ট করা হবে না।
+                     */
+
+                    if (
+                        stock === null
+                    ) {
+
+                        return;
+
+                    }
+
+
+                    product.stock =
+                        stock;
+
+
+                    /*
+                     * যদি Cart quantity
+                     * Firebase stock-এর চেয়ে বেশি হয়,
+                     * তাহলে stock-এর মধ্যে নামিয়ে আনা হবে।
+                     */
+
+                    const quantity =
+                        Number(
+                            product.quantity
+                        ) || 1;
+
+
+                    if (
+                        stock <= 0
+                    ) {
+
+                        product.quantity =
+                            0;
+
+                        cartChanged =
+                            true;
+
+                    }
+
+                    else if (
+                        quantity > stock
+                    ) {
+
+                        product.quantity =
+                            stock;
+
+                        cartChanged =
+                            true;
+
+                    }
+
+                }
             );
+
+
+            if (
+                cartChanged
+            ) {
+
+                /*
+                 * Stock 0 হলে সেই product
+                 * Cart থেকে সরিয়ে দেওয়া হবে।
+                 */
+
+                cart =
+                    cart.filter(
+                        function(product) {
+
+                            return (
+                                Number(
+                                    product.quantity
+                                ) > 0
+                            );
+
+                        }
+                    );
+
+
+                localStorage.setItem(
+                    "cart",
+                    JSON.stringify(cart)
+                );
+
+            }
+            else {
+
+                localStorage.setItem(
+                    "cart",
+                    JSON.stringify(cart)
+                );
+
+            }
+
 
             showCart();
 
         }
 
 
+
+        /* =====================================================
+           SHOW CART
+        ===================================================== */
+
+        window.showCart =
+        function() {
+
+            const cart =
+                JSON.parse(
+                    localStorage.getItem(
+                        "cart"
+                    )
+                ) || [];
+
+
+            /*
+             * Old cart item হলে quantity
+             * ঠিক করে দেওয়া হবে।
+             */
+
+            cart.forEach(
+                function(product) {
+
+                    if (
+                        !product.quantity
+                        ||
+                        isNaN(product.quantity)
+                    ) {
+
+                        product.quantity =
+                            1;
+
+                    }
+
+                }
+            );
+
+
+            localStorage.setItem(
+                "cart",
+                JSON.stringify(cart)
+            );
+
+
+            const container =
+                document.getElementById(
+                    "cart-container"
+                );
+
+
+            container.innerHTML =
+                "";
+
+
+            if (
+                cart.length === 0
+            ) {
+
+                container.innerHTML =
+                    '<p class="empty">Your cart is empty.</p>';
+
+                return;
+
+            }
+
+
+            let total =
+                0;
+
+
+            cart.forEach(
+                function(product, index) {
+
+                    const quantity =
+                        Number(
+                            product.quantity
+                        ) || 1;
+
+
+                    const price =
+                        Number(
+                            product.price
+                        ) || 0;
+
+
+                    total +=
+                        price *
+                        quantity;
+
+
+                    const item =
+                        document.createElement(
+                            "div"
+                        );
+
+
+                    item.className =
+                        "cart-item";
+
+
+                    const stock =
+                        Number(
+                            product.stock
+                        );
+
+
+                    let stockHTML =
+                        "";
+
+
+                    if (
+                        Number.isFinite(stock)
+                    ) {
+
+                        if (
+                            stock <= 0
+                        ) {
+
+                            stockHTML = `
+                                <p class="out-of-stock">
+                                    ❌ Out of Stock
+                                </p>
+                            `;
+
+                        }
+
+                        else {
+
+                            stockHTML = `
+                                <p class="stock-info">
+                                    In Stock: ${stock} pcs
+                                </p>
+                            `;
+
+                        }
+
+                    }
+
+
+                    /*
+                     * + button stock অনুযায়ী disabled হবে।
+                     */
+
+                    const plusDisabled =
+                        Number.isFinite(stock)
+                        &&
+                        quantity >= stock;
+
+
+                    item.innerHTML = `
+
+                        <img
+                            src="${product.image}"
+                            alt="${product.name}"
+                            style="
+                                width:100%;
+                                max-width:200px;
+                                height:180px;
+                                object-fit:cover;
+                                border-radius:8px;
+                            "
+                        >
+
+                        <h2>
+                            ${product.name}
+                        </h2>
+
+                        <p class="price">
+                            Price: ৳${price} × ${quantity}
+                        </p>
+
+                        ${stockHTML}
+
+                        <p>
+                            Subtotal:
+                            ৳${price * quantity}
+                        </p>
+
+                        <div class="quantity-control">
+
+                            <button
+                                onclick="decreaseQuantity(${index})"
+                                ${quantity <= 1 ? "disabled" : ""}
+                            >
+                                −
+                            </button>
+
+                            <span>
+                                ${quantity}
+                            </span>
+
+                            <button
+                                onclick="increaseQuantity(${index})"
+                                ${plusDisabled ? "disabled" : ""}
+                            >
+                                +
+                            </button>
+
+                        </div>
+
+                        <button
+                            class="remove-btn"
+                            onclick="removeFromCart(${index})"
+                        >
+                            Remove
+                        </button>
+
+                    `;
+
+
+                    container.appendChild(
+                        item
+                    );
+
+                }
+            );
+
+
+            const totalDiv =
+                document.createElement(
+                    "div"
+                );
+
+
+            totalDiv.className =
+                "total";
+
+
+            totalDiv.textContent =
+                "Total: ৳" + total;
+
+
+            container.appendChild(
+                totalDiv
+            );
+
+
+
+            /* =================================================
+               CHECKOUT BUTTON
+            ================================================= */
+
+            const checkoutBtn =
+                document.createElement(
+                    "button"
+                );
+
+
+            checkoutBtn.textContent =
+                "Checkout";
+
+
+            checkoutBtn.className =
+                "checkout-btn";
+
+
+            checkoutBtn.onclick =
+            async function() {
+
+                /*
+                 * Checkout যাওয়ার আগে
+                 * আবার Firebase stock যাচাই করা হবে।
+                 */
+
+                checkoutBtn.disabled =
+                    true;
+
+
+                checkoutBtn.textContent =
+                    "Checking Stock...";
+
+
+                const currentCart =
+                    JSON.parse(
+                        localStorage.getItem(
+                            "cart"
+                        )
+                    ) || [];
+
+
+                let stockProblem =
+                    false;
+
+
+                for (
+                    const product
+                    of currentCart
+                ) {
+
+                    const currentStock =
+                        await getProductStock(
+                            product.productId
+                        );
+
+
+                    if (
+                        currentStock === null
+                    ) {
+
+                        alert(
+                            "Unable to check product stock. Please try again."
+                        );
+
+                        stockProblem =
+                            true;
+
+                        break;
+
+                    }
+
+
+                    const quantity =
+                        Number(
+                            product.quantity
+                        ) || 0;
+
+
+                    if (
+                        currentStock <= 0
+                        ||
+                        quantity > currentStock
+                    ) {
+
+                        alert(
+                            product.name +
+                            " has only " +
+                            currentStock +
+                            " pcs in stock."
+                        );
+
+                        stockProblem =
+                            true;
+
+                        break;
+
+                    }
+
+                }
+
+
+                checkoutBtn.disabled =
+                    false;
+
+
+                checkoutBtn.textContent =
+                    "Checkout";
+
+
+                if (
+                    stockProblem
+                ) {
+
+                    /*
+                     * নতুন stock নিয়ে Cart refresh।
+                     */
+
+                    await loadCartStocks();
+
+                    return;
+
+                }
+
+
+                window.location.href =
+                    "checkout.html";
+
+            };
+
+
+            container.appendChild(
+                checkoutBtn
+            );
+
+        }
+
+
+
+        /* =====================================================
+           INCREASE QUANTITY
+           FIREBASE STOCK PROTECTION
+        ===================================================== */
+
+        window.increaseQuantity =
+        async function(index) {
+
+            let cart =
+                JSON.parse(
+                    localStorage.getItem(
+                        "cart"
+                    )
+                ) || [];
+
+
+            if (
+                !cart[index]
+            ) {
+
+                return;
+
+            }
+
+
+            const product =
+                cart[index];
+
+
+            /*
+             * Firebase থেকে সর্বশেষ stock নেওয়া হচ্ছে।
+             */
+
+            const currentStock =
+                await getProductStock(
+                    product.productId
+                );
+
+
+            if (
+                currentStock === null
+            ) {
+
+                alert(
+                    "Unable to check stock. Please try again."
+                );
+
+                return;
+
+            }
+
+
+            const currentQuantity =
+                Number(
+                    product.quantity
+                ) || 1;
+
+
+            /*
+             * Stock 0
+             */
+
+            if (
+                currentStock <= 0
+            ) {
+
+                alert(
+                    product.name +
+                    " is currently out of stock."
+                );
+
+                await loadCartStocks();
+
+                return;
+
+            }
+
+
+            /*
+             * Stock limit
+             */
+
+            if (
+                currentQuantity >=
+                currentStock
+            ) {
+
+                alert(
+                    "You cannot order more than " +
+                    currentStock +
+                    " pcs of " +
+                    product.name +
+                    "."
+                );
+
+                product.stock =
+                    currentStock;
+
+
+                localStorage.setItem(
+                    "cart",
+                    JSON.stringify(cart)
+                );
+
+
+                showCart();
+
+                return;
+
+            }
+
+
+            /*
+             * Quantity +1
+             */
+
+            product.quantity =
+                currentQuantity + 1;
+
+
+            product.stock =
+                currentStock;
+
+
+            localStorage.setItem(
+                "cart",
+                JSON.stringify(cart)
+            );
+
+
+            showCart();
+
+        };
+
+
+
+        /* =====================================================
+           DECREASE QUANTITY
+        ===================================================== */
+
+        window.decreaseQuantity =
+        function(index) {
+
+            let cart =
+                JSON.parse(
+                    localStorage.getItem(
+                        "cart"
+                    )
+                ) || [];
+
+
+            if (
+                !cart[index]
+            ) {
+
+                return;
+
+            }
+
+
+            const quantity =
+                Number(
+                    cart[index].quantity
+                ) || 1;
+
+
+            if (
+                quantity > 1
+            ) {
+
+                cart[index].quantity =
+                    quantity - 1;
+
+            }
+
+
+            localStorage.setItem(
+                "cart",
+                JSON.stringify(cart)
+            );
+
+
+            showCart();
+
+        };
+
+
+
+        /* =====================================================
+           REMOVE FROM CART
+        ===================================================== */
+
+        window.removeFromCart =
+        function(index) {
+
+            let cart =
+                JSON.parse(
+                    localStorage.getItem(
+                        "cart"
+                    )
+                ) || [];
+
+
+            cart.splice(
+                index,
+                1
+            );
+
+
+            localStorage.setItem(
+                "cart",
+                JSON.stringify(cart)
+            );
+
+
+            showCart();
+
+        };
+
+
+
+        /* =====================================================
+           INITIAL CART DISPLAY
+        ===================================================== */
+
         showCart();
+
+
+
+        /* =====================================================
+           LOAD CURRENT FIREBASE STOCK
+        ===================================================== */
+
+        loadCartStocks();
 
     </script>
 
 </body>
+
 </html>
