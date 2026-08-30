@@ -346,25 +346,31 @@ h1 {
 
 <label for="paymentMethod">
     Payment Method
-</label>
+</label><select id="paymentMethod"><option value="cod">
+    Cash on Delivery
+</option>
 
+<option value="bkash">
+    bKash
+</option>
 
-<select id="paymentMethod">
+<option value="nagad">
+    Nagad
+</option>
 
-    <option value="cod">
-        Cash on Delivery
-    </option>
+<option value="rocket">
+    Rocket
+</option>
 
-    <option value="bkash">
-        bKash
-    </option>
+<option value="bank">
+    Bank Transfer
+</option>
 
-    <option value="nagad">
-        Nagad
-    </option>
+<option value="card">
+    Visa / Mastercard
+</option>
 
 </select>
-
 
 <div
     id="paymentDetails"
@@ -1176,41 +1182,173 @@ upazilaSelect.addEventListener(
    PAYMENT METHOD
 ================================================== */
 
-
 document
-    .getElementById("paymentMethod")
-    .addEventListener(
+.getElementById("paymentMethod")
+.addEventListener(
 
-        "change",
+    "change",
 
-        function() {
+    function() {
 
-            const paymentDetails =
-                document.getElementById(
-                    "paymentDetails"
-                );
+        const paymentDetails =
+            document.getElementById(
+                "paymentDetails"
+            );
+
+        const paymentMessage =
+            document.getElementById(
+                "paymentMessage"
+            );
+
+        const paymentNumber =
+            document.getElementById(
+                "paymentNumber"
+            );
+
+        const transactionId =
+            document.getElementById(
+                "transactionId"
+            );
 
 
-            if (
-                this.value === "bkash" ||
-                this.value === "nagad"
-            ) {
+        /* ==============================
+           CASH ON DELIVERY
+        ============================== */
 
-                paymentDetails.style.display =
-                    "block";
+        if (this.value === "cod") {
 
-            }
+            paymentDetails.style.display =
+                "none";
 
-            else {
+            paymentNumber.value = "";
+            transactionId.value = "";
 
-                paymentDetails.style.display =
-                    "none";
-
-            }
+            return;
 
         }
 
-    );
+
+        /* ==============================
+           ONLINE PAYMENT DETAILS
+        ============================== */
+
+        paymentDetails.style.display =
+            "block";
+
+
+        /* ==============================
+           BKASH
+        ============================== */
+
+        if (this.value === "bkash") {
+
+            paymentMessage.innerHTML =
+                "<strong>bKash</strong><br>" +
+                "Online bKash payment gateway is not connected yet. " +
+                "Please use Cash on Delivery.";
+
+            paymentNumber.placeholder =
+                "Enter bKash number";
+
+            transactionId.placeholder =
+                "Enter bKash Transaction ID";
+
+            return;
+
+        }
+
+
+        /* ==============================
+           NAGAD
+        ============================== */
+
+        if (this.value === "nagad") {
+
+            paymentMessage.innerHTML =
+                "<strong>Nagad</strong><br>" +
+                "Online Nagad payment gateway is not connected yet. " +
+                "Please use Cash on Delivery.";
+
+            paymentNumber.placeholder =
+                "Enter Nagad number";
+
+            transactionId.placeholder =
+                "Enter Nagad Transaction ID";
+
+            return;
+
+        }
+
+
+        /* ==============================
+           ROCKET
+        ============================== */
+
+        if (this.value === "rocket") {
+
+            paymentMessage.innerHTML =
+                "<strong>Rocket</strong><br>" +
+                "Online Rocket payment gateway is not connected yet. " +
+                "Please use Cash on Delivery.";
+
+            paymentNumber.placeholder =
+                "Enter Rocket number";
+
+            transactionId.placeholder =
+                "Enter Rocket Transaction ID";
+
+            return;
+
+        }
+
+
+        /* ==============================
+           BANK TRANSFER
+        ============================== */
+
+        if (this.value === "bank") {
+
+            paymentMessage.innerHTML =
+                "<strong>Bank Transfer</strong><br>" +
+                "Bank transfer verification is not connected yet. " +
+                "Please use Cash on Delivery.";
+
+            paymentNumber.placeholder =
+                "Enter bank account / sender number";
+
+            transactionId.placeholder =
+                "Enter Bank Transaction ID";
+
+            return;
+
+        }
+
+
+        /* ==============================
+           VISA / MASTERCARD
+        ============================== */
+
+        if (this.value === "card") {
+
+            paymentMessage.innerHTML =
+                "<strong>Visa / Mastercard</strong><br>" +
+                "Card payment gateway is not connected yet. " +
+                "Please use Cash on Delivery.";
+
+            paymentNumber.placeholder =
+                "Enter payment reference";
+
+            transactionId.placeholder =
+                "Enter Transaction ID";
+
+            return;
+
+        }
+
+    }
+
+);
+
 
 
 
