@@ -1472,6 +1472,16 @@ function(productId) {
 
     }
 
+if (Number(product.stock) <= 0) {
+
+    alert(
+        "Sorry, this product is currently out of stock."
+    );
+
+    return;
+
+}
+
 
     let cart =
         JSON.parse(
