@@ -1849,8 +1849,19 @@ if (
 
 
         products:
-            cart,
+    cart.map(function(product) {
 
+        return {
+
+            ...product,
+
+            productSerial:
+                product.productSerial ||
+                product.productId
+
+        };
+
+    }),
 
         totalAmount:
             totalAmount,
