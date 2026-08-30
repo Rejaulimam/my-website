@@ -1,4 +1,5 @@
 <!DOCTYPE html>
+
 <html lang="en">
 
 <head>
@@ -133,7 +134,6 @@ h1 {
     margin-top: 8px;
 }
 
-
 </style>
 
 </head>
@@ -239,6 +239,7 @@ h1 {
     Union
 </label>
 
+
 <select id="union" disabled>
 
     <option value="">
@@ -251,6 +252,7 @@ h1 {
 <label for="ward">
     Ward
 </label>
+
 
 <select id="ward">
 
@@ -312,8 +314,6 @@ h1 {
 </select>
 
 
-
-
 <label for="address">
     Detailed Address
 </label>
@@ -337,7 +337,6 @@ h1 {
     id="locationLoading"
     class="location-loading"
 ></div>
-
 
 
 <!-- =========================================
@@ -449,13 +448,17 @@ from "https://www.gstatic.com/firebasejs/12.18.0/firebase-app.js";
 
 
 import {
+
     getFirestore,
     collection,
     addDoc,
     serverTimestamp,
     doc,
     runTransaction
-} from "https://www.gstatic.com/firebasejs/12.18.0/firebase-firestore.js";
+
+}
+
+from "https://www.gstatic.com/firebasejs/12.18.0/firebase-firestore.js";
 
 
 import {
@@ -866,10 +869,10 @@ loadLocationData();
 
 
 
-
 /* ==================================================
    DIVISION CHANGE
 ================================================== */
+
 
 divisionSelect.addEventListener(
 
@@ -910,8 +913,6 @@ divisionSelect.addEventListener(
             return;
         }
 
-        /* Get District List */
-
         const districts =
             division.districts ||
             division.district ||
@@ -926,8 +927,6 @@ divisionSelect.addEventListener(
 
             return;
         }
-
-        /* Add Districts */
 
         districts.forEach(
 
@@ -960,6 +959,7 @@ divisionSelect.addEventListener(
 /* ==================================================
    DISTRICT CHANGE
 ================================================== */
+
 
 districtSelect.addEventListener(
 
@@ -1017,11 +1017,14 @@ districtSelect.addEventListener(
             district.children;
 
         if (!Array.isArray(upazilas)) {
+
             console.log(
                 "Upazila data not found:",
                 district
             );
+
             return;
+
         }
 
         upazilas.forEach(
@@ -1063,7 +1066,6 @@ upazilaSelect.addEventListener(
 
     function() {
 
-
         resetSelect(
             unionSelect,
             "Select Union"
@@ -1097,16 +1099,17 @@ upazilaSelect.addEventListener(
 
 
         const districts =
-    division.districts ||
-    division.district ||
-    division.children;
+            division.districts ||
+            division.district ||
+            division.children;
 
-const district =
-    districts[
-        Number(
-            districtSelect.value
-        )
-    ];
+
+        const district =
+            districts[
+                Number(
+                    districtSelect.value
+                )
+            ];
 
 
         if (!district) {
@@ -1117,14 +1120,15 @@ const district =
 
 
         const upazilas =
-    district.upazilas ||
-    district.upazila ||
-    district.children;
+            district.upazilas ||
+            district.upazila ||
+            district.children;
 
-const upazila =
-    upazilas[
-        Number(this.value)
-    ];
+
+        const upazila =
+            upazilas[
+                Number(this.value)
+            ];
 
 
         if (
@@ -1181,7 +1185,6 @@ document
 
         function() {
 
-
             const paymentDetails =
                 document.getElementById(
                     "paymentDetails"
@@ -1229,6 +1232,7 @@ async function() {
 
     const user =
         auth.currentUser;
+
 
 
     /* =========================================
@@ -1326,7 +1330,6 @@ async function() {
 
     if (divisionValue !== "") {
 
-
         const division =
             locationData[
                 Number(divisionValue)
@@ -1335,57 +1338,67 @@ async function() {
 
         if (division) {
 
-
             divisionName =
                 division.bn_name ||
                 division.name;
 
 
+            const districts =
+                division.districts ||
+                division.district ||
+                division.children;
+
+
             if (
                 districtValue !== "" &&
-                division.districts
+                Array.isArray(districts)
             ) {
 
-
                 const district =
-                    division.districts[
+                    districts[
                         Number(districtValue)
                     ];
 
 
                 if (district) {
 
-
                     districtName =
                         district.bn_name ||
-                        district.name;
+                        district.name ||
+                        district.district_name;
+
+
+                    const upazilas =
+                        district.upazilas ||
+                        district.upazila ||
+                        district.children;
 
 
                     if (
                         upazilaValue !== "" &&
-                        district.upazilas
+                        Array.isArray(upazilas)
                     ) {
 
-
                         const upazila =
-                            district.upazilas[
+                            upazilas[
                                 Number(upazilaValue)
                             ];
 
 
                         if (upazila) {
 
-
                             upazilaName =
                                 upazila.bn_name ||
-                                upazila.name;
+                                upazila.name ||
+                                upazila.upazila_name;
 
 
                             if (
                                 unionValue !== "" &&
-                                upazila.unions
+                                Array.isArray(
+                                    upazila.unions
+                                )
                             ) {
-
 
                                 const union =
                                     upazila.unions[
@@ -1528,6 +1541,37 @@ async function() {
 
 
     /* =========================================
+       CHECK CART QUANTITY
+    ========================================== */
+
+    for (
+        const product
+        of cart
+    ) {
+
+        const quantity =
+            Number(product.quantity);
+
+
+        if (
+            !Number.isFinite(quantity) ||
+            quantity <= 0
+        ) {
+
+            alert(
+                product.name +
+                " has an invalid quantity."
+            );
+
+            return;
+
+        }
+
+    }
+
+
+
+    /* =========================================
        TOTAL
     ========================================== */
 
@@ -1538,7 +1582,6 @@ async function() {
     cart.forEach(
 
         function(product) {
-
 
             const quantity =
                 Number(
@@ -1604,7 +1647,6 @@ async function() {
 
 
     const order = {
-
 
         orderId:
             orderId,
@@ -1703,28 +1745,218 @@ async function() {
 
 
     button.innerText =
-        "Placing Order...";
+        "Checking Stock...";
 
 
 
     /* =========================================
-       FIRESTORE SAVE
+       FIREBASE TRANSACTION
+       ORDER + STOCK UPDATE
     ========================================== */
-
 
     try {
 
 
         const docRef =
 
-            await addDoc(
+            await runTransaction(
 
-                collection(
-                    db,
-                    "orders"
-                ),
+                db,
 
-                order
+                async function(transaction) {
+
+
+                    /*
+                     * এখানে সব product-এর
+                     * সর্বশেষ Firebase stock
+                     * আগে পড়া হবে।
+                     */
+
+                    const stockItems = [];
+
+
+                    for (
+                        const product
+                        of cart
+                    ) {
+
+
+                        const productId =
+                            String(
+                                product.productId
+                            );
+
+
+                        const quantity =
+                            Number(
+                                product.quantity
+                            );
+
+
+                        if (
+                            !productId
+                        ) {
+
+                            throw new Error(
+                                "INVALID_PRODUCT_ID|" +
+                                product.name
+                            );
+
+                        }
+
+
+                        const productRef =
+                            doc(
+                                db,
+                                "productDescriptions",
+                                productId
+                            );
+
+
+                        const productSnapshot =
+                            await transaction.get(
+                                productRef
+                            );
+
+
+                        if (
+                            !productSnapshot.exists()
+                        ) {
+
+                            throw new Error(
+                                "PRODUCT_NOT_FOUND|" +
+                                product.name
+                            );
+
+                        }
+
+
+                        const productData =
+                            productSnapshot.data();
+
+
+                        const currentStock =
+                            Number(
+                                productData.stock
+                            );
+
+
+                        if (
+                            !Number.isFinite(
+                                currentStock
+                            ) ||
+                            currentStock < 0
+                        ) {
+
+                            throw new Error(
+                                "INVALID_STOCK|" +
+                                product.name
+                            );
+
+                        }
+
+
+                        /*
+                         * আসল Stock Protection
+                         */
+
+                        if (
+                            quantity >
+                            currentStock
+                        ) {
+
+                            throw new Error(
+
+                                "STOCK_NOT_ENOUGH|" +
+
+                                product.name +
+
+                                "|" +
+
+                                currentStock
+
+                            );
+
+                        }
+
+
+                        stockItems.push({
+
+                            ref:
+                                productRef,
+
+                            currentStock:
+                                currentStock,
+
+                            quantity:
+                                quantity
+
+                        });
+
+                    }
+
+
+
+                    /*
+                     * ==================================
+                     * STOCK UPDATE
+                     * ==================================
+                     */
+
+                    for (
+                        const item
+                        of stockItems
+                    ) {
+
+
+                        const newStock =
+
+                            item.currentStock -
+                            item.quantity;
+
+
+                        transaction.update(
+
+                            item.ref,
+
+                            {
+                                stock:
+                                    newStock
+                            }
+
+                        );
+
+                    }
+
+
+
+                    /*
+                     * ==================================
+                     * CREATE ORDER DOCUMENT
+                     * ==================================
+                     */
+
+                    const orderRef =
+                        doc(
+                            collection(
+                                db,
+                                "orders"
+                            )
+                        );
+
+
+                    transaction.set(
+
+                        orderRef,
+
+                        order
+
+                    );
+
+
+                    return orderRef;
+
+                }
 
             );
 
@@ -1813,6 +2045,153 @@ async function() {
             error
         );
 
+
+        /* =====================================
+           STOCK ERROR
+        ====================================== */
+
+        if (
+            error.message &&
+            error.message.startsWith(
+                "STOCK_NOT_ENOUGH|"
+            )
+        ) {
+
+
+            const parts =
+                error.message.split("|");
+
+
+            const productName =
+                parts[1] ||
+                "Product";
+
+
+            const availableStock =
+                parts[2] ||
+                "0";
+
+
+            alert(
+
+                productName +
+
+                " has only " +
+
+                availableStock +
+
+                " pcs in stock. " +
+
+                "Please reduce the quantity."
+
+            );
+
+
+            button.disabled =
+                false;
+
+
+            button.innerText =
+                "Place Order";
+
+
+            return;
+
+        }
+
+
+
+        /* =====================================
+           PRODUCT NOT FOUND
+        ====================================== */
+
+        if (
+            error.message &&
+            error.message.startsWith(
+                "PRODUCT_NOT_FOUND|"
+            )
+        ) {
+
+
+            const parts =
+                error.message.split("|");
+
+
+            const productName =
+                parts[1] ||
+                "Product";
+
+
+            alert(
+
+                productName +
+
+                " product information was not found."
+
+            );
+
+
+            button.disabled =
+                false;
+
+
+            button.innerText =
+                "Place Order";
+
+
+            return;
+
+        }
+
+
+
+        /* =====================================
+           INVALID STOCK
+        ====================================== */
+
+        if (
+            error.message &&
+            error.message.startsWith(
+                "INVALID_STOCK|"
+            )
+        ) {
+
+
+            const parts =
+                error.message.split("|");
+
+
+            const productName =
+                parts[1] ||
+                "Product";
+
+
+            alert(
+
+                productName +
+
+                " stock information is invalid."
+
+            );
+
+
+            button.disabled =
+                false;
+
+
+            button.innerText =
+                "Place Order";
+
+
+            return;
+
+        }
+
+
+
+        /* =====================================
+           GENERAL ERROR
+        ====================================== */
 
         alert(
             "Order could not be placed. Please try again."
