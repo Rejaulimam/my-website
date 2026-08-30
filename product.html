@@ -1047,17 +1047,33 @@ function showProduct(data) {
             data.price
         );
 
-document.getElementById(
-    "productStock"
-).textContent =
-    "In Stock: " +
-    (
-        data.stock !== undefined
-            ? data.stock
-            : 0
-    ) +
-    " pcs";
+const stock =
+    Number(data.stock) || 0;
 
+const stockElement =
+    document.getElementById(
+        "productStock"
+    );
+
+if (stock > 0) {
+
+    stockElement.textContent =
+        "In Stock: " +
+        stock +
+        " pcs";
+
+    stockElement.style.color =
+        "#198754";
+
+} else {
+
+    stockElement.textContent =
+        "Out of Stock";
+
+    stockElement.style.color =
+        "#dc3545";
+
+}
     /* =========================
        DESCRIPTION
     ========================= */
