@@ -1448,6 +1448,129 @@ document
         }
     );
 
+/* =====================================================
+   DELIVERY TIME CHANGE EVENT
+===================================================== */
+
+document
+    .getElementById(
+        "ordersContainer"
+    )
+    .addEventListener(
+        "change",
+        function(event) {
+
+            if (
+                event.target.classList.contains(
+                    "delivery-select"
+                )
+            ) {
+
+                const index =
+                    Number(
+                        event.target.dataset.index
+                    );
+
+                const deliveryTime =
+                    event.target.value;
+
+                changeDeliveryTime(
+                    index,
+                    deliveryTime
+                );
+
+            }
+
+        }
+    );
+
+
+/* =====================================================
+   CHANGE DELIVERY TIME
+===================================================== */
+
+async function changeDeliveryTime(
+    index,
+    deliveryTime
+) {
+
+    const order =
+        orders[index];
+
+
+    if (!order) {
+
+        return;
+
+    }
+
+
+    try {
+
+        /* =========================
+           FIREBASE UPDATE
+        ========================= */
+
+        if (
+            order.firebaseId
+        ) {
+
+            await updateDoc(
+
+                doc(
+                    db,
+                    "orders",
+                    order.firebaseId
+                ),
+
+                {
+
+                    deliveryTime:
+                        deliveryTime
+
+                }
+
+            );
+
+        }
+
+
+        /* =========================
+           LOCAL UPDATE
+        ========================= */
+
+        orders[index].deliveryTime =
+            deliveryTime;
+
+
+        /* =========================
+           LOCAL STORAGE
+        ========================= */
+
+        saveOrdersToLocalStorage();
+
+
+        displayOrders();
+
+    }
+
+
+    catch (error) {
+
+        console.error(
+            "Delivery Time Update Error:",
+            error
+        );
+
+
+        alert(
+            "Delivery time update failed. Please try again."
+        );
+
+    }
+
+}
+
 
 /* =====================================================
    CHANGE STATUS
