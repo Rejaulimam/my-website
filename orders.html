@@ -160,6 +160,15 @@
             color: white !important;
         }
 
+.delivery-select {
+    padding: 8px 12px;
+    font-size: 15px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    background-color: white;
+    cursor: pointer;
+    margin-left: 5px;
+}
 
         /* =========================
            BUTTONS
@@ -835,6 +844,13 @@ function displayOrders() {
                 order.statusUpdatedTime ||
                 "Not updated";
 
+/* =========================
+   DELIVERY TIME
+========================= */
+
+const deliveryTime =
+    order.deliveryTime ||
+    "";
 
             /* =========================
                SEARCH
@@ -1151,6 +1167,88 @@ function displayOrders() {
                         </select>
 
                     </p>
+
+${
+    status === "Confirmed"
+        ? `
+
+            <p>
+
+                <strong>
+                    Expected Delivery:
+                </strong>
+
+                <select
+                    class="delivery-select"
+                    data-index="${index}"
+                >
+
+                    <option value="">
+                        Select Delivery Time
+                    </option>
+
+                    <option
+                        value="1–2 Days"
+                        ${
+                            deliveryTime === "1–2 Days"
+                                ? "selected"
+                                : ""
+                        }
+                    >
+                        1–2 Days
+                    </option>
+
+                    <option
+                        value="3–5 Days"
+                        ${
+                            deliveryTime === "3–5 Days"
+                                ? "selected"
+                                : ""
+                        }
+                    >
+                        3–5 Days
+                    </option>
+
+                    <option
+                        value="5–7 Days"
+                        ${
+                            deliveryTime === "5–7 Days"
+                                ? "selected"
+                                : ""
+                        }
+                    >
+                        5–7 Days
+                    </option>
+
+                    <option
+                        value="7 Days"
+                        ${
+                            deliveryTime === "7 Days"
+                                ? "selected"
+                                : ""
+                        }
+                    >
+                        7 Days
+                    </option>
+
+                    <option
+                        value="7–10 Days"
+                        ${
+                            deliveryTime === "7–10 Days"
+                                ? "selected"
+                                : ""
+                        }
+                    >
+                        7–10 Days
+                    </option>
+
+                </select>
+
+            </p>
+
+        `
+        : ""
+}
 
 
                     <p>
