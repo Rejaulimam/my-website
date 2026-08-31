@@ -1721,39 +1721,11 @@ function() {
 
 
 /* =====================================================
-   THREE DOT MENU - ADMIN ONLY
+   THREE DOT MENU
 ===================================================== */
 
 window.toggleThreeDotMenu =
 function() {
-
-    const user =
-        auth.currentUser;
-
-
-    /* =========================
-       ADMIN CHECK
-    ========================= */
-
-    if (
-        !user ||
-        !user.email ||
-        user.email.toLowerCase() !==
-        "REJAUL.IMAM@gmail.com".toLowerCase()
-    ) {
-
-        alert(
-            "🔒 Admin access only."
-        );
-
-        return;
-
-    }
-
-
-    /* =========================
-       OPEN / CLOSE MENU
-    ========================= */
 
     const menu =
         document.getElementById(
