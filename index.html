@@ -1721,88 +1721,14 @@ function() {
 
 
 /* =====================================================
-   THREE DOT MENU - ADMIN LOGIN REQUIRED
+   THREE DOT → ADMIN LOGIN
 ===================================================== */
 
 window.toggleThreeDotMenu =
 function() {
 
-    const user =
-        auth.currentUser;
-
-
-    /* =========================================
-       ADMIN NOT LOGGED IN
-       → সরাসরি Admin Login Page
-    ========================================= */
-
-    const isAdmin =
-        user &&
-        user.email &&
-        user.email.toLowerCase() ===
-        "REJAUL.IMAM@gmail.com".toLowerCase();
-
-
-    if (!isAdmin) {
-
-        window.location.href =
-            "admin-login.html";
-
-        return;
-
-    }
-
-
-    /* =========================================
-       ADMIN LOGGED IN
-       → Three Dot Menu খুলবে
-    ========================================= */
-
-    const menu =
-        document.getElementById(
-            "threeDotMenu"
-        );
-
-    const adminLoginLink =
-        document.getElementById(
-            "adminLoginLink"
-        );
-
-    const adminOrderLink =
-        document.getElementById(
-            "adminOrderLink"
-        );
-
-    const productDescriptionLink =
-        document.getElementById(
-            "productDescriptionLink"
-        );
-
-
-    /* Admin Login hide */
-
-    adminLoginLink.style.display =
-        "none";
-
-
-    /* Admin Order show */
-
-    adminOrderLink.style.display =
-        "block";
-
-
-    /* Product Description show */
-
-    productDescriptionLink.style.display =
-        "block";
-
-
-    /* Open / Close Menu */
-
-    menu.style.display =
-        menu.style.display === "block"
-            ? "none"
-            : "block";
+    window.location.href =
+        "admin-login.html";
 
 };
 
