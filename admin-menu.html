@@ -1,0 +1,372 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+<meta charset="UTF-8">
+
+<meta
+    name="viewport"
+    content="width=device-width, initial-scale=1.0"
+>
+
+<title>RK Store - Admin Menu</title>
+
+
+<style>
+
+* {
+    box-sizing: border-box;
+}
+
+
+body {
+
+    margin: 0;
+
+    font-family: Arial, sans-serif;
+
+    background: #f5f5f5;
+
+}
+
+
+.admin-box {
+
+    width: 90%;
+
+    max-width: 450px;
+
+    margin: 60px auto;
+
+    background: white;
+
+    padding: 25px;
+
+    border-radius: 12px;
+
+    box-shadow:
+        0 3px 12px rgba(0,0,0,0.15);
+
+}
+
+
+h2 {
+
+    text-align: center;
+
+    color: #ff6600;
+
+    margin-top: 0;
+
+    margin-bottom: 25px;
+
+}
+
+
+.admin-status {
+
+    text-align: center;
+
+    background: #e8f5e9;
+
+    color: #198754;
+
+    padding: 12px;
+
+    border-radius: 7px;
+
+    margin-bottom: 20px;
+
+    font-weight: bold;
+
+}
+
+
+.admin-button {
+
+    display: block;
+
+    width: 100%;
+
+    padding: 14px;
+
+    margin: 12px 0;
+
+    border: none;
+
+    border-radius: 7px;
+
+    background: #ff6600;
+
+    color: white;
+
+    font-size: 17px;
+
+    font-weight: bold;
+
+    cursor: pointer;
+
+}
+
+
+.admin-button:hover {
+
+    background: #e65c00;
+
+}
+
+
+.logout-button {
+
+    background: #555;
+
+}
+
+
+.logout-button:hover {
+
+    background: #333;
+
+}
+
+
+#page {
+
+    visibility: hidden;
+
+}
+
+</style>
+
+</head>
+
+
+<body>
+
+
+<div id="page">
+
+    <div class="admin-box">
+
+        <h2>
+            🔐 RK Store Admin Panel
+        </h2>
+
+
+        <div
+            class="admin-status"
+            id="adminStatus"
+        >
+            Checking Admin Login...
+        </div>
+
+
+        <button
+            class="admin-button"
+            onclick="window.location.href='orders.html'"
+        >
+            📦 Order
+        </button>
+
+
+        <button
+            class="admin-button"
+            onclick="window.location.href='admin-product-description.html'"
+        >
+            📝 Product Description
+        </button>
+
+
+        <button
+            class="admin-button logout-button"
+            id="logoutButton"
+        >
+            🚪 Admin Logout
+        </button>
+
+    </div>
+
+</div>
+
+
+<script type="module">
+
+
+/* =====================================================
+   FIREBASE IMPORT
+===================================================== */
+
+import {
+    initializeApp
+} from "https://www.gstatic.com/firebasejs/12.18.0/firebase-app.js";
+
+
+import {
+    getAuth,
+    onAuthStateChanged,
+    signOut
+} from "https://www.gstatic.com/firebasejs/12.18.0/firebase-auth.js";
+
+
+/* =====================================================
+   FIREBASE CONFIG
+===================================================== */
+
+const firebaseConfig = {
+
+    apiKey:
+        "AIzaSyCkBQaphKKz_Wxd1GgKAVoxqR4taKvzdEM",
+
+    authDomain:
+        "rk-store-5fb24.firebaseapp.com",
+
+    projectId:
+        "rk-store-5fb24",
+
+    storageBucket:
+        "rk-store-5fb24.firebasestorage.app",
+
+    messagingSenderId:
+        "407275549697",
+
+    appId:
+        "1:407275549697:web:41043b49bf7182cecffc00"
+
+};
+
+
+/* =====================================================
+   INITIALIZE FIREBASE
+===================================================== */
+
+const app =
+    initializeApp(firebaseConfig);
+
+
+const auth =
+    getAuth(app);
+
+
+/* =====================================================
+   ADMIN EMAIL
+===================================================== */
+
+const ADMIN_EMAIL =
+    "REJAUL.IMAM@gmail.com";
+
+
+/* =====================================================
+   ELEMENTS
+===================================================== */
+
+const page =
+    document.getElementById(
+        "page"
+    );
+
+
+const adminStatus =
+    document.getElementById(
+        "adminStatus"
+    );
+
+
+const logoutButton =
+    document.getElementById(
+        "logoutButton"
+    );
+
+
+/* =====================================================
+   ADMIN AUTH CHECK
+===================================================== */
+
+onAuthStateChanged(
+
+    auth,
+
+    function(user) {
+
+
+        /* =========================
+           NOT ADMIN
+        ========================= */
+
+        if (
+            !user ||
+            !user.email ||
+            user.email.toLowerCase() !==
+            ADMIN_EMAIL.toLowerCase()
+        ) {
+
+            window.location.replace(
+                "admin-login.html"
+            );
+
+            return;
+
+        }
+
+
+        /* =========================
+           ADMIN VERIFIED
+        ========================= */
+
+        adminStatus.innerText =
+            "🔐 Admin Access Granted: " +
+            user.email;
+
+
+        page.style.visibility =
+            "visible";
+
+    }
+
+);
+
+
+/* =====================================================
+   ADMIN LOGOUT
+===================================================== */
+
+logoutButton.addEventListener(
+
+    "click",
+
+    async function() {
+
+        try {
+
+            await signOut(auth);
+
+
+            window.location.replace(
+                "admin-login.html"
+            );
+
+        }
+
+        catch (error) {
+
+            console.error(
+                "Admin Logout Error:",
+                error
+            );
+
+            alert(
+                "Logout failed. Please try again."
+            );
+
+        }
+
+    }
+
+);
+
+</script>
+
+
+</body>
+
+</html>
