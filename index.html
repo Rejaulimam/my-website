@@ -863,6 +863,14 @@ nav a:active {
     </a>
 
     <a
+        href="orders.html"
+        id="adminOrderLink"
+        style="display: none;"
+    >
+        📦 Order
+    </a>
+
+    <a
         href="admin-product-description.html"
         id="productDescriptionLink"
         style="display: none;"
@@ -1759,6 +1767,83 @@ function() {
             : "block";
 
 };
+
+/* =====================================================
+   ADMIN MENU VISIBILITY
+===================================================== */
+
+onAuthStateChanged(
+    auth,
+    function(user) {
+
+        const adminLoginLink =
+            document.getElementById(
+                "adminLoginLink"
+            );
+
+        const adminOrderLink =
+            document.getElementById(
+                "adminOrderLink"
+            );
+
+        const productDescriptionLink =
+            document.getElementById(
+                "productDescriptionLink"
+            );
+
+
+        const isAdmin =
+            user &&
+            user.email &&
+            user.email.toLowerCase() ===
+            "REJAUL.IMAM@gmail.com".toLowerCase();
+
+
+        if (isAdmin) {
+
+            /* Admin Login hide */
+
+            adminLoginLink.style.display =
+                "none";
+
+
+            /* Order show */
+
+            adminOrderLink.style.display =
+                "block";
+
+
+            /* Product Description show */
+
+            productDescriptionLink.style.display =
+                "block";
+
+        }
+
+        else {
+
+            /* Admin Login show */
+
+            adminLoginLink.style.display =
+                "block";
+
+
+            /* Order hide */
+
+            adminOrderLink.style.display =
+                "none";
+
+
+            /* Product Description hide */
+
+            productDescriptionLink.style.display =
+                "none";
+
+        }
+
+    }
+);
+
 
 /* =====================================================
    HELP LINE
