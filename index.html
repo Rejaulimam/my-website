@@ -1086,6 +1086,9 @@ const app =
 const db =
     getFirestore(app);
 
+const auth =
+    getAuth(app);
+
 
 /* =====================================================
    PRODUCT DATA
@@ -1710,16 +1713,45 @@ function() {
 
 
 /* =====================================================
-   THREE DOT MENU
+   THREE DOT MENU - ADMIN ONLY
 ===================================================== */
 
 window.toggleThreeDotMenu =
 function() {
 
+    const user =
+        auth.currentUser;
+
+
+    /* =========================
+       ADMIN CHECK
+    ========================= */
+
+    if (
+        !user ||
+        !user.email ||
+        user.email.toLowerCase() !==
+        "REJAUL.IMAM@gmail.com".toLowerCase()
+    ) {
+
+        alert(
+            "🔒 Admin access only."
+        );
+
+        return;
+
+    }
+
+
+    /* =========================
+       OPEN / CLOSE MENU
+    ========================= */
+
     const menu =
         document.getElementById(
             "threeDotMenu"
         );
+
 
     menu.style.display =
         menu.style.display === "block"
@@ -1727,7 +1759,6 @@ function() {
             : "block";
 
 };
-
 
 /* =====================================================
    HELP LINE
