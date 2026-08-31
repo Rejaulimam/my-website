@@ -407,6 +407,17 @@ import {
 } from "https://www.gstatic.com/firebasejs/12.18.0/firebase-auth.js";
 
 
+import {
+    getFirestore,
+    collection,
+    doc,
+    getDoc,
+    getDocs,
+    query,
+    where
+} from "https://www.gstatic.com/firebasejs/12.18.0/firebase-firestore.js";
+
+
 /* =====================================================
    FIREBASE CONFIG
 ===================================================== */
@@ -444,6 +455,10 @@ const app =
 
 const auth =
     getAuth(app);
+
+
+const db =
+    getFirestore(app);
 
 
 /* =====================================================
@@ -484,7 +499,7 @@ onAuthStateChanged(
 
     auth,
 
-    function(user) {
+    async function(user) {
 
 
         /* =========================
@@ -540,10 +555,10 @@ onAuthStateChanged(
 
 
         /* =========================
-           LOAD ORDER
+           LOAD ORDER FROM FIRESTORE
         ========================= */
 
-        loadOrderDetails();
+        await loadOrderDetails();
 
     }
 
@@ -551,95 +566,362 @@ onAuthStateChanged(
 
 
 /* =====================================================
-   LOAD ORDER DETAILS
+   SHOW ERROR
 ===================================================== */
 
-function loadOrderDetails() {
+function showOrderError(message) {
+
+    orderDetails.innerHTML = `
+
+        <div class="error">
+
+            <h2>
+                Order Not Found
+            </h2>
+
+            <p>
+                ${message}
+            </p>
+
+        </div>
+
+    `;
+
+}
 
 
-    /* =========================
-       GET ORDER FROM URL
-    ========================= */
+/* =====================================================
+   LOAD ORDER FROM FIRESTORE
+===================================================== */
 
-    const urlParams =
-        new URLSearchParams(
-            window.location.search
+async function loadOrderDetails() {
+
+    try {
+
+
+        /* =========================
+           GET URL PARAMETERS
+        ========================= */
+
+        const urlParams =
+            new URLSearchParams(
+                window.location.search
+            );
+
+
+        const orderId =
+            urlParams.get("orderId");
+
+
+        const documentId =
+            urlParams.get("id");
+
+
+        const orderParameter =
+            urlParams.get("order");
+
+
+        let order = null;
+
+
+        let firestoreDocumentId = null;
+
+
+        /* =================================================
+           METHOD 1
+           FIRESTORE DOCUMENT ID
+        ================================================= */
+
+        if (documentId) {
+
+            console.log(
+                "Loading order by Firestore document ID:",
+                documentId
+            );
+
+
+            const orderRef =
+                doc(
+                    db,
+                    "orders",
+                    documentId
+                );
+
+
+            const orderSnap =
+                await getDoc(
+                    orderRef
+                );
+
+
+            if (orderSnap.exists()) {
+
+                order =
+                    orderSnap.data();
+
+                firestoreDocumentId =
+                    orderSnap.id;
+
+            }
+
+        }
+
+
+        /* =================================================
+           METHOD 2
+           ORDER ID
+        ================================================= */
+
+        if (
+            !order &&
+            orderId
+        ) {
+
+            console.log(
+                "Loading order by Order ID:",
+                orderId
+            );
+
+
+            const ordersRef =
+                collection(
+                    db,
+                    "orders"
+                );
+
+
+            const q =
+                query(
+                    ordersRef,
+                    where(
+                        "orderId",
+                        "==",
+                        orderId
+                    )
+                );
+
+
+            const snapshot =
+                await getDocs(q);
+
+
+            if (
+                !snapshot.empty
+            ) {
+
+                const firstDoc =
+                    snapshot.docs[0];
+
+
+                order =
+                    firstDoc.data();
+
+                firestoreDocumentId =
+                    firstDoc.id;
+
+            }
+
+        }
+
+
+        /* =================================================
+           METHOD 3
+           OLD ?order= PARAMETER
+           
+           If the old orders.html still sends
+           ?order=0, ?order=1, etc.,
+           we try to find the order directly
+           from Firestore.
+        ================================================= */
+
+        if (
+            !order &&
+            orderParameter !== null
+        ) {
+
+
+            /* =========================
+               TRY AS FIRESTORE DOCUMENT ID
+            ========================= */
+
+            const possibleDocId =
+                orderParameter;
+
+
+            try {
+
+                const orderRef =
+                    doc(
+                        db,
+                        "orders",
+                        possibleDocId
+                    );
+
+
+                const orderSnap =
+                    await getDoc(
+                        orderRef
+                    );
+
+
+                if (
+                    orderSnap.exists()
+                ) {
+
+                    order =
+                        orderSnap.data();
+
+                    firestoreDocumentId =
+                        orderSnap.id;
+
+                }
+
+            } catch (docError) {
+
+                console.log(
+                    "Document ID lookup skipped:",
+                    docError
+                );
+
+            }
+
+
+            /* =========================
+               TRY OLD NUMERIC INDEX
+            ========================= */
+
+            if (
+                !order &&
+                /^\d+$/.test(
+                    orderParameter
+                )
+            ) {
+
+                const ordersRef =
+                    collection(
+                        db,
+                        "orders"
+                    );
+
+
+                const snapshot =
+                    await getDocs(
+                        ordersRef
+                    );
+
+
+                const index =
+                    Number(
+                        orderParameter
+                    );
+
+
+                if (
+                    index >= 0 &&
+                    index <
+                    snapshot.docs.length
+                ) {
+
+                    const selectedDoc =
+                        snapshot.docs[index];
+
+
+                    order =
+                        selectedDoc.data();
+
+                    firestoreDocumentId =
+                        selectedDoc.id;
+
+                }
+
+            }
+
+        }
+
+
+        /* =================================================
+           CHECK ORDER
+        ================================================= */
+
+        if (!order) {
+
+            showOrderError(
+                "The requested order could not be found in Firestore."
+            );
+
+            return;
+
+        }
+
+
+        console.log(
+            "Order loaded from Firestore:",
+            firestoreDocumentId
         );
 
 
-    let orderIndex =
-        urlParams.get("order");
+        /* =================================================
+           DISPLAY ORDER
+        ================================================= */
+
+        displayOrder(
+            order
+        );
 
 
-    /* =========================
-       FALLBACK LOCAL STORAGE
-    ========================= */
+        /* =================================================
+           STORE CURRENT ORDER
+           ONLY FOR PRINT FUNCTIONS
+        ================================================= */
 
-    if (orderIndex === null) {
-
-        orderIndex =
-            localStorage.getItem(
-                "selectedOrderIndex"
-            );
-
-    }
+        window.currentOrder =
+            order;
 
 
-    /* =========================
-       CONVERT TO NUMBER
-    ========================= */
-
-    if (orderIndex !== null) {
-
-        orderIndex =
-            Number(orderIndex);
-
-    }
+        window.currentOrderDocumentId =
+            firestoreDocumentId;
 
 
-    /* =========================
-       GET ORDERS
-    ========================= */
+    } catch (error) {
 
-    const orders =
-        JSON.parse(
-            localStorage.getItem("orders")
-        ) || [];
+        console.error(
+            "Firestore Order Details Error:",
+            error
+        );
 
-
-    /* =========================
-       CHECK ORDER
-    ========================= */
-
-    if (
-        orderIndex === null ||
-        !Number.isInteger(orderIndex) ||
-        !orders[orderIndex]
-    ) {
 
         orderDetails.innerHTML = `
 
             <div class="error">
 
                 <h2>
-                    Order Not Found
+                    Unable to Load Order
                 </h2>
 
                 <p>
-                    The requested order could not be found.
+                    Something went wrong while loading the order.
+                </p>
+
+                <p style="color:#d00; font-size:13px;">
+
+                    ${error.message || ""}
+
                 </p>
 
             </div>
 
         `;
 
-        return;
-
     }
 
+}
 
-    const order =
-        orders[orderIndex];
+
+/* =====================================================
+   DISPLAY ORDER
+===================================================== */
+
+function displayOrder(order) {
 
 
     const orderStatus =
@@ -661,6 +943,7 @@ function loadOrderDetails() {
 
     if (
         order.products &&
+        Array.isArray(order.products) &&
         order.products.length > 0
     ) {
 
@@ -670,13 +953,15 @@ function loadOrderDetails() {
 
 
                 const quantity =
-                    product.quantity ||
-                    1;
+                    Number(
+                        product.quantity
+                    ) || 1;
 
 
                 const price =
-                    product.price ||
-                    0;
+                    Number(
+                        product.price
+                    ) || 0;
 
 
                 const total =
@@ -1157,25 +1442,6 @@ function loadOrderDetails() {
 
     `;
 
-
-    /* =================================================
-       SAVE CURRENT ORDER INDEX
-    ================================================= */
-
-    localStorage.setItem(
-        "selectedOrderIndex",
-        orderIndex
-    );
-
-
-    /* =================================================
-       STORE ORDER FOR PRINT FUNCTIONS
-    ================================================= */
-
-    window.currentOrder =
-        order;
-
-
 }
 
 
@@ -1237,6 +1503,7 @@ window.printInvoice =
 
         if (
             order.products &&
+            Array.isArray(order.products) &&
             order.products.length > 0
         ) {
 
@@ -1246,13 +1513,15 @@ window.printInvoice =
 
 
                     const quantity =
-                        product.quantity ||
-                        1;
+                        Number(
+                            product.quantity
+                        ) || 1;
 
 
                     const price =
-                        product.price ||
-                        0;
+                        Number(
+                            product.price
+                        ) || 0;
 
 
                     const subtotal =
