@@ -275,6 +275,23 @@
             opacity: 0.9;
         }
 
+        /* Security Loading */
+
+        #securityLoading {
+            background-color: white;
+            padding: 25px;
+            border-radius: 8px;
+            text-align: center;
+            margin-bottom: 15px;
+            font-weight: bold;
+        }
+
+        /* Initially hide protected content */
+
+        #protectedContent {
+            display: none;
+        }
+
         /* Print */
 
         @media print {
@@ -310,70 +327,274 @@
         RK Store - Order Details
     </div>
 
+
     <div class="container">
 
-        <a
-            href="orders.html"
-            class="back-btn"
-        >
-            ← Back to Orders
-        </a>
 
-        <div id="orderDetails"></div>
+        <!-- =========================
+             SECURITY CHECK
+        ========================= -->
 
-        <!-- Action Buttons -->
+        <div id="securityLoading">
 
-        <div class="action-buttons">
+            🔐 Checking Admin Login...
 
-            <button
-                type="button"
-                class="action-btn print-btn"
-                onclick="printOrder()"
+        </div>
+
+
+        <!-- =========================
+             PROTECTED CONTENT
+        ========================= -->
+
+        <div id="protectedContent">
+
+
+            <a
+                href="orders.html"
+                class="back-btn"
             >
-                🖨️ Print Order
-            </button>
+                ← Back to Orders
+            </a>
 
-            <button
-                type="button"
-                class="action-btn invoice-btn"
-                onclick="printInvoice()"
-            >
-                📄 Print Invoice
-            </button>
+
+            <div id="orderDetails"></div>
+
+
+            <!-- Action Buttons -->
+
+            <div class="action-buttons">
+
+                <button
+                    type="button"
+                    class="action-btn print-btn"
+                    onclick="printOrder()"
+                >
+                    🖨️ Print Order
+                </button>
+
+
+                <button
+                    type="button"
+                    class="action-btn invoice-btn"
+                    onclick="printInvoice()"
+                >
+                    📄 Print Invoice
+                </button>
+
+            </div>
+
 
         </div>
 
     </div>
 
 
-<script>
+<script type="module">
+
+
+/* =====================================================
+   FIREBASE IMPORT
+===================================================== */
+
+import {
+    initializeApp
+} from "https://www.gstatic.com/firebasejs/12.18.0/firebase-app.js";
+
+
+import {
+    getAuth,
+    onAuthStateChanged
+} from "https://www.gstatic.com/firebasejs/12.18.0/firebase-auth.js";
+
+
+/* =====================================================
+   FIREBASE CONFIG
+===================================================== */
+
+const firebaseConfig = {
+
+    apiKey:
+        "AIzaSyCkBQaphKKz_Wxd1GgKAVoxqR4taKvzdEM",
+
+    authDomain:
+        "rk-store-5fb24.firebaseapp.com",
+
+    projectId:
+        "rk-store-5fb24",
+
+    storageBucket:
+        "rk-store-5fb24.firebasestorage.app",
+
+    messagingSenderId:
+        "407275549697",
+
+    appId:
+        "1:407275549697:web:41043b49bf7182cecffc00"
+
+};
+
+
+/* =====================================================
+   INITIALIZE FIREBASE
+===================================================== */
+
+const app =
+    initializeApp(firebaseConfig);
+
+
+const auth =
+    getAuth(app);
+
+
+/* =====================================================
+   ADMIN EMAIL
+===================================================== */
+
+const ADMIN_EMAIL =
+    "REJAUL.IMAM@gmail.com";
+
+
+/* =====================================================
+   ELEMENTS
+===================================================== */
+
+const securityLoading =
+    document.getElementById(
+        "securityLoading"
+    );
+
+
+const protectedContent =
+    document.getElementById(
+        "protectedContent"
+    );
+
+
+const orderDetails =
+    document.getElementById(
+        "orderDetails"
+    );
+
+
+/* =====================================================
+   ADMIN AUTH CHECK
+===================================================== */
+
+onAuthStateChanged(
+
+    auth,
+
+    function(user) {
+
+
+        /* =========================
+           NOT LOGGED IN
+        ========================= */
+
+        if (!user) {
+
+            window.location.replace(
+                "admin-login.html"
+            );
+
+            return;
+
+        }
+
+
+        /* =========================
+           ADMIN EMAIL CHECK
+        ========================= */
+
+        if (
+            !user.email ||
+            user.email.toLowerCase() !==
+            ADMIN_EMAIL.toLowerCase()
+        ) {
+
+            window.location.replace(
+                "admin-login.html"
+            );
+
+            return;
+
+        }
+
+
+        /* =========================
+           ADMIN VERIFIED
+        ========================= */
+
+        console.log(
+            "Admin verified for Order Details:",
+            user.email
+        );
+
+
+        securityLoading.style.display =
+            "none";
+
+
+        protectedContent.style.display =
+            "block";
+
+
+        /* =========================
+           LOAD ORDER
+        ========================= */
+
+        loadOrderDetails();
+
+    }
+
+);
+
+
+/* =====================================================
+   LOAD ORDER DETAILS
+===================================================== */
+
+function loadOrderDetails() {
+
 
     /* =========================
        GET ORDER FROM URL
     ========================= */
 
+    const urlParams =
+        new URLSearchParams(
+            window.location.search
+        );
+
+
+    let orderIndex =
+        urlParams.get("order");
+
+
     /* =========================
-   GET ORDER INDEX
-========================= */
+       FALLBACK LOCAL STORAGE
+    ========================= */
 
-// First check URL
-const urlParams =
-    new URLSearchParams(window.location.search);
+    if (orderIndex === null) {
 
-let orderIndex =
-    urlParams.get("order");
+        orderIndex =
+            localStorage.getItem(
+                "selectedOrderIndex"
+            );
 
-// If URL does not contain order index,
-// get it from localStorage
-if (orderIndex === null) {
-    orderIndex =
-        localStorage.getItem("selectedOrderIndex");
-}
+    }
 
-// Convert to number
-if (orderIndex !== null) {
-    orderIndex = Number(orderIndex);
-}
+
+    /* =========================
+       CONVERT TO NUMBER
+    ========================= */
+
+    if (orderIndex !== null) {
+
+        orderIndex =
+            Number(orderIndex);
+
+    }
 
 
     /* =========================
@@ -381,11 +602,9 @@ if (orderIndex !== null) {
     ========================= */
 
     const orders =
-        JSON.parse(localStorage.getItem("orders")) || [];
-
-
-    const orderDetails =
-        document.getElementById("orderDetails");
+        JSON.parse(
+            localStorage.getItem("orders")
+        ) || [];
 
 
     /* =========================
@@ -394,6 +613,7 @@ if (orderIndex !== null) {
 
     if (
         orderIndex === null ||
+        !Number.isInteger(orderIndex) ||
         !orders[orderIndex]
     ) {
 
@@ -413,180 +633,135 @@ if (orderIndex !== null) {
 
         `;
 
-    } else {
+        return;
 
-        const order =
-            orders[orderIndex];
-
-
-        const orderStatus =
-            order.status || "Pending";
+    }
 
 
-        /* =========================
-           ORDER TOTAL
-        ========================= */
-
-        let orderTotal = 0;
-
-        let productsHTML = "";
+    const order =
+        orders[orderIndex];
 
 
-        if (
-            order.products &&
-            order.products.length > 0
-        ) {
-
-            order.products.forEach(
-                (product, index) => {
-
-                    const quantity =
-                        product.quantity || 1;
-
-                    const price =
-                        product.price || 0;
-
-                    const total =
-                        price * quantity;
+    const orderStatus =
+        order.status ||
+        "Pending";
 
 
-                    orderTotal += total;
+    /* =========================
+       ORDER TOTAL
+    ========================= */
+
+    let orderTotal =
+        0;
 
 
-                    productsHTML += `
+    let productsHTML =
+        "";
 
-                        <div class="product">
 
-                            <img
-                                src="${
-                                    product.image ||
-                                    "product1.jpg"
-                                }"
-                                alt="${
+    if (
+        order.products &&
+        order.products.length > 0
+    ) {
+
+
+        order.products.forEach(
+            (product, index) => {
+
+
+                const quantity =
+                    product.quantity ||
+                    1;
+
+
+                const price =
+                    product.price ||
+                    0;
+
+
+                const total =
+                    price *
+                    quantity;
+
+
+                orderTotal +=
+                    total;
+
+
+                productsHTML += `
+
+                    <div class="product">
+
+                        <img
+                            src="${
+                                product.image ||
+                                "product1.jpg"
+                            }"
+                            alt="${
+                                product.name ||
+                                "Product"
+                            }"
+                            class="product-image"
+                        >
+
+
+                        <div>
+
+                            <div class="product-name">
+
+                                ${
                                     product.name ||
-                                    "Product"
-                                }"
-                                class="product-image"
-                            >
-
-                            <div>
-
-                                <div class="product-name">
-
-                                    ${
-                                        product.name ||
-                                        "Product " +
-                                        (index + 1)
-                                    }
-
-                                </div>
-
-<div class="product-info">
-
-    Product Serial:
-    <strong style="color:#ff6600;">
-        ${
-            product.productSerial ||
-            product.productId ||
-            "N/A"
-        }
-    </strong>
-
-</div>
-
-
-
-                                <div class="product-info">
-
-                                    Quantity:
-                                    <strong>
-                                        ${quantity}
-                                    </strong>
-
-                                    <br>
-
-                                    Price:
-                                    <strong>
-                                        ৳${price}
-                                    </strong>
-
-                                </div>
+                                    "Product " +
+                                    (index + 1)
+                                }
 
                             </div>
 
-                            <div class="product-total">
 
-                                Subtotal:
-                                ৳${total}
+                            <div class="product-info">
+
+                                Product Serial:
+
+                                <strong style="color:#ff6600;">
+
+                                    ${
+                                        product.productSerial ||
+                                        product.productId ||
+                                        "N/A"
+                                    }
+
+                                </strong>
+
+                            </div>
+
+
+                            <div class="product-info">
+
+                                Quantity:
+
+                                <strong>
+                                    ${quantity}
+                                </strong>
+
+                                <br>
+
+                                Price:
+
+                                <strong>
+                                    ৳${price}
+                                </strong>
 
                             </div>
 
                         </div>
 
-                    `;
 
-                }
-            );
+                        <div class="product-total">
 
-        } else {
+                            Subtotal:
+                            ৳${total}
 
-            productsHTML = `
-                <p>
-                    No products found.
-                </p>
-            `;
-
-        }
-
-
-        /* =========================
-           STATUS TIMELINE
-        ========================= */
-
-        const statusOrder = [
-            "Pending",
-            "Confirmed",
-            "Shipped",
-            "Delivered"
-        ];
-
-
-        const currentStatusIndex =
-            statusOrder.indexOf(orderStatus);
-
-
-        let timelineHTML = "";
-
-
-        statusOrder.forEach(
-            (status, index) => {
-
-                let className = "";
-
-
-                if (
-                    currentStatusIndex >= 0 &&
-                    index < currentStatusIndex
-                ) {
-
-                    className = "completed";
-
-                } else if (
-                    index === currentStatusIndex
-                ) {
-
-                    className = "active";
-
-                }
-
-
-                timelineHTML += `
-
-                    <div
-                        class="timeline-item ${className}"
-                    >
-
-                        ${status}
+                        </div>
 
                     </div>
 
@@ -596,356 +771,594 @@ if (orderIndex !== null) {
         );
 
 
-        /* =========================
-           DISPLAY ORDER
-        ========================= */
+    } else {
 
-        orderDetails.innerHTML = `
 
-            <!-- Order Information -->
+        productsHTML = `
 
-            <div class="card">
-
-                <div class="card-title">
-                    Order Information
-                </div>
-
-                <div class="info-row">
-
-                    <span class="label">
-                        Order ID
-                    </span>
-
-                    <span class="value">
-                        ${
-                            order.orderId ||
-                            "Not available"
-                        }
-                    </span>
-
-                </div>
-
-                <div class="info-row">
-
-                    <span class="label">
-                        Order Date
-                    </span>
-
-                    <span class="value">
-                        ${
-                            order.dateTime ||
-                            "Not available"
-                        }
-                    </span>
-
-                </div>
-
-                <div class="info-row">
-
-                    <span class="label">
-                        Status
-                    </span>
-
-                    <span class="value">
-
-                        <span
-                            class="status-badge ${
-                                orderStatus.toLowerCase()
-                            }"
-                        >
-                            ${orderStatus}
-                        </span>
-
-                    </span>
-
-                </div>
-
-                <div class="info-row">
-
-    <span class="label">
-        Status Updated
-    </span>
-
-    <span class="value">
-        ${
-            order.statusUpdatedTime ||
-            "Not updated"
-        }
-    </span>
-
-</div>
-
-            </div>
-
-
-            <!-- Customer Information -->
-
-            <div class="card">
-
-                <div class="card-title">
-                    Customer Information
-                </div>
-
-                <div class="info-row">
-
-                    <span class="label">
-                        Name
-                    </span>
-
-                    <span class="value">
-                        ${
-                            order.customerName ||
-                            "Not available"
-                        }
-                    </span>
-
-                </div>
-
-                <div class="info-row">
-
-                    <span class="label">
-                        Phone
-                    </span>
-
-                    <span class="value">
-                        ${
-                            order.customerMobile ||
-                            "Not available"
-                        }
-                    </span>
-
-                </div>
-
-                <div class="info-row">
-
-                    <span class="label">
-                        Address
-                    </span>
-
-                    <span class="value">
-                        ${
-                            order.customerAddress ||
-                            "Not available"
-                        }
-                    </span>
-
-                </div>
-
-            </div>
-
-
-            <!-- Payment Information -->
-
-            <div class="card">
-
-                <div class="card-title">
-                    Payment Information
-                </div>
-
-                <div class="info-row">
-
-                    <span class="label">
-                        Payment Method
-                    </span>
-
-                    <span class="value">
-
-                        ${
-                            order.paymentMethod === "bkash"
-                                ? "bKash"
-                                : order.paymentMethod === "nagad"
-                                    ? "Nagad"
-                                    : "Cash on Delivery"
-                        }
-
-                    </span>
-
-                </div>
-
-
-                ${
-                    order.paymentMethod === "bkash" ||
-                    order.paymentMethod === "nagad"
-
-                    ? `
-
-                        <div class="info-row">
-
-                            <span class="label">
-                                Payment Number
-                            </span>
-
-                            <span class="value">
-                                ${
-                                    order.paymentNumber ||
-                                    "Not available"
-                                }
-                            </span>
-
-                        </div>
-
-
-                        <div class="info-row">
-
-                            <span class="label">
-                                Transaction ID
-                            </span>
-
-                            <span class="value">
-                                ${
-                                    order.transactionId ||
-                                    "Not available"
-                                }
-                            </span>
-
-                        </div>
-
-                    `
-
-                    : ""
-
-                }
-
-            </div>
-
-
-            <!-- Ordered Products -->
-
-            <div class="card">
-
-                <div class="card-title">
-                    Ordered Products
-                </div>
-
-                ${productsHTML}
-
-                <div class="total-row">
-
-                    <span>
-                        Total Amount
-                    </span>
-
-                    <span class="total-price">
-                        ৳${orderTotal}
-                    </span>
-
-                </div>
-
-            </div>
-
-
-            <!-- Order Status -->
-
-            <div class="card">
-
-                <div class="card-title">
-                    Order Status
-                </div>
-
-                <div class="timeline">
-
-                    ${timelineHTML}
-
-                </div>
-
-            </div>
+            <p>
+                No products found.
+            </p>
 
         `;
 
     }
 
 
-    /* =========================
-       PRINT ORDER
-    ========================= */
+    /* =================================================
+       STATUS TIMELINE
+    ================================================= */
 
-    function printOrder() {
+    const statusOrder = [
+
+        "Pending",
+
+        "Confirmed",
+
+        "Shipped",
+
+        "Delivered"
+
+    ];
+
+
+    const currentStatusIndex =
+        statusOrder.indexOf(
+            orderStatus
+        );
+
+
+    let timelineHTML =
+        "";
+
+
+    statusOrder.forEach(
+        (status, index) => {
+
+
+            let className =
+                "";
+
+
+            if (
+                currentStatusIndex >= 0 &&
+                index < currentStatusIndex
+            ) {
+
+                className =
+                    "completed";
+
+            }
+
+
+            else if (
+                index ===
+                currentStatusIndex
+            ) {
+
+                className =
+                    "active";
+
+            }
+
+
+            timelineHTML += `
+
+                <div
+                    class="timeline-item ${className}"
+                >
+
+                    ${status}
+
+                </div>
+
+            `;
+
+        }
+    );
+
+
+    /* =================================================
+       DISPLAY ORDER
+    ================================================= */
+
+    orderDetails.innerHTML = `
+
+
+        <!-- Order Information -->
+
+        <div class="card">
+
+            <div class="card-title">
+                Order Information
+            </div>
+
+
+            <div class="info-row">
+
+                <span class="label">
+                    Order ID
+                </span>
+
+
+                <span class="value">
+
+                    ${
+                        order.orderId ||
+                        "Not available"
+                    }
+
+                </span>
+
+            </div>
+
+
+            <div class="info-row">
+
+                <span class="label">
+                    Order Date
+                </span>
+
+
+                <span class="value">
+
+                    ${
+                        order.dateTime ||
+                        "Not available"
+                    }
+
+                </span>
+
+            </div>
+
+
+            <div class="info-row">
+
+                <span class="label">
+                    Status
+                </span>
+
+
+                <span class="value">
+
+                    <span
+                        class="status-badge ${
+                            orderStatus.toLowerCase()
+                        }"
+                    >
+
+                        ${orderStatus}
+
+                    </span>
+
+                </span>
+
+            </div>
+
+
+            <div class="info-row">
+
+                <span class="label">
+                    Status Updated
+                </span>
+
+
+                <span class="value">
+
+                    ${
+                        order.statusUpdatedTime ||
+                        "Not updated"
+                    }
+
+                </span>
+
+            </div>
+
+        </div>
+
+
+        <!-- Customer Information -->
+
+        <div class="card">
+
+            <div class="card-title">
+                Customer Information
+            </div>
+
+
+            <div class="info-row">
+
+                <span class="label">
+                    Name
+                </span>
+
+
+                <span class="value">
+
+                    ${
+                        order.customerName ||
+                        "Not available"
+                    }
+
+                </span>
+
+            </div>
+
+
+            <div class="info-row">
+
+                <span class="label">
+                    Phone
+                </span>
+
+
+                <span class="value">
+
+                    ${
+                        order.customerMobile ||
+                        "Not available"
+                    }
+
+                </span>
+
+            </div>
+
+
+            <div class="info-row">
+
+                <span class="label">
+                    Address
+                </span>
+
+
+                <span class="value">
+
+                    ${
+                        order.customerAddress ||
+                        "Not available"
+                    }
+
+                </span>
+
+            </div>
+
+        </div>
+
+
+        <!-- Payment Information -->
+
+        <div class="card">
+
+            <div class="card-title">
+                Payment Information
+            </div>
+
+
+            <div class="info-row">
+
+                <span class="label">
+                    Payment Method
+                </span>
+
+
+                <span class="value">
+
+                    ${
+                        order.paymentMethod === "bkash"
+                            ? "bKash"
+                            : order.paymentMethod === "nagad"
+                                ? "Nagad"
+                                : "Cash on Delivery"
+                    }
+
+                </span>
+
+            </div>
+
+
+            ${
+                order.paymentMethod === "bkash" ||
+                order.paymentMethod === "nagad"
+
+                ? `
+
+                    <div class="info-row">
+
+                        <span class="label">
+                            Payment Number
+                        </span>
+
+
+                        <span class="value">
+
+                            ${
+                                order.paymentNumber ||
+                                "Not available"
+                            }
+
+                        </span>
+
+                    </div>
+
+
+                    <div class="info-row">
+
+                        <span class="label">
+                            Transaction ID
+                        </span>
+
+
+                        <span class="value">
+
+                            ${
+                                order.transactionId ||
+                                "Not available"
+                            }
+
+                        </span>
+
+                    </div>
+
+                `
+
+                : ""
+
+            }
+
+        </div>
+
+
+        <!-- Ordered Products -->
+
+        <div class="card">
+
+            <div class="card-title">
+                Ordered Products
+            </div>
+
+
+            ${productsHTML}
+
+
+            <div class="total-row">
+
+                <span>
+                    Total Amount
+                </span>
+
+
+                <span class="total-price">
+
+                    ৳${orderTotal}
+
+                </span>
+
+            </div>
+
+        </div>
+
+
+        <!-- Order Status -->
+
+        <div class="card">
+
+            <div class="card-title">
+                Order Status
+            </div>
+
+
+            <div class="timeline">
+
+                ${timelineHTML}
+
+            </div>
+
+        </div>
+
+    `;
+
+
+    /* =================================================
+       SAVE CURRENT ORDER INDEX
+    ================================================= */
+
+    localStorage.setItem(
+        "selectedOrderIndex",
+        orderIndex
+    );
+
+
+    /* =================================================
+       STORE ORDER FOR PRINT FUNCTIONS
+    ================================================= */
+
+    window.currentOrder =
+        order;
+
+
+}
+
+
+/* =====================================================
+   PRINT ORDER
+===================================================== */
+
+window.printOrder =
+    function() {
+
+        if (
+            !window.currentOrder
+        ) {
+
+            alert(
+                "Order not found."
+            );
+
+            return;
+
+        }
+
 
         window.print();
 
-    }
+    };
 
 
-    /* =========================
-       PRINT INVOICE
-    ========================= */
+/* =====================================================
+   PRINT INVOICE
+===================================================== */
 
-    function printInvoice() {
+window.printInvoice =
+    function() {
 
-    const order = orders[orderIndex];
 
-    if (!order) {
-        alert("Order not found.");
-        return;
-    }
+        const order =
+            window.currentOrder;
 
-    let invoiceProducts = "";
-    let invoiceTotal = 0;
 
-    if (order.products && order.products.length > 0) {
+        if (!order) {
 
-        order.products.forEach((product, index) => {
+            alert(
+                "Order not found."
+            );
 
-            const quantity = product.quantity || 1;
-            const price = product.price || 0;
-            const subtotal = price * quantity;
+            return;
 
-            invoiceTotal += subtotal;
+        }
 
-            invoiceProducts += `
+
+        let invoiceProducts =
+            "";
+
+
+        let invoiceTotal =
+            0;
+
+
+        if (
+            order.products &&
+            order.products.length > 0
+        ) {
+
+
+            order.products.forEach(
+                (product, index) => {
+
+
+                    const quantity =
+                        product.quantity ||
+                        1;
+
+
+                    const price =
+                        product.price ||
+                        0;
+
+
+                    const subtotal =
+                        price *
+                        quantity;
+
+
+                    invoiceTotal +=
+                        subtotal;
+
+
+                    invoiceProducts += `
+
+                        <tr>
+
+                            <td>
+
+                                ${
+                                    product.name ||
+                                    "Product " +
+                                    (index + 1)
+                                }
+
+                            </td>
+
+
+                            <td>
+
+                                ${quantity}
+
+                            </td>
+
+
+                            <td>
+
+                                ৳${price}
+
+                            </td>
+
+
+                            <td>
+
+                                ৳${subtotal}
+
+                            </td>
+
+                        </tr>
+
+                    `;
+
+                }
+            );
+
+
+        } else {
+
+
+            invoiceProducts = `
+
                 <tr>
-                    <td>
-                        ${product.name || "Product " + (index + 1)}
+
+                    <td colspan="4">
+
+                        No products found.
+
                     </td>
 
-                    <td>
-                        ${quantity}
-                    </td>
-
-                    <td>
-                        ৳${price}
-                    </td>
-
-                    <td>
-                        ৳${subtotal}
-                    </td>
                 </tr>
+
             `;
-        });
 
-    } else {
-
-        invoiceProducts = `
-            <tr>
-                <td colspan="4">
-                    No products found.
-                </td>
-            </tr>
-        `;
-    }
+        }
 
 
-    const paymentMethod =
-        order.paymentMethod === "bkash"
-            ? "bKash"
-            : order.paymentMethod === "nagad"
-                ? "Nagad"
-                : "Cash on Delivery";
+        const paymentMethod =
+
+            order.paymentMethod === "bkash"
+
+                ? "bKash"
+
+                : order.paymentMethod === "nagad"
+
+                    ? "Nagad"
+
+                    : "Cash on Delivery";
 
 
-    const invoiceWindow = window.open("", "_blank");
-
-    if (!invoiceWindow) {
-
-        alert(
-            "Please allow pop-ups for this website."
-        );
-
-        return;
-    }
+        const invoiceWindow =
+            window.open(
+                "",
+                "_blank"
+            );
 
 
-    invoiceWindow.document.write(`
+        if (!invoiceWindow) {
+
+            alert(
+                "Please allow pop-ups for this website."
+            );
+
+            return;
+
+        }
+
+
+        invoiceWindow.document.write(`
 
 <!DOCTYPE html>
 
@@ -1151,6 +1564,7 @@ body {
 
 }
 
+
 @media (max-width: 600px) {
 
     body {
@@ -1185,6 +1599,7 @@ body {
 
 }
 
+
 .invoice-buttons {
     display: flex;
     justify-content: center;
@@ -1210,10 +1625,13 @@ body {
     opacity: 0.9;
 }
 
+
 @media print {
+
     .invoice-buttons {
         display: none;
     }
+
 }
 
 </style>
@@ -1271,17 +1689,21 @@ body {
                 Order Information
             </h3>
 
+
             <div class="info-row">
 
                 <span class="info-label">
                     Order ID
                 </span>
 
+
                 <span class="info-value">
+
                     ${
                         order.orderId ||
                         "Not available"
                     }
+
                 </span>
 
             </div>
@@ -1293,11 +1715,14 @@ body {
                     Order Date
                 </span>
 
+
                 <span class="info-value">
+
                     ${
                         order.dateTime ||
                         "Not available"
                     }
+
                 </span>
 
             </div>
@@ -1309,11 +1734,14 @@ body {
                     Status
                 </span>
 
+
                 <span class="info-value">
+
                     ${
                         order.status ||
                         "Pending"
                     }
+
                 </span>
 
             </div>
@@ -1329,17 +1757,21 @@ body {
                 Customer Information
             </h3>
 
+
             <div class="info-row">
 
                 <span class="info-label">
                     Name
                 </span>
 
+
                 <span class="info-value">
+
                     ${
                         order.customerName ||
                         "Not available"
                     }
+
                 </span>
 
             </div>
@@ -1351,11 +1783,14 @@ body {
                     Phone
                 </span>
 
+
                 <span class="info-value">
+
                     ${
                         order.customerMobile ||
                         "Not available"
                     }
+
                 </span>
 
             </div>
@@ -1367,11 +1802,14 @@ body {
                     Address
                 </span>
 
+
                 <span class="info-value">
+
                     ${
                         order.customerAddress ||
                         "Not available"
                     }
+
                 </span>
 
             </div>
@@ -1389,14 +1827,18 @@ body {
             Payment Information
         </h3>
 
+
         <div class="info-row">
 
             <span class="info-label">
                 Payment Method
             </span>
 
+
             <span class="info-value">
+
                 ${paymentMethod}
+
             </span>
 
         </div>
@@ -1412,8 +1854,11 @@ body {
                         Payment Number
                     </span>
 
+
                     <span class="info-value">
+
                         ${order.paymentNumber}
+
                     </span>
 
                 </div>
@@ -1433,8 +1878,11 @@ body {
                         Transaction ID
                     </span>
 
+
                     <span class="info-value">
+
                         ${order.transactionId}
+
                     </span>
 
                 </div>
@@ -1499,25 +1947,35 @@ body {
                 Total Amount
             </span>
 
+
             <span class="total-price">
+
                 ৳${invoiceTotal}
+
             </span>
 
         </div>
 
     </div>
 
-<div class="invoice-buttons">
 
-    <button onclick="window.print()">
-        🖨️ Print Invoice
-    </button>
+    <div class="invoice-buttons">
 
-    <button onclick="window.close()">
-        ✖ Close
-    </button>
+        <button
+            onclick="window.print()"
+        >
+            🖨️ Print Invoice
+        </button>
 
-</div>
+
+        <button
+            onclick="window.close()"
+        >
+            ✖ Close
+        </button>
+
+    </div>
+
 
     <!-- Footer -->
 
@@ -1540,17 +1998,18 @@ body {
 
 </html>
 
-    `);
+        `);
 
 
-    invoiceWindow.document.close();
+        invoiceWindow.document.close();
 
-    invoiceWindow.focus();
+        invoiceWindow.focus();
 
-    
+    };
 
-}
+
 </script>
+
 
 </body>
 </html>
