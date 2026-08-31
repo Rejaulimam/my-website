@@ -1817,23 +1817,29 @@ function viewDetails(
 
 
     /* =========================
-       SAVE SELECTED INDEX
+       FIREBASE DOCUMENT ID
     ========================= */
 
-    localStorage.setItem(
-        "selectedOrderIndex",
-        index
-    );
+    if (!order.firebaseId) {
+
+        alert(
+            "Order Firebase ID not found."
+        );
+
+        return;
+
+    }
 
 
     /* =========================
        OPEN DETAILS PAGE
+       USING FIRESTORE DOCUMENT ID
     ========================= */
 
     window.location.href =
-        "order-details.html?order=" +
+        "order-details.html?id=" +
         encodeURIComponent(
-            index
+            order.firebaseId
         );
 
 }
