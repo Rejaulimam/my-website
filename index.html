@@ -1727,6 +1727,37 @@ function() {
 window.toggleThreeDotMenu =
 function() {
 
+    const user =
+        auth.currentUser;
+
+
+    /* =========================================
+       ADMIN NOT LOGGED IN
+       → সরাসরি Admin Login Page
+    ========================================= */
+
+    const isAdmin =
+        user &&
+        user.email &&
+        user.email.toLowerCase() ===
+        "REJAUL.IMAM@gmail.com".toLowerCase();
+
+
+    if (!isAdmin) {
+
+        window.location.href =
+            "admin-login.html";
+
+        return;
+
+    }
+
+
+    /* =========================================
+       ADMIN LOGGED IN
+       → Three Dot Menu খুলবে
+    ========================================= */
+
     const menu =
         document.getElementById(
             "threeDotMenu"
@@ -1747,55 +1778,26 @@ function() {
             "productDescriptionLink"
         );
 
-    const user =
-        auth.currentUser;
 
-    const isAdmin =
-        user &&
-        user.email &&
-        user.email.toLowerCase() ===
-        "REJAUL.IMAM@gmail.com".toLowerCase();
+    /* Admin Login hide */
+
+    adminLoginLink.style.display =
+        "none";
 
 
-    /* =========================================
-       ADMIN LOGGED IN
-    ========================================= */
+    /* Admin Order show */
 
-    if (isAdmin) {
-
-        adminLoginLink.style.display =
-            "none";
-
-        adminOrderLink.style.display =
-            "block";
-
-        productDescriptionLink.style.display =
-            "block";
-
-    }
+    adminOrderLink.style.display =
+        "block";
 
 
-    /* =========================================
-       ADMIN NOT LOGGED IN
-    ========================================= */
+    /* Product Description show */
 
-    else {
-
-        adminLoginLink.style.display =
-            "block";
-
-        adminOrderLink.style.display =
-            "none";
-
-        productDescriptionLink.style.display =
-            "none";
-
-    }
+    productDescriptionLink.style.display =
+        "block";
 
 
-    /* =========================================
-       OPEN / CLOSE MENU
-    ========================================= */
+    /* Open / Close Menu */
 
     menu.style.display =
         menu.style.display === "block"
