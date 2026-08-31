@@ -229,6 +229,20 @@
         }
 
 
+/* =========================
+   ADMIN PAGE LOCK
+========================= */
+
+body {
+    visibility: hidden;
+}
+
+body.admin-verified {
+    visibility: visible;
+}
+
+
+
         @media (max-width: 600px) {
 
             .row {
@@ -1006,6 +1020,8 @@ onAuthStateChanged(
         adminStatus.innerText =
             "🔐 Admin Access Granted: " +
             user.email;
+
+document.body.classList.add("admin-verified");
 
         saveButton.disabled =
             false;
