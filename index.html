@@ -767,6 +767,31 @@ nav a:active {
 
 }
 
+#searchSuggestions {
+    display: none;
+    width: 250px;
+    max-width: calc(100% - 20px);
+    background: white;
+    margin: -15px auto 10px;
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+    overflow: hidden;
+    position: relative;
+    z-index: 500;
+}
+
+.search-suggestion {
+    padding: 11px 14px;
+    border-bottom: 1px solid #eee;
+    cursor: pointer;
+    text-align: left;
+    font-size: 15px;
+    color: #333;
+    background: white;
+}
+
+
 </style>
 
 </head>
@@ -947,6 +972,8 @@ nav a:active {
     </button>
 
 </div>
+
+<div id="searchSuggestions"></div>
 
 
 <!-- =========================
@@ -1713,11 +1740,162 @@ function() {
         );
 
 
+    /* =========================
+       SHOW FILTERED PRODUCTS
+    ========================= */
+
     displayProducts(
         filtered
     );
 
+
+    /* =========================
+       SHOW SEARCH SUGGESTIONS
+    ========================= */
+
+    showSearchSuggestions();
+
 };
+
+
+/* =====================================================
+   SEARCH SUGGESTIONS
+===================================================== */
+
+function showSearchSuggestions() {
+
+    const input =
+        document.getElementById("searchInput");
+
+    const suggestionBox =
+        document.getElementById("searchSuggestions");
+
+    const searchText =
+        input.value
+            .toLowerCase()
+            .trim();
+
+
+    /* কিছু না লিখলে suggestion বন্ধ */
+
+    if (searchText === "") {
+
+        suggestionBox.innerHTML = "";
+
+        suggestionBox.style.display = "none";
+
+        return;
+
+    }
+
+
+    /* Matching products */
+
+    const matches =
+        products.filter(function(product) {
+
+            const categoryMatch =
+                selectedCategory === "All"
+                ||
+                product.category === selectedCategory;
+
+
+            const nameMatch =
+                String(product.name)
+                    .toLowerCase()
+                    .includes(searchText);
+
+
+            return categoryMatch && nameMatch;
+
+        })
+        .slice(0, 6);
+
+
+    /* কোনো product না থাকলে */
+
+    if (matches.length === 0) {
+
+        suggestionBox.innerHTML = "";
+
+        suggestionBox.style.display = "none";
+
+        return;
+
+    }
+
+
+    /* Suggestion তৈরি */
+
+    suggestionBox.innerHTML =
+        matches.map(function(product) {
+
+            return `
+                <div
+                    class="search-suggestion"
+                    onclick="selectSearchSuggestion(${product.id})"
+                >
+                    <strong>
+                        ${product.serial}.
+                    </strong>
+                    ${escapeHTML(product.name)}
+                </div>
+            `;
+
+        }).join("");
+
+
+    suggestionBox.style.display = "block";
+
+}
+
+
+/* =====================================================
+   SELECT SEARCH SUGGESTION
+===================================================== */
+
+window.selectSearchSuggestion =
+function(productId) {
+
+    const product =
+        products.find(function(item) {
+
+            return item.id === productId;
+
+        });
+
+
+    if (!product) {
+
+        return;
+
+    }
+
+
+    const input =
+        document.getElementById("searchInput");
+
+
+    input.value =
+        product.name;
+
+
+    const suggestionBox =
+        document.getElementById(
+            "searchSuggestions"
+        );
+
+
+    suggestionBox.innerHTML = "";
+
+    suggestionBox.style.display = "none";
+
+
+    searchProducts();
+
+};
+
+
 
 
 /* =====================================================
