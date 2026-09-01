@@ -600,21 +600,32 @@ nav a:active {
     background-color: #0056b3;
 }
 
+
 .help-box {
     display: none;
 
-    background-color: white;
+    position: fixed;
 
+    top: 50%;
+    left: 50%;
+
+    transform: translate(-50%, -50%);
+
+    width: 90%;
     max-width: 400px;
 
-    margin: 12px auto;
+    background-color: white;
 
     padding: 20px;
 
-    border-radius: 10px;
+    border-radius: 12px;
 
     box-shadow:
-        0 3px 12px rgba(0,0,0,0.15);
+        0 8px 30px rgba(0,0,0,0.30);
+
+    border: 1px solid #ddd;
+
+    z-index: 2000;
 }
 
 .help-box h3 {
@@ -1988,7 +1999,7 @@ onAuthStateChanged(
 
 
 /* =====================================================
-   HELP LINE
+   HELP LINE POPUP
 ===================================================== */
 
 window.toggleHelpLine =
@@ -1999,15 +2010,64 @@ function() {
             "helpBox"
         );
 
-
-    helpBox.style.display =
+    if (
         helpBox.style.display ===
         "block"
-            ? "none"
-            : "block";
+    ) {
+
+        helpBox.style.display =
+            "none";
+
+    } else {
+
+        helpBox.style.display =
+            "block";
+
+    }
 
 };
 
+
+/* =====================================================
+   CLOSE HELP POPUP
+   WHEN CLICKING OUTSIDE
+===================================================== */
+
+document.addEventListener(
+    "click",
+    function(event) {
+
+        const helpBox =
+            document.getElementById(
+                "helpBox"
+            );
+
+        const helpButton =
+            document.querySelector(
+                ".header-help-button"
+            );
+
+
+        if (
+            helpBox.style.display ===
+            "block"
+            &&
+            !helpBox.contains(
+                event.target
+            )
+            &&
+            !helpButton.contains(
+                event.target
+            )
+        ) {
+
+            helpBox.style.display =
+                "none";
+
+        }
+
+    }
+);
 
 /* =====================================================
    CLOSE THREE DOT MENU
