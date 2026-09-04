@@ -968,6 +968,16 @@ function displayOrder(order) {
                     price *
                     quantity;
 
+const productImage =
+    product.image ||
+    product.imageUrl ||
+    product.img ||
+    (
+        product.productId
+            ? "./product" + product.productId + "/product1.jpg"
+            : ""
+    );
+
 
                 orderTotal +=
                     total;
@@ -977,11 +987,10 @@ function displayOrder(order) {
 
                     <div class="product">
 
+
                         <img
-                            src="${
-                                product.image ||
-                                "product1.jpg"
-                            }"
+                            src="${productImage}"
+
                             alt="${
                                 product.name ||
                                 "Product"
