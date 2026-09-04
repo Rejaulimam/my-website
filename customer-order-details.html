@@ -334,6 +334,31 @@
 
         }
 
+@media print {
+
+    .header,
+    .back-button,
+    button[onclick="printCustomerOrder()"] {
+        display: none !important;
+    }
+
+    body {
+        background: white;
+    }
+
+    .container {
+        width: 100%;
+        max-width: none;
+        margin: 0;
+    }
+
+    .card {
+        box-shadow: none;
+    }
+
+}
+
+
     </style>
 
 </head>
