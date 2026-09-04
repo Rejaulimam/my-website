@@ -1212,7 +1212,7 @@ price: null,
 
 category: "",
 
-stock: 0,
+stock: null,
 
         /*
          * AUTOMATIC IMAGE
@@ -1311,18 +1311,25 @@ function displayProducts(list) {
         : ""
 }
 
-<p style="
-    font-size: 15px;
-    font-weight: bold;
-    color: ${Number(product.stock) > 0 ? '#198754' : '#dc3545'};
-    margin: 5px 0 10px;
-">
-    ${
-        Number(product.stock) > 0
-            ? "In Stock: " + product.stock + " pcs"
-            : "Out of Stock"
-    }
-</p>
+${
+    product.stock !== null &&
+    Number.isFinite(Number(product.stock))
+        ? `
+            <p style="
+                font-size: 15px;
+                font-weight: bold;
+                color: ${Number(product.stock) > 0 ? '#198754' : '#dc3545'};
+                margin: 5px 0 10px;
+            ">
+                ${
+                    Number(product.stock) > 0
+                        ? "In Stock: " + product.stock + " pcs"
+                        : "Out of Stock"
+                }
+            </p>
+        `
+        : ""
+}
                 <button
                     type="button"
                     onclick="buyProductById(${product.id})"
