@@ -1154,43 +1154,7 @@ const auth =
 const products = [];
 
 
-/* =====================================================
-   DEFAULT PRODUCT INFORMATION
-===================================================== */
 
-const defaultProducts = {
-
-    1: {
-        name: "Men's Formal Solid Shirt",
-        price: 450,
-        category: "Men"
-    },
-
-    2: {
-        name: "Men's Casual Shirt",
-        price: 400,
-        category: "Men"
-    },
-
-    3: {
-        name: "Men's Casual Check Shirt",
-        price: 480,
-        category: "Men"
-    },
-
-    4: {
-        name: "Women's Casual Yellow Dress",
-        price: 500,
-        category: "Women"
-    },
-
-    5: {
-        name: "Women's Casual Dress",
-        price: 900,
-        category: "Women"
-    }
-
-};
 
 
 /* =====================================================
@@ -1234,9 +1198,7 @@ for (
     i++
 ) {
 
-    const defaultData =
-        defaultProducts[i];
-
+    
 
     products.push({
 
@@ -1244,23 +1206,12 @@ for (
 
         serial: i,
 
-        name:
-            defaultData
-                ? defaultData.name
-                : "Product " + i,
+        name: "",
 
-        price:
-            defaultData
-                ? defaultData.price
-                : 100 + (i * 10),
+price: null,
 
-        category:
-            defaultData
-                ? defaultData.category
-                : categories[
-                    (i - 6) %
-                    categories.length
-                ],
+category: "",
+
 stock: 0,
 
         /*
@@ -1349,9 +1300,16 @@ function displayProducts(list) {
 
                 </h3>
 
-                <p>
-                    Price: ৳${formatPrice(product.price)}
-                </p>
+               ${
+    product.price !== null &&
+    Number.isFinite(Number(product.price))
+        ? `
+            <p>
+                Price: ৳${formatPrice(product.price)}
+            </p>
+          `
+        : ""
+}
 
 <p style="
     font-size: 15px;
