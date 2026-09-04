@@ -368,6 +368,24 @@
 
         </div>
 
+<button
+    type="button"
+    onclick="printCustomerOrder()"
+    style="
+        width:100%;
+        padding:12px;
+        margin-bottom:20px;
+        border:none;
+        border-radius:6px;
+        background:#3498db;
+        color:white;
+        font-size:16px;
+        cursor:pointer;
+    "
+>
+    🖨️ Print Order
+</button>
+
 
     </div>
 
@@ -1224,6 +1242,11 @@ const productImage =
                 "customer-orders.html";
 
         };
+
+window.printCustomerOrder =
+    function() {
+        window.print();
+    };
 
 
 </script>
