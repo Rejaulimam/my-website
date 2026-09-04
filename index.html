@@ -1327,12 +1327,17 @@ function displayProducts(list) {
 
             card.innerHTML = `
 
-                <img
-                    src="${product.image}"
-                    alt="${escapeHTML(product.name)}"
-                    loading="lazy"
-                    onerror="handleProductImageError(this)"
-                >
+                <a
+    href="product.html?product=${product.id}"
+    style="display:block; cursor:pointer;"
+>
+    <img
+        src="${product.image}"
+        alt="${escapeHTML(product.name)}"
+        loading="lazy"
+        onerror="handleProductImageError(this)"
+    >
+</a>
 
                 <h3>
 
