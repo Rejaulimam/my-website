@@ -610,6 +610,16 @@
                             price *
                             quantity;
 
+const productImage =
+    product.image ||
+    product.imageUrl ||
+    product.img ||
+    (
+        product.productId
+            ? "./product" + product.productId + "/product1.jpg"
+            : ""
+    );
+
 
                         totalAmount +=
                             subtotal;
@@ -618,6 +628,22 @@
                         productsHTML += `
 
                             <div class="product">
+
+
+<img
+    src="${productImage}"
+    alt="${
+        product.name ||
+        "Product"
+    }"
+    style="
+        width:90px;
+        height:90px;
+        object-fit:cover;
+        border-radius:8px;
+        margin-bottom:10px;
+    "
+>
 
 
                                 <div class="product-name">
