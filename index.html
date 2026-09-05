@@ -280,6 +280,12 @@ h1 {
     font-weight: bold;
 }
 
+.welcome-bangla {
+    margin-left: 18px;
+    font-size: 20px;
+    font-weight: bold;
+}
+
 /* =========================
    WELCOME TEXT SMOOTH SLIDE
 ========================= */
@@ -868,6 +874,28 @@ nav a:active {
 }
 
 
+/* Welcome text smooth animation */
+
+.welcome {
+    overflow: hidden;
+}
+
+.welcome h2 {
+    animation: welcomeSlide 10s linear infinite;
+}
+
+@keyframes welcomeSlide {
+
+    0% {
+        transform: translateX(100%);
+    }
+
+    100% {
+        transform: translateX(-100%);
+    }
+
+}
+
 </style>
 
 </head>
@@ -989,6 +1017,9 @@ nav a:active {
 
     <h2>
         Welcome to RK Store
+        <span class="welcome-bangla">
+            আর কে স্টোরে আপনাকে স্বাগতম।
+        </span>
     </h2>
 
     <p>
@@ -996,7 +1027,6 @@ nav a:active {
     </p>
 
 </div>
-
 
 <!-- =========================
      NAVIGATION
