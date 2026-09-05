@@ -855,14 +855,33 @@ nav a:active {
 }
 
 
-/* Welcome text smooth animation */
+/* Welcome text smooth continuous animation */
 
 .welcome {
     overflow: hidden;
 }
 
-.welcome h2 {
-    animation: welcomeSlide 10s linear infinite;
+.welcome-marquee {
+    width: 100%;
+    overflow: hidden;
+    white-space: nowrap;
+    margin: 0;
+}
+
+.welcome-track {
+    display: inline-flex;
+    align-items: center;
+    gap: 80px;
+    white-space: nowrap;
+
+    animation: welcomeSlide 18s linear infinite;
+}
+
+.welcome-track span {
+    flex-shrink: 0;
+    font-size: 22px;
+    color: #ff6600;
+    font-weight: bold;
 }
 
 @keyframes welcomeSlide {
@@ -996,12 +1015,10 @@ nav a:active {
 
 <div class="welcome">
 
-    <h2>
-    <span class="welcome-text">
-        Welcome to RK Store
-        <span class="welcome-bangla">
-            আর কে স্টোরে আপনাকে স্বাগতম।
-        </span>
+    <h2 class="welcome-marquee">
+    <span class="welcome-track">
+        <span>Welcome to RK Store</span>
+        <span>আর কে স্টোরে আপনাকে স্বাগতম।</span>
     </span>
 </h2>
 
