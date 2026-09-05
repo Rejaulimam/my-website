@@ -521,6 +521,33 @@ nav a:active {
     flex-shrink: 0;
 }
 
+.search-input-wrapper {
+    position: relative;
+    width: 400px;
+    max-width: calc(100% - 90px);
+}
+
+.clear-search-button {
+    position: absolute;
+    right: 8px;
+    top: 50%;
+    transform: translateY(-50%);
+    
+    background: transparent;
+    color: #777;
+    border: none;
+    
+    padding: 0;
+    width: 24px;
+    height: 24px;
+    
+    font-size: 22px;
+    line-height: 24px;
+    
+    display: none;
+    cursor: pointer;
+}
+
 
 /* =========================
    CATEGORIES
@@ -775,13 +802,19 @@ nav a:active {
         padding: 10px;
     }
 
-    .search input {
-        width: auto;
+.search-input-wrapper {
+    flex: 1;
+    min-width: 0;
+    width: auto;
+    max-width: none;
+}
 
-        flex: 1;
+.search-input-wrapper input {
+    width: 100%;
+    max-width: none;
+}
 
-        min-width: 0;
-    }
+    
 
     .search button {
         flex-shrink: 0;
@@ -1155,12 +1188,26 @@ nav a:active {
 
 <div class="search">
 
-    <input
-        type="text"
-        id="searchInput"
-        placeholder="Search products..."
-        oninput="searchProducts()"
-    >
+    <div class="search-input-wrapper">
+
+        <input
+            type="text"
+            id="searchInput"
+            placeholder="Search products..."
+            oninput="searchProducts(); updateClearButton()"
+        >
+
+        <button
+            type="button"
+            id="clearSearchButton"
+            class="clear-search-button"
+            onclick="clearSearch()"
+            aria-label="Clear search"
+        >
+            ×
+        </button>
+
+    </div>
 
     <button
         type="button"
@@ -2007,7 +2054,67 @@ function(productId) {
 
 };
 
+/* =====================================================
+   SEARCH CLEAR BUTTON
+===================================================== */
 
+window.updateClearButton =
+function() {
+
+    const input =
+        document.getElementById("searchInput");
+
+    const clearButton =
+        document.getElementById(
+            "clearSearchButton"
+        );
+
+    if (input.value.trim() !== "") {
+
+        clearButton.style.display =
+            "flex";
+
+    } else {
+
+        clearButton.style.display =
+            "none";
+
+    }
+
+};
+
+
+/* =====================================================
+   CLEAR SEARCH
+===================================================== */
+
+window.clearSearch =
+function() {
+
+    const input =
+        document.getElementById("searchInput");
+
+    const suggestionBox =
+        document.getElementById(
+            "searchSuggestions"
+        );
+
+
+    input.value = "";
+
+
+    suggestionBox.innerHTML = "";
+
+    suggestionBox.style.display =
+        "none";
+
+
+    updateClearButton();
+
+
+    searchProducts();
+
+};
 
 
 /* =====================================================
